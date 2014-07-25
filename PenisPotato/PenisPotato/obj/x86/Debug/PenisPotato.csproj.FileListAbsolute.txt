@@ -507,3 +507,25 @@ C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Deb
 C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_Contractor.xnb
 C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_LabourCamp.xnb
 C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\Menu_Manipulation.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\Menu_Military.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Structure_Airport.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Structure_Barracks.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Structure_TankDepot.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\Structure_Capitol.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\Structure_CityHall.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\Structure_Settlement.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\Structure_TownHall.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\Menu_Economy.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Structure_Factory.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Structure_Market.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Unit_Dictator.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_Infantry.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_Plane.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_Tank.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Modifiers\minusMoney.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Modifiers\plusMoney.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_Propaganda.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_Contractor.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_LabourCamp.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\Menu_Manipulation.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Structure_Exporter.xnb

@@ -7,7 +7,7 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Effects\BloomCombine.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Effects\BloomCombine.xnb</Output>
       <Time>2013-10-27T18:56:26-07:00</Time>
     </Item>
     <Item>
@@ -16,7 +16,7 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Effects\BloomExtract.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Effects\BloomExtract.xnb</Output>
       <Time>2013-10-27T18:56:26-07:00</Time>
     </Item>
     <Item>
@@ -25,7 +25,7 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Effects\GaussianBlur.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Effects\GaussianBlur.xnb</Output>
       <Time>2013-10-27T18:56:26-07:00</Time>
     </Item>
     <Item>
@@ -34,7 +34,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Map\square.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Map\square.xnb</Output>
       <Time>2014-02-19T19:58:34-08:00</Time>
     </Item>
     <Item>
@@ -43,7 +43,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Map\square2.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Map\square2.xnb</Output>
       <Time>2014-02-21T20:21:32-08:00</Time>
     </Item>
     <Item>
@@ -52,7 +52,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Map\squareNoBorder.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Map\squareNoBorder.xnb</Output>
       <Time>2013-10-27T22:39:40-07:00</Time>
     </Item>
     <Item>
@@ -61,7 +61,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Dictator.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Dictator.xnb</Output>
       <Time>2014-02-24T19:06:30-08:00</Time>
     </Item>
     <Item>
@@ -70,7 +70,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Factory.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Factory.xnb</Output>
       <Time>2014-02-24T19:05:42-08:00</Time>
     </Item>
     <Item>
@@ -79,7 +79,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\TownCentre.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\TownCentre.xnb</Output>
       <Time>2014-02-24T19:05:26-08:00</Time>
     </Item>
     <Item>
@@ -88,7 +88,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\blank.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\blank.xnb</Output>
       <Time>2013-12-15T18:09:34-08:00</Time>
     </Item>
     <Item>
@@ -97,7 +97,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Barracks.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Barracks.xnb</Output>
       <Time>2014-02-24T19:06:12-08:00</Time>
     </Item>
     <Item>
@@ -106,7 +106,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Map\tile.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Map\tile.xnb</Output>
       <Time>2014-01-29T17:22:16-08:00</Time>
     </Item>
     <Item>
@@ -115,7 +115,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Networking\chat_ready.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Networking\chat_ready.xnb</Output>
       <Time>2014-02-05T19:07:36-08:00</Time>
     </Item>
     <Item>
@@ -124,7 +124,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Hangar.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Hangar.xnb</Output>
       <Time>2014-03-02T00:36:28-08:00</Time>
     </Item>
     <Item>
@@ -133,7 +133,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\TankDepot.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\TankDepot.xnb</Output>
       <Time>2014-03-02T00:46:46-08:00</Time>
     </Item>
     <Item>
@@ -142,7 +142,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\Menu_Military.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\Menu_Military.xnb</Output>
       <Time>2014-03-21T17:27:00-07:00</Time>
     </Item>
     <Item>
@@ -151,7 +151,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Infantry.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Infantry.xnb</Output>
       <Time>2014-03-02T01:45:52-08:00</Time>
     </Item>
     <Item>
@@ -160,7 +160,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Jet.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Jet.xnb</Output>
       <Time>2014-03-02T01:46:44-08:00</Time>
     </Item>
     <Item>
@@ -169,7 +169,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Tank.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Tank.xnb</Output>
       <Time>2014-03-02T01:47:44-08:00</Time>
     </Item>
     <Item>
@@ -178,7 +178,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Structure_Airport.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Structure_Airport.xnb</Output>
       <Time>2014-03-22T19:59:20-07:00</Time>
     </Item>
     <Item>
@@ -187,7 +187,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Structure_Barracks.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Structure_Barracks.xnb</Output>
       <Time>2014-03-21T18:14:34-07:00</Time>
     </Item>
     <Item>
@@ -196,7 +196,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Structure_TankDepot.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Structure_TankDepot.xnb</Output>
       <Time>2014-03-21T18:05:38-07:00</Time>
     </Item>
     <Item>
@@ -205,7 +205,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\Structure_Capitol.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\Structure_Capitol.xnb</Output>
       <Time>2014-03-21T17:30:40-07:00</Time>
     </Item>
     <Item>
@@ -214,7 +214,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\Structure_CityHall.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\Structure_CityHall.xnb</Output>
       <Time>2014-03-21T17:40:48-07:00</Time>
     </Item>
     <Item>
@@ -223,7 +223,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\Structure_Settlement.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\Structure_Settlement.xnb</Output>
       <Time>2014-03-21T18:09:28-07:00</Time>
     </Item>
     <Item>
@@ -232,7 +232,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\Structure_TownHall.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\Structure_TownHall.xnb</Output>
       <Time>2014-03-21T18:14:12-07:00</Time>
     </Item>
     <Item>
@@ -241,7 +241,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\Menu_Economy.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\Menu_Economy.xnb</Output>
       <Time>2014-03-21T17:32:54-07:00</Time>
     </Item>
     <Item>
@@ -250,7 +250,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Structure_Factory.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Structure_Factory.xnb</Output>
       <Time>2014-03-21T18:01:48-07:00</Time>
     </Item>
     <Item>
@@ -259,7 +259,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Structure_Market.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Structure_Market.xnb</Output>
       <Time>2014-03-21T18:04:52-07:00</Time>
     </Item>
     <Item>
@@ -268,7 +268,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Unit_Dictator.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Unit_Dictator.xnb</Output>
       <Time>2014-03-21T17:59:18-07:00</Time>
     </Item>
     <Item>
@@ -277,7 +277,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_Infantry.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_Infantry.xnb</Output>
       <Time>2014-03-21T18:10:02-07:00</Time>
     </Item>
     <Item>
@@ -286,7 +286,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_Plane.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_Plane.xnb</Output>
       <Time>2014-03-21T18:07:24-07:00</Time>
     </Item>
     <Item>
@@ -295,7 +295,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_Tank.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_Tank.xnb</Output>
       <Time>2014-03-21T18:12:42-07:00</Time>
     </Item>
     <Item>
@@ -304,7 +304,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Modifiers\minusMoney.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Modifiers\minusMoney.xnb</Output>
       <Time>2014-06-15T20:57:12-07:00</Time>
     </Item>
     <Item>
@@ -313,7 +313,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Modifiers\plusMoney.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Modifiers\plusMoney.xnb</Output>
       <Time>2014-06-15T20:57:12-07:00</Time>
     </Item>
     <Item>
@@ -322,7 +322,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_Propaganda.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_Propaganda.xnb</Output>
       <Time>2014-07-09T20:59:22-07:00</Time>
     </Item>
     <Item>
@@ -331,7 +331,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_Contractor.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_Contractor.xnb</Output>
       <Time>2014-07-09T20:59:22-07:00</Time>
     </Item>
     <Item>
@@ -340,7 +340,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_LabourCamp.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_LabourCamp.xnb</Output>
       <Time>2014-07-09T20:59:22-07:00</Time>
     </Item>
     <Item>
@@ -349,7 +349,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\Menu_Manipulation.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\Menu_Manipulation.xnb</Output>
       <Time>2014-07-09T20:59:32-07:00</Time>
     </Item>
     <Item>
@@ -358,7 +358,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Structure_Exporter.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Structure_Exporter.xnb</Output>
       <Time>2014-07-09T21:03:10-07:00</Time>
     </Item>
     <Item>
@@ -367,7 +367,7 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Fonts\debugFont.xnb</Output>
+      <Output>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Fonts\debugFont.xnb</Output>
       <Time>2013-11-19T20:08:56-08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
@@ -376,39 +376,39 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotatoContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotatoContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotatoContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotatoContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
         <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
-        <Value>2010-08-23T12:41:18-07:00</Value>
+        <Value>2010-08-23T09:41:18-07:00</Value>
       </Assembly>
       <Assembly>
         <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
-        <Value>2010-08-23T12:41:18-07:00</Value>
+        <Value>2010-08-23T09:41:18-07:00</Value>
       </Assembly>
       <Assembly>
         <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
-        <Value>2010-08-23T12:41:18-07:00</Value>
+        <Value>2010-08-23T09:41:18-07:00</Value>
       </Assembly>
       <Assembly>
         <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
-        <Value>2010-08-23T12:41:18-07:00</Value>
+        <Value>2010-08-23T09:41:18-07:00</Value>
       </Assembly>
       <Assembly>
         <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
-        <Value>2010-08-23T12:41:18-07:00</Value>
+        <Value>2010-08-23T09:41:18-07:00</Value>
       </Assembly>
       <Assembly>
         <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
-        <Value>2010-08-23T12:41:18-07:00</Value>
+        <Value>2010-08-23T09:41:18-07:00</Value>
       </Assembly>
       <Assembly>
         <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2013-10-27T18:29:44.060897-07:00</Value>
+        <Value>2012-07-31T14:12:41.0855656-07:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>
