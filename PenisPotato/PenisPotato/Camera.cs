@@ -14,6 +14,9 @@ namespace PenisPotato
 {
     public class Camera
     {
+        /// <summary>
+        /// This is the shit.
+        /// </summary>
         private const float zoomUpperLimit = 1.5f;
         private const float zoomLowerLimit = .2f;
 
