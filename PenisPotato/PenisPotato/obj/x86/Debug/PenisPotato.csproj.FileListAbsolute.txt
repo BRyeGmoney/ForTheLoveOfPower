@@ -507,7 +507,6 @@ C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Deb
 C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_Contractor.xnb
 C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_LabourCamp.xnb
 C:\Users\Rafzoola\Desktop\PenisPotatoLastRev\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\Menu_Manipulation.xnb
-<<<<<<< HEAD
 C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\Menu_Military.xnb
 C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Structure_Airport.xnb
 C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Structure_Barracks.xnb
@@ -530,9 +529,7 @@ C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Deb
 C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_LabourCamp.xnb
 C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\Menu_Manipulation.xnb
 C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Structure_Exporter.xnb
-=======
 C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_Propaganda.xnb
 C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_Contractor.xnb
 C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_LabourCamp.xnb
 C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\Menu_Manipulation.xnb
->>>>>>> origin/master

@@ -14,6 +14,8 @@ namespace PenisPotato.StateSystem.Networking
     {
         NetPeerConfiguration config;
         Thread runServer;
+        bool inLobby = true;
+
 
 	    // create and start server
         public NetServer server;
@@ -137,7 +139,7 @@ namespace PenisPotato.StateSystem.Networking
 					// send position updates 30 times per second
 					//
 					double now = NetTime.Now;
-					if (now > nextSendUpdates)
+					if (!inLobby && now > nextSendUpdates)
 					{
 						// Yes, it's time to send position updates
 
@@ -161,7 +163,7 @@ namespace PenisPotato.StateSystem.Networking
 								om.Write(pos[1]);
 
 								// send message
-								server.SendMessage(om, player, NetDeliveryMethod.Unreliable);
+								server.SendMessage(om, player, NetDeliveryMethod.ReliableOrdered);
 							}
 						}
 

@@ -15,7 +15,7 @@ namespace PenisPotato.StateSystem.Screens
         bool otherScreensAreGone;
 
         GameScreen[] screensToLoad;
-
+        List<Player.NetworkPlayer> netPlayers;
         #endregion
 
         #region Initialization
@@ -30,6 +30,16 @@ namespace PenisPotato.StateSystem.Screens
         {
             this.loadingIsSlow = loadingIsSlow;
             this.screensToLoad = screensToLoad;
+
+            TransitionOnTime = TimeSpan.FromSeconds(0.5);
+        }
+
+        private LoadingScreen(StateManager screenManager, bool loadingIsSlow,
+                                List<Player.NetworkPlayer> networkPlayers, GameScreen[] screensToLoad)
+        {
+            this.loadingIsSlow = loadingIsSlow;
+            this.screensToLoad = screensToLoad;
+            this.netPlayers = networkPlayers;
 
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
         }
@@ -54,6 +64,25 @@ namespace PenisPotato.StateSystem.Screens
             screenManager.AddScreen(loadingScreen, controllingPlayer);
         }
 
+        /// <summary>
+        /// Activates the loading screen.
+        /// </summary>
+        public static void Load(StateManager screenManager, bool loadingIsSlow,
+                                PlayerIndex? controllingPlayer, List<Player.NetworkPlayer> networkPlayers,
+                                params GameScreen[] screensToLoad)
+        {
+            // Tell all the current screens to transition off.
+            foreach (GameScreen screen in screenManager.GetScreens())
+                screen.ExitScreen();
+
+            // Create and activate the loading screen.
+            LoadingScreen loadingScreen = new LoadingScreen(screenManager,
+                                                            loadingIsSlow,
+                                                            networkPlayers,
+                                                            screensToLoad);
+
+            screenManager.AddScreen(loadingScreen, controllingPlayer);
+        }
 
         #endregion
 
@@ -67,6 +96,10 @@ namespace PenisPotato.StateSystem.Screens
                                                        bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+
+            //Run this if it is a network game, keeps connections up while we load.
+            if (netPlayers != null)
+                netPlayers.ForEach(nP => { nP.Update(gameTime); });
 
             // If all the previous screens have finished transitioning
             // off, it is time to actually perform the load.

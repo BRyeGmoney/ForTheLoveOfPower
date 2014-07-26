@@ -122,12 +122,13 @@ namespace PenisPotato.StateSystem.Screens
             else
                 pauseAlpha = Math.Max(pauseAlpha - 1f / 32, 0);
 
-            //playerOne.Update(gameTime);
+            playerOne.Update(gameTime);
             //enemyOne.Update(gameTime);
-            players.ForEach(player =>
+
+            /*players.ForEach(player =>
                 {
-                    player.Update(gameTime);
-                });
+                        player.Update(gameTime);
+                });*/
 
             combat.ForEach(fight =>
             {
