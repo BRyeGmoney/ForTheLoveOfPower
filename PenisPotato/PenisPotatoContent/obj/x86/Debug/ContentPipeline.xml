@@ -179,7 +179,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Structure_Airport.xnb</Output>
-      <Time>2014-07-23T20:01:33.6508507-07:00</Time>
+      <Time>2014-07-06T23:00:08.8124033-07:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Military\Structure_Barracks.png</Source>
@@ -188,7 +188,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Structure_Barracks.xnb</Output>
-      <Time>2014-07-23T20:01:33.6528509-07:00</Time>
+      <Time>2014-07-06T23:17:42.0386444-07:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Military\Structure_TankDepot.png</Source>
@@ -197,7 +197,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Structure_TankDepot.xnb</Output>
-      <Time>2014-07-23T20:01:33.6528509-07:00</Time>
+      <Time>2014-07-06T23:10:19.4663307-07:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Civil\Structure_Capitol.png</Source>
@@ -206,7 +206,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\Structure_Capitol.xnb</Output>
-      <Time>2014-07-23T20:01:33.6398501-07:00</Time>
+      <Time>2014-07-06T23:04:14.9164796-07:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Civil\Structure_CityHall.png</Source>
@@ -215,7 +215,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\Structure_CityHall.xnb</Output>
-      <Time>2014-07-23T20:01:33.6408502-07:00</Time>
+      <Time>2014-07-06T23:05:59.9014844-07:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Civil\Structure_Settlement.png</Source>
@@ -224,7 +224,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\Structure_Settlement.xnb</Output>
-      <Time>2014-07-23T20:01:33.6418502-07:00</Time>
+      <Time>2014-07-06T23:13:28.2451282-07:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Civil\Structure_TownHall.png</Source>
@@ -233,7 +233,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\Structure_TownHall.xnb</Output>
-      <Time>2014-07-23T20:01:33.6428503-07:00</Time>
+      <Time>2014-07-06T23:17:18.2762852-07:00</Time>
     </Item>
     <Item>
       <Source>Textures\Misc\Menu_Economy.png</Source>
@@ -251,7 +251,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Structure_Factory.xnb</Output>
-      <Time>2014-07-23T20:01:33.6448504-07:00</Time>
+      <Time>2014-07-06T23:08:40.3426611-07:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Economy\Structure_Market.png</Source>
@@ -260,7 +260,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Structure_Market.xnb</Output>
-      <Time>2014-07-23T20:01:33.6458505-07:00</Time>
+      <Time>2014-07-06T23:09:56.5180181-07:00</Time>
     </Item>
     <Item>
       <Source>Textures\Units\Unit_Dictator.png</Source>
@@ -269,7 +269,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Unit_Dictator.xnb</Output>
-      <Time>2014-07-23T20:01:33.6668517-07:00</Time>
+      <Time>2014-07-06T23:34:31.4423789-07:00</Time>
     </Item>
     <Item>
       <Source>Textures\Units\Military\Unit_Infantry.png</Source>
@@ -278,7 +278,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_Infantry.xnb</Output>
-      <Time>2014-07-23T20:01:33.6578511-07:00</Time>
+      <Time>2014-07-06T23:14:04.3691944-07:00</Time>
     </Item>
     <Item>
       <Source>Textures\Units\Military\Unit_Plane.png</Source>
@@ -287,7 +287,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_Plane.xnb</Output>
-      <Time>2014-07-23T20:01:33.6648515-07:00</Time>
+      <Time>2014-07-06T23:12:03.918305-07:00</Time>
     </Item>
     <Item>
       <Source>Textures\Units\Military\Unit_Tank.png</Source>
@@ -296,7 +296,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_Tank.xnb</Output>
-      <Time>2014-07-23T20:01:33.6658516-07:00</Time>
+      <Time>2014-07-06T23:15:32.9652618-07:00</Time>
     </Item>
     <Item>
       <Source>Icons\Modifiers\minusMoney.png</Source>
@@ -341,7 +341,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_LabourCamp.xnb</Output>
-      <Time>2014-07-23T20:03:21.3040081-07:00</Time>
+      <Time>2014-07-23T20:01:33.6478506-07:00</Time>
     </Item>
     <Item>
       <Source>Textures\Misc\Menu_Manipulation.png</Source>
@@ -359,7 +359,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Structure_Exporter.xnb</Output>
-      <Time>2014-07-23T20:01:33.6448504-07:00</Time>
+      <Time>2014-07-06T23:11:03.7498635-07:00</Time>
     </Item>
     <Item>
       <Source>Fonts\debugFont.spritefont</Source>
