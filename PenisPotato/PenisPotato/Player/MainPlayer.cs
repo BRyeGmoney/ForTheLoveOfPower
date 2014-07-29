@@ -77,6 +77,9 @@ namespace PenisPotato.Player
             UpdateStructures(gameTime);
             playerUnits.ForEach(pU => pU.Update(gameTime, this));
 
+            if (netPlayer != null)
+                netPlayer.Update(gameTime);
+
             prevUnits = playerUnits.Count;
         }
 
@@ -108,6 +111,7 @@ namespace PenisPotato.Player
                 if (input.CurrentMouseStates[0].RightButton == ButtonState.Pressed)
                     cameraMovement = (new Vector2(input.LastMouseStates[0].X, input.LastMouseStates[0].Y) - new Vector2(input.CurrentMouseStates[0].X, input.CurrentMouseStates[0].Y)) / camera.Zoom;
 
+                //Initial press onto the screen
                 if (input.CurrentMouseStates[0].LeftButton == ButtonState.Pressed && input.LastMouseStates[0].LeftButton == ButtonState.Released)
                 {
                     selectedTilePos = GetMouseStateRelative(input.CurrentMouseStates[0], camera);
@@ -120,8 +124,12 @@ namespace PenisPotato.Player
                     });
 
                     if (navigatingUnit != null && !movementTiles.Contains(selectedTilePos))
+                    {
+                        navigatingUnit.movementPoints.Clear();
                         movementTiles.Add(selectedTilePos);
+                    }
                 }
+                //continuing press onto the screen
                 else if (input.CurrentMouseStates[0].LeftButton == ButtonState.Pressed && input.LastMouseStates[0].LeftButton == ButtonState.Pressed)
                 {
                     selectedTilePos = GetMouseStateRelative(input.CurrentMouseStates[0], camera);
@@ -130,12 +138,13 @@ namespace PenisPotato.Player
                     if (navigatingUnit != null && !movementTiles.Contains(selectedTilePos))
                         movementTiles.Add(selectedTilePos);
                 }
-
+                //release of press onto the screen
                 if (input.CurrentMouseStates[0].LeftButton == ButtonState.Released && input.LastMouseStates[0].LeftButton == ButtonState.Pressed)
                 {
                     //Dump the tiles we've highlighted for moving into the navigating unit's repertoire.
                     if (navigatingUnit != null && movementTiles.Count > 1)
                     {
+                        //Clear the movement points because the new set of movement points is being sent to the navigating unit
                         navigatingUnit.movementPoints.AddRange(movementTiles);
 
                         //kill the reference to the navigating unit and clear movement points.

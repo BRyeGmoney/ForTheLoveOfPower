@@ -251,7 +251,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Structure_Factory.xnb</Output>
-      <Time>2014-07-25T20:55:31.2894213-07:00</Time>
+      <Time>2014-07-27T23:11:38.8744057-07:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Economy\Structure_Market.png</Source>
@@ -260,7 +260,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Structure_Market.xnb</Output>
-      <Time>2014-07-25T20:55:31.2904213-07:00</Time>
+      <Time>2014-07-27T23:10:50.6408639-07:00</Time>
     </Item>
     <Item>
       <Source>Textures\Units\Unit_Dictator.png</Source>
@@ -314,7 +314,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Modifiers\plusMoney.xnb</Output>
-      <Time>2014-07-23T20:01:33.6058482-07:00</Time>
+      <Time>2014-07-27T10:54:19.9447897-07:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Manipulation\Structure_Propaganda.png</Source>
