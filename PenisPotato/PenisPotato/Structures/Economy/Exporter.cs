@@ -18,7 +18,7 @@ namespace PenisPotato.Structures.Economy
             this.playerColor = color;
             this.pieceTexture = pieceTex;
             this.pieceType = (byte)PieceTypes.Exporter;
-            this.tileWidth = pieceTex.Width;
+            this.tileWidth = Convert.ToInt16(Resources.tileWidth);
             this.buildTime = 25;
         }
 

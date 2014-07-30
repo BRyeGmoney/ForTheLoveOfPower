@@ -41,7 +41,7 @@ namespace PenisPotato.StateSystem.Networking
         public LobbyScreen(GameServer gameServer)
         {
             this.networkSession = gameServer;
-            this.networkSession.stateManager = ScreenManager;
+            //this.networkSession.stateManager = ScreenManager;
             netPlayer = new Player.NetworkPlayer(true, "");
 
             TransitionOnTime = TimeSpan.FromSeconds(0.5);

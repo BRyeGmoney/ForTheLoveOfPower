@@ -235,4 +235,7 @@ B button, Esc = cancel</value>
   <data name="SinglePlayer" xml:space="preserve">
     <value>Single Player</value>
   </data>
+  <data name="tileWidth" xml:space="preserve">
+    <value>250</value>
+  </data>
 </root>

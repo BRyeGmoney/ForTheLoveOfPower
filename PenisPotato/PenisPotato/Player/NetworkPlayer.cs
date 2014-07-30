@@ -143,27 +143,27 @@ namespace PenisPotato.Player
             switch (type)
             {
                 case (byte)Structures.PieceTypes.Settlement:
-                    return new Structures.Civil.Settlement(piecePosition, nP.playerColor, masterState.ScreenManager.buildItems[(int)StateSystem.BuildItems.settlement].menuItem);
+                    return new Structures.Civil.Settlement(piecePosition, nP.playerColor, ScreenManager.buildItems[(int)StateSystem.BuildItems.settlement].menuItem);
                 case (byte)Structures.PieceTypes.Factory:
-                    return new Structures.Economy.Factory(piecePosition, nP.playerColor, masterState.ScreenManager.buildItems[(int)StateSystem.BuildItems.factory].menuItem);
+                    return new Structures.Economy.Factory(piecePosition, nP.playerColor, ScreenManager.buildItems[(int)StateSystem.BuildItems.factory].menuItem);
                 case (byte)Structures.PieceTypes.Market:
-                    return new Structures.Economy.Market(piecePosition, nP.playerColor, masterState.ScreenManager.buildItems[(int)StateSystem.BuildItems.market].menuItem);
+                    return new Structures.Economy.Market(piecePosition, nP.playerColor, ScreenManager.buildItems[(int)StateSystem.BuildItems.market].menuItem);
                 case (byte)Structures.PieceTypes.Exporter:
-                    return new Structures.Economy.Exporter(piecePosition, nP.playerColor, masterState.ScreenManager.buildItems[(int)StateSystem.BuildItems.exporter].menuItem);
+                    return new Structures.Economy.Exporter(piecePosition, nP.playerColor, ScreenManager.buildItems[(int)StateSystem.BuildItems.exporter].menuItem);
                 case (byte)Structures.PieceTypes.Barracks:
-                    return new Structures.Military.Barracks(piecePosition, nP.playerColor, masterState.ScreenManager.buildItems[(int)StateSystem.BuildItems.barracks].menuItem);
+                    return new Structures.Military.Barracks(piecePosition, nP.playerColor, ScreenManager.buildItems[(int)StateSystem.BuildItems.barracks].menuItem);
                 case (byte)Structures.PieceTypes.TankDepot:
-                    return new Structures.Military.TankDepot(piecePosition, nP.playerColor, masterState.ScreenManager.buildItems[(int)StateSystem.BuildItems.tankDepot].menuItem);
+                    return new Structures.Military.TankDepot(piecePosition, nP.playerColor, ScreenManager.buildItems[(int)StateSystem.BuildItems.tankDepot].menuItem);
                 case (byte)Structures.PieceTypes.AirBase:
-                    return new Structures.Military.AirBase(piecePosition, nP.playerColor, masterState.ScreenManager.buildItems[(int)StateSystem.BuildItems.airfield].menuItem);
+                    return new Structures.Military.AirBase(piecePosition, nP.playerColor, ScreenManager.buildItems[(int)StateSystem.BuildItems.airfield].menuItem);
                 case (byte)Structures.PieceTypes.LabourCamp:
-                    return new Structures.Manipulation.LabourCamp(piecePosition, nP.playerColor, masterState.ScreenManager.buildItems[(int)StateSystem.BuildItems.labourCamp].menuItem);
+                    return new Structures.Manipulation.LabourCamp(piecePosition, nP.playerColor, ScreenManager.buildItems[(int)StateSystem.BuildItems.labourCamp].menuItem);
                 case (byte)Structures.PieceTypes.MilitaryContractor:
-                    return new Structures.Manipulation.MilitaryContractor(piecePosition, nP.playerColor, masterState.ScreenManager.buildItems[(int)StateSystem.BuildItems.contractor].menuItem);
+                    return new Structures.Manipulation.MilitaryContractor(piecePosition, nP.playerColor, ScreenManager.buildItems[(int)StateSystem.BuildItems.contractor].menuItem);
                 case (byte)Structures.PieceTypes.Propaganda:
-                    return new Structures.Manipulation.Propaganda(piecePosition, nP.playerColor, masterState.ScreenManager.buildItems[(int)StateSystem.BuildItems.propaganda].menuItem);
+                    return new Structures.Manipulation.Propaganda(piecePosition, nP.playerColor, ScreenManager.buildItems[(int)StateSystem.BuildItems.propaganda].menuItem);
                 default:
-                    return new Structures.Civil.TownCentre(piecePosition, nP.playerColor, masterState.ScreenManager.buildItems[(int)StateSystem.BuildItems.settlement].menuItem);
+                    return new Structures.Civil.TownCentre(piecePosition, nP.playerColor, ScreenManager.buildItems[(int)StateSystem.BuildItems.settlement].menuItem);
             }
         }
     }

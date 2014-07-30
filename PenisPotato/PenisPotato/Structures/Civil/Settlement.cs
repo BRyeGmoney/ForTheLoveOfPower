@@ -23,7 +23,7 @@ namespace PenisPotato.Structures.Civil
             this.playerColor = color;
             this.pieceTexture = pieceTex;
             this.pieceType = (byte)PieceTypes.Settlement;
-            this.tileWidth = pieceTex.Width;
+            this.tileWidth = Convert.ToInt16(Resources.tileWidth);
             this.settlementProperties = new List<Structure>();
             this.buildTime = 15;
         }

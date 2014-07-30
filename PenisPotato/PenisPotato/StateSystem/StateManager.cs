@@ -105,7 +105,7 @@ namespace PenisPotato.StateSystem
             ContentManager content = Game.Content;
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            font = content.Load<SpriteFont>("Fonts/debugFont");
+            font = content.Load<SpriteFont>("Fonts/falturaFont");
             blankTexture = content.Load<Texture2D>("Textures/Misc/blank");
             tile = content.Load<Texture2D>("Textures/Map/square");
 

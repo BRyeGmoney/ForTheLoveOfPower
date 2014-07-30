@@ -16,7 +16,7 @@ namespace PenisPotato.Structures.Military
             this.playerColor = color;
             this.pieceTexture = pieceTex;
             this.pieceType = (byte)PieceTypes.Barracks;
-            this.tileWidth = pieceTex.Width;
+            this.tileWidth = Convert.ToInt16(Resources.tileWidth);
             this.buildTime = 25;
         }
 

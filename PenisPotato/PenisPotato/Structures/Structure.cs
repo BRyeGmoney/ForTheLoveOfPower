@@ -69,10 +69,6 @@ namespace PenisPotato.Structures
         public List<Vector2> GetSurroundingTiles()
         {
             List<Vector2> st = new List<Vector2>();
-
-            /*for (int y = -1; y <= 1; y++)
-                for (int x = -1; x <= 1; x++)
-                    st.Add(new Vector2(piecePosition.X + x, piecePosition.Y + y));*/
             st.Add(new Vector2(piecePosition.X, piecePosition.Y));
             st.Add(new Vector2(piecePosition.X + 1, piecePosition.Y));
             st.Add(new Vector2(piecePosition.X - 1, piecePosition.Y));
@@ -88,16 +84,6 @@ namespace PenisPotato.Structures
                 st.Add(new Vector2(piecePosition.X - 1, piecePosition.Y + 1));
                 st.Add(new Vector2(piecePosition.X + 1, piecePosition.Y + 1));
             }
-            //if (piecePosition.X % 2 == 0 || piecePosition.Y % 2 == 0 && !(piecePosition.X % 2 == 0 && piecePosition.Y % 2 == 0))
-            //{
-            //    st.Add(new Vector2(piecePosition.X - 1, piecePosition.Y - 1));
-            //    st.Add(new Vector2(piecePosition.X + 1, piecePosition.Y - 1));
-            //}
-            //else
-            //{
-            //    st.Add(new Vector2(piecePosition.X - 1, piecePosition.Y + 1));
-            //    st.Add(new Vector2(piecePosition.X + 1, piecePosition.Y + 1));
-            //}
 
             return st;
         }
@@ -115,8 +101,7 @@ namespace PenisPotato.Structures
             {
                 modifierTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                spriteBatch.Draw(stateManager.textureRepo[modifierIndex], new Rectangle((int)piecePosition.X * tileWidth, y, tileWidth / 6, tileWidth / 6), Color.White * (1 - (modifierTimer / 2)));//(byte)(255 - (124 * modifierTimer))
-                //spriteBatch.Draw(stateManager.textureRepo[modifierIndex], new Rectangle((int)piecePosition.X * tileWidth, y + 30, tileWidth / 6, tileWidth / 6), Color.White);
+                spriteBatch.Draw(stateManager.textureRepo[modifierIndex], new Rectangle((int)piecePosition.X * tileWidth, y + (int)(15 - (15 * (modifierTimer / 2))), tileWidth / 6, tileWidth / 6), Color.White * (1 - (modifierTimer / 2)));//(byte)(255 - (124 * modifierTimer))
                 if (modifierTimer > 2)
                 {
                     modifierTimer = 0;

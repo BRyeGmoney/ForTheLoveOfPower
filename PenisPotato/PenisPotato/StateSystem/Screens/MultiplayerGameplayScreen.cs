@@ -75,7 +75,10 @@ namespace PenisPotato.StateSystem.Screens
 
             players.ForEach(pS => {
                 if (pS.GetType().Equals(typeof(Player.NetworkPlayer)))
+                {
                     (pS as Player.NetworkPlayer).InitGamePlayer(false);
+                    pS.ScreenManager = ScreenManager;
+                }
             });
 
             //Combat List
@@ -123,15 +126,8 @@ namespace PenisPotato.StateSystem.Screens
                 pauseAlpha = Math.Max(pauseAlpha - 1f / 32, 0);
 
             playerOne.Update(gameTime);
-            //enemyOne.Update(gameTime);
 
-            /*players.ForEach(player =>
-                {
-                        player.Update(gameTime);
-                });*/
-
-            combat.ForEach(fight =>
-            {
+            combat.ForEach(fight => {
                 fight.Update(gameTime);
             });
         }
@@ -177,22 +173,18 @@ namespace PenisPotato.StateSystem.Screens
                     DrawChunk(spriteBatch, x, y);
             }
 
-            playerOne.buildingTiles.ForEach(pS =>
-            {
+            playerOne.buildingTiles.ForEach(pS => {
                 spriteBatch.Draw(tile, new Rectangle((int)(pS.X * tileWidth), (int)((pS.Y * tileWidth) - Math.Abs(pS.X % 2) * (tileWidth / 2)), tileWidth, tileWidth), playerOne.playerColor);
             });
-            playerOne.movementTiles.ForEach(pS =>
-            {
+            playerOne.movementTiles.ForEach(pS => {
                 spriteBatch.Draw(tile, new Rectangle((int)(pS.X * tileWidth), (int)((pS.Y * tileWidth) - Math.Abs(pS.X % 2) * (tileWidth / 2)), tileWidth, tileWidth), playerOne.playerColor);
             });
 
 
-            players.ForEach(player =>
-                {
-                    player.Draw(spriteBatch, gameTime, camera);
-                });
-            //playerOne.Draw(spriteBatch, gameTime, camera);
-            //enemyOne.Draw(spriteBatch, gameTime, camera);
+            players.ForEach(player =>{
+                player.Draw(spriteBatch, gameTime, camera);
+            });
+            playerOne.Draw(spriteBatch, gameTime, camera);
             spriteBatch.End();
 
             //Hud spritebatch
@@ -222,7 +214,6 @@ namespace PenisPotato.StateSystem.Screens
                 {
                     rect = new Rectangle(x * tileWidth, (y * tileWidth) - Math.Abs(x % 2) * (tileWidth / 2), tileWidth, tileWidth);
                     spriteBatch.Draw(tile, rect, Color.Cyan);
-                    //spriteBatch.DrawString(ScreenManager.Font, x + ", " + y, new Vector2(rect.X + 10, rect.Y + 5), Color.Cyan, 0.0f, Vector2.Zero, 2.2f, SpriteEffects.None, 0.0f);
                 }
             }
         }
