@@ -115,7 +115,8 @@ namespace PenisPotato.Structures
             {
                 modifierTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                spriteBatch.Draw(stateManager.textureRepo[modifierIndex], new Rectangle((int)piecePosition.X * tileWidth, y, tileWidth / 6, tileWidth / 6), playerColor * (modifierTimer * 255));//(byte)(255 - (124 * modifierTimer))
+                spriteBatch.Draw(stateManager.textureRepo[modifierIndex], new Rectangle((int)piecePosition.X * tileWidth, y, tileWidth / 6, tileWidth / 6), Color.White * (1 - (modifierTimer / 2)));//(byte)(255 - (124 * modifierTimer))
+                //spriteBatch.Draw(stateManager.textureRepo[modifierIndex], new Rectangle((int)piecePosition.X * tileWidth, y + 30, tileWidth / 6, tileWidth / 6), Color.White);
                 if (modifierTimer > 2)
                 {
                     modifierTimer = 0;
