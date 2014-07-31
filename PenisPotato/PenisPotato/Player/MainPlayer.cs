@@ -39,6 +39,7 @@ namespace PenisPotato.Player
             playerSettlements = new List<Structures.Civil.Settlement>();
             playerUnits = new List<Units.Unit>();
             buildingTiles = new List<Vector2>();
+            dupeBuildingTiles = new List<Vector2>();
             movementTiles = new List<Vector2>();
 
             LoadContent();
@@ -60,6 +61,7 @@ namespace PenisPotato.Player
             playerSettlements = new List<Structures.Civil.Settlement>();
             playerUnits = new List<Units.Unit>();
             buildingTiles = new List<Vector2>();
+            dupeBuildingTiles = new List<Vector2>();
             movementTiles = new List<Vector2>();
 
             LoadContent();
@@ -170,7 +172,7 @@ namespace PenisPotato.Player
 
                             playerUnits.ForEach(pU =>
                             {
-                                if (!performedAction && pU.piecePosition.Equals(selectedTilePos))
+                                if (!performedAction && pU.piecePosition.Equals(selectedTilePos) && pU.canBuild)
                                 {
                                     ScreenManager.AddScreen(new StateSystem.Screens.BuildMenuScreen(ScreenManager, this, true), PlayerIndex.One);
                                     performedAction = true;

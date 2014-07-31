@@ -47,6 +47,7 @@ namespace PenisPotato.Player
             this.playerStructures = new List<Structures.Structure>();
             this.playerSettlements = new List<Structures.Civil.Settlement>();
             this.playerUnits = new List<Units.Unit>();
+            this.dupeBuildingTiles = new List<Vector2>();
             this.buildingTiles = new List<Vector2>();
 
             playerUnits.Add(new Units.Misc.Dictator(new Vector2(6, 5), playerColor, ScreenManager.buildItems[(int)StateSystem.BuildItems.dictator].menuItem));

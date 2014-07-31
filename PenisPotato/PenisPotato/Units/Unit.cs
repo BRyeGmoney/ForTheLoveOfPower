@@ -19,6 +19,7 @@ namespace PenisPotato.Units
         public int tileWidth;
         public UnitType unitType;
         public UnitType goodAgainst;
+        public bool canBuild = false;
 
         public int numUnits = 1;
 
@@ -95,6 +96,8 @@ namespace PenisPotato.Units
                         player.masterState.combat.Add(new Combat(this, unitOnTile, player.masterState));
                     }
                 }
+
+                canBuild = (!player.buildingTiles.Contains(piecePosition) && !player.dupeBuildingTiles.Contains(piecePosition));
             }
         }
 
@@ -108,7 +111,9 @@ namespace PenisPotato.Units
         public void Draw(SpriteBatch spriteBatch, SpriteFont font, StateSystem.StateManager ScreenManager)
         {
             Rectangle pieceRect = new Rectangle((int)(piecePosition.X * tileWidth), (int)(piecePosition.Y * tileWidth - Math.Abs(piecePosition.X % 2) * (tileWidth / 2)), tileWidth, tileWidth);
-            spriteBatch.Draw(ScreenManager.tile, pieceRect, playerColor);
+            if (canBuild)
+                spriteBatch.Draw(ScreenManager.tile, pieceRect, playerColor);
+
             spriteBatch.Draw(pieceTexture, pieceRect, playerColor);
 
             if (numUnits > 1)

@@ -25,6 +25,7 @@ namespace PenisPotato.Player
         public List<Structures.Civil.Settlement> playerSettlements;
         public List<Units.Unit> playerUnits;
         public List<Vector2> buildingTiles;
+        public List<Vector2> dupeBuildingTiles;
         public List<Vector2> movementTiles;
         public Units.Unit navigatingUnit;
 
