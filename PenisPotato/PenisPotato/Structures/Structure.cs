@@ -44,6 +44,7 @@ namespace PenisPotato.Structures
             else if (built.Equals(100) || (conquered.Equals(100) && player.playerStructures.Contains(this)))
             {
                 player.buildingTiles.AddRange(GetSurroundingTiles());
+                //player.buildingTiles.RemoveAll(player.buildingTiles.Intersect(player.buildingTiles).ToList());
                 conquered = 0.0f;
                 built = 101;
             }

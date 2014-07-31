@@ -413,7 +413,7 @@ namespace PenisPotato {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 250.
+        ///   Looks up a localized string similar to 256.
         /// </summary>
         internal static string tileWidth {
             get {
