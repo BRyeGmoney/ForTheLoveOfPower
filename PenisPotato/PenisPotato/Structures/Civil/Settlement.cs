@@ -134,7 +134,7 @@ namespace PenisPotato.Structures.Civil
                 });
             tiles.AddRange(this.GetSurroundingTiles());
 
-            return tiles;
+            return tiles.Distinct().ToList();
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime, StateSystem.StateManager stateManager)

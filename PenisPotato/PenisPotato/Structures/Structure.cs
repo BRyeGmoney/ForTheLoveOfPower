@@ -43,8 +43,25 @@ namespace PenisPotato.Structures
             }
             else if (built.Equals(100) || (conquered.Equals(100) && player.playerStructures.Contains(this)))
             {
-                player.buildingTiles.AddRange(GetSurroundingTiles());
-                //player.buildingTiles.RemoveAll(player.buildingTiles.Intersect(player.buildingTiles).ToList());
+                List<Vector2> dupes = new List<Vector2>();
+                //player.buildingTiles.AddRange(GetSurroundingTiles());
+                player.playerSettlements.ForEach(pS =>
+                {
+                    dupes.AddRange(pS.GetAllTilesBelongingToSettlement());
+                });
+                player.buildingTiles = dupes;
+                dupes = dupes.GroupBy(x => x)
+                             .Where(g => g.Count() > 1)
+                             .Select(g => g.Key)
+                             .ToList();
+
+                player.buildingTiles = player.buildingTiles.Except(dupes).ToList();
+                /*var dupes = player.buildingTiles.GroupBy(x => x)
+                                                .Where(g => g.Count() > 1)
+                                                .Select(g => g.Key)
+                                                .ToList();
+
+                player.buildingTiles = player.buildingTiles.Except(dupes).ToList();*/
                 conquered = 0.0f;
                 built = 101;
             }
