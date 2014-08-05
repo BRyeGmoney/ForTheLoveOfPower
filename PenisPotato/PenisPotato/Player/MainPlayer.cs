@@ -80,8 +80,10 @@ namespace PenisPotato.Player
             playerUnits.ForEach(pU => pU.Update(gameTime, this));
 
             if (netPlayer != null)
+            {
                 netPlayer.Update(gameTime);
-
+                SendUnitInfo();
+            }
             prevUnits = playerUnits.Count;
         }
 

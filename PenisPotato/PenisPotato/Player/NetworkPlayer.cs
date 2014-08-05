@@ -21,6 +21,7 @@ namespace PenisPotato.Player
 
         public NetClient client;
         public Queue<Structures.Structure> structuresToSend;
+        public Queue<Units.Unit> unitsToSend;
 
         // Create new outgoing message
         NetOutgoingMessage outmsg;
@@ -62,7 +63,10 @@ namespace PenisPotato.Player
         public void InitGamePlayer(bool isMain)
         {
             if (isMain)
+            {
+                unitsToSend = new Queue<Units.Unit>();
                 structuresToSend = new Queue<Structures.Structure>();
+            }
             else
             {
                 playerStructures = new List<Structures.Structure>();
@@ -121,6 +125,16 @@ namespace PenisPotato.Player
                                     nPlayer.playerStructures.Add(DetermineStructureType(msg.ReadByte(), msg.ReadVector2(), nPlayer));
                             }
                         }
+                        else if (packetType == (byte)PacketType.UNIT)
+                        {
+                            long id = msg.ReadInt64();
+                            if (id != this.client.UniqueIdentifier)
+                            {
+                                NetworkPlayer nPlayer = peers.Find(nP => nP.uniqueIdentifer == id);
+                                if (nPlayer.client == null)
+                                    nPlayer.playerUnits.Add(DetermineUnitType(msg.ReadByte(), msg.ReadVector2(), nPlayer));
+                            }
+                        }
                         break;
                     default:
                         break;
@@ -136,6 +150,34 @@ namespace PenisPotato.Player
                 outmsg.Write(building.pieceType);
                 outmsg.Write(building.piecePosition);
                 client.SendMessage(outmsg, NetDeliveryMethod.ReliableOrdered);
+            }
+            if (unitsToSend != null && unitsToSend.Count > 0)
+            {
+                NetOutgoingMessage outmsg = client.CreateMessage();
+                Units.Unit unit = unitsToSend.Dequeue();
+                outmsg.Write((byte)PacketType.UNIT);
+                outmsg.Write(client.UniqueIdentifier);
+                outmsg.Write(unit.unitType);
+                outmsg.Write(unit.piecePosition);
+                client.SendMessage(outmsg, NetDeliveryMethod.ReliableOrdered);
+            }
+
+        }
+
+        private Units.Unit DetermineUnitType(byte type, Vector2 piecePosition, NetworkPlayer nP)
+        {
+            switch (type)
+            {
+                case (byte)Units.UnitType.Dictator:
+                    return new Units.Misc.Dictator(piecePosition, nP.playerColor, nP.ScreenManager.buildItems[(int)StateSystem.BuildItems.dictator].menuItem);
+                case (byte)Units.UnitType.Infantry:
+                    return new Units.Infantry(piecePosition, nP.playerColor, nP.ScreenManager.buildItems[(int)StateSystem.BuildItems.infantry].menuItem);
+                case (byte)Units.UnitType.Tank:
+                    return new Units.Tank(piecePosition, nP.playerColor, nP.ScreenManager.buildItems[(int)StateSystem.BuildItems.tank].menuItem);
+                case (byte)Units.UnitType.Jet:
+                    return new Units.Jet(piecePosition, nP.playerColor, nP.ScreenManager.buildItems[(int)StateSystem.BuildItems.plane].menuItem);
+                default:
+                    return null;
             }
         }
 

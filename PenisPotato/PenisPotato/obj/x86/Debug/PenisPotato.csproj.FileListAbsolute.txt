@@ -115,7 +115,6 @@ C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\obj\x86\Deb
 C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\obj\x86\Debug\PenisPotato.csproj.GenerateResource.Cache
 C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\obj\x86\Debug\PenisPotato.exe
 C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\obj\x86\Debug\PenisPotato.pdb
-C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Lidgren.Network.pdb
 C:\Users\Bryan Gromadzki\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Effects\BloomCombine.xnb
 C:\Users\Bryan Gromadzki\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Effects\BloomExtract.xnb
 C:\Users\Bryan Gromadzki\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Effects\GaussianBlur.xnb
@@ -535,3 +534,4 @@ C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Cont
 C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\Menu_Manipulation.xnb
 C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Fonts\falturaFont.xnb
 C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Fonts\falturaFont.xnb
+C:\Users\Bryan Gromadzki\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Lidgren.Network.pdb

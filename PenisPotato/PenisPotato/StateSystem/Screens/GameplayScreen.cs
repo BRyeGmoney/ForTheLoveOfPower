@@ -19,28 +19,17 @@ namespace PenisPotato.StateSystem.Screens
         BloomComponent bloom;
         Camera camera;
 
+        bool isMpMatch = false;
+
         //Map
         Texture2D tile;
         Texture2D selectedTile;
-        //Texture2D selectedTile;
-        int tileWidth = 256;
-        int tileHeight = 256;
-        //Vector2 selectedTilePos = Vector2.Zero;
-
-        //Game input
-        //Vector2 previousPosition = Vector2.Zero;
-        //int previousScroll = 0;
-        //float zoomIncrement = 1.0f;
-
-        //Text
-        //SpriteFont unitPos;
-        //Vector2 textPos;
-        //String unitPosString;
         private float pauseAlpha;
 
         //Players
         public List<Player.Player> players;
         public Player.MainPlayer playerOne;
+        Player.NetworkPlayer netPlayer;
         public Player.EnemyPlayer enemyOne;
 
         public List<Units.Combat> combat;
@@ -55,6 +44,23 @@ namespace PenisPotato.StateSystem.Screens
         /// </summary>
         public GameplayScreen()
         {
+            TransitionOnTime = TimeSpan.FromSeconds(1.5);
+            TransitionOffTime = TimeSpan.FromSeconds(0.5);
+        }
+
+        public GameplayScreen(Player.NetworkPlayer nP)
+        {
+            isMpMatch = true;
+
+            if (nP != null)
+            {
+                players = new List<Player.Player>();
+
+                netPlayer = nP;
+                nP.peers.Remove(netPlayer);
+                players.AddRange(nP.peers);
+            }
+
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
@@ -77,11 +83,26 @@ namespace PenisPotato.StateSystem.Screens
             spriteBatch = ScreenManager.SpriteBatch;
 
             //Players
-            playerOne = new Player.MainPlayer(content, graphics, ScreenManager, this, null, Color.PaleVioletRed);
-            enemyOne = new Player.EnemyPlayer(ScreenManager, this, Color.Chartreuse);
-            players = new List<Player.Player>();
-            players.Add(playerOne);
-            players.Add(enemyOne);
+            if (isMpMatch)
+            {
+                playerOne = new Player.MainPlayer(content, graphics, ScreenManager, this, netPlayer, Color.PaleVioletRed);
+                players.ForEach(pS =>
+                {
+                    if (pS.GetType().Equals(typeof(Player.NetworkPlayer)))
+                    {
+                        (pS as Player.NetworkPlayer).InitGamePlayer(false);
+                        pS.ScreenManager = ScreenManager;
+                    }
+                });
+            }
+            else
+            {
+                playerOne = new Player.MainPlayer(content, graphics, ScreenManager, this, null, Color.PaleVioletRed);
+                enemyOne = new Player.EnemyPlayer(ScreenManager, this, Color.Chartreuse);
+                players = new List<Player.Player>();
+                players.Add(playerOne);
+                players.Add(enemyOne);
+            }
 
             //Combat List
             combat = new List<Units.Combat>();
@@ -127,7 +148,8 @@ namespace PenisPotato.StateSystem.Screens
                 pauseAlpha = Math.Max(pauseAlpha - 1f / 32, 0);
 
             playerOne.Update(gameTime);
-            enemyOne.Update(gameTime);
+            if (!isMpMatch)
+                enemyOne.Update(gameTime);
 
             combat.ForEach(fight =>
             {
@@ -158,8 +180,9 @@ namespace PenisPotato.StateSystem.Screens
         /// </summary>
         public override void Draw(GameTime gameTime)
         {
+            int tileWidth = Convert.ToInt16(Resources.tileWidth);
             int startx = (int)(camera.Pos.X / tileWidth);
-            int starty = (int)(camera.Pos.Y / tileHeight);
+            int starty = (int)(camera.Pos.Y / tileWidth);
 
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
                                                Color.Black, 0, 0);
@@ -173,21 +196,25 @@ namespace PenisPotato.StateSystem.Screens
             for (int y = starty -15; y < starty + 15; y += 5)
             {
                 for (int x = startx - 15; x < startx + 15; x += 5)
-                    DrawChunk(spriteBatch, x, y);
+                    DrawChunk(spriteBatch, x, y, tileWidth);
             }
 
             playerOne.buildingTiles.ForEach(pS =>
             {
-                spriteBatch.Draw(tile, new Rectangle((int)(pS.X * tileWidth), (int)((pS.Y * tileHeight) - Math.Abs(pS.X % 2) * (tileHeight / 2)), tileWidth, tileHeight), playerOne.playerColor);
+                spriteBatch.Draw(tile, new Rectangle((int)(pS.X * tileWidth), (int)((pS.Y * tileWidth) - Math.Abs(pS.X % 2) * (tileWidth / 2)), tileWidth, tileWidth), playerOne.playerColor);
             });
             playerOne.movementTiles.ForEach(pS =>
             {
-                spriteBatch.Draw(tile, new Rectangle((int)(pS.X * tileWidth), (int)((pS.Y * tileHeight) - Math.Abs(pS.X % 2) * (tileHeight / 2)), tileWidth, tileHeight), playerOne.playerColor);
+                spriteBatch.Draw(tile, new Rectangle((int)(pS.X * tileWidth), (int)((pS.Y * tileWidth) - Math.Abs(pS.X % 2) * (tileWidth / 2)), tileWidth, tileWidth), playerOne.playerColor);
             });
 
             
             playerOne.Draw(spriteBatch, gameTime, camera);
-            enemyOne.Draw(spriteBatch, gameTime, camera);
+            players.ForEach(player =>
+            {
+                player.Draw(spriteBatch, gameTime, camera);
+            });
+            //enemyOne.Draw(spriteBatch, gameTime, camera);
             spriteBatch.End();
 
             //Hud spritebatch
@@ -207,7 +234,7 @@ namespace PenisPotato.StateSystem.Screens
             }
         }
 
-        private void DrawChunk(SpriteBatch spriteBatch, int startx, int starty)
+        private void DrawChunk(SpriteBatch spriteBatch, int startx, int starty, int tileWidth)
         {
             Rectangle rect;
 
@@ -215,7 +242,7 @@ namespace PenisPotato.StateSystem.Screens
             {
                 for (int x = startx; x <= startx + 5; x++)
                 {
-                    rect = new Rectangle(x * tileWidth, (y * tileHeight) - Math.Abs(x % 2) * (tileHeight / 2), tileWidth, tileHeight);
+                    rect = new Rectangle(x * tileWidth, (y * tileWidth) - Math.Abs(x % 2) * (tileWidth / 2), tileWidth, tileWidth);
                     spriteBatch.Draw(tile, rect, Color.Cyan);
                     //spriteBatch.DrawString(ScreenManager.Font, x + ", " + y, new Vector2(rect.X + 10, rect.Y + 5), Color.Cyan, 0.0f, Vector2.Zero, 2.2f, SpriteEffects.None, 0.0f);
                 }

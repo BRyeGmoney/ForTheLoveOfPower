@@ -17,7 +17,7 @@ namespace PenisPotato.Units
         public List<Vector2> movementPoints;
         public float unitSpeed;
         public int tileWidth;
-        public UnitType unitType;
+        public byte unitType;
         public UnitType goodAgainst;
         public bool canBuild = false;
 
@@ -126,5 +126,6 @@ namespace PenisPotato.Units
         Infantry,
         Jet,
         Tank,
+        Dictator,
     }
 }

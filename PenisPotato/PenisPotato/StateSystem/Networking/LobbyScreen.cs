@@ -97,7 +97,7 @@ namespace PenisPotato.StateSystem.Networking
 
                 if (allReady)
                     LoadingScreen.Load(ScreenManager, true, PlayerIndex.One,
-                                  new MultiplayerGameplayScreen(netPlayer));
+                                  new GameplayScreen(netPlayer));
             }
 
             if (!IsExiting)

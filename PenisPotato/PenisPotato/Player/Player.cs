@@ -103,6 +103,11 @@ namespace PenisPotato.Player
             playerStructures.ForEach(pS => pS.Update(gameTime, this));
         }
 
+        public virtual void SendUnitInfo()
+        {
+            playerUnits.ForEach(pU => netPlayer.unitsToSend.Enqueue(pU));
+        }
+
         public void SendStructureInfo(int diff)
         {
             for (int x = diff; x > 0; x--)

@@ -17,9 +17,10 @@ namespace PenisPotato.Units.Misc
             this.piecePosition = pos;
             this.playerColor = color;
             this.pieceTexture = pieceTex;
+            this.unitType = (byte)UnitType.Dictator;
             this.movementPoints = new List<Vector2>();
             this.unitSpeed = 2.0f;
-            this.tileWidth = pieceTex.Width;
+            this.tileWidth = Convert.ToInt16(Resources.tileWidth);
         }
 
         public override void LoadContent(ContentManager Content)

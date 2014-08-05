@@ -135,6 +135,19 @@ namespace PenisPotato.StateSystem.Networking
                                 outmsg.Write(nPlayer.playerStructures[nPlayer.playerStructures.Count - 1].piecePosition);
                                 server.SendToAll(outmsg, NetDeliveryMethod.ReliableOrdered);
                             }
+                            else if (packetType == (byte)Player.PacketType.UNIT)
+                            {
+                                long id = msg.ReadInt64();
+                                Player.NetworkPlayer nPlayer = networkPlayers.Find(nP => nP.uniqueIdentifer == id);
+                                nPlayer.playerUnits.Add(DetermineUnitType(msg.ReadByte(), msg.ReadVector2(), nPlayer));
+
+                                outmsg = server.CreateMessage();
+                                outmsg.Write((byte)Player.PacketType.UNIT);
+                                outmsg.Write(id);
+                                outmsg.Write(nPlayer.playerUnits[nPlayer.playerUnits.Count - 1].unitType);
+                                outmsg.Write(nPlayer.playerUnits[nPlayer.playerUnits.Count - 1].piecePosition);
+                                server.SendToAll(outmsg, NetDeliveryMethod.ReliableOrdered);
+                            }
 							break;
 					}
 
@@ -181,6 +194,23 @@ namespace PenisPotato.StateSystem.Networking
 
 			server.Shutdown("app exiting");
 		}
+
+        private Units.Unit DetermineUnitType(byte type, Vector2 piecePosition, Player.NetworkPlayer nP)
+        {
+            switch (type)
+            {
+                case (byte)Units.UnitType.Dictator:
+                    return new Units.Misc.Dictator(piecePosition, nP.playerColor, null);
+                case (byte)Units.UnitType.Infantry:
+                    return new Units.Infantry(piecePosition, nP.playerColor, null);
+                case (byte)Units.UnitType.Tank:
+                    return new Units.Tank(piecePosition, nP.playerColor, null);
+                case (byte)Units.UnitType.Jet:
+                    return new Units.Jet(piecePosition, nP.playerColor, null);
+                default:
+                    return null;
+            }
+        }
 
         private Structures.Structure DetermineStructureType(byte type, Vector2 piecePosition, Player.NetworkPlayer nP)
         {

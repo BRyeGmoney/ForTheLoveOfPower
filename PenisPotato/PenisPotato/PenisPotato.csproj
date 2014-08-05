@@ -62,7 +62,7 @@
   <ItemGroup>
     <Reference Include="Lidgren.Network, Version=2011.3.12.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>E:\lidgren-network-gen3-2013-05-07\Lidgren-network-gen3\Lidgren.Network\bin\Release\Lidgren.Network.dll</HintPath>
+      <HintPath>..\..\..\..\Downloads\lidgren-network-gen3-2013-05-07\Lidgren-network-gen3\Lidgren.Network\bin\Release\Lidgren.Network.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>

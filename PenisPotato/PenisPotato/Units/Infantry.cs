@@ -19,8 +19,8 @@ namespace PenisPotato.Units
             this.pieceTexture = pieceTex;
             this.movementPoints = new List<Vector2>();
             this.unitSpeed = 3.0f;
-            this.tileWidth = pieceTex.Width;
-            this.unitType = UnitType.Infantry;
+            this.tileWidth = Convert.ToInt16(Resources.tileWidth);
+            this.unitType = (byte)UnitType.Infantry;
             this.goodAgainst = UnitType.Tank;
         }
     }
