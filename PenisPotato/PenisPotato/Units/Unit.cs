@@ -54,7 +54,7 @@ namespace PenisPotato.Units
         {
             if (numUnits < 1)
                 player.playerUnits.Remove(this);
-            else
+            else if (movementPoints.Count > 0)
             {
                 moveTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -93,12 +93,13 @@ namespace PenisPotato.Units
                     else
                     {
                         movementPoints.Clear();
-                        player.masterState.combat.Add(new Combat(this, unitOnTile, player.masterState));
+                        player.combat.Add(new Combat(this, unitOnTile, player.masterState));
                     }
+                    if (player.netPlayer != null)
+                        player.netPlayer.unitsToUpdate.Enqueue(this);
                 }
-
-                canBuild = (!player.buildingTiles.Contains(piecePosition) && !player.dupeBuildingTiles.Contains(piecePosition));
             }
+            canBuild = (!player.buildingTiles.Contains(piecePosition) && !player.dupeBuildingTiles.Contains(piecePosition));
         }
 
         public virtual void Update(GameTime gameTime, Player.EnemyPlayer enemyPlayer)

@@ -11,9 +11,9 @@ namespace PenisPotato.Units
 {
     public class Combat
     {
-        private List<Units.Unit> attacker;
-        private List<Units.Unit> defender;
-        float timeToFight = 0.0f;
+        public List<Units.Unit> attacker;
+        public List<Units.Unit> defender;
+        public float timeToFight = 0.0f;
 
         private StateSystem.Screens.GameplayScreen masterState;
 
@@ -38,13 +38,13 @@ namespace PenisPotato.Units
             defender = defends;
         }*/
 
-        private void InitializeCombat()
+        public void InitializeCombat()
         {
             attacker = new List<Unit>();
             defender = new List<Unit>();
         }
 
-        private void ClearUnitsLists()
+        public void ClearUnitsLists()
         {
             attacker.RemoveRange(1, attacker.Count);
             defender.RemoveRange(1, defender.Count);
@@ -62,7 +62,7 @@ namespace PenisPotato.Units
         {
             List<Vector2> surroundingTiles = GetSurroundingTiles(toSearchAround.piecePosition);
 
-            masterState.players.Find(player => !player.playerColor.Equals(toSearchAround.playerColor)).playerUnits.ForEach(pU =>
+            masterState.players.Find(player => !player.playerUnits.Contains(toSearchAround)).playerUnits.ForEach(pU =>
             {
                 if (surroundingTiles.Contains(pU.piecePosition))
                 {
@@ -113,7 +113,7 @@ namespace PenisPotato.Units
                 defender.AddRange(unit);
         }
 
-        public virtual void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             if (timeToFight > 0.3)
             {
@@ -147,13 +147,135 @@ namespace PenisPotato.Units
                         attacker[random.Next(0, attacker.Count)].KillUnit();
 
                 if (attacker.Count <= 0 || defender.Count <= 0)
-                    masterState.combat.Remove(this);
+                    masterState.playerOne.combat.Remove(this);
 
                 //Reset the timer
                 timeToFight = 0.0f;
             }
             
             timeToFight += (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
+    }
+
+    public class SkeletonCombat : Combat
+    {
+
+        public long attackingNetworkID;
+        public long defendingNetworkID;
+        public int combatid;
+        public bool combatReady = false;
+
+        public SkeletonCombat(Unit attacker, Unit defender, long attackId, long defendId)
+        {
+            combatid = new Random().Next(-1000, -1);
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            if (timeToFight > 0.3)
+            {
+                combatReady = true;
+                timeToFight = 0f;
+            }
+
+            timeToFight += (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
+
+        /// <summary>
+        /// The reason I search for neighbouring enemies instead of allies is because an ally could be behind the current attacking
+        /// unit and not directly touching an enemy unit tile. This way i get all enemies surrounding a unit. This is done every time 
+        /// the two are about to battle in order to get the freshest information off the battlefield.
+        /// </summary>
+        /// <param name="toSearchAround"></param>
+        /// <param name="isAttacker"></param>
+        public List<int> FindNeighboringEnemies(Unit toSearchAround, bool isAttacker, List<Player.NetworkPlayer> peers)
+        {
+            List<Vector2> surroundingTiles = GetSurroundingTiles(toSearchAround.piecePosition);
+            List<int> attackerList = new List<int>();
+            List<int> defenderList = new List<int>();
+
+            Player.Player player = peers.Find(p => !p.playerUnits.Contains(toSearchAround));
+
+            foreach (Units.Unit pU in player.playerUnits)
+            {
+                if (surroundingTiles.Contains(pU.piecePosition))
+                {
+                    if (isAttacker && !defender.Contains(pU))
+                        defenderList.Add(player.playerUnits.IndexOf(pU));
+                    else if (!isAttacker && !attacker.Contains(pU))
+                        attackerList.Add(player.playerUnits.IndexOf(pU));
+                }
+            }
+
+            if (isAttacker)
+                return defenderList;
+            else
+                return attackerList;
+        }
+    }
+
+    public class ServerCombat : Combat
+    {
+        long attackingNetworkID;
+        long defendingNetworkID;
+        public bool lastWin = false;
+
+        public ServerCombat(Unit attacker, Unit defender, long attackId, long defendId)
+        {
+            InitializeCombat();
+
+            this.attacker.Add(attacker);
+            this.defender.Add(defender);
+        }
+
+        public int Update()
+        {
+
+                Random random = new Random();
+                int attackPower = 0, defendPower = 0;
+
+                attacker.ForEach(s =>
+                {
+                    //Standard random attack power that everyone gets. No modifiers put in yet
+                    for (int x = 0; x < s.numUnits; x++)
+                        attackPower += random.Next(0, 6);
+                });
+
+                defender.ForEach(s =>
+                {
+                    //Standard random attack power that everyone gets. No modifiers put in yet
+                    for (int x = 0; x < s.numUnits; x++)
+                        defendPower += random.Next(0, 6);
+                });
+
+                if (attackPower > defendPower)
+                {
+                    if (defender.Count > 0)
+                    {
+                        attackPower = random.Next(0, defender.Count);
+                        defender[attackPower].KillUnit();
+                        lastWin = true;
+                        return attackPower;
+                    }
+                    else
+                        return -1;
+                }
+                else if (defendPower > attackPower)
+                {
+                    if (attacker.Count > 0)
+                    {
+                        defendPower = random.Next(0, attacker.Count);
+                        attacker[defendPower].KillUnit();
+                        lastWin = false;
+                        return defendPower;
+                    }
+                    else
+                        return -1;
+                }
+                else
+                {
+                    return -1;
+                }
         }
     }
 }

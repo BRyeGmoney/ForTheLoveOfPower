@@ -27,6 +27,7 @@ namespace PenisPotato.Player
         public List<Vector2> buildingTiles;
         public List<Vector2> dupeBuildingTiles;
         public List<Vector2> movementTiles;
+        public List<Units.Combat> combat;
         public Units.Unit navigatingUnit;
 
         public Texture2D dictatorTex;
@@ -101,11 +102,6 @@ namespace PenisPotato.Player
         public virtual void UpdateStructures(GameTime gameTime)
         {
             playerStructures.ForEach(pS => pS.Update(gameTime, this));
-        }
-
-        public virtual void SendUnitInfo()
-        {
-            playerUnits.ForEach(pU => netPlayer.unitsToSend.Enqueue(pU));
         }
 
         public void SendStructureInfo(int diff)

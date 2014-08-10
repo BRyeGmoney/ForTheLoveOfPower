@@ -32,7 +32,7 @@ namespace PenisPotato.StateSystem.Screens
         Player.NetworkPlayer netPlayer;
         public Player.EnemyPlayer enemyOne;
 
-        public List<Units.Combat> combat;
+        //public List<Units.Combat> combat;
 
         #endregion
 
@@ -90,7 +90,7 @@ namespace PenisPotato.StateSystem.Screens
                 {
                     if (pS.GetType().Equals(typeof(Player.NetworkPlayer)))
                     {
-                        (pS as Player.NetworkPlayer).InitGamePlayer(false);
+                        (pS as Player.NetworkPlayer).InitGamePlayer(false, null);
                         pS.ScreenManager = ScreenManager;
                     }
                 });
@@ -103,9 +103,6 @@ namespace PenisPotato.StateSystem.Screens
                 players.Add(playerOne);
                 players.Add(enemyOne);
             }
-
-            //Combat List
-            combat = new List<Units.Combat>();
 
             // A real game would probably have more content than this sample, so
             // it would take longer to load. We simulate that by delaying for a
@@ -151,7 +148,7 @@ namespace PenisPotato.StateSystem.Screens
             if (!isMpMatch)
                 enemyOne.Update(gameTime);
 
-            combat.ForEach(fight =>
+            playerOne.combat.ForEach(fight =>
             {
                 fight.Update(gameTime);
             });

@@ -23,7 +23,7 @@ namespace PenisPotato.Player
 
         public MainPlayer() { LoadContent(); }
 
-        public MainPlayer(ContentManager content, GraphicsDevice graphics, StateSystem.StateManager stateManager, StateSystem.Screens.MultiplayerGameplayScreen master, NetworkPlayer netPlayer, Color color)
+        /*public MainPlayer(ContentManager content, GraphicsDevice graphics, StateSystem.StateManager stateManager, StateSystem.Screens.MultiplayerGameplayScreen master, NetworkPlayer netPlayer, Color color)
         {
             this.graphics = graphics;
             this.Content = content;
@@ -33,7 +33,7 @@ namespace PenisPotato.Player
             this.playerColor = color;
             if (netPlayer != null)
             {
-                netPlayer.InitGamePlayer(true);
+                netPlayer.InitGamePlayer(true, masterState);
             }
             playerStructures = new List<Structures.Structure>();
             playerSettlements = new List<Structures.Civil.Settlement>();
@@ -43,7 +43,7 @@ namespace PenisPotato.Player
             movementTiles = new List<Vector2>();
 
             LoadContent();
-        }
+        }*/
 
         public MainPlayer(ContentManager content, GraphicsDevice graphics, StateSystem.StateManager stateManager, StateSystem.Screens.GameplayScreen master, NetworkPlayer netPlayer, Color color)
         {
@@ -55,7 +55,7 @@ namespace PenisPotato.Player
             this.playerColor = color;
             if (netPlayer != null)
             {
-                netPlayer.InitGamePlayer(true);
+                netPlayer.InitGamePlayer(true, masterState);
             }
             playerStructures = new List<Structures.Structure>();
             playerSettlements = new List<Structures.Civil.Settlement>();
@@ -63,6 +63,9 @@ namespace PenisPotato.Player
             buildingTiles = new List<Vector2>();
             dupeBuildingTiles = new List<Vector2>();
             movementTiles = new List<Vector2>();
+            //Combat List
+            combat = new List<Units.Combat>();
+            this.netPlayer.combat = this.combat;
 
             LoadContent();
         }
@@ -82,7 +85,6 @@ namespace PenisPotato.Player
             if (netPlayer != null)
             {
                 netPlayer.Update(gameTime);
-                SendUnitInfo();
             }
             prevUnits = playerUnits.Count;
         }
@@ -127,7 +129,7 @@ namespace PenisPotato.Player
                             navigatingUnit = pS;
                     });
 
-                    if (navigatingUnit != null && !movementTiles.Contains(selectedTilePos))
+                    if (navigatingUnit != null && !movementTiles.Contains(selectedTilePos) && !navigatingUnit.piecePosition.Equals(selectedTilePos))
                     {
                         navigatingUnit.movementPoints.Clear();
                         movementTiles.Add(selectedTilePos);
@@ -139,7 +141,7 @@ namespace PenisPotato.Player
                     selectedTilePos = GetMouseStateRelative(input.CurrentMouseStates[0], camera);
                     DetermineSelectedTile(camera);
 
-                    if (navigatingUnit != null && !movementTiles.Contains(selectedTilePos))
+                    if (navigatingUnit != null && !movementTiles.Contains(selectedTilePos) && !navigatingUnit.piecePosition.Equals(selectedTilePos))
                         movementTiles.Add(selectedTilePos);
                 }
                 //release of press onto the screen
@@ -159,7 +161,12 @@ namespace PenisPotato.Player
                     {
                         //If there's no buildings yet then we have to create an mvp
                         if (playerUnits.Count < 1)
+                        {
                             playerUnits.Add(new Units.Misc.Dictator(selectedTilePos, playerColor, dictatorTex));
+                            //err i know this is awkward placement for this but whatever
+                            if (netPlayer != null)
+                                netPlayer.unitsToSend.Enqueue(playerUnits[playerUnits.Count - 1]);
+                        }
                         else
                         {
 

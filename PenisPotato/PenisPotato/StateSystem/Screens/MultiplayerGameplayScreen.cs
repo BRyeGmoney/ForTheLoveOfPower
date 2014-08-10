@@ -71,12 +71,12 @@ namespace PenisPotato.StateSystem.Screens
             spriteBatch = ScreenManager.SpriteBatch;
 
             //Players
-            playerOne = new Player.MainPlayer(content, graphics, ScreenManager, this, netPlayer, Color.PaleVioletRed);
+            //playerOne = new Player.MainPlayer(content, graphics, ScreenManager, this, netPlayer, Color.PaleVioletRed);
 
             players.ForEach(pS => {
                 if (pS.GetType().Equals(typeof(Player.NetworkPlayer)))
                 {
-                    (pS as Player.NetworkPlayer).InitGamePlayer(false);
+                    (pS as Player.NetworkPlayer).InitGamePlayer(false, null);
                     pS.ScreenManager = ScreenManager;
                 }
             });

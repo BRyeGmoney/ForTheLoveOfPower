@@ -27,9 +27,17 @@ namespace PenisPotato.Structures.Military
                 Units.Unit unitInSpace = player.playerUnits.Find(pu => pu.piecePosition.Equals(this.piecePosition));
 
                 if (unitInSpace == null)
-                    player.playerUnits.Add(new Units.Infantry(this.piecePosition, player.playerColor, player.ScreenManager.buildItems[12].menuItem));
+                {
+                    player.playerUnits.Add(new Units.Infantry(this.piecePosition, player.playerColor, 1, player.ScreenManager.buildItems[12].menuItem));
+                    if (player.netPlayer != null)
+                        player.netPlayer.unitsToSend.Enqueue(player.playerUnits[player.playerUnits.Count - 1]);
+                }
                 else if (unitInSpace.GetType() == typeof(Units.Infantry))
+                {
                     unitInSpace.AddUnits(1);
+                    if (player.netPlayer != null)
+                        player.netPlayer.unitsToUpdate.Enqueue(unitInSpace);
+                }
             }
         }
     }

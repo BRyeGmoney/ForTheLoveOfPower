@@ -51,8 +51,7 @@ namespace PenisPotato.Player
             this.buildingTiles = new List<Vector2>();
 
             playerUnits.Add(new Units.Misc.Dictator(new Vector2(6, 5), playerColor, ScreenManager.buildItems[(int)StateSystem.BuildItems.dictator].menuItem));
-            playerUnits.Add(new Units.Infantry(new Vector2(4, 4), playerColor, ScreenManager.buildItems[(int)StateSystem.BuildItems.infantry].menuItem));
-            playerUnits[0].AddUnits(3);
+            playerUnits.Add(new Units.Infantry(new Vector2(4, 4), playerColor, 3, ScreenManager.buildItems[(int)StateSystem.BuildItems.infantry].menuItem));
             playerSettlements.Add(new Structures.Civil.Settlement(new Vector2(4, 5), playerColor, ScreenManager.buildItems[(int)StateSystem.BuildItems.settlement].menuItem));
             playerStructures.Add(playerSettlements.Last());
         }

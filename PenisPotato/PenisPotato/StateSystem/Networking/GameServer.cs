@@ -22,6 +22,7 @@ namespace PenisPotato.StateSystem.Networking
         NetOutgoingMessage outmsg;
 
         List<Player.NetworkPlayer> networkPlayers;
+        List<Units.ServerCombat> ongoingFights;
 
         bool _isRunning;
 
@@ -72,8 +73,8 @@ namespace PenisPotato.StateSystem.Networking
 
                                 // Approve client's connection
                                 msg.SenderConnection.Approve();
-                                networkPlayers.Add(new Player.NetworkPlayer(msg.ReadString(), msg.SenderEndPoint.Address.ToString(), msg.ReadInt64(), Color.AliceBlue));
-                                networkPlayers[networkPlayers.Count - 1].InitGamePlayer(false);
+                                networkPlayers.Add(new Player.NetworkPlayer(msg.ReadString(), msg.SenderEndPoint.Address.ToString(), msg.ReadInt64(), Color.Green));
+                                networkPlayers[networkPlayers.Count - 1].InitGamePlayer(false, null);
 
                                 outmsg = server.CreateMessage();
                                 outmsg.Write((byte)Player.PacketType.LOBBYSTATE);
@@ -109,9 +110,9 @@ namespace PenisPotato.StateSystem.Networking
                                 Console.WriteLine("b");
                             }
 							break;
-						case NetIncomingMessageType.Data:
+                        case NetIncomingMessageType.Data:
                             byte packetType = msg.ReadByte();
-							// The client sent input to the server
+                            // The client sent input to the server
                             if ((packetType == (byte)Player.PacketType.READY))
                             {
                                 long id = msg.ReadInt64();
@@ -135,20 +136,98 @@ namespace PenisPotato.StateSystem.Networking
                                 outmsg.Write(nPlayer.playerStructures[nPlayer.playerStructures.Count - 1].piecePosition);
                                 server.SendToAll(outmsg, NetDeliveryMethod.ReliableOrdered);
                             }
-                            else if (packetType == (byte)Player.PacketType.UNIT)
+                            else if (packetType == (byte)Player.PacketType.UNIT_ADD)
                             {
                                 long id = msg.ReadInt64();
                                 Player.NetworkPlayer nPlayer = networkPlayers.Find(nP => nP.uniqueIdentifer == id);
-                                nPlayer.playerUnits.Add(DetermineUnitType(msg.ReadByte(), msg.ReadVector2(), nPlayer));
+                                nPlayer.playerUnits.Add(DetermineUnitType(msg.ReadByte(), msg.ReadInt32(), msg.ReadVector2(), nPlayer));
 
                                 outmsg = server.CreateMessage();
-                                outmsg.Write((byte)Player.PacketType.UNIT);
+                                outmsg.Write((byte)Player.PacketType.UNIT_ADD);
                                 outmsg.Write(id);
                                 outmsg.Write(nPlayer.playerUnits[nPlayer.playerUnits.Count - 1].unitType);
+                                outmsg.Write(nPlayer.playerUnits[nPlayer.playerUnits.Count - 1].numUnits);
                                 outmsg.Write(nPlayer.playerUnits[nPlayer.playerUnits.Count - 1].piecePosition);
                                 server.SendToAll(outmsg, NetDeliveryMethod.ReliableOrdered);
                             }
-							break;
+                            else if (packetType == (byte)Player.PacketType.UNIT_UPDATE)
+                            {
+                                long id = msg.ReadInt64();
+                                Player.NetworkPlayer nPlayer = networkPlayers.Find(nP => nP.uniqueIdentifer == id);
+
+                                int index = msg.ReadInt32();
+                                nPlayer.playerUnits[index].numUnits = msg.ReadInt32();
+                                nPlayer.playerUnits[index].piecePosition = msg.ReadVector2();
+
+                                outmsg = server.CreateMessage();
+                                outmsg.Write((byte)Player.PacketType.UNIT_UPDATE);
+                                outmsg.Write(id);
+                                outmsg.Write(index);
+                                outmsg.Write(nPlayer.playerUnits[index].numUnits);
+                                outmsg.Write(nPlayer.playerUnits[index].piecePosition);
+                                server.SendToAll(outmsg, NetDeliveryMethod.ReliableOrdered);
+                            }
+                            else if (packetType == (byte)Player.PacketType.START_COMBAT)
+                            {
+                                Player.NetworkPlayer nPlayer = networkPlayers.Find(nP => nP.uniqueIdentifer == msg.ReadInt64());
+                                Player.NetworkPlayer nPlayer2 = networkPlayers.Find(nP => nP.uniqueIdentifer == msg.ReadInt64());
+
+                                int combatId = msg.ReadInt32();
+                                int attInd = msg.ReadInt32();
+                                int defInd = msg.ReadInt32();
+
+                                //Get all participating parties
+                                /*int amountOfUnitsnP1 = msg.ReadInt32();
+                                int[] indicesnP1 = new int[amountOfUnitsnP1];
+                                for (int x = 0; x < amountOfUnitsnP1; x++)
+                                    indicesnP1[x] = msg.ReadInt32();
+                                int amountOfUnitsnP2 = msg.ReadInt32();
+                                int[] indicesnP2 = new int[amountOfUnitsnP2];
+                                for (int x = 0; x < amountOfUnitsnP2; x++)
+                                    indicesnP2[x] = msg.ReadInt32();*/
+
+                                ongoingFights.Add(new Units.ServerCombat(nPlayer.playerUnits[attInd], nPlayer2.playerUnits[defInd],
+                                    nPlayer.uniqueIdentifer, nPlayer2.uniqueIdentifer));
+
+                                outmsg = server.CreateMessage();
+                                outmsg.Write((byte)Player.PacketType.START_COMBAT);
+                                outmsg.Write(nPlayer.uniqueIdentifer);
+                                outmsg.Write(nPlayer2.uniqueIdentifer);
+                                outmsg.Write(combatId);
+                                outmsg.Write(ongoingFights.Count - 1);
+                                outmsg.Write(attInd);
+                                outmsg.Write(defInd);
+                                server.SendToAll(outmsg, NetDeliveryMethod.ReliableOrdered);
+                            }
+                            else if (packetType == (byte)Player.PacketType.UPDATE_COMBAT)
+                            {
+                                Player.NetworkPlayer nPlayer = networkPlayers.Find(nP => nP.uniqueIdentifer == msg.ReadInt64());
+                                Player.NetworkPlayer nPlayer2 = networkPlayers.Find(nP => nP.uniqueIdentifer == msg.ReadInt64());
+                                int fightIndex = msg.ReadInt32();
+
+                                //Get all participating parties
+                                int amountOfUnitsnP1 = msg.ReadInt32();
+                                for (int x = 0; x < amountOfUnitsnP1; x++)
+                                    ongoingFights[fightIndex].AddUnit(nPlayer.playerUnits[msg.ReadInt32()], true);
+
+                                int amountOfUnitsnP2 = msg.ReadInt32();
+                                for (int x = 0; x < amountOfUnitsnP2; x++)
+                                    ongoingFights[fightIndex].AddUnit(nPlayer2.playerUnits[msg.ReadInt32()], false);
+
+                                int unitToUpdate = ongoingFights[fightIndex].Update();
+                                if (unitToUpdate > -1)
+                                {
+                                    outmsg = server.CreateMessage();
+                                    outmsg.Write((byte)Player.PacketType.UPDATE_COMBAT);
+                                    if (ongoingFights[fightIndex].lastWin)
+                                        outmsg.Write(nPlayer.uniqueIdentifer);
+                                    else
+                                        outmsg.Write(nPlayer2.uniqueIdentifer);
+                                    outmsg.Write(unitToUpdate);
+                                    server.SendToAll(outmsg, NetDeliveryMethod.ReliableOrdered);
+                                }
+                            }
+                            break;
 					}
 
 					//
@@ -195,18 +274,18 @@ namespace PenisPotato.StateSystem.Networking
 			server.Shutdown("app exiting");
 		}
 
-        private Units.Unit DetermineUnitType(byte type, Vector2 piecePosition, Player.NetworkPlayer nP)
+        private Units.Unit DetermineUnitType(byte type, int numUnits, Vector2 piecePosition, Player.NetworkPlayer nP)
         {
             switch (type)
             {
                 case (byte)Units.UnitType.Dictator:
                     return new Units.Misc.Dictator(piecePosition, nP.playerColor, null);
                 case (byte)Units.UnitType.Infantry:
-                    return new Units.Infantry(piecePosition, nP.playerColor, null);
+                    return new Units.Infantry(piecePosition, nP.playerColor, numUnits, null);
                 case (byte)Units.UnitType.Tank:
-                    return new Units.Tank(piecePosition, nP.playerColor, null);
+                    return new Units.Tank(piecePosition, nP.playerColor, numUnits, null);
                 case (byte)Units.UnitType.Jet:
-                    return new Units.Jet(piecePosition, nP.playerColor, null);
+                    return new Units.Jet(piecePosition, nP.playerColor, numUnits, null);
                 default:
                     return null;
             }
