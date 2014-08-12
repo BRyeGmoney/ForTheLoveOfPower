@@ -53,10 +53,7 @@ namespace PenisPotato.Player
             this.masterState = master;
             this.netPlayer = netPlayer;
             this.playerColor = color;
-            if (netPlayer != null)
-            {
-                netPlayer.InitGamePlayer(true, masterState);
-            }
+            
             playerStructures = new List<Structures.Structure>();
             playerSettlements = new List<Structures.Civil.Settlement>();
             playerUnits = new List<Units.Unit>();
@@ -65,7 +62,12 @@ namespace PenisPotato.Player
             movementTiles = new List<Vector2>();
             //Combat List
             combat = new List<Units.Combat>();
-            this.netPlayer.combat = this.combat;
+            if (netPlayer != null)
+            {
+                netPlayer.InitGamePlayer(true, masterState);
+                this.netPlayer.combat = this.combat;
+            }
+            
 
             LoadContent();
         }
@@ -80,11 +82,16 @@ namespace PenisPotato.Player
         {
             //base.Update(gameTime);
             UpdateStructures(gameTime);
-            playerUnits.ForEach(pU => pU.Update(gameTime, this));
+            playerUnits.ForEach(pU => {
+                if (pU.numUnits < 1)
+                    playerUnits.Remove(pU);
+                else
+                    pU.Update(gameTime, this);
+            });
 
             if (netPlayer != null)
             {
-                netPlayer.Update(gameTime);
+                netPlayer.Update(gameTime, this);
             }
             prevUnits = playerUnits.Count;
         }

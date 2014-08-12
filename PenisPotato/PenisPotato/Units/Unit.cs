@@ -22,6 +22,7 @@ namespace PenisPotato.Units
         public bool canBuild = false;
 
         public int numUnits = 1;
+        private bool needsUpdate = false;
 
         public Unit() { }
 
@@ -38,16 +39,19 @@ namespace PenisPotato.Units
         public void AddUnits(int unitsToAdd)
         {
             numUnits += unitsToAdd;
+            needsUpdate = true;
         }
 
         public void RemoveUnits(int unitsToRemove)
         {
             numUnits -= unitsToRemove;
+            needsUpdate = true;
         }
 
         public void KillUnit()
         {
             numUnits -= 1;
+            needsUpdate = true;
         }
 
         public virtual void Update(GameTime gameTime, Player.Player player)
@@ -93,10 +97,25 @@ namespace PenisPotato.Units
                     else
                     {
                         movementPoints.Clear();
-                        player.combat.Add(new Combat(this, unitOnTile, player.masterState));
+                        if (player.netPlayer != null)
+                        {
+                            player.combat.Add(new SkeletonCombat(this, unitOnTile, player.netPlayer.uniqueIdentifer, player.netPlayer.peers.Find(peer => peer.playerUnits.Contains(unitOnTile)).uniqueIdentifer));
+                            player.netPlayer.ongoingFights.Enqueue(player.combat[player.combat.Count - 1]);
+                        }
+                        else
+                            player.combat.Add(new Combat(this, unitOnTile, player.masterState));
                     }
+
+                    //if there's a movement just update anyways
                     if (player.netPlayer != null)
-                        player.netPlayer.unitsToUpdate.Enqueue(this);
+                        needsUpdate = true;
+                    
+                }
+
+                if (player.netPlayer != null && needsUpdate)
+                {
+                    player.netPlayer.unitsToUpdate.Enqueue(this);
+                    needsUpdate = false;
                 }
             }
             canBuild = (!player.buildingTiles.Contains(piecePosition) && !player.dupeBuildingTiles.Contains(piecePosition));

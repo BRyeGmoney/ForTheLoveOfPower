@@ -85,7 +85,7 @@ namespace PenisPotato.StateSystem.Networking
         {
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
 
-            netPlayer.Update(gameTime);
+            netPlayer.Update(gameTime, null);
 
             if (netPlayer.peers.Count > 0)
             {

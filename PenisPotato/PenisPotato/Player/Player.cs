@@ -96,7 +96,13 @@ namespace PenisPotato.Player
         public virtual void Update(GameTime gameTime)
         {
             UpdateStructures(gameTime);
-            playerUnits.ForEach(pU => pU.Update(gameTime, this));
+            playerUnits.ForEach(pU =>
+            {
+                if (pU.numUnits < 1)
+                    playerUnits.Remove(pU);
+                else
+                    pU.Update(gameTime, this);
+            });
         }
 
         public virtual void UpdateStructures(GameTime gameTime)

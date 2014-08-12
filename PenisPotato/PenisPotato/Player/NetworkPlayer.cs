@@ -82,7 +82,7 @@ namespace PenisPotato.Player
             }
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, MainPlayer mPlayer)
         {
             NetIncomingMessage msg;
 
@@ -158,24 +158,44 @@ namespace PenisPotato.Player
                         }
                         else if (packetType == (byte)PacketType.START_COMBAT)
                         {
-                            NetworkPlayer nPlayer = peers.Find(nP => nP.uniqueIdentifer == msg.ReadInt64());
-                            NetworkPlayer nPlayer2 = peers.Find(nP => nP.uniqueIdentifer == msg.ReadInt64());
+                            long nPiD = msg.ReadInt64();
+                            long nP2iD = msg.ReadInt64();
+
+                            NetworkPlayer nPlayer = peers.Find(nP => nP.uniqueIdentifer == nPiD);
+                            NetworkPlayer nPlayer2 = peers.Find(nP => nP.uniqueIdentifer == nP2iD);
 
                             int oldCombatId = msg.ReadInt32();
+                            int newCombatid = msg.ReadInt32();
+                            int indexnp1 = msg.ReadInt32();
+                            int indexnp2 = msg.ReadInt32();
 
-                            if (!nPlayer.uniqueIdentifer.Equals(this.uniqueIdentifer))
-                            {
-                                (this.combat.Find(fight => (fight as Units.SkeletonCombat).combatid.Equals(oldCombatId)) as Units.SkeletonCombat).combatid = msg.ReadInt32();
-                            }
+                            if (nPlayer.uniqueIdentifer.Equals(this.uniqueIdentifer))
+                                (mPlayer.combat.Find(fight => (fight as Units.SkeletonCombat).combatid.Equals(oldCombatId)) as Units.SkeletonCombat).combatid = newCombatid;
+                            else if (nPlayer2.uniqueIdentifer.Equals(this.uniqueIdentifer))
+                                this.combat.Add(new Units.SkeletonCombat(nPlayer.playerUnits[indexnp1], mPlayer.playerUnits[indexnp2], nPlayer.uniqueIdentifer, nPlayer2.uniqueIdentifer) { combatid = newCombatid });
                             else
-                            {
-                                int newCombatid = msg.ReadInt32();
-                                this.combat.Add(new Units.SkeletonCombat(nPlayer.playerUnits[msg.ReadInt32()], nPlayer2.playerUnits[msg.ReadInt32()], nPlayer.uniqueIdentifer, nPlayer2.uniqueIdentifer) { combatid = newCombatid });
-                            }
+                                this.combat.Add(new Units.SkeletonCombat(nPlayer.playerUnits[indexnp1], nPlayer2.playerUnits[indexnp2], nPlayer.uniqueIdentifer, nPlayer2.uniqueIdentifer) { combatid = newCombatid });
                         }
                         else if (packetType == (byte)PacketType.UPDATE_COMBAT)
                         {
+                            long nPiD = msg.ReadInt64();
 
+                            NetworkPlayer losingNPlayer = peers.Find(nP => nP.uniqueIdentifer == nPiD);
+                            int unitIndex = msg.ReadInt32();
+                            int fightIndex = msg.ReadInt32();
+
+                            if (this.uniqueIdentifer.Equals(losingNPlayer.uniqueIdentifer))
+                            {
+                                mPlayer.playerUnits[unitIndex].KillUnit();
+
+                                if (mPlayer.playerUnits.Count < unitIndex)
+                                {
+                                    outmsg = client.CreateMessage();
+                                    outmsg.Write((byte)PacketType.DELETE_COMBAT);
+                                    outmsg.Write(fightIndex);
+                                    client.SendMessage(outmsg, NetDeliveryMethod.ReliableOrdered);
+                                }
+                            }
                         }
                         break;
                     default:
@@ -221,7 +241,7 @@ namespace PenisPotato.Player
                 outmsg = client.CreateMessage();
                 Units.SkeletonCombat fight = ongoingFights.Dequeue() as Units.SkeletonCombat;
 
-                if (fight.combatid < 0)
+                if (fight.combatid > 1000)
                 {
                     outmsg.Write((byte)PacketType.START_COMBAT);
 
@@ -230,26 +250,28 @@ namespace PenisPotato.Player
 
                     outmsg.Write(fight.combatid);
 
-                    outmsg.Write(peers.Find(nP => nP.uniqueIdentifer == fight.attackingNetworkID).playerUnits.IndexOf(fight.attacker[0]));
+                    outmsg.Write(mPlayer.playerUnits.IndexOf(mPlayer.playerUnits.Find(pU => pU.piecePosition.Equals(fight.attacker[0].piecePosition))));//peers.Find(nP => nP.uniqueIdentifer == fight.attackingNetworkID).playerUnits.IndexOf(fight.attacker[0]));
                     outmsg.Write(peers.Find(nP => nP.uniqueIdentifer == fight.defendingNetworkID).playerUnits.IndexOf(fight.defender[0]));
+                    client.SendMessage(outmsg, NetDeliveryMethod.ReliableOrdered);
                 }
                 else //update
                 {
                     outmsg = client.CreateMessage();
                     outmsg.Write((byte)PacketType.UPDATE_COMBAT);
 
-                    outmsg.Write(fight.combatid);
-
                     outmsg.Write(fight.attackingNetworkID);
                     outmsg.Write(fight.defendingNetworkID);
 
-                    List<int> units = fight.FindNeighboringEnemies(fight.attacker[0], true, peers);
+                    outmsg.Write(fight.combatid);
+
+                    List<int> units = fight.FindNeighboringEnemies(fight.attacker[0], true, peers, null);
                     outmsg.Write(units.Count);
                     units.ForEach(un => outmsg.Write(un));
 
-                    units = fight.FindNeighboringEnemies(fight.defender[0], false, peers);
+                    units = fight.FindNeighboringEnemies(fight.defender[0], false, peers, mPlayer);
                     outmsg.Write(units.Count);
                     units.ForEach(un => outmsg.Write(un));
+                    client.SendMessage(outmsg, NetDeliveryMethod.ReliableOrdered);
                 }
             }
 
@@ -313,5 +335,6 @@ namespace PenisPotato.Player
         UNIT_UPDATE,
         START_COMBAT,
         UPDATE_COMBAT,
+        DELETE_COMBAT,
     }
 }

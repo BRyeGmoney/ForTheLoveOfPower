@@ -22,7 +22,7 @@ namespace PenisPotato.Units
             InitializeCombat();
         }
 
-        public Combat(Unit attacker, Unit defender, StateSystem.Screens.GameplayScreen masterState)
+        public Combat(ref Unit attacker, ref Unit defender, StateSystem.Screens.GameplayScreen masterState)
         {
             InitializeCombat();
             this.masterState = masterState;
@@ -140,13 +140,17 @@ namespace PenisPotato.Units
                 });
 
                 if (attackPower > defendPower)
+                {
                     if (defender.Count > 0)
                         defender[random.Next(0, defender.Count)].KillUnit();
+                }
                 else if (defendPower > attackPower)
+                {
                     if (attacker.Count > 0)
                         attacker[random.Next(0, attacker.Count)].KillUnit();
+                }
 
-                if (attacker.Count <= 0 || defender.Count <= 0)
+                if (attacker.Count < 1 || defender.Count < 1)
                     masterState.playerOne.combat.Remove(this);
 
                 //Reset the timer
@@ -167,15 +171,22 @@ namespace PenisPotato.Units
 
         public SkeletonCombat(Unit attacker, Unit defender, long attackId, long defendId)
         {
-            combatid = new Random().Next(-1000, -1);
+            this.attacker.Add(attacker);
+            this.defender.Add(defender);
+            attackingNetworkID = attackId;
+            defendingNetworkID = defendId;
+            combatid = new Random().Next(1001, 5000);
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, Player.Player player)
         {
-            if (timeToFight > 0.3)
+            if (attackingNetworkID.Equals(player.netPlayer.uniqueIdentifer))
             {
-                combatReady = true;
-                timeToFight = 0f;
+                if (timeToFight > 0.3)
+                {
+                    combatReady = true;
+                    timeToFight = 0f;
+                }
             }
 
             timeToFight += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -188,13 +199,17 @@ namespace PenisPotato.Units
         /// </summary>
         /// <param name="toSearchAround"></param>
         /// <param name="isAttacker"></param>
-        public List<int> FindNeighboringEnemies(Unit toSearchAround, bool isAttacker, List<Player.NetworkPlayer> peers)
+        public List<int> FindNeighboringEnemies(Unit toSearchAround, bool isAttacker, List<Player.NetworkPlayer> peers, Player.MainPlayer mPlayer)
         {
             List<Vector2> surroundingTiles = GetSurroundingTiles(toSearchAround.piecePosition);
             List<int> attackerList = new List<int>();
             List<int> defenderList = new List<int>();
 
-            Player.Player player = peers.Find(p => !p.playerUnits.Contains(toSearchAround));
+            Player.Player player;
+            if (mPlayer == null)
+                player = peers.Find(p => !p.playerUnits.Contains(toSearchAround));
+            else
+                player = mPlayer;
 
             foreach (Units.Unit pU in player.playerUnits)
             {
@@ -226,6 +241,8 @@ namespace PenisPotato.Units
 
             this.attacker.Add(attacker);
             this.defender.Add(defender);
+            this.attackingNetworkID = attackId;
+            this.defendingNetworkID = defendId;
         }
 
         public int Update()
