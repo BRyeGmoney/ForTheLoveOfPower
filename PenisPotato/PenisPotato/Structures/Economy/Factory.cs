@@ -12,7 +12,7 @@ namespace PenisPotato.Structures.Economy
     {
         public Factory() { }
 
-        public Factory(Vector2 pos, Color color, Texture2D pieceTex)
+        public Factory(Vector2 pos, Color color, Texture2D pieceTex, int owner)
         {
             this.piecePosition = pos;
             this.playerColor = color;
@@ -21,6 +21,7 @@ namespace PenisPotato.Structures.Economy
             this.tileWidth = Convert.ToInt16(Resources.tileWidth);
             this.buildTime = 25;
             this.modifierIndex = (int)StateSystem.TextureRepoOrder.plusMoney;
+            this.settlementOwnerIndex = owner;
         }
 
         public override void LoadContent(ContentManager Content)

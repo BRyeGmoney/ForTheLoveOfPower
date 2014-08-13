@@ -113,7 +113,15 @@ namespace PenisPotato.Player
         public void SendStructureInfo(int diff)
         {
             for (int x = diff; x > 0; x--)
-                netPlayer.structuresToSend.Enqueue(playerStructures[playerStructures.Count - diff]);
+            {
+                Structures.Structure structure = playerStructures[playerStructures.Count - diff];
+                if (structure is Structures.Civil.Settlement)
+                    netPlayer.packetsToSend.Enqueue(new StructureNetworkPacket() { packetType = (byte)PacketType.SETTLEMENT_ADD, building = structure });
+                else
+                    netPlayer.packetsToSend.Enqueue(new StructureNetworkPacket() { packetType = (byte)PacketType.STRUCTURE_ADD, building = structure });
+
+                //netPlayer.structuresToSend.Enqueue(playerStructures[playerStructures.Count - diff]);
+            }
         }
 
         public int ToRoundX(float num)

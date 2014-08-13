@@ -9,7 +9,7 @@ namespace PenisPotato.Structures.Military
     {
         public TankDepot() { }
 
-        public TankDepot(Vector2 pos, Color color, Texture2D pieceTex)
+        public TankDepot(Vector2 pos, Color color, Texture2D pieceTex, int owner)
         {
             this.piecePosition = pos;
             this.playerColor = color;
@@ -17,6 +17,7 @@ namespace PenisPotato.Structures.Military
             this.pieceType = (byte)PieceTypes.TankDepot;
             this.tileWidth = Convert.ToInt16(Resources.tileWidth);
             this.buildTime = 20;
+            this.settlementOwnerIndex = owner;
         }
 
         public override void Clicked(GameTime gameTime, Player.Player player)

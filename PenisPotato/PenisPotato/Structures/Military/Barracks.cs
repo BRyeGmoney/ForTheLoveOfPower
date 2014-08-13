@@ -10,7 +10,7 @@ namespace PenisPotato.Structures.Military
 
         public Barracks() { }
 
-        public Barracks(Vector2 pos, Color color, Texture2D pieceTex)
+        public Barracks(Vector2 pos, Color color, Texture2D pieceTex, int owner)
         {
             this.piecePosition = pos;
             this.playerColor = color;
@@ -18,6 +18,7 @@ namespace PenisPotato.Structures.Military
             this.pieceType = (byte)PieceTypes.Barracks;
             this.tileWidth = Convert.ToInt16(Resources.tileWidth);
             this.buildTime = 25;
+            this.settlementOwnerIndex = owner;
         }
 
         public override void Clicked(GameTime gameTime, Player.Player player)

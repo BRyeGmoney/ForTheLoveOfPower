@@ -71,7 +71,10 @@ namespace PenisPotato.Units
                                 unitOnTile = curPlayer.playerUnits.Find(pU => pU.piecePosition.Equals(movementPoints[0]));
 
                             if (curPlayer.playerSettlements.Exists(pS => pS.piecePosition.Equals(movementPoints[0])))
+                            {
                                 curPlayer.playerSettlements.Find(pS => pS.piecePosition.Equals(movementPoints[0])).isCityBeingConquered = true;
+
+                            }
                         });
 
                     if (unitOnTile == null)

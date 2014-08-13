@@ -23,6 +23,7 @@ namespace PenisPotato.Structures
         public bool displayModifier = false;
         public int modifierIndex;
         private float modifierTimer;
+        public int settlementOwnerIndex;
 
         public Structure() { }
 

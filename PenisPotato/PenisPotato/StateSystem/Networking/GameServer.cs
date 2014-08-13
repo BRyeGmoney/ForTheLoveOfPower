@@ -124,18 +124,47 @@ namespace PenisPotato.StateSystem.Networking
                                 outmsg.Write(id);
                                 server.SendToAll(outmsg, NetDeliveryMethod.ReliableOrdered);
                             }
-                            else if (packetType == (byte)Player.PacketType.STRUCTURE)
+                            else if (packetType == (byte)Player.PacketType.STRUCTURE_ADD)
                             {
                                 long id = msg.ReadInt64();
                                 Player.NetworkPlayer nPlayer = networkPlayers.Find(nP => nP.uniqueIdentifer == id);
-                                nPlayer.playerStructures.Add(DetermineStructureType(msg.ReadByte(), msg.ReadVector2(), nPlayer));
+                                //Read struct type, ownerIndex, position, player info
+                                nPlayer.playerStructures.Add(DetermineStructureType(msg.ReadByte(), msg.ReadInt32(), msg.ReadVector2(), nPlayer));
 
                                 outmsg = server.CreateMessage();
-                                outmsg.Write((byte)Player.PacketType.STRUCTURE);
+                                outmsg.Write((byte)Player.PacketType.STRUCTURE_ADD);
                                 outmsg.Write(id);
                                 outmsg.Write(nPlayer.playerStructures[nPlayer.playerStructures.Count - 1].pieceType);
+                                outmsg.Write(nPlayer.playerStructures[nPlayer.playerStructures.Count - 1].settlementOwnerIndex);
                                 outmsg.Write(nPlayer.playerStructures[nPlayer.playerStructures.Count - 1].piecePosition);
                                 server.SendToAll(outmsg, NetDeliveryMethod.ReliableOrdered);
+                            }
+                            else if (packetType == (byte)Player.PacketType.SETTLEMENT_ADD)
+                            {
+                                long id = msg.ReadInt64();
+                                Player.NetworkPlayer nPlayer = networkPlayers.Find(nP => nP.uniqueIdentifer == id);
+                                Structures.Civil.Settlement newStruct = DetermineStructureType(msg.ReadByte(), -1, msg.ReadVector2(), nPlayer) as Structures.Civil.Settlement;
+                                nPlayer.playerSettlements.Add(newStruct);
+                                nPlayer.playerStructures.Add(newStruct);
+
+                                outmsg = server.CreateMessage();
+                                outmsg.Write((byte)Player.PacketType.SETTLEMENT_ADD);
+                                outmsg.Write(id);
+                                outmsg.Write(newStruct.piecePosition);
+                                server.SendToAll(outmsg, NetDeliveryMethod.ReliableOrdered);
+                            }
+                            else if (packetType == (byte)Player.PacketType.SETTLEMENT_UPDATE)
+                            {
+                                long id = msg.ReadInt64();
+                                int settlementPosition = msg.ReadInt32();
+                                Player.NetworkPlayer nPlayer = networkPlayers.Find(nP => nP.uniqueIdentifer == id);
+                                //nPlayer.playerStructures.
+                                //(nPlayer.playerStructures[settlementIndex] as Structures.Civil.Settlement).isCityBeingConquered = true;
+
+                                outmsg = server.CreateMessage();
+                                outmsg.Write((byte)Player.PacketType.SETTLEMENT_UPDATE);
+                                outmsg.Write(id);
+                                //outmsg.Write(settlementIndex);
                             }
                             else if (packetType == (byte)Player.PacketType.UNIT_ADD)
                             {
@@ -316,30 +345,30 @@ namespace PenisPotato.StateSystem.Networking
             }
         }
 
-        private Structures.Structure DetermineStructureType(byte type, Vector2 piecePosition, Player.NetworkPlayer nP)
+        private Structures.Structure DetermineStructureType(byte type, int owner, Vector2 piecePosition, Player.NetworkPlayer nP)
         {
             switch (type)
             {
                 case (byte)Structures.PieceTypes.Settlement:
                     return new Structures.Civil.Settlement(piecePosition, nP.playerColor, null);
                 case (byte)Structures.PieceTypes.Factory:
-                    return new Structures.Economy.Factory(piecePosition, nP.playerColor, null);
+                    return new Structures.Economy.Factory(piecePosition, nP.playerColor, null, owner);
                 case (byte)Structures.PieceTypes.Market:
-                    return new Structures.Economy.Market(piecePosition, nP.playerColor, null);
+                    return new Structures.Economy.Market(piecePosition, nP.playerColor, null, owner);
                 case (byte)Structures.PieceTypes.Exporter:
-                    return new Structures.Economy.Exporter(piecePosition, nP.playerColor, null);
+                    return new Structures.Economy.Exporter(piecePosition, nP.playerColor, null, owner);
                 case (byte)Structures.PieceTypes.Barracks:
-                    return new Structures.Military.Barracks(piecePosition, nP.playerColor, null);
+                    return new Structures.Military.Barracks(piecePosition, nP.playerColor, null, owner);
                 case (byte)Structures.PieceTypes.TankDepot:
-                    return new Structures.Military.TankDepot(piecePosition, nP.playerColor, null);
+                    return new Structures.Military.TankDepot(piecePosition, nP.playerColor, null, owner);
                 case (byte)Structures.PieceTypes.AirBase:
-                    return new Structures.Military.AirBase(piecePosition, nP.playerColor, null);
+                    return new Structures.Military.AirBase(piecePosition, nP.playerColor, null, owner);
                 case (byte)Structures.PieceTypes.LabourCamp:
-                    return new Structures.Manipulation.LabourCamp(piecePosition, nP.playerColor, null);
+                    return new Structures.Manipulation.LabourCamp(piecePosition, nP.playerColor, null, owner);
                 case (byte)Structures.PieceTypes.MilitaryContractor:
-                    return new Structures.Manipulation.MilitaryContractor(piecePosition, nP.playerColor, null);
+                    return new Structures.Manipulation.MilitaryContractor(piecePosition, nP.playerColor, null, owner);
                 case (byte)Structures.PieceTypes.Propaganda:
-                    return new Structures.Manipulation.Propaganda(piecePosition, nP.playerColor, null);
+                    return new Structures.Manipulation.Propaganda(piecePosition, nP.playerColor, null, owner);
                 default:
                     return new Structures.Civil.TownCentre(piecePosition, nP.playerColor, null);
             }

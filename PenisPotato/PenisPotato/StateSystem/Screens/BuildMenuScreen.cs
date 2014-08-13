@@ -155,25 +155,26 @@ namespace PenisPotato.StateSystem.Screens
 
                 Structures.Civil.Settlement settlement = player.playerSettlements.Find(pS =>
                     pS.GetAllTilesBelongingToSettlement().Intersect(selectedposition).Count() > 0);
+                int indexOfOwner = player.playerSettlements.IndexOf(settlement);
 
                 if (specificState.Equals(BuildMenuStates.Factory))
-                    settlement.settlementProperties.Add(new Structures.Economy.Factory(player.selectedTilePos, player.playerColor, this.menuItem));
+                    settlement.settlementProperties.Add(new Structures.Economy.Factory(player.selectedTilePos, player.playerColor, this.menuItem, indexOfOwner));
                 else if (specificState.Equals(BuildMenuStates.Market))
-                    settlement.settlementProperties.Add(new Structures.Economy.Market(player.selectedTilePos, player.playerColor, this.menuItem));
+                    settlement.settlementProperties.Add(new Structures.Economy.Market(player.selectedTilePos, player.playerColor, this.menuItem, indexOfOwner));
                 else if (specificState.Equals(BuildMenuStates.Exporter))
-                    settlement.settlementProperties.Add(new Structures.Economy.Exporter(player.selectedTilePos, player.playerColor, this.menuItem));
+                    settlement.settlementProperties.Add(new Structures.Economy.Exporter(player.selectedTilePos, player.playerColor, this.menuItem, indexOfOwner));
                 else if (specificState.Equals(BuildMenuStates.Baracks))
-                    settlement.settlementProperties.Add(new Structures.Military.Barracks(player.selectedTilePos, player.playerColor, this.menuItem));
+                    settlement.settlementProperties.Add(new Structures.Military.Barracks(player.selectedTilePos, player.playerColor, this.menuItem, indexOfOwner));
                 else if (specificState.Equals(BuildMenuStates.AirField))
-                    settlement.settlementProperties.Add(new Structures.Military.AirBase(player.selectedTilePos, player.playerColor, this.menuItem));
+                    settlement.settlementProperties.Add(new Structures.Military.AirBase(player.selectedTilePos, player.playerColor, this.menuItem, indexOfOwner));
                 else if (specificState.Equals(BuildMenuStates.TankDepot))
-                    settlement.settlementProperties.Add(new Structures.Military.TankDepot(player.selectedTilePos, player.playerColor, this.menuItem));
+                    settlement.settlementProperties.Add(new Structures.Military.TankDepot(player.selectedTilePos, player.playerColor, this.menuItem, indexOfOwner));
                 else if (specificState.Equals(BuildMenuStates.LabourCamp))
-                    settlement.settlementProperties.Add(new Structures.Manipulation.LabourCamp(player.selectedTilePos, player.playerColor, this.menuItem));
+                    settlement.settlementProperties.Add(new Structures.Manipulation.LabourCamp(player.selectedTilePos, player.playerColor, this.menuItem, indexOfOwner));
                 else if (specificState.Equals(BuildMenuStates.MilitaryContractor))
-                    settlement.settlementProperties.Add(new Structures.Manipulation.MilitaryContractor(player.selectedTilePos, player.playerColor, this.menuItem));
+                    settlement.settlementProperties.Add(new Structures.Manipulation.MilitaryContractor(player.selectedTilePos, player.playerColor, this.menuItem, indexOfOwner));
                 else if (specificState.Equals(BuildMenuStates.Propaganda))
-                    settlement.settlementProperties.Add(new Structures.Manipulation.Propaganda(player.selectedTilePos, player.playerColor, this.menuItem));
+                    settlement.settlementProperties.Add(new Structures.Manipulation.Propaganda(player.selectedTilePos, player.playerColor, this.menuItem, indexOfOwner));
 
                 player.playerStructures.Add(settlement.settlementProperties.Last());
             }

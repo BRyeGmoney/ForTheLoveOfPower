@@ -12,7 +12,7 @@ namespace PenisPotato.Structures.Manipulation
     {
         public Propaganda() { }
 
-        public Propaganda(Vector2 pos, Color color, Texture2D pieceTex)
+        public Propaganda(Vector2 pos, Color color, Texture2D pieceTex, int owner)
         {
             this.piecePosition = pos;
             this.playerColor = color;
@@ -20,6 +20,7 @@ namespace PenisPotato.Structures.Manipulation
             this.pieceType = (byte)PieceTypes.Factory;
             this.tileWidth = Convert.ToInt16(Resources.tileWidth);
             this.buildTime = 25;
+            this.settlementOwnerIndex = owner;
         }
     }
 }

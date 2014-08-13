@@ -9,7 +9,7 @@ namespace PenisPotato.Structures.Military
     {
         public AirBase() {} 
 
-        public AirBase(Vector2 pos, Color color, Texture2D pieceTex)
+        public AirBase(Vector2 pos, Color color, Texture2D pieceTex, int owner)
         {
             this.piecePosition = pos;
             this.playerColor = color;
@@ -17,6 +17,7 @@ namespace PenisPotato.Structures.Military
             this.pieceType = (byte)PieceTypes.AirBase;
             this.tileWidth = Convert.ToInt16(Resources.tileWidth);
             this.buildTime = 15;
+            this.settlementOwnerIndex = owner;
         }
 
         public override void Clicked(GameTime gameTime, Player.Player player)
