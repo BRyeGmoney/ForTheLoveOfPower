@@ -22,7 +22,7 @@ namespace PenisPotato.Units
             InitializeCombat();
         }
 
-        public Combat(ref Unit attacker, ref Unit defender, StateSystem.Screens.GameplayScreen masterState)
+        public Combat(Unit attacker, Unit defender, StateSystem.Screens.GameplayScreen masterState)
         {
             InitializeCombat();
             this.masterState = masterState;
@@ -150,8 +150,8 @@ namespace PenisPotato.Units
                         attacker[random.Next(0, attacker.Count)].KillUnit();
                 }
 
-                if (attacker.Count < 1 || defender.Count < 1)
-                    masterState.playerOne.combat.Remove(this);
+                //if (attacker.Count < 1 || defender.Count < 1)
+                //    masterState.playerOne.combat.Remove(this);
 
                 //Reset the timer
                 timeToFight = 0.0f;

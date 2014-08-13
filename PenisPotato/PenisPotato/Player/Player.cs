@@ -98,10 +98,10 @@ namespace PenisPotato.Player
             UpdateStructures(gameTime);
             playerUnits.ForEach(pU =>
             {
-                if (pU.numUnits < 1)
+                pU.Update(gameTime, this);
+
+                if (pU.numUnits < 1 && !netPlayer.unitsToUpdate.Contains(pU))
                     playerUnits.Remove(pU);
-                else
-                    pU.Update(gameTime, this);
             });
         }
 

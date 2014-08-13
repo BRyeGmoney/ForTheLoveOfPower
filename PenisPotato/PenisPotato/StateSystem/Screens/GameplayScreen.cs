@@ -150,18 +150,24 @@ namespace PenisPotato.StateSystem.Screens
 
             playerOne.combat.ForEach(fight =>
             {
-                if (playerOne.netPlayer != null)
+                if (fight.attacker[0].numUnits > 0 && fight.defender[0].numUnits > 0)
                 {
-                    (fight as Units.SkeletonCombat).Update(gameTime, playerOne);
-
-                    if ((fight as Units.SkeletonCombat).combatReady)
+                    if (playerOne.netPlayer != null)
                     {
-                        playerOne.netPlayer.ongoingFights.Enqueue(fight);
-                        (fight as Units.SkeletonCombat).combatReady = false;
+                        (fight as Units.SkeletonCombat).Update(gameTime, playerOne);
+
+                        if ((fight as Units.SkeletonCombat).combatReady)
+                        {
+                            playerOne.netPlayer.ongoingFights.Enqueue(fight);
+                            (fight as Units.SkeletonCombat).combatReady = false;
+                        }
                     }
+                    else
+                        fight.Update(gameTime);
+                        
                 }
                 else
-                    fight.Update(gameTime);
+                    playerOne.combat.Remove(fight);
             });
         }
 

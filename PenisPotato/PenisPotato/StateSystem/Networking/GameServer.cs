@@ -243,7 +243,14 @@ namespace PenisPotato.StateSystem.Networking
                             }
                             else if (packetType == (byte)Player.PacketType.DELETE_COMBAT)
                             {
-                                ongoingFights.RemoveAt(msg.ReadInt32());
+                                long npid = msg.ReadInt64();
+                                int fightindex = msg.ReadInt32();
+                                ongoingFights.RemoveAt(fightindex);
+                                outmsg = server.CreateMessage();
+                                outmsg.Write((byte)Player.PacketType.DELETE_COMBAT);
+                                outmsg.Write(npid);
+                                outmsg.Write(fightindex);
+                                server.SendToAll(outmsg, NetDeliveryMethod.ReliableOrdered);
                             }
                             break;
 					}

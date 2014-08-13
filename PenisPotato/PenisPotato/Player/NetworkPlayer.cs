@@ -153,6 +153,8 @@ namespace PenisPotato.Player
                                     int index = msg.ReadInt32();
                                     nPlayer.playerUnits[index].numUnits = msg.ReadInt32();
                                     nPlayer.playerUnits[index].piecePosition = msg.ReadVector2();
+                                    if (nPlayer.playerUnits[index].numUnits < 1)
+                                        nPlayer.playerUnits.RemoveAt(index);
                                 }
                             }
                         }
@@ -188,14 +190,20 @@ namespace PenisPotato.Player
                             {
                                 mPlayer.playerUnits[unitIndex].KillUnit();
 
-                                if (mPlayer.playerUnits.Count < unitIndex)
+                                if (mPlayer.playerUnits[unitIndex].numUnits < 1)
                                 {
                                     outmsg = client.CreateMessage();
                                     outmsg.Write((byte)PacketType.DELETE_COMBAT);
+                                    outmsg.Write(nPiD);
                                     outmsg.Write(fightIndex);
                                     client.SendMessage(outmsg, NetDeliveryMethod.ReliableOrdered);
                                 }
                             }
+                        }
+                        else if (packetType == (byte)PacketType.DELETE_COMBAT)
+                        {
+                            if (!this.uniqueIdentifer.Equals(msg.ReadInt64()))
+                                mPlayer.combat.RemoveAt(msg.ReadInt32());
                         }
                         break;
                     default:

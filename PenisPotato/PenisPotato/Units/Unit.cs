@@ -56,9 +56,7 @@ namespace PenisPotato.Units
 
         public virtual void Update(GameTime gameTime, Player.Player player)
         {
-            if (numUnits < 1)
-                player.playerUnits.Remove(this);
-            else if (movementPoints.Count > 0)
+            if (movementPoints.Count > 0)
             {
                 moveTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -111,13 +109,13 @@ namespace PenisPotato.Units
                         needsUpdate = true;
                     
                 }
-
-                if (player.netPlayer != null && needsUpdate)
-                {
-                    player.netPlayer.unitsToUpdate.Enqueue(this);
-                    needsUpdate = false;
-                }
             }
+            if (player.netPlayer != null && needsUpdate)
+            {
+                player.netPlayer.unitsToUpdate.Enqueue(this);
+                needsUpdate = false;
+            }
+
             canBuild = (!player.buildingTiles.Contains(piecePosition) && !player.dupeBuildingTiles.Contains(piecePosition));
         }
 
