@@ -137,6 +137,36 @@ namespace PenisPotato.Player
                                 nPlayer.playerStructures.Add(newSett);
                             }
                         }
+                        else if (packetType == (byte)PacketType.SETTLEMENT_UPDATE)
+                        {
+                            short lenTransmission = msg.ReadInt16();
+                            long defenderId = msg.ReadInt64();
+                            long attackerId = msg.ReadInt64();
+
+                            Vector2 piecePosition = msg.ReadVector2();
+
+                            if (lenTransmission <= 4 && defenderId == this.client.UniqueIdentifier)
+                            {
+                                Structures.Civil.Settlement conSettlement = mPlayer.playerSettlements.Find(pS => pS.piecePosition.Equals(piecePosition));
+                                conSettlement.isCityBeingConquered = true;
+                                conSettlement.invadingPlayerId = attackerId;
+                            }
+                            else if (lenTransmission > 4 && lenTransmission <= 6 && defenderId != this.client.UniqueIdentifier)
+                            {
+                                short percConquered = msg.ReadInt16();
+                                NetworkPlayer defender = peers.Find(nP => nP.uniqueIdentifer == defenderId);
+
+                                Structures.Civil.Settlement conSettlement = defender.playerSettlements.Find(pS => pS.piecePosition.Equals(piecePosition));
+                                conSettlement.conquered = percConquered;
+
+                                if (conSettlement.conquered >= 100 && this.client.UniqueIdentifier!= attackerId)
+                                    conSettlement.ChangeOwnership(peers.Find(nP => nP.uniqueIdentifer == attackerId),
+                                        defender);
+                                else if (conSettlement.conquered >= 100 && this.client.UniqueIdentifier == attackerId)
+                                    conSettlement.ChangeOwnership(mPlayer,
+                                        defender);
+                            }
+                        }
                         else if (packetType == (byte)PacketType.STRUCTURE_ADD)
                         {
                             long id = msg.ReadInt64();
@@ -147,6 +177,20 @@ namespace PenisPotato.Player
                                 //if (nPlayer.client == null)
                                 nPlayer.playerStructures.Add(newStruct);
                                 nPlayer.playerSettlements[newStruct.settlementOwnerIndex].settlementProperties.Add(newStruct);
+                            }
+                        }
+                        else if (packetType == (byte)PacketType.STRUCTURE_UPDATE)
+                        {
+                            long defenderId = msg.ReadInt64();
+                            if (defenderId != this.client.UniqueIdentifier)
+                            {
+                                long attackerId = msg.ReadInt64();
+                                Vector2 settlementPos = msg.ReadVector2();
+                                short conqIndex = msg.ReadInt16();
+                                short percConq = msg.ReadInt16();
+
+                                NetworkPlayer defender = peers.Find(nP => nP.uniqueIdentifer == defenderId);
+                                defender.playerSettlements.Find(pS => pS.piecePosition.Equals(settlementPos)).settlementProperties[conqIndex].conquered = percConq;
                             }
                         }
                         else if (packetType == (byte)PacketType.UNIT_ADD)
@@ -250,8 +294,35 @@ namespace PenisPotato.Player
                 }
                 else if (stp.packetType.Equals((byte)PacketType.SETTLEMENT_UPDATE))
                 {
-                    outmsg.Write(client.UniqueIdentifier);
-                    outmsg.Write(building.piecePosition);
+                    if (stp.lengthOfTransmission <= 4)
+                    {
+                        //Initial settlement is being conquered message to player being conquered
+                        outmsg.Write(stp.lengthOfTransmission);
+                        outmsg.Write(stp.defenderId);
+                        outmsg.Write(stp.invaderId);
+                        outmsg.Write(building.piecePosition);
+                    }
+                    else if (stp.lengthOfTransmission <= 6)
+                    {
+                        //Settlement being conquered by percentage
+                        outmsg.Write(stp.lengthOfTransmission);
+                        outmsg.Write(stp.defenderId);
+                        outmsg.Write(stp.invaderId);
+                        outmsg.Write(building.piecePosition);
+                        outmsg.Write(stp.percentageConquered);
+                    }
+                    else
+                    {
+                        //final message to tell everyone to switch the settlement and all properties to invader
+                    }
+                }
+                else if (stp.packetType.Equals((byte)PacketType.STRUCTURE_UPDATE))
+                {
+                    outmsg.Write(stp.defenderId);
+                    outmsg.Write(stp.invaderId);
+                    outmsg.Write(stp.building.piecePosition);
+                    outmsg.Write(stp.conqueredIndex);
+                    outmsg.Write(stp.percentageConquered);
                 }
                 client.SendMessage(outmsg, NetDeliveryMethod.ReliableOrdered);
             }
@@ -374,6 +445,11 @@ namespace PenisPotato.Player
     public class StructureNetworkPacket : NetworkPacket
     {
         public Structures.Structure building;
+        public long invaderId;
+        public long defenderId;
+        public short lengthOfTransmission;
+        public short percentageConquered;
+        public short conqueredIndex;
     }
 
     public enum PacketType

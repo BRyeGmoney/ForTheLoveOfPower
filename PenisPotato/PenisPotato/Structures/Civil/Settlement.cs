@@ -14,6 +14,7 @@ namespace PenisPotato.Structures.Civil
         public bool isDictatorInCity = false;
         public bool isCityBeingConquered = false;
         public int conqueredIndex = 0;
+        public long invadingPlayerId = 0;
 
         public Settlement() { }
 
@@ -77,9 +78,12 @@ namespace PenisPotato.Structures.Civil
             //sweet jesus let's start conquering the city if there is someone actually here
             if (isCityBeingConquered)
             {
-                if (settlementProperties.Count() > 0)
+                if (settlementProperties.Count() - 1 > conqueredIndex)
                 {
-                    this.settlementProperties[conqueredIndex].conquered = MathHelper.Clamp(this.settlementProperties[conqueredIndex].conquered + 1.0f, 0, 100);
+                    this.settlementProperties[conqueredIndex].conquered = MathHelper.Clamp(this.settlementProperties[conqueredIndex].conquered + 20.0f, 0, 100);
+
+                    if (player.netPlayer != null)
+                        player.netPlayer.packetsToSend.Enqueue(new Player.StructureNetworkPacket() { packetType = (byte)Player.PacketType.STRUCTURE_UPDATE, defenderId = player.netPlayer.uniqueIdentifer, invaderId = invadingPlayerId, building = this, percentageConquered = (short)this.settlementProperties[conqueredIndex].conquered, conqueredIndex = (short)this.conqueredIndex });
 
                     if (this.settlementProperties[conqueredIndex].conquered >= 100.0f)
                         conqueredIndex++;
@@ -87,6 +91,9 @@ namespace PenisPotato.Structures.Civil
                 else
                 {
                     this.conquered = MathHelper.Clamp(this.conquered + 30.0f, 0, 100.0f);
+
+                    if (player.netPlayer != null)
+                        player.netPlayer.packetsToSend.Enqueue(new Player.StructureNetworkPacket() { packetType = (byte)Player.PacketType.SETTLEMENT_UPDATE, defenderId = player.netPlayer.uniqueIdentifer, invaderId = invadingPlayerId, building = this, percentageConquered = (short)this.conquered, lengthOfTransmission = 6 });
                 }
 
                 if (this.conquered.Equals(100.0f) && opposingPlayer != null)
@@ -94,7 +101,7 @@ namespace PenisPotato.Structures.Civil
             }
         }
 
-        private void ChangeOwnership(Player.Player opposingPlayer, Player.Player curPlayer)
+        public void ChangeOwnership(Player.Player opposingPlayer, Player.Player curPlayer)
         {
             //Give the opposing player the city and all its structures
             opposingPlayer.playerSettlements.Add(this);

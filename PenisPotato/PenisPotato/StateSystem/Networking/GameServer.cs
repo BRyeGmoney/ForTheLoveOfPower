@@ -155,16 +155,57 @@ namespace PenisPotato.StateSystem.Networking
                             }
                             else if (packetType == (byte)Player.PacketType.SETTLEMENT_UPDATE)
                             {
-                                long id = msg.ReadInt64();
-                                int settlementPosition = msg.ReadInt32();
-                                Player.NetworkPlayer nPlayer = networkPlayers.Find(nP => nP.uniqueIdentifer == id);
-                                //nPlayer.playerStructures.
-                                //(nPlayer.playerStructures[settlementIndex] as Structures.Civil.Settlement).isCityBeingConquered = true;
+                                short lenOfTransmission = msg.ReadInt16();
+                                long defenderId = msg.ReadInt64();
+                                long attackerId = msg.ReadInt64();
+                                Vector2 settlementPosition = msg.ReadVector2();
+
+                                if (lenOfTransmission <= 4)
+                                {
+                                    outmsg = server.CreateMessage();
+                                    outmsg.Write((byte)Player.PacketType.SETTLEMENT_UPDATE);
+                                    outmsg.Write(lenOfTransmission);
+                                    outmsg.Write(defenderId);
+                                    outmsg.Write(attackerId);
+                                    outmsg.Write(settlementPosition);
+                                }
+                                else if (lenOfTransmission <= 6)
+                                {
+                                    short percConquered = msg.ReadInt16();
+
+                                    if (percConquered >= 100)
+                                    {
+                                        Player.NetworkPlayer defender = networkPlayers.Find(nP => nP.uniqueIdentifer.Equals(defenderId));
+                                        Player.NetworkPlayer attacker = networkPlayers.Find(nP => nP.uniqueIdentifer.Equals(attackerId));
+                                        Structures.Civil.Settlement changingSettlement = defender.playerSettlements.Find(pS => pS.piecePosition.Equals(settlementPosition));
+                                        changingSettlement.ChangeOwnership(attacker, defender);
+                                    }
+
+                                    outmsg = server.CreateMessage();
+                                    outmsg.Write((byte)Player.PacketType.SETTLEMENT_UPDATE);
+                                    outmsg.Write(lenOfTransmission);
+                                    outmsg.Write(defenderId);
+                                    outmsg.Write(attackerId);
+                                    outmsg.Write(settlementPosition);
+                                    outmsg.Write(percConquered);
+                                }
+                                server.SendToAll(outmsg, NetDeliveryMethod.ReliableOrdered);
+                            }
+                            else if (packetType == (byte)Player.PacketType.STRUCTURE_UPDATE)
+                            {
+                                long defenderId = msg.ReadInt64();
+                                long attackerId = msg.ReadInt64();
+                                Vector2 settlementPosition = msg.ReadVector2();
+                                short conqIndex = msg.ReadInt16();
+                                short percConquered = msg.ReadInt16();
 
                                 outmsg = server.CreateMessage();
-                                outmsg.Write((byte)Player.PacketType.SETTLEMENT_UPDATE);
-                                outmsg.Write(id);
-                                //outmsg.Write(settlementIndex);
+                                outmsg.Write(defenderId);
+                                outmsg.Write(attackerId);
+                                outmsg.Write(settlementPosition);
+                                outmsg.Write(conqIndex);
+                                outmsg.Write(percConquered);
+                                server.SendToAll(outmsg, NetDeliveryMethod.ReliableOrdered);
                             }
                             else if (packetType == (byte)Player.PacketType.UNIT_ADD)
                             {
