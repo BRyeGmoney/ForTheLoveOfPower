@@ -103,33 +103,50 @@ namespace PenisPotato.Structures.Civil
 
         public void ChangeOwnership(Player.Player opposingPlayer, Player.Player curPlayer)
         {
-            //Give the opposing player the city and all its structures
-            opposingPlayer.playerSettlements.Add(this);
-            opposingPlayer.playerStructures.Add(this);
-
             //Remove the city and all its structures from current player's grasp
             curPlayer.playerSettlements.Remove(this);
             curPlayer.playerStructures.Remove(this);
 
+            //if (curPlayer.netPlayer == null) //problem is that both the defending and attacking player are updating the attacking player's 
+            //structure list. which means both structures get drawn. only do it for defending if defending player is updating this list
+            //and only for attacking if attacking is updating this list.
+            //{
+                //Give the opposing player the city and all its structures
+                opposingPlayer.playerSettlements.Add(this);
+                opposingPlayer.playerStructures.Add(this);
+            //}
+
+            this.settlementProperties.ForEach(sP =>
+            {
+                //opposingPlayer.playerSettlements[opposingPlayer.playerSettlements.Count - 1].settlementProperties.Add(sP);
+                //if (curPlayer.netPlayer == null)
+                //{
+                    opposingPlayer.playerStructures.Add(sP);
+                    sP.playerColor = opposingPlayer.playerColor;
+                //}
+                //this.settlementProperties.Remove(sP);
+                curPlayer.playerStructures.Remove(sP);
+                
+            });
             this.playerColor = opposingPlayer.playerColor;
         }
 
         private void UpdateToTown(StateSystem.StateManager stateManager)
         {
             this.pieceTexture = stateManager.buildItems[16].menuItem;
-            this.pieceType = (byte)PieceTypes.TownHall;
+            //this.pieceType = (byte)PieceTypes.TownHall;
         }
 
         private void UpdateToCity(StateSystem.StateManager stateManager)
         {
             this.pieceTexture = stateManager.buildItems[17].menuItem;
-            this.pieceType = (byte)PieceTypes.CityHall;
+            //this.pieceType = (byte)PieceTypes.CityHall;
         }
 
         private void UpdateToCapitol(StateSystem.StateManager stateManager)
         {
             this.pieceTexture = stateManager.buildItems[18].menuItem;
-            this.pieceType = (byte)PieceTypes.Capitol;
+            //this.pieceType = (byte)PieceTypes.Capitol;
         }
 
         public List<Vector2> GetAllTilesBelongingToSettlement()

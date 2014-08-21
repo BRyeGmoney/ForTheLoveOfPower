@@ -17,7 +17,7 @@ namespace PenisPotato.Structures.Manipulation
             this.piecePosition = pos;
             this.playerColor = color;
             this.pieceTexture = pieceTex;
-            this.pieceType = (byte)PieceTypes.Factory;
+            this.pieceType = (byte)PieceTypes.LabourCamp;
             this.tileWidth = Convert.ToInt16(Resources.tileWidth);
             this.buildTime = 25;
             this.settlementOwnerIndex = owner;

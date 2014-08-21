@@ -131,18 +131,18 @@ namespace PenisPotato.Structures
 
     public enum PieceTypes
     {
-        Settlement,
-        TownHall,
-        CityHall,
-        Capitol,
-        Factory,
-        Exporter,
-        Market,
-        Barracks,
-        AirBase,
-        TankDepot,
-        LabourCamp,
-        MilitaryContractor,
-        Propaganda,
+        Settlement = 0,
+        TownHall = 1,
+        CityHall = 2,
+        Capitol = 3,
+        Factory = 4,
+        Exporter = 5,
+        Market = 6,
+        Barracks = 7,
+        AirBase = 8,
+        TankDepot = 9,
+        LabourCamp = 10,
+        MilitaryContractor = 11,
+        Propaganda = 12,
     }
 }

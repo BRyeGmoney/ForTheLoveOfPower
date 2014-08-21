@@ -159,10 +159,10 @@ namespace PenisPotato.Player
                                 Structures.Civil.Settlement conSettlement = defender.playerSettlements.Find(pS => pS.piecePosition.Equals(piecePosition));
                                 conSettlement.conquered = percConquered;
 
-                                if (conSettlement.conquered >= 100 && this.client.UniqueIdentifier!= attackerId)
-                                    conSettlement.ChangeOwnership(peers.Find(nP => nP.uniqueIdentifer == attackerId),
-                                        defender);
-                                else if (conSettlement.conquered >= 100 && this.client.UniqueIdentifier == attackerId)
+                                //if (conSettlement.conquered >= 100 && this.client.UniqueIdentifier!= attackerId)
+                                //    conSettlement.ChangeOwnership(peers.Find(nP => nP.uniqueIdentifer == attackerId),
+                                //        defender);
+                                if (conSettlement.conquered >= 100 && this.client.UniqueIdentifier == attackerId)
                                     conSettlement.ChangeOwnership(mPlayer,
                                         defender);
                             }
