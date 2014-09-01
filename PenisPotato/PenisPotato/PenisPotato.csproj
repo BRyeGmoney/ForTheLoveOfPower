@@ -112,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="GameSaveData.cs" />
     <Compile Include="Graphics\Effects\BloomComponent.cs" />
     <Compile Include="Graphics\Effects\BloomSettings.cs" />
     <Compile Include="Graphics\Primitives.cs" />

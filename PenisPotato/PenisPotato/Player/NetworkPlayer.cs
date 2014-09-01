@@ -190,7 +190,9 @@ namespace PenisPotato.Player
                                 short percConq = msg.ReadInt16();
 
                                 NetworkPlayer defender = peers.Find(nP => nP.uniqueIdentifer == defenderId);
-                                defender.playerSettlements.Find(pS => pS.piecePosition.Equals(settlementPos)).settlementProperties[conqIndex].conquered = percConq;
+                                Structures.Civil.Settlement settlement = defender.playerSettlements.Find(pS => pS.piecePosition.Equals(settlementPos));
+                                settlement.invadingPlayerColor = peers.Find(nP => nP.uniqueIdentifer == attackerId).playerColor;
+                                settlement.settlementProperties[conqIndex].conquered = percConq;
                             }
                         }
                         else if (packetType == (byte)PacketType.UNIT_ADD)

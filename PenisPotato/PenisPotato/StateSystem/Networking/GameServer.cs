@@ -200,6 +200,7 @@ namespace PenisPotato.StateSystem.Networking
                                 short percConquered = msg.ReadInt16();
 
                                 outmsg = server.CreateMessage();
+                                outmsg.Write((byte)Player.PacketType.STRUCTURE_UPDATE);
                                 outmsg.Write(defenderId);
                                 outmsg.Write(attackerId);
                                 outmsg.Write(settlementPosition);

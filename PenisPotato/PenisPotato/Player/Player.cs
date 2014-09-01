@@ -153,10 +153,12 @@ namespace PenisPotato.Player
             foreach (Units.Unit unit in playerUnits)
                 if (isInRange(unit.piecePosition.X * modTileWidth, minboundsx - modTileWidth, maxboundsx) && isInRange(unit.piecePosition.Y * modTileWidth, minboundsy - modTileWidth, maxboundsy))
                     unit.Draw(spriteBatch, ScreenManager.Font, ScreenManager);
-
-            foreach (Structures.Structure structure in playerStructures)
+            foreach (Structures.Civil.Settlement settlement in playerSettlements)
+                if (isInRange(settlement.piecePosition.X * modTileWidth, minboundsx - modTileWidth, maxboundsx) && isInRange(settlement.piecePosition.Y * modTileWidth, minboundsy - modTileWidth, maxboundsy))
+                    settlement.Draw(spriteBatch, gameTime, ScreenManager, this);
+            /*foreach (Structures.Structure structure in playerStructures)
                 if (isInRange(structure.piecePosition.X * modTileWidth, minboundsx - modTileWidth, maxboundsx) && isInRange(structure.piecePosition.Y * modTileWidth, minboundsy - modTileWidth, maxboundsy))
-                    structure.Draw(spriteBatch, gameTime, ScreenManager, this);
+                    structure.Draw(spriteBatch, gameTime, ScreenManager, this);*/
         }
 
         private bool isInRange(float value, float min, float max)

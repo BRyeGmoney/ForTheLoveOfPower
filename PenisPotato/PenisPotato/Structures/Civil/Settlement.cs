@@ -121,14 +121,10 @@ namespace PenisPotato.Structures.Civil
 
             this.settlementProperties.ForEach(sP =>
             {
-                //opposingPlayer.playerSettlements[opposingPlayer.playerSettlements.Count - 1].settlementProperties.Add(sP);
-                //if (curPlayer.netPlayer == null)
-                //{
-                    opposingPlayer.playerStructures.Add(sP);
-                    sP.conquered = 0f;
-                    sP.playerColor = opposingPlayer.playerColor;
-                //}
-                //this.settlementProperties.Remove(sP);
+                opposingPlayer.playerStructures.Add(sP);
+                sP.conquered = 0f;
+                sP.playerColor = opposingPlayer.playerColor;
+
                 curPlayer.playerStructures.Remove(sP);
                 
             });
