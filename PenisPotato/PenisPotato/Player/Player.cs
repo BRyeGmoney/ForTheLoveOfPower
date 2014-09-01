@@ -156,7 +156,7 @@ namespace PenisPotato.Player
 
             foreach (Structures.Structure structure in playerStructures)
                 if (isInRange(structure.piecePosition.X * modTileWidth, minboundsx - modTileWidth, maxboundsx) && isInRange(structure.piecePosition.Y * modTileWidth, minboundsy - modTileWidth, maxboundsy))
-                    structure.Draw(spriteBatch, gameTime, ScreenManager);
+                    structure.Draw(spriteBatch, gameTime, ScreenManager, this);
         }
 
         private bool isInRange(float value, float min, float max)

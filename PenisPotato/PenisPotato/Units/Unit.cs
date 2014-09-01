@@ -74,7 +74,8 @@ namespace PenisPotato.Units
                             {
                                 Structures.Civil.Settlement curSettlement = curPlayer.playerSettlements.Find(pS => pS.piecePosition.Equals(movementPoints[0]));
                                 curSettlement.isCityBeingConquered = true;
-                                player.netPlayer.packetsToSend.Enqueue(new Player.StructureNetworkPacket() { packetType = (byte)Player.PacketType.SETTLEMENT_UPDATE, building = curSettlement, invaderId = player.netPlayer.uniqueIdentifer, defenderId = (curPlayer as Player.NetworkPlayer).uniqueIdentifer, lengthOfTransmission = 4});
+                                if (player.netPlayer != null)
+                                    player.netPlayer.packetsToSend.Enqueue(new Player.StructureNetworkPacket() { packetType = (byte)Player.PacketType.SETTLEMENT_UPDATE, building = curSettlement, invaderId = player.netPlayer.uniqueIdentifer, defenderId = (curPlayer as Player.NetworkPlayer).uniqueIdentifer, lengthOfTransmission = 4});
                             }
                         });
 

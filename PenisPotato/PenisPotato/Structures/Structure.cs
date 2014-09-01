@@ -42,7 +42,7 @@ namespace PenisPotato.Structures
                 built += buildTime * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 built = MathHelper.Clamp(built, 0, 100);
             }
-            else if (built.Equals(100) || (conquered.Equals(100) && player.playerStructures.Contains(this)))
+            else if (built.Equals(100))
             {
                 player.dupeBuildingTiles.Clear();
                 //player.buildingTiles.AddRange(GetSurroundingTiles());
@@ -58,7 +58,7 @@ namespace PenisPotato.Structures
 
                 player.buildingTiles = player.buildingTiles.Except(player.dupeBuildingTiles).ToList();
 
-                conquered = 0.0f;
+                //conquered = 0.0f;
                 built = 101;
             }
         }
@@ -102,12 +102,15 @@ namespace PenisPotato.Structures
             return st;
         }
 
-        public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime, StateSystem.StateManager stateManager)
+        public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime, StateSystem.StateManager stateManager, Player.Player player)
         {
             int y = (int)(piecePosition.Y * tileWidth - Math.Abs(piecePosition.X % 2) * (tileWidth / 2));
             int b = (int)(tileWidth * (built / 100));
 
             spriteBatch.Draw(pieceTexture, new Vector2(piecePosition.X * tileWidth, y), playerColor);
+
+            if (conquered > 0)
+                spriteBatch.Draw(pieceTexture, new Vector2((int)piecePosition.X * tileWidth, y), new Rectangle(0, 0, tileWidth, (int)(tileWidth * (conquered / 100))), player.playerSettlements[settlementOwnerIndex].invadingPlayerColor);
 
             if (built < 100)
                 spriteBatch.FillRectangle(new Rectangle((int)piecePosition.X * tileWidth, y + tileWidth - 5, (int)(tileWidth * (built / 100)), 10), playerColor);

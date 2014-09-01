@@ -15,6 +15,7 @@ namespace PenisPotato.Structures.Civil
         public bool isCityBeingConquered = false;
         public int conqueredIndex = 0;
         public long invadingPlayerId = 0;
+        public Color invadingPlayerColor;
 
         public Settlement() { }
 
@@ -78,7 +79,9 @@ namespace PenisPotato.Structures.Civil
             //sweet jesus let's start conquering the city if there is someone actually here
             if (isCityBeingConquered)
             {
-                if (settlementProperties.Count() - 1 > conqueredIndex)
+                invadingPlayerColor = opposingPlayer.playerColor;
+
+                if (settlementProperties.Count() > conqueredIndex)
                 {
                     this.settlementProperties[conqueredIndex].conquered = MathHelper.Clamp(this.settlementProperties[conqueredIndex].conquered + 20.0f, 0, 100);
 
@@ -122,6 +125,7 @@ namespace PenisPotato.Structures.Civil
                 //if (curPlayer.netPlayer == null)
                 //{
                     opposingPlayer.playerStructures.Add(sP);
+                    sP.conquered = 0f;
                     sP.playerColor = opposingPlayer.playerColor;
                 //}
                 //this.settlementProperties.Remove(sP);
@@ -161,13 +165,13 @@ namespace PenisPotato.Structures.Civil
             return tiles.Distinct().ToList();
         }
 
-        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime, StateSystem.StateManager stateManager)
+        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime, StateSystem.StateManager stateManager, Player.Player player)
         {
             settlementProperties.ForEach(sP =>
                 {
-                    sP.Draw(spriteBatch, gameTime, stateManager);
+                    sP.Draw(spriteBatch, gameTime, stateManager, player);
                 });
-            base.Draw(spriteBatch, gameTime, stateManager);
+            base.Draw(spriteBatch, gameTime, stateManager, player);
         }
     }
 }
