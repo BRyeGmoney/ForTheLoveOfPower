@@ -29,9 +29,11 @@ namespace PenisPotato.Player
         // Create new outgoing message
         NetOutgoingMessage outmsg;
 
-        public NetworkPlayer(bool isHost, string ipToConnectTo)
+        public NetworkPlayer(bool isHost, string ipToConnectTo, StateSystem.StateManager screenManager)
         {
             IsHost = isHost;
+            playerName = screenManager.mpPlayerInfo.playerName;
+            playerColor = screenManager.mpPlayerInfo.playerColorChoice[0];
 
             NetPeerConfiguration config = new NetPeerConfiguration("game");
             config.EnableMessageType(NetIncomingMessageType.DiscoveryResponse);
@@ -96,8 +98,9 @@ namespace PenisPotato.Player
                         // just connect to first server discovered
                         outmsg = client.CreateMessage();
                         outmsg.Write((byte)PacketType.LOGIN);
-                        outmsg.Write("Poopface");
+                        outmsg.Write(playerName);
                         outmsg.Write(client.UniqueIdentifier);
+                        outmsg.Write(playerColor.ToVector3());
                         uniqueIdentifer = client.UniqueIdentifier;
                         ipAddress = msg.SenderEndPoint.Address.ToString();
                         client.Connect(msg.SenderEndPoint.Address.ToString(), 14242, outmsg);

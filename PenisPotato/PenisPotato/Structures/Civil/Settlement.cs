@@ -36,6 +36,26 @@ namespace PenisPotato.Structures.Civil
 
             if (isCityBeingConquered && lastTime > 2f)
                 RunCityTakeover(player);
+            else if (!isCityBeingConquered && (conquered > 0 || conqueredIndex > -1) && lastTime > 2f)
+            {
+                if (conquered > 0)
+                {
+                    this.conquered = MathHelper.Clamp(this.conquered - 30.0f, 0, 100.0f);
+
+                    if (player.netPlayer != null)
+                        player.netPlayer.packetsToSend.Enqueue(new Player.StructureNetworkPacket() { packetType = (byte)Player.PacketType.SETTLEMENT_UPDATE, defenderId = player.netPlayer.uniqueIdentifer, invaderId = invadingPlayerId, building = this, percentageConquered = (short)this.conquered, lengthOfTransmission = 6 });
+                }
+                else if (conqueredIndex > -1)
+                {
+                    this.settlementProperties[conqueredIndex].conquered = MathHelper.Clamp(this.settlementProperties[conqueredIndex].conquered - 20.0f, 0, 100);
+
+                    if (player.netPlayer != null)
+                        player.netPlayer.packetsToSend.Enqueue(new Player.StructureNetworkPacket() { packetType = (byte)Player.PacketType.STRUCTURE_UPDATE, defenderId = player.netPlayer.uniqueIdentifer, invaderId = invadingPlayerId, building = this, percentageConquered = (short)this.settlementProperties[conqueredIndex].conquered, conqueredIndex = (short)this.conqueredIndex });
+
+                    if (this.settlementProperties[conqueredIndex].conquered <= 0)
+                        conqueredIndex--;
+                }
+            }
 
 
             if (built >= 100 && lastTime > 2f)
@@ -80,6 +100,8 @@ namespace PenisPotato.Structures.Civil
             if (isCityBeingConquered)
             {
                 invadingPlayerColor = opposingPlayer.playerColor;
+                if (conqueredIndex < 0)
+                    conqueredIndex = 0;
 
                 if (settlementProperties.Count() > conqueredIndex)
                 {

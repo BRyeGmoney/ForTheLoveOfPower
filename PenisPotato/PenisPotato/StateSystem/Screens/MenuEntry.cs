@@ -55,6 +55,8 @@ namespace PenisPotato.StateSystem.Screens
         }
 
 
+        public Color playerColor { get; set; }
+
         #endregion
 
         #region Events
@@ -122,9 +124,13 @@ namespace PenisPotato.StateSystem.Screens
 #if WINDOWS_PHONE
             isSelected = false;
 #endif
+            Color color;
 
             // Draw the selected entry in yellow, otherwise white.
-            Color color = isSelected ? Color.Yellow : Color.White;
+            if (playerColor.A <= 0)
+                color = isSelected ? Color.Yellow : Color.White;
+            else
+                color = playerColor;
 
             // Pulsate the size of the selected menu entry.
             double time = gameTime.TotalGameTime.TotalSeconds;

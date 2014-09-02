@@ -74,7 +74,7 @@ namespace PenisPotato.StateSystem.Networking
 
                                 // Approve client's connection
                                 msg.SenderConnection.Approve();
-                                networkPlayers.Add(new Player.NetworkPlayer(msg.ReadString(), msg.SenderEndPoint.Address.ToString(), msg.ReadInt64(), Color.Green));
+                                networkPlayers.Add(new Player.NetworkPlayer(msg.ReadString(), msg.SenderEndPoint.Address.ToString(), msg.ReadInt64(), new Color(msg.ReadVector3())));
                                 networkPlayers[networkPlayers.Count - 1].InitGamePlayer(false, null);
 
                                 outmsg = server.CreateMessage();

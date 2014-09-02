@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace PenisPotato.StateSystem.Screens
 {
@@ -18,7 +19,7 @@ namespace PenisPotato.StateSystem.Screens
         MenuEntry colorChoiceMenuEntry;
 
         string name = "";
-        string[] colors = { "Red", "Green", "Blue" };
+        Color[] colors = new Color[4] { Color.PaleVioletRed, Color.PaleTurquoise, Color.PaleGreen, Color.PaleGoldenrod };
         int currentColor;
 
         #endregion
@@ -29,17 +30,19 @@ namespace PenisPotato.StateSystem.Screens
         /// <summary>
         /// Constructor.
         /// </summary>
-        public OptionsMenuScreen()
+        public OptionsMenuScreen(StateManager screenManager)
             : base("Options")
         {
+            name = screenManager.mpPlayerInfo.playerName;
+            currentColor = colors.ToList().IndexOf(screenManager.mpPlayerInfo.playerColorChoice[0]);
             // Create our menu entries.
-            nameTypeMenuEntry = new MenuEntry(string.Empty);
-            colorChoiceMenuEntry = new MenuEntry(string.Empty);
+            nameTypeMenuEntry = new MenuEntry(name);
+            colorChoiceMenuEntry = new MenuEntry(colors[currentColor].ToString());
 
             SetMenuEntryText();
 
             MenuEntry back = new MenuEntry("Back");
-
+            
             // Hook up menu event handlers.
             nameTypeMenuEntry.Selected += NameTypeEntrySelected;
             colorChoiceMenuEntry.Selected += ColorChoiceEntrySelected;
@@ -58,7 +61,8 @@ namespace PenisPotato.StateSystem.Screens
         void SetMenuEntryText()
         {
             nameTypeMenuEntry.Text = "Multiplayer Name: " + name;
-            colorChoiceMenuEntry.Text = "Color: " + colors[currentColor];
+            colorChoiceMenuEntry.Text = "Color: " + colors[currentColor].ToString();
+            colorChoiceMenuEntry.playerColor = colors[currentColor];
         }
 
 
@@ -90,6 +94,8 @@ namespace PenisPotato.StateSystem.Screens
         {
             MessageBoxScreen msg = sender as MessageBoxScreen;
             name = msg.IPAddress;
+            ScreenManager.mpPlayerInfo.playerName = name;
+            SerializationHelper.Save(ScreenManager.mpPlayerInfo);
             SetMenuEntryText();
         }
 
@@ -99,7 +105,8 @@ namespace PenisPotato.StateSystem.Screens
         void ColorChoiceEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             currentColor = (currentColor + 1) % colors.Length;
-
+            ScreenManager.mpPlayerInfo.playerColorChoice[0] = colors[currentColor];
+            SerializationHelper.Save(ScreenManager.mpPlayerInfo);
             SetMenuEntryText();
         }
 

@@ -20,7 +20,7 @@ namespace PenisPotato.StateSystem.Networking
         /// Constructs an error message box from the specified exception.
         /// </summary>
         public NetworkErrorScreen(Exception exception)
-            : base(GetErrorMessage(exception), false)
+            : base(GetErrorMessage(exception), false, false)
         { }
 
 

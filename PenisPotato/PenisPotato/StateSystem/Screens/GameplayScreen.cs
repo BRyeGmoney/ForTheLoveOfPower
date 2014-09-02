@@ -85,7 +85,7 @@ namespace PenisPotato.StateSystem.Screens
             //Players
             if (isMpMatch)
             {
-                playerOne = new Player.MainPlayer(content, graphics, ScreenManager, this, netPlayer, Color.PaleVioletRed);
+                playerOne = new Player.MainPlayer(content, graphics, ScreenManager, this, netPlayer, ScreenManager.mpPlayerInfo.playerColorChoice[0]);
                 players.ForEach(pS =>
                 {
                     if (pS.GetType().Equals(typeof(Player.NetworkPlayer)))

@@ -13,6 +13,7 @@ namespace PenisPotato.StateSystem.Screens
 
         string message;
         public String IPAddress { get; set; }
+        private bool onlyNumeric = false;
         //Texture2D gradientTexture;
 
         #endregion
@@ -32,7 +33,7 @@ namespace PenisPotato.StateSystem.Screens
         /// usage text prompt.
         /// </summary>
         public MessageBoxScreen(string message)
-            : this(message, true)
+            : this(message, true, false)
         { }
 
 
@@ -40,10 +41,11 @@ namespace PenisPotato.StateSystem.Screens
         /// Constructor lets the caller specify whether to include the standard
         /// "A=ok, B=cancel" usage text prompt.
         /// </summary>
-        public MessageBoxScreen(string message, bool includeUsageText)
+        public MessageBoxScreen(string message, bool includeUsageText, bool onlyNumeric)
         {
             const string usageText = "\n\n\n\n\n\n\nEnter = ok" +
                                      "\nEsc = cancel";
+            this.onlyNumeric = onlyNumeric;
             IPAddress = "";
             if (includeUsageText)
                 this.message = message + usageText;
@@ -75,6 +77,15 @@ namespace PenisPotato.StateSystem.Screens
 
         #region Handle Input
 
+        public static bool IsKeyAChar(Keys key)
+        {
+            return key >= Keys.A && key <= Keys.Z;
+        }
+
+        public static bool IsKeyADigit(Keys key)
+        {
+            return (key >= Keys.D0 && key <= Keys.D9) || (key >= Keys.NumPad0 && key <= Keys.NumPad9);
+        }
 
         /// <summary>
         /// Responds to user input, accepting or cancelling the message box.
@@ -90,7 +101,10 @@ namespace PenisPotato.StateSystem.Screens
             {
                 if (!prevState.Contains(key))
                 {
-                    IPAddress += TextInputHandler.KeyToString(key);
+                    if (onlyNumeric)
+                        IPAddress += TextInputHandler.KeyToString(key);
+                    else if (IsKeyAChar(key) || IsKeyADigit(key))
+                        IPAddress += key.ToString();
                     if (key == Keys.Back && IPAddress.Length > 0)
                         IPAddress = IPAddress.Remove(IPAddress.Length - 1);
                 }

@@ -431,7 +431,7 @@ namespace PenisPotato.StateSystem.Networking
             MessageBoxScreen messageBox;
 
             if (!string.IsNullOrEmpty(sessionEndMessage))
-                messageBox = new MessageBoxScreen(sessionEndMessage, false);
+                messageBox = new MessageBoxScreen(sessionEndMessage, false, false);
             else
                 messageBox = null;
 

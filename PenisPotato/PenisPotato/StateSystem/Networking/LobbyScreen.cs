@@ -38,20 +38,20 @@ namespace PenisPotato.StateSystem.Networking
         /// <summary>
         /// Constructs a new lobby screen.
         /// </summary>
-        public LobbyScreen(GameServer gameServer)
+        public LobbyScreen(GameServer gameServer, StateManager screenManager)
         {
             this.networkSession = gameServer;
             //this.networkSession.stateManager = ScreenManager;
-            netPlayer = new Player.NetworkPlayer(true, "");
+            netPlayer = new Player.NetworkPlayer(true, "", screenManager);
 
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
 
-        public LobbyScreen(String ipaddress)
+        public LobbyScreen(String ipaddress, StateManager screenManager)
         {
             //this.netClient = netClient;
-            netPlayer = new Player.NetworkPlayer(false, ipaddress);
+            netPlayer = new Player.NetworkPlayer(false, ipaddress, screenManager);
 
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
@@ -261,7 +261,7 @@ namespace PenisPotato.StateSystem.Networking
             foreach (Player.NetworkPlayer nP in netPlayer.peers)
             {
                 gamerCount++;
-                spriteBatch.DrawString(font, String.Format("{0} #{1}", nP.playerName, gamerCount), new Vector2(titlePosition.X + 32, titlePosition.Y + (gamerCount * 50)), nP.playerColor, 0,
+                spriteBatch.DrawString(font, String.Format("{0}", nP.playerName), new Vector2(titlePosition.X + 32, titlePosition.Y + (gamerCount * 50)), nP.playerColor, 0,
                                         titleOrigin, titleScale, SpriteEffects.None, 0);
                 if (nP.IsReady)
                     spriteBatch.Draw(isReadyTexture, new Rectangle((int)titlePosition.X, (int)titlePosition.Y + (gamerCount * 50), 32, 32),

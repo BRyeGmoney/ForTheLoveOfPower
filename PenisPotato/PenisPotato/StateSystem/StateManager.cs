@@ -25,6 +25,8 @@ namespace PenisPotato.StateSystem
         Texture2D blankTexture;
         public Texture2D tile;
 
+        public MPSaveData mpPlayerInfo;
+
         public List<Screens.BuildMenuItem> buildItems;
         public List<Texture2D> textureRepo;
 
@@ -111,6 +113,19 @@ namespace PenisPotato.StateSystem
 
             SetupBuildMenuItems(content);
             SetupTextureRepository(content);
+
+            mpPlayerInfo = SerializationHelper.Load<MPSaveData>();
+
+            //if mpPlayerInfo failed to load then we'll just set the player up with brand new info
+            if (mpPlayerInfo == null)
+            {
+                mpPlayerInfo = new MPSaveData();
+                mpPlayerInfo.playerName = "PoopHead";
+                mpPlayerInfo.playerLevel = 0;
+                mpPlayerInfo.playerColorChoice = new Color[4] { Color.PaleVioletRed, Color.PaleTurquoise, Color.PaleGreen, Color.PaleGoldenrod };
+
+                SerializationHelper.Save(mpPlayerInfo);
+            }
 
             // Tell each of the screens to load their content.
             foreach (GameScreen screen in screens)
