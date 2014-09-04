@@ -13,7 +13,7 @@ namespace PenisPotato.Structures.Civil
         public List<Structure> settlementProperties;
         public bool isDictatorInCity = false;
         public bool isCityBeingConquered = false;
-        public int conqueredIndex = 0;
+        public int conqueredIndex = -1;
         public long invadingPlayerId = 0;
         public Color invadingPlayerColor;
 
@@ -140,6 +140,10 @@ namespace PenisPotato.Structures.Civil
                 opposingPlayer.playerSettlements.Add(this);
                 opposingPlayer.playerStructures.Add(this);
             //}
+            if (curPlayer.netPlayer != null)
+            {
+                curPlayer.buildingTiles = curPlayer.buildingTiles.Except(this.GetAllTilesBelongingToSettlement()).ToList();
+            }
 
             this.settlementProperties.ForEach(sP =>
             {
