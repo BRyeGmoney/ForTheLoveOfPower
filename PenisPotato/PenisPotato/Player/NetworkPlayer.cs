@@ -78,6 +78,7 @@ namespace PenisPotato.Player
             }
             else
             {
+                buildingTiles = new List<Vector2>();
                 playerStructures = new List<Structures.Structure>();
                 playerSettlements = new List<Structures.Civil.Settlement>();
                 playerUnits = new List<Units.Unit>();
@@ -138,6 +139,7 @@ namespace PenisPotato.Player
                                 //if (nPlayer.client == null)
                                 nPlayer.playerSettlements.Add(newSett);
                                 nPlayer.playerStructures.Add(newSett);
+                                nPlayer.buildingTiles.AddRange(newSett.GetSurroundingTiles());
                             }
                         }
                         else if (packetType == (byte)PacketType.SETTLEMENT_UPDATE)
@@ -180,6 +182,8 @@ namespace PenisPotato.Player
                                 //if (nPlayer.client == null)
                                 nPlayer.playerStructures.Add(newStruct);
                                 nPlayer.playerSettlements[newStruct.settlementOwnerIndex].settlementProperties.Add(newStruct);
+                                nPlayer.buildingTiles.AddRange(newStruct.GetSurroundingTiles());
+                                //make sure to clear duplicates
                             }
                         }
                         else if (packetType == (byte)PacketType.STRUCTURE_UPDATE)

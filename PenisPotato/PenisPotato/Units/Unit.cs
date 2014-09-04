@@ -19,7 +19,7 @@ namespace PenisPotato.Units
         public int tileWidth;
         public byte unitType;
         public UnitType goodAgainst;
-        public bool canBuild = false;
+        public bool canBuild = true;
 
         public int numUnits = 1;
         private bool needsUpdate = false;
@@ -56,6 +56,8 @@ namespace PenisPotato.Units
 
         public virtual void Update(GameTime gameTime, Player.Player player)
         {
+            //canBuild = true;
+
             if (movementPoints.Count > 0)
             {
                 moveTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -84,6 +86,7 @@ namespace PenisPotato.Units
                         //if there is no unit here then we continue on as if nothing
                         piecePosition = movementPoints[0];
                         movementPoints.RemoveAt(0);
+                        canBuild = CheckIfNoEnemyOnTile(player, piecePosition);
                     }
                     else if (unitOnTile.playerColor.Equals(player.playerColor))
                     {
@@ -121,7 +124,24 @@ namespace PenisPotato.Units
                 needsUpdate = false;
             }
 
-            canBuild = (!player.buildingTiles.Contains(piecePosition) && !player.dupeBuildingTiles.Contains(piecePosition));
+            canBuild = canBuild && (!player.buildingTiles.Contains(piecePosition) && !player.dupeBuildingTiles.Contains(piecePosition));
+        }
+
+        private bool CheckIfNoEnemyOnTile(Player.Player player, Vector2 pos)
+        {
+            bool noEnemy = true;
+            if (player.netPlayer != null)
+            {
+                player.netPlayer.peers.ForEach(peer =>
+                    {
+                        peer.buildingTiles.ForEach(bT =>
+                            {
+                                if (bT.Equals(pos))
+                                    noEnemy = false;
+                            });
+                    });
+            }
+            return noEnemy;
         }
 
         public virtual void Update(GameTime gameTime, Player.EnemyPlayer enemyPlayer)
