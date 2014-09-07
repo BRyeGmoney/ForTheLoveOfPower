@@ -140,6 +140,7 @@ namespace PenisPotato.Player
                                 nPlayer.playerSettlements.Add(newSett);
                                 nPlayer.playerStructures.Add(newSett);
                                 nPlayer.buildingTiles.AddRange(newSett.GetSurroundingTiles());
+                                ClearDupeBuildingTiles(nPlayer);
                             }
                         }
                         else if (packetType == (byte)PacketType.SETTLEMENT_UPDATE)
@@ -183,7 +184,9 @@ namespace PenisPotato.Player
                                 nPlayer.playerStructures.Add(newStruct);
                                 nPlayer.playerSettlements[newStruct.settlementOwnerIndex].settlementProperties.Add(newStruct);
                                 nPlayer.buildingTiles.AddRange(newStruct.GetSurroundingTiles());
+
                                 //make sure to clear duplicates
+                                ClearDupeBuildingTiles(nPlayer);
                             }
                         }
                         else if (packetType == (byte)PacketType.STRUCTURE_UPDATE)
@@ -397,6 +400,11 @@ namespace PenisPotato.Player
                 }
             }
 
+        }
+
+        private void ClearDupeBuildingTiles(Player nPlayer)
+        {
+            nPlayer.buildingTiles = nPlayer.buildingTiles.Distinct().ToList();
         }
 
         private Units.Unit DetermineUnitType(byte type, int numUnits, Vector2 piecePosition, NetworkPlayer nP)

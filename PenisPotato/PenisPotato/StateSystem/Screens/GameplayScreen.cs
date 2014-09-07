@@ -213,9 +213,9 @@ namespace PenisPotato.StateSystem.Screens
                     DrawChunk(spriteBatch, x, y, tileWidth);
             }
 
-            playerOne.netPlayer.peers.ForEach(peer =>
+            players.ForEach(player =>
                 {
-                    peer.buildingTiles.ForEach(pS => { spriteBatch.Draw(tile, new Rectangle((int)(pS.X * tileWidth), (int)((pS.Y * tileWidth) - Math.Abs(pS.X % 2) * (tileWidth / 2)), tileWidth, tileWidth), peer.playerColor); });
+                    player.buildingTiles.ForEach(pS => { spriteBatch.Draw(tile, new Rectangle((int)(pS.X * tileWidth), (int)((pS.Y * tileWidth) - Math.Abs(pS.X % 2) * (tileWidth / 2)), tileWidth, tileWidth), player.playerColor); });
                 });
 
             playerOne.buildingTiles.ForEach(pS =>

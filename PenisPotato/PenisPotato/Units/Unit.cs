@@ -130,7 +130,7 @@ namespace PenisPotato.Units
         private bool CheckIfNoEnemyOnTile(Player.Player player, Vector2 pos)
         {
             bool noEnemy = true;
-            if (player.netPlayer != null)
+            /*if (player.netPlayer != null)
             {
                 player.netPlayer.peers.ForEach(peer =>
                     {
@@ -141,6 +141,17 @@ namespace PenisPotato.Units
                             });
                     });
             }
+            else
+            {*/
+                player.masterState.players.ForEach(playee =>
+                    {
+                        playee.buildingTiles.ForEach(bT =>
+                            {
+                                if (bT.Equals(pos))
+                                    noEnemy = false;
+                            });
+                    });
+            //}
             return noEnemy;
         }
 
