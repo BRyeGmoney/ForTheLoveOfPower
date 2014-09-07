@@ -155,7 +155,7 @@ namespace PenisPotato.Player
                 if (input.CurrentMouseStates[0].LeftButton == ButtonState.Released && input.LastMouseStates[0].LeftButton == ButtonState.Pressed)
                 {
                     //Dump the tiles we've highlighted for moving into the navigating unit's repertoire.
-                    if (navigatingUnit != null && movementTiles.Count > 1)
+                    if (navigatingUnit != null && movementTiles.Count > 0)
                     {
                         //Clear the movement points because the new set of movement points is being sent to the navigating unit
                         navigatingUnit.movementPoints.AddRange(movementTiles);

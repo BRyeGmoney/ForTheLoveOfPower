@@ -29,6 +29,13 @@ namespace PenisPotato.Structures.Economy
             this.pieceTexture = Content.Load<Texture2D>("Textures/Structures/Economy/Factory");
         }
 
+        public override void Clicked(GameTime gameTime, Player.Player player)
+        {
+            
+
+            base.Clicked(gameTime, player);
+        }
+
         public override void Update(GameTime gameTime, Player.Player player)
         {
             lastTime += (float)gameTime.ElapsedGameTime.TotalSeconds;

@@ -146,6 +146,7 @@
     <Compile Include="StateSystem\Screens\BackgroundScreen.cs" />
     <Compile Include="StateSystem\Screens\BuildMenuScreen.cs" />
     <Compile Include="StateSystem\Screens\DevSplashScreen.cs" />
+    <Compile Include="StateSystem\Screens\EconomyScreen.cs" />
     <Compile Include="StateSystem\Screens\GameplayScreen.cs" />
     <Compile Include="StateSystem\Screens\LoadingScreen.cs" />
     <Compile Include="StateSystem\Screens\MainMenuScreen.cs" />
