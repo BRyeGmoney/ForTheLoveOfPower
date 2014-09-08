@@ -76,7 +76,7 @@ namespace PenisPotato.Structures
             }
         }
 
-        public virtual void Clicked(GameTime gameTime, Player.Player player)
+        public virtual void Clicked(GameTime gameTime, Player.MainPlayer player)
         {
         }
 

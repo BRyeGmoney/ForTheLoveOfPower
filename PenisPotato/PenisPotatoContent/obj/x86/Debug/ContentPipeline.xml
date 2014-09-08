@@ -379,6 +379,33 @@
       <Output>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Fonts\debugFont.xnb</Output>
       <Time>2014-08-12T20:46:07.9505995-07:00</Time>
     </Item>
+    <Item>
+      <Source>Icons\Economy\Agriculture.png</Source>
+      <Name>Icons\Economy\Agriculture</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Economy\Agriculture.xnb</Output>
+      <Time>2014-09-07T16:49:23.6874801-07:00</Time>
+    </Item>
+    <Item>
+      <Source>Icons\Economy\Automotive.png</Source>
+      <Name>Icons\Economy\Automotive</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Economy\Automotive.xnb</Output>
+      <Time>2014-09-07T16:50:08.6540521-07:00</Time>
+    </Item>
+    <Item>
+      <Source>Icons\Economy\Computers.png</Source>
+      <Name>Icons\Economy\Computers</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Economy\Computers.xnb</Output>
+      <Time>2014-09-07T16:50:50.0274185-07:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

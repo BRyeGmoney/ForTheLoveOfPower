@@ -29,11 +29,9 @@ namespace PenisPotato.Structures.Economy
             this.pieceTexture = Content.Load<Texture2D>("Textures/Structures/Economy/Factory");
         }
 
-        public override void Clicked(GameTime gameTime, Player.Player player)
+        public override void Clicked(GameTime gameTime, Player.MainPlayer player)
         {
-            
-
-            base.Clicked(gameTime, player);
+            player.ScreenManager.AddScreen(new StateSystem.Screens.EconomyScreen(player, player.ScreenManager), PlayerIndex.One);
         }
 
         public override void Update(GameTime gameTime, Player.Player player)

@@ -21,7 +21,7 @@ namespace PenisPotato.Structures.Military
             this.settlementOwnerIndex = owner;
         }
 
-        public override void Clicked(GameTime gameTime, Player.Player player)
+        public override void Clicked(GameTime gameTime, Player.MainPlayer player)
         {
             if (built >= 100)
             {
