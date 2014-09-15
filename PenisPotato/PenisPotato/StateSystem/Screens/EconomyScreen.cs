@@ -15,15 +15,20 @@ namespace PenisPotato.StateSystem.Screens
         public StateManager stateManager;
 
         private Texture2D[] induTextures;
-        private Vector2[] induBasePos; 
+        private Vector2[] induBasePos;
 
-        public EconomyScreen(Player.MainPlayer player, StateManager stateManager)
+        private Structures.Structure managingBuilding;
+        private Structures.PieceTypes typeOfBuilding;
+
+        public EconomyScreen(Player.MainPlayer player, StateManager stateManager, Structures.Structure econOwner, Structures.PieceTypes typeofBuilding)
         {
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
 
             this.player = player;
             this.stateManager = stateManager;
+            this.managingBuilding = econOwner;
+            this.typeOfBuilding = typeofBuilding;
 
             LoadContent();
         }
@@ -55,14 +60,45 @@ namespace PenisPotato.StateSystem.Screens
             }
         }
 
+        private int GetEconomyPercentage(int index)
+        {
+            if (typeOfBuilding.Equals(Structures.PieceTypes.Factory))
+                return (managingBuilding as Structures.Economy.Factory).economies[index];
+            else if (typeOfBuilding.Equals(Structures.PieceTypes.Exporter))
+                return (managingBuilding as Structures.Economy.Exporter).economies[index];
+            else
+                return (managingBuilding as Structures.Economy.Market).economies[index];
+        }
+
         public override void Draw(GameTime gameTime)
         {
+            Vector2 addedPos;
             stateManager.SpriteBatch.Begin();
 
             for (int x = 0; x < 3; x++)
             {
-                stateManager.SpriteBatch.Draw(stateManager.tile, induBasePos[x], player.playerColor);
-                stateManager.SpriteBatch.Draw(induTextures[x], new Rectangle((int)induBasePos[x].X, (int)induBasePos[x].Y, stateManager.tile.Width, stateManager.tile.Height), player.playerColor);
+                int perc = GetEconomyPercentage(x);
+                if (x == 0)
+                {
+                    addedPos = new Vector2(0, -perc);
+                    stateManager.DrawLine(stateManager.SpriteBatch, new Vector2(induBasePos[x].X + (stateManager.tile.Width / 2), induBasePos[x].Y + (stateManager.tile.Height / 2)), new Vector2(induBasePos[x].X + (stateManager.tile.Width / 2) + addedPos.X, induBasePos[x].Y + (stateManager.tile.Height / 2) + addedPos.Y), player.playerColor);
+                    stateManager.SpriteBatch.DrawString(stateManager.Font, String.Format("{0}%", perc), new Vector2(induBasePos[x].X, induBasePos[x].Y - (stateManager.tile.Height / 2) + addedPos.Y), player.playerColor);
+                }
+                else if (x == 1)
+                {
+                    addedPos = new Vector2(0, perc);
+                    stateManager.DrawLine(stateManager.SpriteBatch, induBasePos[x], induBasePos[x] + addedPos, player.playerColor);
+                    stateManager.SpriteBatch.DrawString(stateManager.Font, String.Format("{0}%", perc), new Vector2(induBasePos[x].X, induBasePos[x].Y + stateManager.tile.Height + addedPos.Y), player.playerColor);
+                }
+                else
+                {
+                    addedPos = new Vector2(-perc, 0);
+                    stateManager.DrawLine(stateManager.SpriteBatch, induBasePos[x], induBasePos[x] + addedPos, player.playerColor);
+                    stateManager.SpriteBatch.DrawString(stateManager.Font, String.Format("{0}%", perc), new Vector2(induBasePos[x].X + addedPos.X, induBasePos[x].Y - (stateManager.tile.Height / 2)), player.playerColor);
+                }
+
+                stateManager.SpriteBatch.Draw(stateManager.tile, induBasePos[x] + addedPos, player.playerColor);
+                stateManager.SpriteBatch.Draw(induTextures[x], new Rectangle((int)(induBasePos[x].X + addedPos.X), (int)(induBasePos[x].Y + addedPos.Y), stateManager.tile.Width, stateManager.tile.Height), player.playerColor);
             }
 
 

@@ -10,6 +10,8 @@ namespace PenisPotato.Structures.Economy
 {
     public class Factory : Structure
     {
+        public int[] economies;
+
         public Factory() { }
 
         public Factory(Vector2 pos, Color color, Texture2D pieceTex, int owner)
@@ -22,6 +24,15 @@ namespace PenisPotato.Structures.Economy
             this.buildTime = 25;
             this.modifierIndex = (int)StateSystem.TextureRepoOrder.plusMoney;
             this.settlementOwnerIndex = owner;
+            SetEconomy();
+        }
+
+        private void SetEconomy()
+        {
+            economies = new int[3];
+            economies[0] = 100;
+            economies[1] = 0;
+            economies[2] = 0;
         }
 
         public override void LoadContent(ContentManager Content)
@@ -31,7 +42,7 @@ namespace PenisPotato.Structures.Economy
 
         public override void Clicked(GameTime gameTime, Player.MainPlayer player)
         {
-            player.ScreenManager.AddScreen(new StateSystem.Screens.EconomyScreen(player, player.ScreenManager), PlayerIndex.One);
+            player.ScreenManager.AddScreen(new StateSystem.Screens.EconomyScreen(player, player.ScreenManager, this, Structures.PieceTypes.Factory), PlayerIndex.One);
         }
 
         public override void Update(GameTime gameTime, Player.Player player)

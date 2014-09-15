@@ -24,6 +24,7 @@ namespace PenisPotato.StateSystem
 
         Texture2D blankTexture;
         public Texture2D tile;
+        public Texture2D tracer;
 
         public MPSaveData mpPlayerInfo;
 
@@ -110,6 +111,10 @@ namespace PenisPotato.StateSystem
             font = content.Load<SpriteFont>("Fonts/falturaFont");
             blankTexture = content.Load<Texture2D>("Textures/Misc/blank");
             tile = content.Load<Texture2D>("Textures/Map/square");
+
+            // create 1x1 texture for line drawing
+            tracer = new Texture2D(GraphicsDevice, 1, 1);
+            tracer.SetData<Color>(new Color[] { Color.White });// fill the texture with white
 
             SetupBuildMenuItems(content);
             SetupTextureRepository(content);
@@ -263,6 +268,18 @@ namespace PenisPotato.StateSystem
                 screenNames.Add(screen.GetType().Name);
 
             //Debug.WriteLine(string.Join(", ", screenNames.ToArray()));
+        }
+
+        public void DrawLine(SpriteBatch sb, Vector2 start, Vector2 end, Color playerColor)
+        {
+            Vector2 edge = end - start;
+            // calculate angle to rotate line
+            float angle =
+                (float)Math.Atan2(edge.Y, edge.X);
+
+
+            sb.Draw(tracer, new Rectangle((int)start.X, (int)start.Y, (int)edge.Length(), 1),
+                null, playerColor, angle, new Vector2(0, 0), SpriteEffects.None, 0);
         }
 
 
