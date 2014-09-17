@@ -20,6 +20,8 @@ namespace PenisPotato.StateSystem.Screens
         private Structures.Structure managingBuilding;
         private Structures.PieceTypes typeOfBuilding;
 
+        private int selectedIndex = -1;
+
         public EconomyScreen(Player.MainPlayer player, StateManager stateManager, Structures.Structure econOwner, Structures.PieceTypes typeofBuilding)
         {
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
@@ -54,10 +56,26 @@ namespace PenisPotato.StateSystem.Screens
 
             if (input.CurrentMouseStates[0].LeftButton == ButtonState.Pressed && input.LastMouseStates[0].LeftButton == ButtonState.Released)
             {
+                for (int x = 0; x < 3; x++)
+                {
+                    if (new Rectangle((int)induBasePos[x].X, (int)induBasePos[x].Y, stateManager.tile.Width, stateManager.tile.Height).Intersects(
+                        new Rectangle(input.CurrentMouseStates[0].X, input.CurrentMouseStates[0].Y, 5, 5)))
+                    {
+                        selectedIndex = x;
+                        isClose = false;
+                    }
+                }
 
                 if (isClose)
                     stateManager.RemoveScreen(this);
             }
+            else if (input.CurrentMouseStates[0].LeftButton == ButtonState.Pressed && selectedIndex > -1)
+            {
+                SetEconomyPercentage((int)MathHelper.Clamp(100 - (input.CurrentMouseStates[0].Y - (induBasePos[selectedIndex].Y - 100)), 0, 100));
+                isClose = false;
+            }
+            else if (input.CurrentMouseStates[0].LeftButton == ButtonState.Released && input.LastMouseStates[0].LeftButton == ButtonState.Released)
+                selectedIndex = -1; //reset
         }
 
         private int GetEconomyPercentage(int index)
@@ -68,6 +86,16 @@ namespace PenisPotato.StateSystem.Screens
                 return (managingBuilding as Structures.Economy.Exporter).economies[index];
             else
                 return (managingBuilding as Structures.Economy.Market).economies[index];
+        }
+
+        private void SetEconomyPercentage(int percentage)
+        {
+            if (typeOfBuilding.Equals(Structures.PieceTypes.Factory))
+                (managingBuilding as Structures.Economy.Factory).economies[selectedIndex] = percentage;
+            else if (typeOfBuilding.Equals(Structures.PieceTypes.Exporter))
+                (managingBuilding as Structures.Economy.Exporter).economies[selectedIndex] = percentage;
+            else
+                (managingBuilding as Structures.Economy.Market).economies[selectedIndex] = percentage;
         }
 
         public override void Draw(GameTime gameTime)
