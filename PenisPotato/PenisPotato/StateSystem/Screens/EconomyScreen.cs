@@ -58,11 +58,32 @@ namespace PenisPotato.StateSystem.Screens
             {
                 for (int x = 0; x < 3; x++)
                 {
-                    if (new Rectangle((int)induBasePos[x].X, (int)induBasePos[x].Y, stateManager.tile.Width, stateManager.tile.Height).Intersects(
-                        new Rectangle(input.CurrentMouseStates[0].X, input.CurrentMouseStates[0].Y, 5, 5)))
+                    if (x == 0)
                     {
-                        selectedIndex = x;
-                        isClose = false;
+                        if (new Rectangle((int)induBasePos[x].X, (int)induBasePos[x].Y - GetEconomyPercentage(x), stateManager.tile.Width, stateManager.tile.Height).Intersects(
+                            new Rectangle(input.CurrentMouseStates[0].X, input.CurrentMouseStates[0].Y, 5, 5)))
+                        {
+                            selectedIndex = x;
+                            isClose = false;
+                        }
+                    }
+                    else if (x == 1)
+                    {
+                        if (new Rectangle((int)induBasePos[x].X, (int)induBasePos[x].Y + GetEconomyPercentage(x), stateManager.tile.Width, stateManager.tile.Height).Intersects(
+                            new Rectangle(input.CurrentMouseStates[0].X, input.CurrentMouseStates[0].Y, 5, 5)))
+                        {
+                            selectedIndex = x;
+                            isClose = false;
+                        }
+                    }
+                    else
+                    {
+                        if (new Rectangle((int)induBasePos[x].X - GetEconomyPercentage(x), (int)induBasePos[x].Y, stateManager.tile.Width, stateManager.tile.Height).Intersects(
+                            new Rectangle(input.CurrentMouseStates[0].X, input.CurrentMouseStates[0].Y, 5, 5)))
+                        {
+                            selectedIndex = x;
+                            isClose = false;
+                        }
                     }
                 }
 
@@ -71,7 +92,12 @@ namespace PenisPotato.StateSystem.Screens
             }
             else if (input.CurrentMouseStates[0].LeftButton == ButtonState.Pressed && selectedIndex > -1)
             {
-                SetEconomyPercentage((int)MathHelper.Clamp(100 - (input.CurrentMouseStates[0].Y - (induBasePos[selectedIndex].Y - 100)), 0, 100));
+                if (selectedIndex == 0)
+                    SetEconomyPercentage((int)MathHelper.Clamp(100 - (input.CurrentMouseStates[0].Y - (induBasePos[selectedIndex].Y - 100)), 0, 100));
+                else if (selectedIndex == 1)
+                    SetEconomyPercentage((int)MathHelper.Clamp((input.CurrentMouseStates[0].Y - (induBasePos[selectedIndex].Y - 100) - 100), 0, 100));
+                else
+                    SetEconomyPercentage((int)MathHelper.Clamp(100 - (input.CurrentMouseStates[0].X - (induBasePos[selectedIndex].X - 100)), 0, 100));
                 isClose = false;
             }
             else if (input.CurrentMouseStates[0].LeftButton == ButtonState.Released && input.LastMouseStates[0].LeftButton == ButtonState.Released)
@@ -96,6 +122,8 @@ namespace PenisPotato.StateSystem.Screens
                 (managingBuilding as Structures.Economy.Exporter).economies[selectedIndex] = percentage;
             else
                 (managingBuilding as Structures.Economy.Market).economies[selectedIndex] = percentage;
+
+
         }
 
         public override void Draw(GameTime gameTime)

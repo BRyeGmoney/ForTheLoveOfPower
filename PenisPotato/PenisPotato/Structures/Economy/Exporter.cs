@@ -34,6 +34,11 @@ namespace PenisPotato.Structures.Economy
             economies[2] = 0;
         }
 
+        public override void Clicked(GameTime gameTime, Player.MainPlayer player)
+        {
+            player.ScreenManager.AddScreen(new StateSystem.Screens.EconomyScreen(player, player.ScreenManager, this, Structures.PieceTypes.Exporter), PlayerIndex.One);
+        }
+
         public override void Update(GameTime gameTime, Player.Player player)
         {
             if (gameTime.TotalGameTime.Seconds - lastTime > 1)

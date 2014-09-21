@@ -16,6 +16,7 @@ namespace PenisPotato.Structures.Civil
         public int conqueredIndex = -1;
         public long invadingPlayerId = 0;
         public Color invadingPlayerColor;
+        public int[] economyAvailable;
 
         public Settlement() { }
 
@@ -28,6 +29,15 @@ namespace PenisPotato.Structures.Civil
             this.tileWidth = Convert.ToInt16(Resources.tileWidth);
             this.settlementProperties = new List<Structure>();
             this.buildTime = 15;
+            SetUpLocalEconomy();
+        }
+
+        private void SetUpLocalEconomy()
+        {
+            economyAvailable = new int[3];
+            economyAvailable[0] = 0;
+            economyAvailable[1] = 0;
+            economyAvailable[2] = 0;
         }
 
         public override void Update(GameTime gameTime, Player.Player player)
