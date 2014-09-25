@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace PenisPotato.StateSystem.Screens
 {
@@ -219,7 +220,7 @@ namespace PenisPotato.StateSystem.Screens
             titlePosition.Y -= transitionOffset * 100;
 
             spriteBatch.DrawString(font, menuTitle, titlePosition, titleColor, 0,
-                                   titleOrigin, titleScale, SpriteEffects.None, 0);
+                                   titleOrigin, titleScale * ScreenManager.audioManager.visData.Frequencies[0] * 2, SpriteEffects.None, 0);
 
             spriteBatch.End();
         }

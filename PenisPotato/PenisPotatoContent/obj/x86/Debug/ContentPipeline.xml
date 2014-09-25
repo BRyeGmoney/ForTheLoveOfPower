@@ -406,6 +406,26 @@
       <Output>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Economy\Computers.xnb</Output>
       <Time>2014-09-07T16:50:50.0274185-07:00</Time>
     </Item>
+    <Item>
+      <Source>Audio\heart.mp3</Source>
+      <Name>Audio\heart</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Audio\heart.xnb</Output>
+      <Extra>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Audio\heart.wma</Extra>
+      <Time>2014-09-24T22:46:18.3746682-07:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\hex.mp3</Source>
+      <Name>Audio\hex</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Audio\hex.xnb</Output>
+      <Extra>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Audio\hex.wma</Extra>
+      <Time>2014-09-24T22:50:02.7335008-07:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

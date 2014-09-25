@@ -31,6 +31,8 @@ namespace PenisPotato.StateSystem
         public List<Screens.BuildMenuItem> buildItems;
         public List<Texture2D> textureRepo;
 
+        public Audio.AudioManager audioManager;
+
         bool isInitialized;
 
         bool traceEnabled;

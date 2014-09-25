@@ -89,6 +89,8 @@ namespace PenisPotato.Structures.Civil
             base.Update(gameTime, player);
         }
 
+
+
         private void RunCityTakeover(Player.Player player)
         {
             Player.Player opposingPlayer = null;

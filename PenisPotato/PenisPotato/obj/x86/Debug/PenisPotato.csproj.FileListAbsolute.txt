@@ -545,3 +545,7 @@ C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debu
 C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Economy\Agriculture.xnb
 C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Economy\Automotive.xnb
 C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Economy\Computers.xnb
+C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Audio\heart.xnb
+C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Audio\hex.xnb
+C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Audio\heart.wma
+C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Audio\hex.wma
