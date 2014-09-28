@@ -16,7 +16,7 @@ namespace PenisPotato.Structures.Civil
         public int conqueredIndex = -1;
         public long invadingPlayerId = 0;
         public Color invadingPlayerColor;
-        public int[] economyAvailable;
+        public int[,] economyAvailable;
 
         public Settlement() { }
 
@@ -34,10 +34,68 @@ namespace PenisPotato.Structures.Civil
 
         private void SetUpLocalEconomy()
         {
-            economyAvailable = new int[3];
-            economyAvailable[0] = 0;
-            economyAvailable[1] = 0;
-            economyAvailable[2] = 0;
+            economyAvailable = new int[3,3];
+            for (int x = 0; x < 3; x++)
+            {
+                for (int y = 0; y < 3; y++)
+                {
+                    economyAvailable[x, y] = 0;
+                }
+            }
+        }
+
+        public void ReCalcFactoryEconomies()
+        {
+            //Reset the three different types of available economy for the 0/factory index
+            economyAvailable[0, 0] = 0;
+            economyAvailable[0, 1] = 0;
+            economyAvailable[0, 2] = 0;
+
+            settlementProperties.ForEach(sP =>
+            {
+                if (sP.GetType().Equals(typeof(Economy.Factory)))
+                {
+                    economyAvailable[0, 0] += (sP as Economy.Factory).economies[0];
+                    economyAvailable[0, 1] += (sP as Economy.Factory).economies[1];
+                    economyAvailable[0, 2] += (sP as Economy.Factory).economies[2];
+                }
+            });
+        }
+
+        public void ReCalcExporterEconomies()
+        {
+            //Reset the three different types of available economy for the 0/factory index
+            economyAvailable[1, 0] = 0;
+            economyAvailable[1, 1] = 0;
+            economyAvailable[1, 2] = 0;
+
+            settlementProperties.ForEach(sP =>
+            {
+                if (sP.GetType().Equals(typeof(Economy.Exporter)))
+                {
+                    economyAvailable[1, 0] += (sP as Economy.Exporter).economies[0];
+                    economyAvailable[1, 1] += (sP as Economy.Exporter).economies[1];
+                    economyAvailable[1, 2] += (sP as Economy.Exporter).economies[2];
+                }
+            });
+        }
+
+        public void ReCalcMarketEconomies()
+        {
+            //Reset the three different types of available economy for the 0/factory index
+            economyAvailable[2, 0] = 0;
+            economyAvailable[2, 1] = 0;
+            economyAvailable[2, 2] = 0;
+
+            settlementProperties.ForEach(sP =>
+            {
+                if (sP.GetType().Equals(typeof(Economy.Market)))
+                {
+                    economyAvailable[2, 0] += (sP as Economy.Market).economies[0];
+                    economyAvailable[2, 1] += (sP as Economy.Market).economies[1];
+                    economyAvailable[2, 2] += (sP as Economy.Market).economies[2];
+                }
+            });
         }
 
         public override void Update(GameTime gameTime, Player.Player player)
@@ -70,7 +128,8 @@ namespace PenisPotato.Structures.Civil
 
             if (built >= 100 && lastTime > 2f)
             {
-                player.Money++;
+                player.Money += economyAvailable[1, 0] + economyAvailable[1, 1] + economyAvailable[1, 2] +
+                                (((economyAvailable[0, 0] - economyAvailable[1, 0]) + (economyAvailable[0, 1] - economyAvailable[1, 1]) + (economyAvailable[0, 2] - economyAvailable[1, 2])) / 2);
                 lastTime = 0.0f;
             }
 

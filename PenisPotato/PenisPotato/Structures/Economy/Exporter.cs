@@ -23,24 +23,39 @@ namespace PenisPotato.Structures.Economy
             this.tileWidth = Convert.ToInt16(Resources.tileWidth);
             this.buildTime = 25;
             this.settlementOwnerIndex = owner;
-            SetEconomy();
+            SetEconomy(100, 0, 0);
         }
 
-        private void SetEconomy()
+        private void SetEconomy(int ind0, int ind1, int ind2)
         {
             economies = new int[3];
-            economies[0] = 100;
-            economies[1] = 0;
-            economies[2] = 0;
+            economies[0] = ind0;
+            economies[1] = ind1;
+            economies[2] = ind2;
         }
 
         public override void Clicked(GameTime gameTime, Player.MainPlayer player)
         {
-            player.ScreenManager.AddScreen(new StateSystem.Screens.EconomyScreen(player, player.ScreenManager, this, Structures.PieceTypes.Exporter), PlayerIndex.One);
+            if (built >= 100)
+            {
+                int[] availEco = new int[3] { player.playerSettlements[settlementOwnerIndex].economyAvailable[0, 0] - player.playerSettlements[settlementOwnerIndex].economyAvailable[1, 0], 
+                player.playerSettlements[settlementOwnerIndex].economyAvailable[0, 1] - player.playerSettlements[settlementOwnerIndex].economyAvailable[1, 1], 
+                player.playerSettlements[settlementOwnerIndex].economyAvailable[0, 2] - player.playerSettlements[settlementOwnerIndex].economyAvailable[1, 2] };
+                player.ScreenManager.AddScreen(new StateSystem.Screens.EconomyScreen(player, player.ScreenManager, this, Structures.PieceTypes.Exporter, availEco), PlayerIndex.One);
+            }
+        }
+
+        public void DoneModifyingEconomy(Player.Player player)
+        {
+            player.playerSettlements[settlementOwnerIndex].ReCalcExporterEconomies();
+            doneModifying = false;  
         }
 
         public override void Update(GameTime gameTime, Player.Player player)
         {
+            if (doneModifying)
+                DoneModifyingEconomy(player);
+
             if (gameTime.TotalGameTime.Seconds - lastTime > 1)
             {
                 player.Money++;

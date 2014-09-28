@@ -24,15 +24,15 @@ namespace PenisPotato.Structures.Economy
             this.buildTime = 25;
             this.modifierIndex = (int)StateSystem.TextureRepoOrder.plusMoney;
             this.settlementOwnerIndex = owner;
-            SetEconomy();
+            SetEconomy(100, 0, 0);
         }
 
-        private void SetEconomy()
+        private void SetEconomy(int ind0, int ind1, int ind2)
         {
             economies = new int[3];
-            economies[0] = 100;
-            economies[1] = 0;
-            economies[2] = 0;
+            economies[0] = ind0;
+            economies[1] = ind1;
+            economies[2] = ind2;
         }
 
         public override void LoadContent(ContentManager Content)
@@ -42,16 +42,32 @@ namespace PenisPotato.Structures.Economy
 
         public override void Clicked(GameTime gameTime, Player.MainPlayer player)
         {
-            player.ScreenManager.AddScreen(new StateSystem.Screens.EconomyScreen(player, player.ScreenManager, this, Structures.PieceTypes.Factory), PlayerIndex.One);
+            if (built >= 100)
+            {
+                int[] minEco = new int[3] { player.playerSettlements[settlementOwnerIndex].economyAvailable[0, 0] - player.playerSettlements[settlementOwnerIndex].economyAvailable[1, 0], 
+                    player.playerSettlements[settlementOwnerIndex].economyAvailable[0, 1] - player.playerSettlements[settlementOwnerIndex].economyAvailable[1, 1], 
+                    player.playerSettlements[settlementOwnerIndex].economyAvailable[0, 2] - player.playerSettlements[settlementOwnerIndex].economyAvailable[1, 2] };
+
+                player.ScreenManager.AddScreen(new StateSystem.Screens.EconomyScreen(player, player.ScreenManager, this, Structures.PieceTypes.Factory, minEco), PlayerIndex.One);
+            }
+        }
+
+        public void DoneModifyingEconomy(Player.Player player)
+        {
+            player.playerSettlements[settlementOwnerIndex].ReCalcFactoryEconomies();
+            doneModifying = false;   
         }
 
         public override void Update(GameTime gameTime, Player.Player player)
         {
             lastTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+            if (doneModifying)
+                DoneModifyingEconomy(player);
+
             if (built >= 100 && lastTime > 2f)
             {
-                player.Money++;
+                //player.Money++;
                 displayModifier = true;
                 lastTime = 0.0f;
             }

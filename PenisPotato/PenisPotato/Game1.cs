@@ -96,10 +96,7 @@ namespace PenisPotato
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            //audioManager.AddToPlaylist(Audio.AudioManager.songNames[0]);//, new Audio.SpriteEntity(Vector3.Zero, Vector3.Zero, Vector3.Zero, Vector3.Zero));
-            //audioManager.AddToPlaylist(Audio.AudioManager.songNames[1]);//, new Audio.SpriteEntity(Vector3.Zero, Vector3.Zero, Vector3.Zero, Vector3.Zero));
-            screenManager.audioManager.StartPlaylist(0);
-            //audioManager.Play3DSound(Audio.AudioManager.soundNames[0], false, new Audio.SpriteEntity(Vector3.Zero, Vector3.Zero, Vector3.Zero, Vector3.Zero));
+            //screenManager.audioManager.StartPlaylist(0);
         }
 
         /// <summary>

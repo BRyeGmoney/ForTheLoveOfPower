@@ -24,6 +24,7 @@ namespace PenisPotato.Structures
         public int modifierIndex;
         private float modifierTimer;
         public int settlementOwnerIndex;
+        public bool doneModifying = false;
 
         public Structure() { }
 

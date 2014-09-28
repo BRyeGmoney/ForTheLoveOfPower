@@ -21,8 +21,12 @@ namespace PenisPotato.StateSystem.Screens
         private Structures.PieceTypes typeOfBuilding;
 
         private int selectedIndex = -1;
+        private int currentLimit = 0;
 
-        public EconomyScreen(Player.MainPlayer player, StateManager stateManager, Structures.Structure econOwner, Structures.PieceTypes typeofBuilding)
+        private int[] availableEconomies;
+        private readonly int[] origAvailEcons;
+
+        public EconomyScreen(Player.MainPlayer player, StateManager stateManager, Structures.Structure econOwner, Structures.PieceTypes typeofBuilding, int[] availEco)
         {
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
@@ -31,11 +35,14 @@ namespace PenisPotato.StateSystem.Screens
             this.stateManager = stateManager;
             this.managingBuilding = econOwner;
             this.typeOfBuilding = typeofBuilding;
+            origAvailEcons = availEco;
+            this.availableEconomies = new int[3] { origAvailEcons[0], origAvailEcons[1], origAvailEcons[2] };
+            
 
             LoadContent();
         }
 
-        public void LoadContent()
+        public override void LoadContent()
         {
             //Load Textures
             induTextures = new Texture2D[3];
@@ -65,6 +72,7 @@ namespace PenisPotato.StateSystem.Screens
                         {
                             selectedIndex = x;
                             isClose = false;
+                            currentLimit = 100 - (GetEconomyPercentage(1) + GetEconomyPercentage(2));
                         }
                     }
                     else if (x == 1)
@@ -74,6 +82,7 @@ namespace PenisPotato.StateSystem.Screens
                         {
                             selectedIndex = x;
                             isClose = false;
+                            currentLimit = 100 - (GetEconomyPercentage(0) + GetEconomyPercentage(2));
                         }
                     }
                     else
@@ -83,25 +92,33 @@ namespace PenisPotato.StateSystem.Screens
                         {
                             selectedIndex = x;
                             isClose = false;
+                            currentLimit = 100 - (GetEconomyPercentage(0) + GetEconomyPercentage(1));
                         }
                     }
                 }
 
                 if (isClose)
-                    stateManager.RemoveScreen(this);
+                    CloseEconomyScreen();
             }
             else if (input.CurrentMouseStates[0].LeftButton == ButtonState.Pressed && selectedIndex > -1)
             {
                 if (selectedIndex == 0)
-                    SetEconomyPercentage((int)MathHelper.Clamp(100 - (input.CurrentMouseStates[0].Y - (induBasePos[selectedIndex].Y - 100)), 0, 100));
+                    SetEconomyPercentage((int)MathHelper.Clamp(100 - (input.CurrentMouseStates[0].Y - (induBasePos[selectedIndex].Y - 100)), 0, currentLimit));
                 else if (selectedIndex == 1)
-                    SetEconomyPercentage((int)MathHelper.Clamp((input.CurrentMouseStates[0].Y - (induBasePos[selectedIndex].Y - 100) - 100), 0, 100));
+                    SetEconomyPercentage((int)MathHelper.Clamp((input.CurrentMouseStates[0].Y - (induBasePos[selectedIndex].Y - 100) - 100), 0, currentLimit));
                 else
-                    SetEconomyPercentage((int)MathHelper.Clamp(100 - (input.CurrentMouseStates[0].X - (induBasePos[selectedIndex].X - 100)), 0, 100));
+                    SetEconomyPercentage((int)MathHelper.Clamp(100 - (input.CurrentMouseStates[0].X - (induBasePos[selectedIndex].X - 100)), 0, currentLimit));
                 isClose = false;
             }
             else if (input.CurrentMouseStates[0].LeftButton == ButtonState.Released && input.LastMouseStates[0].LeftButton == ButtonState.Released)
                 selectedIndex = -1; //reset
+        }
+
+        private void CloseEconomyScreen()
+        {
+            managingBuilding.doneModifying = true;
+
+            stateManager.RemoveScreen(this);
         }
 
         private int GetEconomyPercentage(int index)
@@ -117,13 +134,20 @@ namespace PenisPotato.StateSystem.Screens
         private void SetEconomyPercentage(int percentage)
         {
             if (typeOfBuilding.Equals(Structures.PieceTypes.Factory))
+            {
                 (managingBuilding as Structures.Economy.Factory).economies[selectedIndex] = percentage;
+                availableEconomies[selectedIndex] = origAvailEcons[selectedIndex] - percentage;
+            }
             else if (typeOfBuilding.Equals(Structures.PieceTypes.Exporter))
+            {
                 (managingBuilding as Structures.Economy.Exporter).economies[selectedIndex] = percentage;
+                availableEconomies[selectedIndex] = origAvailEcons[selectedIndex] - percentage;
+            }
             else
+            {
                 (managingBuilding as Structures.Economy.Market).economies[selectedIndex] = percentage;
-
-
+                availableEconomies[selectedIndex] = origAvailEcons[selectedIndex] - percentage;
+            }
         }
 
         public override void Draw(GameTime gameTime)
@@ -139,18 +163,21 @@ namespace PenisPotato.StateSystem.Screens
                     addedPos = new Vector2(0, -perc);
                     stateManager.DrawLine(stateManager.SpriteBatch, new Vector2(induBasePos[x].X + (stateManager.tile.Width / 2), induBasePos[x].Y + (stateManager.tile.Height / 2)), new Vector2(induBasePos[x].X + (stateManager.tile.Width / 2) + addedPos.X, induBasePos[x].Y + (stateManager.tile.Height / 2) + addedPos.Y), player.playerColor);
                     stateManager.SpriteBatch.DrawString(stateManager.Font, String.Format("{0}%", perc), new Vector2(induBasePos[x].X, induBasePos[x].Y - (stateManager.tile.Height / 2) + addedPos.Y), player.playerColor);
+                    stateManager.SpriteBatch.DrawString(stateManager.Font, String.Format("{0}%", availableEconomies[x]), new Vector2(induBasePos[x].X, induBasePos[x].Y - (stateManager.tile.Height / 2) + addedPos.Y - 30), Color.Red);
                 }
                 else if (x == 1)
                 {
                     addedPos = new Vector2(0, perc);
                     stateManager.DrawLine(stateManager.SpriteBatch, induBasePos[x], induBasePos[x] + addedPos, player.playerColor);
                     stateManager.SpriteBatch.DrawString(stateManager.Font, String.Format("{0}%", perc), new Vector2(induBasePos[x].X, induBasePos[x].Y + stateManager.tile.Height + addedPos.Y), player.playerColor);
+                    stateManager.SpriteBatch.DrawString(stateManager.Font, String.Format("{0}%", availableEconomies[x]), new Vector2(induBasePos[x].X, induBasePos[x].Y - (stateManager.tile.Height / 2) + addedPos.Y - 30), Color.Red);
                 }
                 else
                 {
                     addedPos = new Vector2(-perc, 0);
                     stateManager.DrawLine(stateManager.SpriteBatch, induBasePos[x], induBasePos[x] + addedPos, player.playerColor);
                     stateManager.SpriteBatch.DrawString(stateManager.Font, String.Format("{0}%", perc), new Vector2(induBasePos[x].X + addedPos.X, induBasePos[x].Y - (stateManager.tile.Height / 2)), player.playerColor);
+                    stateManager.SpriteBatch.DrawString(stateManager.Font, String.Format("{0}%", availableEconomies[x]), new Vector2(induBasePos[x].X, induBasePos[x].Y - (stateManager.tile.Height / 2) + addedPos.Y - 30), Color.Red);
                 }
 
                 stateManager.SpriteBatch.Draw(stateManager.tile, induBasePos[x] + addedPos, player.playerColor);
