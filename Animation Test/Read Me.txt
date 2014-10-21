@@ -1,0 +1,7 @@
+1. File "Tank-Still" is a resizing of the aa tank unit at rest to allow for animations without size change and should replace the existing unit if the animation is used.
+2. Files "Tank-Move-1" and "Tank-Move-2" are initial cloud dust building and run at the start of the animation but do not cycle as the tank moves.
+3. Files "Tank-Move-3" through "Tank-Move-6" cycle one after the other indefinitely once the vehicle is in motion until it stops.
+
+These were quite tough to make work even in the limited way that you are seeing them. The big challenge is not being able to see them work.
+I am also unsure of what we require for amount of frames for smooth running or how much detail is really required in each frame.
+If you give me a way to drop the images in and test the flow and look I will give you many more animations at a quicker pace. For now lets use these to test the animations.
