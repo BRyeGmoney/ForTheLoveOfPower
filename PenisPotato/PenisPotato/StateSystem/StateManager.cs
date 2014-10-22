@@ -30,6 +30,7 @@ namespace PenisPotato.StateSystem
 
         public List<Screens.BuildMenuItem> buildItems;
         public List<Texture2D> textureRepo;
+        public List<Graphics.Animation.Animation> animationsRepo;
 
         public Audio.AudioManager audioManager;
 
@@ -120,6 +121,7 @@ namespace PenisPotato.StateSystem
 
             SetupBuildMenuItems(content);
             SetupTextureRepository(content);
+            SetupAnimationRepository(content);
 
             mpPlayerInfo = SerializationHelper.Load<MPSaveData>();
 
@@ -185,6 +187,13 @@ namespace PenisPotato.StateSystem
             textureRepo = new List<Texture2D>();
             textureRepo.Add(content.Load<Texture2D>("Icons//Modifiers//minusMoney"));
             textureRepo.Add(content.Load<Texture2D>("Icons//Modifiers//plusMoney"));
+        }
+
+        private void SetupAnimationRepository(ContentManager content)
+        {
+            animationsRepo = new List<Graphics.Animation.Animation>();
+            animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_Tank"), 0.2f, true));
+            animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_TankMove"), 0.2f, true));
         }
 
         /// <summary>

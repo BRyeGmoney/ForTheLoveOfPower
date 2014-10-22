@@ -20,6 +20,7 @@ namespace PenisPotato.Units
         public byte unitType;
         public UnitType goodAgainst;
         public bool canBuild = true;
+        public Graphics.Animation.AnimationPlayer animPlayer;
 
         public int numUnits = 1;
         private bool needsUpdate = false;
@@ -67,7 +68,10 @@ namespace PenisPotato.Units
                     Unit unitOnTile = null;
                     moveTime = 0f;
 
-                    player.masterState.players.ForEach(curPlayer => 
+                    if (!animPlayer.Equals(null))
+                        animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[1]);
+
+                    player.masterState.players.ForEach(curPlayer =>
                         {
                             if (curPlayer.playerUnits.Exists(pU => pU.piecePosition.Equals(movementPoints[0]) && !pU.Equals(this)))
                                 unitOnTile = curPlayer.playerUnits.Find(pU => pU.piecePosition.Equals(movementPoints[0]));
@@ -77,7 +81,7 @@ namespace PenisPotato.Units
                                 Structures.Civil.Settlement curSettlement = curPlayer.playerSettlements.Find(pS => pS.piecePosition.Equals(movementPoints[0]));
                                 curSettlement.isCityBeingConquered = true;
                                 if (player.netPlayer != null)
-                                    player.netPlayer.packetsToSend.Enqueue(new Player.StructureNetworkPacket() { packetType = (byte)Player.PacketType.SETTLEMENT_UPDATE, building = curSettlement, invaderId = player.netPlayer.uniqueIdentifer, defenderId = (curPlayer as Player.NetworkPlayer).uniqueIdentifer, lengthOfTransmission = 4});
+                                    player.netPlayer.packetsToSend.Enqueue(new Player.StructureNetworkPacket() { packetType = (byte)Player.PacketType.SETTLEMENT_UPDATE, building = curSettlement, invaderId = player.netPlayer.uniqueIdentifer, defenderId = (curPlayer as Player.NetworkPlayer).uniqueIdentifer, lengthOfTransmission = 4 });
                             }
                         });
 
@@ -115,9 +119,15 @@ namespace PenisPotato.Units
                     //if there's a movement just update anyways
                     if (player.netPlayer != null)
                         needsUpdate = true;
-                    
+
                 }
             }
+            else
+            {
+                if (!animPlayer.Equals(null))
+                    animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[0]);
+            }
+
             if (player.netPlayer != null && needsUpdate)
             {
                 player.netPlayer.unitsToUpdate.Enqueue(this);
@@ -162,13 +172,17 @@ namespace PenisPotato.Units
             
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteFont font, StateSystem.StateManager ScreenManager)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, SpriteFont font, StateSystem.StateManager ScreenManager)
         {
             Rectangle pieceRect = new Rectangle((int)(piecePosition.X * tileWidth), (int)(piecePosition.Y * tileWidth - Math.Abs(piecePosition.X % 2) * (tileWidth / 2)), tileWidth, tileWidth);
             if (canBuild)
                 spriteBatch.Draw(ScreenManager.tile, pieceRect, playerColor);
 
-            spriteBatch.Draw(pieceTexture, pieceRect, playerColor);
+
+            if (animPlayer.Animation != null)
+                animPlayer.Draw(gameTime, spriteBatch, new Vector2(pieceRect.X, pieceRect.Y), SpriteEffects.None, playerColor);
+            else
+                spriteBatch.Draw(pieceTexture, pieceRect, playerColor);
 
             if (numUnits > 1)
                 spriteBatch.DrawString(font, numUnits.ToString(), new Vector2(pieceRect.X + 5, pieceRect.Y + pieceRect.Height - (font.LineSpacing * 3)), playerColor, 0.0f, Vector2.Zero, 3.0f, SpriteEffects.None, 0.0f);

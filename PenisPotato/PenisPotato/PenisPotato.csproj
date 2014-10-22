@@ -114,6 +114,8 @@
     <Compile Include="Audio\AudioManager.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="GameSaveData.cs" />
+    <Compile Include="Graphics\Animation\Animation.cs" />
+    <Compile Include="Graphics\Animation\AnimationPlayer.cs" />
     <Compile Include="Graphics\Effects\BloomComponent.cs" />
     <Compile Include="Graphics\Effects\BloomSettings.cs" />
     <Compile Include="Graphics\Primitives.cs" />
