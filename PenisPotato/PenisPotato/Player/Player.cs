@@ -100,7 +100,7 @@ namespace PenisPotato.Player
             {
                 pU.Update(gameTime, this);
 
-                if (pU.numUnits < 1 && !netPlayer.unitsToUpdate.Contains(pU))
+                if (pU.numUnits < 1 || (pU.numUnits < 1 && netPlayer != null && !netPlayer.unitsToUpdate.Contains(pU)))
                     playerUnits.Remove(pU);
             });
         }
