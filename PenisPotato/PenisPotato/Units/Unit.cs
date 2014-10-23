@@ -25,6 +25,8 @@ namespace PenisPotato.Units
         public int numUnits = 1;
         private bool needsUpdate = false;
 
+        private SpriteEffects unitEffects;
+
         public Unit() { }
 
         public Unit(Vector2 position, Texture2D pieceText)
@@ -62,13 +64,15 @@ namespace PenisPotato.Units
             if (movementPoints.Count > 0)
             {
                 moveTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                unitEffects = (movementPoints[0].X >= piecePosition.X) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
 
                 if (movementPoints.Count > 0 && moveTime > unitSpeed)
                 {
                     Unit unitOnTile = null;
                     moveTime = 0f;
 
-                    if (!animPlayer.Equals(null))
+                    if (this.GetType().Equals(typeof(Units.Tank)))
                         animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[1]);
 
                     player.masterState.players.ForEach(curPlayer =>
@@ -124,8 +128,9 @@ namespace PenisPotato.Units
             }
             else
             {
-                if (!animPlayer.Equals(null))
-                    animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[0]);
+                if (animPlayer.Animation != null)//this.GetType().Equals(typeof(Units.Tank)))
+                    animPlayer.KillAnimation();
+                    //animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[0]);
             }
 
             if (player.netPlayer != null && needsUpdate)
@@ -179,10 +184,11 @@ namespace PenisPotato.Units
                 spriteBatch.Draw(ScreenManager.tile, pieceRect, playerColor);
 
 
-            if (animPlayer.Animation != null)
-                animPlayer.Draw(gameTime, spriteBatch, new Vector2(pieceRect.X, pieceRect.Y), SpriteEffects.None, playerColor);
+            if (animPlayer.Animation != null)//this.GetType().Equals(typeof(Units.Tank)))
+                animPlayer.Draw(gameTime, spriteBatch, pieceRect, unitEffects, playerColor);
             else
-                spriteBatch.Draw(pieceTexture, pieceRect, playerColor);
+                //spriteBatch.Draw(pieceTexture, pieceRect, playerColor);
+                spriteBatch.Draw(pieceTexture, pieceRect, new Rectangle(0, 0, tileWidth, tileWidth), playerColor, 0.0f, Vector2.Zero, unitEffects, 0.0f);
 
             if (numUnits > 1)
                 spriteBatch.DrawString(font, numUnits.ToString(), new Vector2(pieceRect.X + 5, pieceRect.Y + pieceRect.Height - (font.LineSpacing * 3)), playerColor, 0.0f, Vector2.Zero, 3.0f, SpriteEffects.None, 0.0f);

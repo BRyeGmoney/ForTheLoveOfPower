@@ -15,6 +15,7 @@ namespace PenisPotato.Graphics.Animation
             public Animation Animation
             {
                 get { return animation; }
+                set { animation = value; }
             }
             Animation animation;
 
@@ -56,6 +57,18 @@ namespace PenisPotato.Graphics.Animation
             }
 
             /// <summary>
+            /// Sets the current animation to null so that we can return to a standard spritebatch.Draw call.
+            /// </summary>
+            public void KillAnimation()
+            {
+                Animation = null;
+
+                this.animation = null;
+                this.frameIndex = 0;
+                this.time = 0.0f;
+            }
+
+            /// <summary>
             /// Advances the time position and draws the current frame of the animation.
             /// </summary>
             public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 position, SpriteEffects spriteEffects, Color playerColor)
@@ -85,6 +98,35 @@ namespace PenisPotato.Graphics.Animation
 
                 // Draw the current frame.
                 spriteBatch.Draw(Animation.Texture, position, source, playerColor, 0.0f, Origin, 1.0f, spriteEffects, 0.0f);
+            }
+
+            public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Rectangle pieceRect, SpriteEffects spriteEffects, Color playerColor)
+            {
+                if (Animation == null)
+                    throw new NotSupportedException("No animation is currently playing.");
+
+                // Process passing time.
+                time += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                while (time > Animation.FrameTime)
+                {
+                    time -= Animation.FrameTime;
+
+                    // Advance the frame index; looping or clamping as appropriate.
+                    if (Animation.IsLooping)
+                    {
+                        frameIndex = (frameIndex + 1) % Animation.FrameCount;
+                    }
+                    else
+                    {
+                        frameIndex = Math.Min(frameIndex + 1, Animation.FrameCount - 1);
+                    }
+                }
+
+                // Calculate the source rectangle of the current frame.
+                Rectangle source = new Rectangle(FrameIndex * Animation.Texture.Height, 0, Animation.Texture.Height, Animation.Texture.Height);
+
+                // Draw the current frame.
+                spriteBatch.Draw(Animation.Texture, pieceRect, source, playerColor, 0.0f, Vector2.Zero, spriteEffects, 0.0f);
             }
         }
 }
