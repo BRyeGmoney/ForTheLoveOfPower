@@ -32,6 +32,7 @@ namespace PenisPotato.StateSystem.Screens
         Player.NetworkPlayer netPlayer;
         public Player.EnemyPlayer enemyOne;
 
+        public Graphics.Grid springGrid;
         //public List<Units.Combat> combat;
 
         #endregion
@@ -109,11 +110,15 @@ namespace PenisPotato.StateSystem.Screens
             // while, giving you a chance to admire the beautiful loading screen.
             //Thread.Sleep(1000);
 
+            springGrid = new Graphics.Grid(new Rectangle(0, 0, graphics.Viewport.Width, graphics.Viewport.Height), new Vector2(256 * camera.Zoom, 256 * camera.Zoom));
+
             // once the load has finished, we use ResetElapsedTime to tell the game's
             // timing mechanism that we have just finished a very long frame, and that
             // it should not try to catch up.
             ScreenManager.Game.ResetElapsedTime();
         }
+
+        
 
         /// <summary>
         /// Unload graphics content used by the game.
@@ -169,6 +174,8 @@ namespace PenisPotato.StateSystem.Screens
                 else
                     playerOne.combat.Remove(fight);
             });
+
+            springGrid.Update();
         }
 
 
@@ -236,10 +243,12 @@ namespace PenisPotato.StateSystem.Screens
             //enemyOne.Draw(spriteBatch, gameTime, camera);
             spriteBatch.End();
 
+            
             //Hud spritebatch
             if (playerOne.MoneyString != null)
             {
                 spriteBatch.Begin();
+                springGrid.Draw(spriteBatch);
                 spriteBatch.DrawString(ScreenManager.Font, playerOne.MoneyString, Vector2.Zero, Color.White);
                 spriteBatch.End();
             }
