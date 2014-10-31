@@ -1,0 +1,83 @@
+-Legend-
+
+C-Cost
+R-Return
+F-Function
+M-Morale
+
+
+---Civil---
+
+Settlement- 		C- 1,000K/1 Food
+			R- 100K/10s
+			F- Allows building creation
+			M- Neutral
+
+Town Hall-		C- 2 Food 
+			R- 200K/10s
+			F- Allows building creation past 10 buildings
+			M- (+1)
+
+City Hall-		C- 3 Food
+			R- 300K/10s
+			F- Allows building creation past 20 buildings
+			M- (+2)
+
+Capitol-		C- 5 Food
+			R- 1,000K/10s
+			F- A City Hall with the Dictator in residence
+			M- (+5)
+
+
+---Economy--- 
+
+Factory-		C- 1,000K/1 Food
+			R- 20K/unit created (200K/10s)
+			F- Manufacture 10 units of product
+			M- Neutral
+
+Exporter-		C- 2,000K/1 Food
+			R- 100K/unit exported
+			F- Exports 3 units of product stock, up to 7 units max
+			M- Intrinsic
+
+Stock Market-		C- 3,000K/1 Food
+			R-
+			F-
+			M-
+
+
+---Military---
+
+Barracks-		C- 1,000K/1 Food
+			R- 0K
+			F- Creates units to enforce foreign policy (Infantry)((300K/unit))
+			M-
+
+Motor Pool-		C- 2,000K/1 Food
+			R- 0K
+			F- Creates units to enforce foreign policy (Anti Air Tanks)((600K/unit))
+			M-
+
+Air Base-		C- 3,000K/1 Food
+			R- 0K
+			F- Creates units to enforce foreign policy (Fighter Planes)((900K/unit))
+			M-
+
+
+---Manipulator---
+
+Labour Camp-		C-
+			R-
+			F-
+			M-
+
+Military Contractor-	C-
+			R-
+			F-
+			M-
+
+Broadcast Station-	C-
+			R-
+			F-
+			M-
