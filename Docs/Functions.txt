@@ -39,12 +39,12 @@ Factory-		C- 1,000K/1 Food
 Exporter-		C- 2,000K/1 Food
 			R- 100K/unit exported
 			F- Exports 3 units of product stock, up to 7 units max
-			M- Intrinsic
+			M- Intrinsic (if export does not exceed local demand +1 per exporter, if export exceeds local demand -1 per unit over local need)
 
 Stock Market-		C- 3,000K/1 Food
-			R-
-			F-
-			M-
+			R- +50K/unit exported, -10K/unit created, up to 30 units, 10 from each industry
+			F- Manipulates cost of units sold domestically and for export
+			M- Intrinsic (if stock setup listed above is unchanged +1, if local cost is raised -1/10K increments)
 
 
 ---Military---
@@ -52,32 +52,32 @@ Stock Market-		C- 3,000K/1 Food
 Barracks-		C- 1,000K/1 Food
 			R- 0K
 			F- Creates units to enforce foreign policy (Infantry)((300K/unit))
-			M-
+			M- (+1) in peace time, (-1) in war
 
 Motor Pool-		C- 2,000K/1 Food
 			R- 0K
 			F- Creates units to enforce foreign policy (Anti Air Tanks)((600K/unit))
-			M-
+			M- (+1) in peace time, (-1) in war
 
 Air Base-		C- 3,000K/1 Food
 			R- 0K
 			F- Creates units to enforce foreign policy (Fighter Planes)((900K/unit))
-			M-
+			M- (+1) in peace time, (-1) in war
 
 
 ---Manipulator---
 
-Labour Camp-		C-
-			R-
-			F-
-			M-
+Labour Camp-		C- 1,000K/1 Food
+			R- +2 unit in every Factory
+			F- Provides raw material for factories at minimal cost
+			M- (-1)/2 Factories
 
-Military Contractor-	C-
-			R-
-			F-
-			M-
+Military Contractor-	C- 2,000K/1 Food
+			R- -10% cost of creating Military Units
+			F- Provides materials essential in Military Unit production
+			M- ??Neutral??
 
-Broadcast Station-	C-
-			R-
-			F-
-			M-
+Broadcast Station-	C- 3,000K/1 Food
+			R- 0K ???(-50K/10s)???
+			F- Broadcast Propaganda
+			M- (+2) 
