@@ -99,6 +99,7 @@ namespace PenisPotato.StateSystem.Screens
             else
             {
                 playerOne = new Player.MainPlayer(content, graphics, ScreenManager, this, null, Color.PaleVioletRed);
+                playerOne.money = 10000;
                 enemyOne = new Player.EnemyPlayer(ScreenManager, this, Color.Chartreuse);
                 players = new List<Player.Player>();
                 players.Add(playerOne);
@@ -110,7 +111,7 @@ namespace PenisPotato.StateSystem.Screens
             // while, giving you a chance to admire the beautiful loading screen.
             //Thread.Sleep(1000);
 
-            springGrid = new Graphics.Grid(new Rectangle(0, 0, graphics.Viewport.Width, graphics.Viewport.Height), new Vector2(256 * camera.Zoom, 256 * camera.Zoom));
+            //springGrid = new Graphics.Grid(new Rectangle(0, 0, graphics.Viewport.Width, graphics.Viewport.Height), new Vector2(256 * camera.Zoom, 256 * camera.Zoom));
 
             // once the load has finished, we use ResetElapsedTime to tell the game's
             // timing mechanism that we have just finished a very long frame, and that
@@ -174,8 +175,6 @@ namespace PenisPotato.StateSystem.Screens
                 else
                     playerOne.combat.Remove(fight);
             });
-
-            springGrid.Update();
         }
 
 
@@ -248,7 +247,6 @@ namespace PenisPotato.StateSystem.Screens
             if (playerOne.MoneyString != null)
             {
                 spriteBatch.Begin();
-                springGrid.Draw(spriteBatch);
                 spriteBatch.DrawString(ScreenManager.Font, playerOne.MoneyString, Vector2.Zero, Color.White);
                 spriteBatch.End();
             }
