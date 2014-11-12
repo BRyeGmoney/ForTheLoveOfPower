@@ -146,7 +146,7 @@ namespace PenisPotato.StateSystem.Screens
             int playerIndex = (int)ControllingPlayer.Value;
 
             if (pauseAlpha == 0)
-                playerOne.UpdateInput(gameTime, input, camera);
+                playerOne.UpdateInput(gameTime, input,camera);
         }
 
 
