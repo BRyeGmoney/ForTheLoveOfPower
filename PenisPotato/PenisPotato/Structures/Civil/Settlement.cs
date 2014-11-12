@@ -17,6 +17,7 @@ namespace PenisPotato.Structures.Civil
         public long invadingPlayerId = 0;
         public Color invadingPlayerColor;
         public int[,] economyAvailable;
+        public short settlementMorale = 0;
 
         public Settlement() { }
 
@@ -140,10 +141,12 @@ namespace PenisPotato.Structures.Civil
 
             if (settlementProperties.Count > 5)
                 UpdateToTown(player.ScreenManager);
-            if (settlementProperties.Count > 10)
+            if (settlementProperties.Count > 10 && !isDictatorInCity)
                 UpdateToCity(player.ScreenManager);
             if (pieceType.Equals(PieceTypes.CityHall) && isDictatorInCity)
                 UpdateToCapitol(player.ScreenManager);
+
+            CalculateMorale(player);
 
             base.Update(gameTime, player);
         }
@@ -230,20 +233,34 @@ namespace PenisPotato.Structures.Civil
 
         private void UpdateToTown(StateSystem.StateManager stateManager)
         {
+            foodConsumption = 2;
             this.pieceTexture = stateManager.buildItems[16].menuItem;
             //this.pieceType = (byte)PieceTypes.TownHall;
         }
 
         private void UpdateToCity(StateSystem.StateManager stateManager)
         {
+            foodConsumption = 3;
             this.pieceTexture = stateManager.buildItems[17].menuItem;
             //this.pieceType = (byte)PieceTypes.CityHall;
         }
 
         private void UpdateToCapitol(StateSystem.StateManager stateManager)
         {
+            foodConsumption = 5;
             this.pieceTexture = stateManager.buildItems[18].menuItem;
             //this.pieceType = (byte)PieceTypes.Capitol;
+        }
+
+        private void CalculateMorale(Player.Player player)
+        {
+            settlementMorale = 0;
+
+            settlementProperties.ForEach(sP => 
+                {
+                    settlementMorale += sP.foodConsumption;
+                });
+            settlementMorale += this.foodConsumption;
         }
 
         public List<Vector2> GetAllTilesBelongingToSettlement()

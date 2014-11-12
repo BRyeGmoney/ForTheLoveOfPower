@@ -214,7 +214,8 @@ namespace PenisPotato.StateSystem.Screens
 
             if (costOfBuilding < mPlayer.money)
             {
-                mPlayer.Money -= costOfBuilding;
+                //mPlayer.Money -= costOfBuilding;
+                mPlayer.money -= costOfBuilding;
                 return true;
             }
             else
