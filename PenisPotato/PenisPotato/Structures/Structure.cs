@@ -25,6 +25,7 @@ namespace PenisPotato.Structures
         private float modifierTimer;
         public int settlementOwnerIndex;
         public bool doneModifying = false;
+        public short foodConsumption = 1;
 
         public Structure() { }
 

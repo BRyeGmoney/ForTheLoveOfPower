@@ -81,6 +81,7 @@ namespace PenisPotato.Player
         public override void Update(GameTime gameTime)
         {
             //base.Update(gameTime);
+            MoneyString = String.Format("Money: {0}", money);
             UpdateStructures(gameTime);
             playerUnits.ForEach(pU => {
                 pU.Update(gameTime, this);
@@ -206,8 +207,6 @@ namespace PenisPotato.Player
                     navigatingUnit = null;
                     movementTiles.Clear();
                 }
-
-                MoneyString = String.Format("Money: {0}", money);
                 performedAction = false;
             }
 
