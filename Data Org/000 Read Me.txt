@@ -1,0 +1,16 @@
+
+Hey,
+Take a look at the ordered images first.
+Legend will not mean as much till you see the rest but should check it first. Also keep in mind for ease of creation I did not use our offset columns design but simplified standard squares. I see it as easily applied to our design, just harder to draw freehand.
+I know it's not as we have discussed it and it incorporates colours but let's see where we can go from here.
+It is designed with operational ease in mind, no instructions or tutorials necessary as the effects and uses are self evident if bothered to be examined.
+The way it works with the design is like this, three levels of zoom.
+
+1. Variable action zoom- This is the existing zoom in game currently. Can be close enough to see details on one icon and furthest limitation I imagine is least usable size.
+This means once you can no longer interact with individual unit or building precisely you reach the end of the "Action Zoom"
+2. Tactical Zoom- One more scroll outward from the end of the action zoom replaces building icons with industry markers, neither buildings or units can be manipulated. Maybe something like 2x zoom on top of distance of furthest action zoom.
+As the name implies, it let's you make decisions on building placement, town design, unit movements and allows quick moving around the map without too much scrolling. Still defines single units and battlefields.
+3. Statistical Zoom- Ever growing, all empire encompassing view that can be double tapped to travel anywhere on the map instantly. Also allows the ability to track status of individual towns relative, and multiple battlefields. Does not track building amounts and types, or units not in a battlefield. It is the health of the empire screen.
+Hey, hope these are helpful to at least start a movement in the right direction of stats tracking and data relay.
+Been working it out for a long while today to get you comprehensive ideas.
+Not so sure I am not too tired to get them across.
