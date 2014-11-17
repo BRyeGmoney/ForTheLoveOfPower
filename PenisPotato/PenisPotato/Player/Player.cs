@@ -156,7 +156,7 @@ namespace PenisPotato.Player
                     unit.Draw(gameTime, spriteBatch, ScreenManager.Font, ScreenManager);
             foreach (Structures.Civil.Settlement settlement in playerSettlements)
                 if (isInRange(settlement.piecePosition.X * modTileWidth, minboundsx - modTileWidth, maxboundsx) && isInRange(settlement.piecePosition.Y * modTileWidth, minboundsy - modTileWidth, maxboundsy))
-                    settlement.Draw(spriteBatch, gameTime, ScreenManager, this);
+                    settlement.Draw(spriteBatch, gameTime, ScreenManager, this, true);
             /*foreach (Structures.Structure structure in playerStructures)
                 if (isInRange(structure.piecePosition.X * modTileWidth, minboundsx - modTileWidth, maxboundsx) && isInRange(structure.piecePosition.Y * modTileWidth, minboundsy - modTileWidth, maxboundsy))
                     structure.Draw(spriteBatch, gameTime, ScreenManager, this);*/

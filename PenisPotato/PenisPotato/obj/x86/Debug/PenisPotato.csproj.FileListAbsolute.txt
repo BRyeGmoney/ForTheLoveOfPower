@@ -609,7 +609,6 @@ C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\C
 C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Audio\hex.wma
 C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\PenisPotato.exe
 C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\PenisPotato.pdb
-C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Lidgren.Network.pdb
 C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\obj\x86\Debug\PenisPotato.csprojResolveAssemblyReference.cache
 C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\obj\x86\Debug\PenisPotato.Resources.resources

@@ -25,7 +25,7 @@ namespace PenisPotato.Structures
         private float modifierTimer;
         public int settlementOwnerIndex;
         public bool doneModifying = false;
-        public short foodConsumption = 1;
+        //public short foodConsumption = 1;
 
         public Structure() { }
 
@@ -104,7 +104,7 @@ namespace PenisPotato.Structures
             return st;
         }
 
-        public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime, StateSystem.StateManager stateManager, Player.Player player)
+        public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime, StateSystem.StateManager stateManager, Player.Player player, bool isSettlement)
         {
             int y = (int)(piecePosition.Y * tileWidth - Math.Abs(piecePosition.X % 2) * (tileWidth / 2));
             int b = (int)(tileWidth * (built / 100));
@@ -127,6 +127,9 @@ namespace PenisPotato.Structures
                     displayModifier = false;
                 }
             }
+
+            if (isSettlement)
+                spriteBatch.DrawString(stateManager.Font, (this as Structures.Civil.Settlement).settlementMorale.ToString(), new Vector2(piecePosition.X * tileWidth + 8, y + tileWidth - (stateManager.Font.LineSpacing * 3)), playerColor);
             //spriteBatch.Draw(pieceTexture, new Vector2(piecePosition.X * tileWidth, y), new Rectangle(0, 0, tileWidth, b), playerColor);
             
             //spriteBatch.Draw(pieceTexture, new Rectangle((int)(piecePosition.X * tileWidth), y, tileWidth, tileWidth), new Rectangle(0, 45, tileWidth, tileWidth), playerColor);

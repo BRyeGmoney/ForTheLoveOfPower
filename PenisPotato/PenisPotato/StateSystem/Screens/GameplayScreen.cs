@@ -32,7 +32,7 @@ namespace PenisPotato.StateSystem.Screens
         Player.NetworkPlayer netPlayer;
         public Player.EnemyPlayer enemyOne;
 
-        public Graphics.Grid springGrid;
+        //public Graphics.Grid springGrid;
         //public List<Units.Combat> combat;
 
         #endregion

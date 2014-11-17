@@ -18,6 +18,7 @@ namespace PenisPotato.Structures.Civil
         public Color invadingPlayerColor;
         public int[,] economyAvailable;
         public short settlementMorale = 0;
+        public short foodConsumption = 1;
 
         public Settlement() { }
 
@@ -127,10 +128,11 @@ namespace PenisPotato.Structures.Civil
             }
 
 
-            if (built >= 100 && lastTime > 2f)
+            if (built >= 100 && lastTime >= 10f)
             {
-                player.Money += economyAvailable[1, 0] + economyAvailable[1, 1] + economyAvailable[1, 2] +
-                                (((economyAvailable[0, 0] - economyAvailable[1, 0]) + (economyAvailable[0, 1] - economyAvailable[1, 1]) + (economyAvailable[0, 2] - economyAvailable[1, 2])) / 2);
+                player.Money += (settlementMorale * 20) + (economyAvailable[1, 0] * 100);
+                    //economyAvailable[1, 0] + economyAvailable[1, 1] + economyAvailable[1, 2] +
+                    //(((economyAvailable[0, 0] - economyAvailable[1, 0]) + (economyAvailable[0, 1] - economyAvailable[1, 1]) + (economyAvailable[0, 2] - economyAvailable[1, 2])) / 2);
                 lastTime = 0.0f;
             }
 
@@ -254,13 +256,8 @@ namespace PenisPotato.Structures.Civil
 
         private void CalculateMorale(Player.Player player)
         {
-            settlementMorale = 0;
-
-            settlementProperties.ForEach(sP => 
-                {
-                    settlementMorale += sP.foodConsumption;
-                });
-            settlementMorale += this.foodConsumption;
+            settlementMorale = Convert.ToInt16(settlementProperties.Count + this.foodConsumption); //calculation of food consumption across settlement
+            settlementMorale = Convert.ToInt16((economyAvailable[0, 0] - economyAvailable[1, 0]) - settlementMorale); //calculation to determine morale based on (produced food - exported food) - used by settlement
         }
 
         public List<Vector2> GetAllTilesBelongingToSettlement()
@@ -275,13 +272,13 @@ namespace PenisPotato.Structures.Civil
             return tiles.Distinct().ToList();
         }
 
-        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime, StateSystem.StateManager stateManager, Player.Player player)
+        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime, StateSystem.StateManager stateManager, Player.Player player, bool isSettlement)
         {
             settlementProperties.ForEach(sP =>
                 {
-                    sP.Draw(spriteBatch, gameTime, stateManager, player);
+                    sP.Draw(spriteBatch, gameTime, stateManager, player, false);
                 });
-            base.Draw(spriteBatch, gameTime, stateManager, player);
+            base.Draw(spriteBatch, gameTime, stateManager, player, true);
         }
     }
 }

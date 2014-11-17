@@ -24,7 +24,6 @@ namespace PenisPotato.Structures.Economy
             this.buildTime = 25;
             this.modifierIndex = (int)StateSystem.TextureRepoOrder.plusMoney;
             this.settlementOwnerIndex = owner;
-            SetEconomy(100, 0, 0);
         }
 
         private void SetEconomy(int ind0, int ind1, int ind2)
@@ -62,14 +61,23 @@ namespace PenisPotato.Structures.Economy
         {
             lastTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (doneModifying)
-                DoneModifyingEconomy(player);
-
-            if (built >= 100 && lastTime > 2f)
+            if (built == 100)
             {
-                //player.Money++;
-                displayModifier = true;
-                lastTime = 0.0f;
+                SetEconomy(10, 0, 0);
+                doneModifying = true;
+            }
+
+            if (built >= 100)
+            {
+                if (doneModifying)
+                    DoneModifyingEconomy(player);
+
+                if (lastTime > 2f)
+                {
+                    //player.Money++;
+                    displayModifier = true;
+                    lastTime = 0.0f;
+                }
             }
             base.Update(gameTime, player);
         }
