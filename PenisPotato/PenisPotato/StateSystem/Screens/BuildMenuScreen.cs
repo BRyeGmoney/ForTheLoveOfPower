@@ -16,6 +16,8 @@ namespace PenisPotato.StateSystem.Screens
         public StateManager stateManager;
         public BuildMenuStates buildState;
         private List<BuildMenuItem> buildItems;
+        private bool canBuy = true;
+        private float timer = 0f;
 
         public BuildMenuScreen(StateManager stateManage, Player.MainPlayer player, bool isSettlement)
         {
@@ -53,7 +55,7 @@ namespace PenisPotato.StateSystem.Screens
                     buildItem = buildItems.Find(bi => bi.specificState.Equals(buildState));
                     if (buildItem.position.Contains(input.CurrentMouseStates[0].X, input.CurrentMouseStates[0].Y))
                     {
-                        buildItem.PerformFunction(player, this);
+                        canBuy = buildItem.PerformFunction(player, this);
                         isClose = false;
                     }
                 }
@@ -70,14 +72,14 @@ namespace PenisPotato.StateSystem.Screens
                             }
                             else if (bi.state.Equals(buildState))
                             {
-                                bi.PerformFunction(player, this);
+                                canBuy = bi.PerformFunction(player, this);
                                 isClose = false;
                             }
                         }
                     });
                 }
 
-                if (isClose.Equals(true))
+                if (isClose.Equals(true) && canBuy)
                     stateManager.RemoveScreen(this);
             }
         }
@@ -91,6 +93,18 @@ namespace PenisPotato.StateSystem.Screens
                 if (bi.state.Equals(buildState) || (bi.state.Equals(BuildMenuStates.Main) && !buildState.Equals(BuildMenuStates.Settlement)))
                     bi.Draw(stateManager.SpriteBatch);
             });
+
+            if (timer > 2.0)
+            {
+                canBuy = true;
+                timer = 0f;
+            }
+
+            if (!canBuy)
+            {
+                timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                stateManager.SpriteBatch.DrawString(stateManager.Font, "Nigga, you broke.", new Vector2(stateManager.GraphicsDevice.Viewport.X + 70, stateManager.GraphicsDevice.Viewport.Y + stateManager.GraphicsDevice.Viewport.Height - 60), Color.Aqua * (float)(Math.Sin(timer * 2)));
+            }
             stateManager.SpriteBatch.End();
         }
     }
@@ -141,11 +155,13 @@ namespace PenisPotato.StateSystem.Screens
             this.color = color;
         }
 
-        public void PerformFunction(Player.MainPlayer player, BuildMenuScreen bms)
+        public bool PerformFunction(Player.MainPlayer player, BuildMenuScreen bms)
         {
+            bool canBuild = true;
+
             if (specificState.Equals(BuildMenuStates.Settlement))
             {
-                if (TryPurchaseBuilding(specificState, player))
+                if (TryPurchaseBuilding(specificState, player, out canBuild))
                 {
                     player.playerSettlements.Add(new Structures.Civil.Settlement(player.selectedTilePos, player.playerColor, this.menuItem));
                     player.playerStructures.Add(player.playerSettlements.Last());
@@ -160,32 +176,35 @@ namespace PenisPotato.StateSystem.Screens
                     pS.GetAllTilesBelongingToSettlement().Intersect(selectedposition).Count() > 0);
                 int indexOfOwner = player.playerSettlements.IndexOf(settlement);
 
-                if (specificState.Equals(BuildMenuStates.Factory) && TryPurchaseBuilding(specificState, player))
+                if (specificState.Equals(BuildMenuStates.Factory) && TryPurchaseBuilding(specificState, player, out canBuild))
                     settlement.settlementProperties.Add(new Structures.Economy.Factory(player.selectedTilePos, player.playerColor, this.menuItem, indexOfOwner));
-                else if (specificState.Equals(BuildMenuStates.Market) && TryPurchaseBuilding(specificState, player))
+                else if (specificState.Equals(BuildMenuStates.Market) && TryPurchaseBuilding(specificState, player, out canBuild))
                     settlement.settlementProperties.Add(new Structures.Economy.Market(player.selectedTilePos, player.playerColor, this.menuItem, indexOfOwner));
-                else if (specificState.Equals(BuildMenuStates.Exporter) && TryPurchaseBuilding(specificState, player))
+                else if (specificState.Equals(BuildMenuStates.Exporter) && TryPurchaseBuilding(specificState, player, out canBuild))
                     settlement.settlementProperties.Add(new Structures.Economy.Exporter(player.selectedTilePos, player.playerColor, this.menuItem, indexOfOwner));
-                else if (specificState.Equals(BuildMenuStates.Baracks) && TryPurchaseBuilding(specificState, player))
+                else if (specificState.Equals(BuildMenuStates.Baracks) && TryPurchaseBuilding(specificState, player, out canBuild))
                     settlement.settlementProperties.Add(new Structures.Military.Barracks(player.selectedTilePos, player.playerColor, this.menuItem, indexOfOwner));
-                else if (specificState.Equals(BuildMenuStates.AirField) && TryPurchaseBuilding(specificState, player))
+                else if (specificState.Equals(BuildMenuStates.AirField) && TryPurchaseBuilding(specificState, player, out canBuild))
                     settlement.settlementProperties.Add(new Structures.Military.AirBase(player.selectedTilePos, player.playerColor, this.menuItem, indexOfOwner));
-                else if (specificState.Equals(BuildMenuStates.TankDepot) && TryPurchaseBuilding(specificState, player))
+                else if (specificState.Equals(BuildMenuStates.TankDepot) && TryPurchaseBuilding(specificState, player, out canBuild))
                     settlement.settlementProperties.Add(new Structures.Military.TankDepot(player.selectedTilePos, player.playerColor, this.menuItem, indexOfOwner));
-                else if (specificState.Equals(BuildMenuStates.LabourCamp) && TryPurchaseBuilding(specificState, player))
+                else if (specificState.Equals(BuildMenuStates.LabourCamp) && TryPurchaseBuilding(specificState, player, out canBuild))
                     settlement.settlementProperties.Add(new Structures.Manipulation.LabourCamp(player.selectedTilePos, player.playerColor, this.menuItem, indexOfOwner));
-                else if (specificState.Equals(BuildMenuStates.MilitaryContractor) && TryPurchaseBuilding(specificState, player))
+                else if (specificState.Equals(BuildMenuStates.MilitaryContractor) && TryPurchaseBuilding(specificState, player, out canBuild))
                     settlement.settlementProperties.Add(new Structures.Manipulation.MilitaryContractor(player.selectedTilePos, player.playerColor, this.menuItem, indexOfOwner));
-                else if (specificState.Equals(BuildMenuStates.Propaganda) && TryPurchaseBuilding(specificState, player))
+                else if (specificState.Equals(BuildMenuStates.Propaganda) && TryPurchaseBuilding(specificState, player, out canBuild))
                     settlement.settlementProperties.Add(new Structures.Manipulation.Propaganda(player.selectedTilePos, player.playerColor, this.menuItem, indexOfOwner));
 
                 player.playerStructures.Add(settlement.settlementProperties.Last());
             }
             
-            bms.stateManager.RemoveScreen(bms);
+            if (canBuild)
+                bms.stateManager.RemoveScreen(bms);
+
+            return canBuild;
         }
 
-        private bool TryPurchaseBuilding(BuildMenuStates bms, Player.MainPlayer mPlayer)
+        private bool TryPurchaseBuilding(BuildMenuStates bms, Player.MainPlayer mPlayer, out bool canBuild)
         {
             int costOfBuilding = 0;
 
@@ -216,11 +235,13 @@ namespace PenisPotato.StateSystem.Screens
             {
                 //mPlayer.Money -= costOfBuilding;
                 mPlayer.money -= costOfBuilding;
-                return true;
+                canBuild = true;
+                return canBuild;
             }
             else
             {
-                return false;
+                canBuild = false;
+                return canBuild;
             }
         }
 
