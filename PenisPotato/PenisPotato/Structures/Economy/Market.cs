@@ -63,8 +63,6 @@ namespace PenisPotato.Structures.Economy
 
                 if (lastTime > 2f)
                 {
-                    //player.Money++;
-                    //displayModifier = true;
                     lastTime = 0.0f;
                 }
             }

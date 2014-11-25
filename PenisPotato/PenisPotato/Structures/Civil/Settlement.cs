@@ -55,7 +55,7 @@ namespace PenisPotato.Structures.Civil
 
             settlementProperties.ForEach(sP =>
             {
-                if (sP.GetType().Equals(typeof(Economy.Factory)))
+                if (sP.built > 99.9 && sP.GetType().Equals(typeof(Economy.Factory)))
                 {
                     economyAvailable[0, 0] += (sP as Economy.Factory).economies[0];
                     economyAvailable[0, 1] += (sP as Economy.Factory).economies[1];
@@ -73,7 +73,7 @@ namespace PenisPotato.Structures.Civil
 
             settlementProperties.ForEach(sP =>
             {
-                if (sP.GetType().Equals(typeof(Economy.Exporter)))
+                if (sP.built > 99.9 && sP.GetType().Equals(typeof(Economy.Exporter)))
                 {
                     economyAvailable[1, 0] += (sP as Economy.Exporter).economies[0];
                     economyAvailable[1, 1] += (sP as Economy.Exporter).economies[1];
@@ -91,7 +91,7 @@ namespace PenisPotato.Structures.Civil
 
             settlementProperties.ForEach(sP =>
             {
-                if (sP.GetType().Equals(typeof(Economy.Market)))
+                if (sP.built > 99.9 && sP.GetType().Equals(typeof(Economy.Market)))
                 {
                     economyAvailable[2, 0] += (sP as Economy.Market).economies[0];
                     economyAvailable[2, 1] += (sP as Economy.Market).economies[1];
@@ -131,8 +131,6 @@ namespace PenisPotato.Structures.Civil
             if (built >= 100 && lastTime >= 10f)
             {
                 player.Money += (settlementMorale * 20) + (economyAvailable[1, 0] * 100);
-                    //economyAvailable[1, 0] + economyAvailable[1, 1] + economyAvailable[1, 2] +
-                    //(((economyAvailable[0, 0] - economyAvailable[1, 0]) + (economyAvailable[0, 1] - economyAvailable[1, 1]) + (economyAvailable[0, 2] - economyAvailable[1, 2])) / 2);
                 lastTime = 0.0f;
             }
 
@@ -265,7 +263,8 @@ namespace PenisPotato.Structures.Civil
             List<Vector2> tiles = new List<Vector2>();
             settlementProperties.ForEach(sP =>
                 {
-                    tiles.AddRange(sP.GetSurroundingTiles());
+                    if (sP.built > 99.9)
+                        tiles.AddRange(sP.GetSurroundingTiles());
                 });
             tiles.AddRange(this.GetSurroundingTiles());
 
