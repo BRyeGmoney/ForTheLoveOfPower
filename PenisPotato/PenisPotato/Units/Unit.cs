@@ -64,7 +64,11 @@ namespace PenisPotato.Units
             if (movementPoints.Count > 0)
             {
                 moveTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                unitEffects = (movementPoints[0].X >= piecePosition.X) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+                if (movementPoints[0].X > piecePosition.X)
+                    unitEffects = SpriteEffects.None;
+                else if (movementPoints[0].X < piecePosition.X)
+                    unitEffects = SpriteEffects.FlipHorizontally;
 
 
                 if (movementPoints.Count > 0 && moveTime > unitSpeed)
