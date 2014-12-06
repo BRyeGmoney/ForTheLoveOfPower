@@ -23,6 +23,7 @@ namespace PenisPotato.Units
             this.tileWidth = Convert.ToInt16(Resources.tileWidth);
             this.unitType = (byte)UnitType.Jet;
             this.goodAgainst = UnitType.Infantry;
+            animPlayer = new Graphics.Animation.AnimationPlayer();
         }
     }
 }

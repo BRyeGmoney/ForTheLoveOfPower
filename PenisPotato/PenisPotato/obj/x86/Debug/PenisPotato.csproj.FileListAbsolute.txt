@@ -615,3 +615,5 @@ C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\obj\x86\Debug\P
 C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\obj\x86\Debug\PenisPotato.csproj.GenerateResource.Cache
 C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\obj\x86\Debug\PenisPotato.exe
 C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\obj\x86\Debug\PenisPotato.pdb
+C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_PlaneMove.xnb
+C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_InfantryMove.xnb

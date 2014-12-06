@@ -48,3 +48,5 @@ Content\Audio\heart.xnb
 Content\Audio\heart.wma
 Content\Audio\hex.xnb
 Content\Audio\hex.wma
+Content\Textures\Units\Military\Unit_PlaneMove.xnb
+Content\Textures\Units\Military\Unit_InfantryMove.xnb

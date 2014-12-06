@@ -25,7 +25,6 @@ namespace PenisPotato.Structures
         private float modifierTimer;
         public int settlementOwnerIndex;
         public bool doneModifying = false;
-        //public short foodConsumption = 1;
 
         public Structure() { }
 
@@ -109,14 +108,12 @@ namespace PenisPotato.Structures
             int y = (int)(piecePosition.Y * tileWidth - Math.Abs(piecePosition.X % 2) * (tileWidth / 2));
             int b = (int)(tileWidth * (built / 100));
 
-            spriteBatch.Draw(pieceTexture, new Vector2(piecePosition.X * tileWidth, y), playerColor);
+            spriteBatch.Draw(pieceTexture, new Vector2(piecePosition.X * tileWidth, y), new Rectangle(0, 0, (int)(tileWidth * (built / 100)), tileWidth), playerColor);
 
             if (conquered > 0)
                 spriteBatch.Draw(pieceTexture, new Vector2((int)piecePosition.X * tileWidth, y), new Rectangle(0, 0, tileWidth, (int)(tileWidth * (conquered / 100))), player.playerSettlements[settlementOwnerIndex].invadingPlayerColor);
 
-            if (built < 100)
-                spriteBatch.FillRectangle(new Rectangle((int)piecePosition.X * tileWidth, y + tileWidth - 5, (int)(tileWidth * (built / 100)), 10), playerColor);
-            else if (displayModifier)
+            if (displayModifier)
             {
                 modifierTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -130,9 +127,6 @@ namespace PenisPotato.Structures
 
             if (isSettlement)
                 spriteBatch.DrawString(stateManager.Font, (this as Structures.Civil.Settlement).settlementMorale.ToString(), new Vector2(piecePosition.X * tileWidth + 8, y + tileWidth - (stateManager.Font.LineSpacing * 3)), playerColor);
-            //spriteBatch.Draw(pieceTexture, new Vector2(piecePosition.X * tileWidth, y), new Rectangle(0, 0, tileWidth, b), playerColor);
-            
-            //spriteBatch.Draw(pieceTexture, new Rectangle((int)(piecePosition.X * tileWidth), y, tileWidth, tileWidth), new Rectangle(0, 45, tileWidth, tileWidth), playerColor);
             
         }
     }

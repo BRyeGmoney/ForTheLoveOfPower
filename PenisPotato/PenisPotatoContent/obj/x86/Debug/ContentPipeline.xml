@@ -8,7 +8,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Effects\BloomCombine.xnb</Output>
-      <Time>2014-10-02T19:53:29.786002-07:00</Time>
+      <Time>2014-11-30T21:55:18.7386581-08:00</Time>
     </Item>
     <Item>
       <Source>Effects\BloomExtract.fx</Source>
@@ -17,7 +17,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Effects\BloomExtract.xnb</Output>
-      <Time>2014-10-02T19:53:29.786002-07:00</Time>
+      <Time>2014-11-30T21:55:18.8086582-08:00</Time>
     </Item>
     <Item>
       <Source>Effects\GaussianBlur.fx</Source>
@@ -26,7 +26,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Effects\GaussianBlur.xnb</Output>
-      <Time>2014-10-02T19:53:29.786002-07:00</Time>
+      <Time>2014-11-30T21:55:18.8786583-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Map\square.png</Source>
@@ -35,7 +35,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Map\square.xnb</Output>
-      <Time>2014-10-02T19:53:29.7920023-07:00</Time>
+      <Time>2014-11-30T21:55:19.338659-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Map\square2.png</Source>
@@ -44,7 +44,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Map\square2.xnb</Output>
-      <Time>2014-10-02T19:53:29.7920023-07:00</Time>
+      <Time>2014-11-30T21:55:19.358659-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Map\squareNoBorder.png</Source>
@@ -53,7 +53,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Map\squareNoBorder.xnb</Output>
-      <Time>2014-10-02T19:53:29.7930024-07:00</Time>
+      <Time>2014-11-30T21:55:19.378659-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Units\Dictator.png</Source>
@@ -62,7 +62,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Dictator.xnb</Output>
-      <Time>2014-10-02T19:53:29.8010028-07:00</Time>
+      <Time>2014-11-30T21:55:19.9886599-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Economy\Factory.png</Source>
@@ -71,7 +71,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Factory.xnb</Output>
-      <Time>2014-10-02T19:53:29.7960025-07:00</Time>
+      <Time>2014-11-30T21:55:19.6086594-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Civil\TownCentre.png</Source>
@@ -80,7 +80,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\TownCentre.xnb</Output>
-      <Time>2014-10-02T19:53:29.7950025-07:00</Time>
+      <Time>2014-11-30T21:55:19.5886593-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Misc\blank.png</Source>
@@ -89,7 +89,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\blank.xnb</Output>
-      <Time>2014-10-02T19:53:29.7940024-07:00</Time>
+      <Time>2014-11-30T21:55:19.4186591-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Military\Barracks.png</Source>
@@ -98,7 +98,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Barracks.xnb</Output>
-      <Time>2014-10-02T19:53:29.7980027-07:00</Time>
+      <Time>2014-11-30T21:55:19.8086596-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Map\tile.png</Source>
@@ -107,7 +107,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Map\tile.xnb</Output>
-      <Time>2014-10-02T19:53:29.7930024-07:00</Time>
+      <Time>2014-11-30T21:55:19.3986591-08:00</Time>
     </Item>
     <Item>
       <Source>Icons\Networking\chat_ready.png</Source>
@@ -116,7 +116,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Networking\chat_ready.xnb</Output>
-      <Time>2014-10-02T19:53:29.7910023-07:00</Time>
+      <Time>2014-11-30T21:55:19.2186588-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Military\Hangar.png</Source>
@@ -125,7 +125,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Hangar.xnb</Output>
-      <Time>2014-10-02T19:53:29.7980027-07:00</Time>
+      <Time>2014-11-30T21:55:19.8486597-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Military\TankDepot.png</Source>
@@ -134,7 +134,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\TankDepot.xnb</Output>
-      <Time>2014-10-02T19:53:29.8000028-07:00</Time>
+      <Time>2014-11-30T21:55:19.9586598-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Misc\Menu_Military.png</Source>
@@ -143,7 +143,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\Menu_Military.xnb</Output>
-      <Time>2014-10-02T19:53:29.7940024-07:00</Time>
+      <Time>2014-11-30T21:55:19.4886592-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Units\Military\Infantry.png</Source>
@@ -152,7 +152,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Infantry.xnb</Output>
-      <Time>2014-10-02T19:53:29.8010028-07:00</Time>
+      <Time>2014-11-30T21:55:20.0086599-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Units\Military\Jet.png</Source>
@@ -161,7 +161,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Jet.xnb</Output>
-      <Time>2014-10-02T19:53:29.8010028-07:00</Time>
+      <Time>2014-11-30T21:55:20.03866-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Units\Military\Tank.png</Source>
@@ -170,7 +170,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Tank.xnb</Output>
-      <Time>2014-10-02T19:53:29.8020029-07:00</Time>
+      <Time>2014-11-30T21:55:20.04866-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Military\Structure_Airport.png</Source>
@@ -179,7 +179,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Structure_Airport.xnb</Output>
-      <Time>2014-10-02T19:53:29.7980027-07:00</Time>
+      <Time>2014-11-30T21:55:19.8786597-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Military\Structure_Barracks.png</Source>
@@ -188,7 +188,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Structure_Barracks.xnb</Output>
-      <Time>2014-10-02T19:53:29.8000028-07:00</Time>
+      <Time>2014-11-30T21:55:19.9086598-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Military\Structure_TankDepot.png</Source>
@@ -197,7 +197,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Military\Structure_TankDepot.xnb</Output>
-      <Time>2014-10-02T19:53:29.8000028-07:00</Time>
+      <Time>2014-11-30T21:55:19.9286598-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Civil\Structure_Capitol.png</Source>
@@ -206,7 +206,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\Structure_Capitol.xnb</Output>
-      <Time>2014-10-02T19:53:29.7940024-07:00</Time>
+      <Time>2014-11-30T21:55:19.5086592-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Civil\Structure_CityHall.png</Source>
@@ -215,7 +215,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\Structure_CityHall.xnb</Output>
-      <Time>2014-10-02T19:53:29.7950025-07:00</Time>
+      <Time>2014-11-30T21:55:19.5286592-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Civil\Structure_Settlement.png</Source>
@@ -224,7 +224,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\Structure_Settlement.xnb</Output>
-      <Time>2014-10-02T19:53:29.7950025-07:00</Time>
+      <Time>2014-11-30T21:55:19.5486593-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Civil\Structure_TownHall.png</Source>
@@ -233,7 +233,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Civil\Structure_TownHall.xnb</Output>
-      <Time>2014-10-02T19:53:29.7950025-07:00</Time>
+      <Time>2014-11-30T21:55:19.5686593-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Misc\Menu_Economy.png</Source>
@@ -242,7 +242,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\Menu_Economy.xnb</Output>
-      <Time>2014-10-02T19:53:29.7930024-07:00</Time>
+      <Time>2014-11-30T21:55:19.4386591-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Economy\Structure_Factory.png</Source>
@@ -251,7 +251,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Structure_Factory.xnb</Output>
-      <Time>2014-10-02T19:53:29.7960025-07:00</Time>
+      <Time>2014-11-30T21:55:19.6486594-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Economy\Structure_Market.png</Source>
@@ -260,7 +260,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Structure_Market.xnb</Output>
-      <Time>2014-10-02T19:53:29.7960025-07:00</Time>
+      <Time>2014-11-30T21:55:19.6686594-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Units\Unit_Dictator.png</Source>
@@ -269,7 +269,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Unit_Dictator.xnb</Output>
-      <Time>2014-10-02T19:53:29.8030029-07:00</Time>
+      <Time>2014-11-30T21:55:20.1286601-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Units\Military\Unit_Infantry.png</Source>
@@ -278,7 +278,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_Infantry.xnb</Output>
-      <Time>2014-10-02T19:53:29.8020029-07:00</Time>
+      <Time>2014-11-30T21:55:20.06866-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Units\Military\Unit_Plane.png</Source>
@@ -287,7 +287,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_Plane.xnb</Output>
-      <Time>2014-10-02T19:53:29.8020029-07:00</Time>
+      <Time>2014-11-30T21:55:20.07866-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Units\Military\Unit_Tank.png</Source>
@@ -296,7 +296,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_Tank.xnb</Output>
-      <Time>2014-10-02T19:53:29.8020029-07:00</Time>
+      <Time>2014-11-30T21:55:20.09866-08:00</Time>
     </Item>
     <Item>
       <Source>Icons\Modifiers\minusMoney.png</Source>
@@ -305,7 +305,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Modifiers\minusMoney.xnb</Output>
-      <Time>2014-10-02T19:53:29.7910023-07:00</Time>
+      <Time>2014-11-30T21:55:19.1786587-08:00</Time>
     </Item>
     <Item>
       <Source>Icons\Modifiers\plusMoney.png</Source>
@@ -314,7 +314,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Modifiers\plusMoney.xnb</Output>
-      <Time>2014-10-02T19:53:29.7910023-07:00</Time>
+      <Time>2014-11-30T21:55:19.1986588-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Manipulation\Structure_Propaganda.png</Source>
@@ -323,7 +323,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_Propaganda.xnb</Output>
-      <Time>2014-10-02T19:53:29.7970026-07:00</Time>
+      <Time>2014-11-30T21:55:19.7386595-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Manipulation\Structure_Contractor.png</Source>
@@ -332,7 +332,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_Contractor.xnb</Output>
-      <Time>2014-10-02T19:53:29.7970026-07:00</Time>
+      <Time>2014-11-30T21:55:19.6886595-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Manipulation\Structure_LabourCamp.png</Source>
@@ -341,7 +341,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Manipulation\Structure_LabourCamp.xnb</Output>
-      <Time>2014-10-02T19:53:29.7970026-07:00</Time>
+      <Time>2014-11-30T21:55:19.7186595-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Misc\Menu_Manipulation.png</Source>
@@ -350,7 +350,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Misc\Menu_Manipulation.xnb</Output>
-      <Time>2014-10-02T19:53:29.7930024-07:00</Time>
+      <Time>2014-11-30T21:55:19.4586591-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Structures\Economy\Structure_Exporter.png</Source>
@@ -359,7 +359,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Structures\Economy\Structure_Exporter.xnb</Output>
-      <Time>2014-10-02T19:53:29.7960025-07:00</Time>
+      <Time>2014-11-30T21:55:19.6286594-08:00</Time>
     </Item>
     <Item>
       <Source>Fonts\falturaFont.bmp</Source>
@@ -368,7 +368,7 @@
       <Processor>FontTextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Fonts\falturaFont.xnb</Output>
-      <Time>2014-10-02T19:53:29.7890021-07:00</Time>
+      <Time>2014-11-30T21:55:19.0486586-08:00</Time>
     </Item>
     <Item>
       <Source>Icons\Economy\Agriculture.png</Source>
@@ -377,7 +377,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Economy\Agriculture.xnb</Output>
-      <Time>2014-10-02T19:53:29.7900022-07:00</Time>
+      <Time>2014-11-30T21:55:19.0786586-08:00</Time>
     </Item>
     <Item>
       <Source>Icons\Economy\Automotive.png</Source>
@@ -386,7 +386,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Economy\Automotive.xnb</Output>
-      <Time>2014-10-02T19:53:29.7900022-07:00</Time>
+      <Time>2014-11-30T21:55:19.1186587-08:00</Time>
     </Item>
     <Item>
       <Source>Icons\Economy\Computers.png</Source>
@@ -395,7 +395,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\Economy\Computers.xnb</Output>
-      <Time>2014-10-22T12:03:20.3811413-07:00</Time>
+      <Time>2014-11-30T21:55:19.1386587-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Units\Military\Unit_TankMove.png</Source>
@@ -404,7 +404,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_TankMove.xnb</Output>
-      <Time>2014-10-22T12:03:20.3821414-07:00</Time>
+      <Time>2014-11-30T21:55:20.1086601-08:00</Time>
     </Item>
     <Item>
       <Source>Fonts\debugFont.spritefont</Source>
@@ -413,7 +413,7 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Fonts\debugFont.xnb</Output>
-      <Time>2014-10-02T19:53:29.787002-07:00</Time>
+      <Time>2014-11-30T21:55:18.9686585-08:00</Time>
     </Item>
     <Item>
       <Source>Audio\heart.mp3</Source>
@@ -423,7 +423,7 @@
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Audio\heart.xnb</Output>
       <Extra>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Audio\heart.wma</Extra>
-      <Time>2014-10-02T19:53:29.7239984-07:00</Time>
+      <Time>2014-11-30T21:55:18.2486574-08:00</Time>
     </Item>
     <Item>
       <Source>Audio\hex.mp3</Source>
@@ -433,7 +433,25 @@
       <Options>None</Options>
       <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Audio\hex.xnb</Output>
       <Extra>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Audio\hex.wma</Extra>
-      <Time>2014-10-02T19:53:29.7850019-07:00</Time>
+      <Time>2014-11-30T21:55:18.6986581-08:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\Units\Military\Unit_PlaneMove.png</Source>
+      <Name>Textures\Units\Military\Unit_PlaneMove</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_PlaneMove.xnb</Output>
+      <Time>2014-12-05T18:35:32.2778736-08:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\Units\Military\Unit_InfantryMove.png</Source>
+      <Name>Textures\Units\Military\Unit_InfantryMove</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_InfantryMove.xnb</Output>
+      <Time>2014-12-05T18:35:52.0773085-08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
