@@ -179,7 +179,6 @@ C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Cont
 C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Fonts\debugFont.xnb
 C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\PenisPotato.exe
 C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\PenisPotato.pdb
-C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Lidgren.Network.pdb
 C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\obj\x86\Debug\PenisPotato.csprojResolveAssemblyReference.cache
 C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\obj\x86\Debug\PenisPotato.Resources.resources
@@ -615,3 +614,4 @@ C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\obj\x86\Debug\P
 C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\obj\x86\Debug\PenisPotato.csproj.GenerateResource.Cache
 C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\obj\x86\Debug\PenisPotato.exe
 C:\Users\BryanGrom\Documents\PenisPotato\PenisPotato\PenisPotato\obj\x86\Debug\PenisPotato.pdb
+C:\Users\Rafzoola\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_TankMove.xnb
