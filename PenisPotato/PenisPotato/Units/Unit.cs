@@ -64,7 +64,11 @@ namespace PenisPotato.Units
             if (movementPoints.Count > 0)
             {
                 moveTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                unitEffects = (movementPoints[0].X >= piecePosition.X) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+                if (movementPoints[0].X > piecePosition.X)
+                    unitEffects = SpriteEffects.None;
+                else if (movementPoints[0].X < piecePosition.X)
+                    unitEffects = SpriteEffects.FlipHorizontally;
 
 
                 if (movementPoints.Count > 0 && moveTime > unitSpeed)
@@ -72,8 +76,12 @@ namespace PenisPotato.Units
                     Unit unitOnTile = null;
                     moveTime = 0f;
 
-                    if (this.GetType().Equals(typeof(Units.Tank)))
+                    if (unitType.Equals((byte)UnitType.Infantry))
+                        animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[0]);
+                    else if (unitType.Equals((byte)UnitType.Tank))
                         animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[1]);
+                    else if (unitType.Equals((byte)UnitType.Jet))
+                        animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[2]);
 
                     player.masterState.players.ForEach(curPlayer =>
                         {
