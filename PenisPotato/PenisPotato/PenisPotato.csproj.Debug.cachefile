@@ -43,10 +43,10 @@ Content\Icons\Economy\Agriculture.xnb
 Content\Icons\Economy\Automotive.xnb
 Content\Icons\Economy\Computers.xnb
 Content\Textures\Units\Military\Unit_TankMove.xnb
+Content\Textures\Units\Military\Unit_PlaneMove.xnb
+Content\Textures\Units\Military\Unit_InfantryMove.xnb
 Content\Fonts\debugFont.xnb
 Content\Audio\heart.xnb
 Content\Audio\hex.xnb
-Content\Textures\Units\Military\Unit_PlaneMove.xnb
-Content\Textures\Units\Military\Unit_InfantryMove.xnb
 Content\Audio\heart.wma
 Content\Audio\hex.wma
