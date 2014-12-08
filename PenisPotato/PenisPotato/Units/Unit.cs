@@ -21,6 +21,7 @@ namespace PenisPotato.Units
         public UnitType goodAgainst;
         public bool canBuild = true;
         public Graphics.Animation.AnimationPlayer animPlayer;
+        public List<Unit> followingUnits;
 
         public int numUnits = 1;
         private bool needsUpdate = false;
@@ -56,6 +57,16 @@ namespace PenisPotato.Units
             numUnits -= 1;
             needsUpdate = true;
         }
+
+        public void AddFollowingUnit(Unit followingUnit)
+        {
+        }
+
+        public void RemoveFollowingUnit(Unit followingUnit)
+        {
+
+        }
+
 
         public virtual void Update(GameTime gameTime, Player.Player player)
         {
