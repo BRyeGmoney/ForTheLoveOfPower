@@ -22,6 +22,7 @@ namespace PenisPotato.Units
         public bool canBuild = true;
         public Graphics.Animation.AnimationPlayer animPlayer;
         public List<Unit> followingUnits;
+        private int leaderUnitIndex = -1;
 
         public int numUnits = 1;
         private bool needsUpdate = false;
@@ -58,13 +59,25 @@ namespace PenisPotato.Units
             needsUpdate = true;
         }
 
-        public void AddFollowingUnit(Unit followingUnit)
+        public void AddFollowingUnit(Unit followingUnit, Player.Player player)
         {
+            if (followingUnits == null)
+                followingUnits = new List<Unit>();
+
+            followingUnits.Add(followingUnit);
+            followingUnit.leaderUnitIndex = player.playerUnits.IndexOf(this); 
         }
 
         public void RemoveFollowingUnit(Unit followingUnit)
         {
+            if (followingUnits.Contains(followingUnit))
+            {
+                followingUnit.leaderUnitIndex = -1;
+                followingUnits.Remove(followingUnit);
+            }
 
+            if (followingUnits.Count.Equals(0))
+                followingUnits = null;
         }
 
 
@@ -76,10 +89,10 @@ namespace PenisPotato.Units
             {
                 moveTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                if (movementPoints[0].X > piecePosition.X)
-                    unitEffects = SpriteEffects.None;
-                else if (movementPoints[0].X < piecePosition.X)
-                    unitEffects = SpriteEffects.FlipHorizontally;
+                if (leaderUnitIndex > -1)
+                    player.playerUnits[leaderUnitIndex].RemoveFollowingUnit(this);
+
+                FlipUnit();
 
 
                 if (movementPoints.Count > 0 && moveTime > unitSpeed)
@@ -87,17 +100,12 @@ namespace PenisPotato.Units
                     Unit unitOnTile = null;
                     moveTime = 0f;
 
-                    if (unitType.Equals((byte)UnitType.Infantry))
-                        animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[0]);
-                    else if (unitType.Equals((byte)UnitType.Tank))
-                        animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[1]);
-                    else if (unitType.Equals((byte)UnitType.Jet))
-                        animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[2]);
+                    AnimateMovement(player);
 
                     player.masterState.players.ForEach(curPlayer =>
                         {
                             if (curPlayer.playerUnits.Exists(pU => pU.piecePosition.Equals(movementPoints[0]) && !pU.Equals(this)))
-                                unitOnTile = curPlayer.playerUnits.Find(pU => pU.piecePosition.Equals(movementPoints[0]));
+                                unitOnTile = curPlayer.playerUnits.Find(pU => ((pU.piecePosition.Equals(movementPoints[0]) && (this.followingUnits == null) || (this.followingUnits != null && !this.followingUnits.Contains(pU)))));
 
                             if (curPlayer.playerSettlements.Exists(pS => pS.piecePosition.Equals(movementPoints[0])))
                             {
@@ -111,7 +119,18 @@ namespace PenisPotato.Units
                     if (unitOnTile == null)
                     {
                         //if there is no unit here then we continue on as if nothing
+                        Vector2 diff = new Vector2(movementPoints[0].X - piecePosition.X, movementPoints[0].Y - piecePosition.Y);
                         piecePosition = movementPoints[0];
+
+                        if (followingUnits != null)
+                        {
+                            followingUnits.ForEach(fU =>
+                                {
+                                    fU.AnimateMovement(player);
+                                    fU.unitEffects = this.unitEffects;
+                                    fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y + diff.Y);
+                                });
+                        }
                         movementPoints.RemoveAt(0);
                         canBuild = CheckIfNoEnemyOnTile(player, piecePosition);
                     }
@@ -125,6 +144,10 @@ namespace PenisPotato.Units
                         {
                             unitOnTile.AddUnits(this.numUnits);
                             this.numUnits -= this.numUnits;
+                        }
+                        else
+                        {
+                            unitOnTile.AddFollowingUnit(this, player);
                         }
                     }
                     else
@@ -147,7 +170,7 @@ namespace PenisPotato.Units
             }
             else
             {
-                if (animPlayer.Animation != null)//this.GetType().Equals(typeof(Units.Tank)))
+                if ((animPlayer.Animation != null && leaderUnitIndex < 0) ^ (leaderUnitIndex > -1 && player.playerUnits[leaderUnitIndex].movementPoints.Count.Equals(0)))//this.GetType().Equals(typeof(Units.Tank)))
                     animPlayer.KillAnimation();
                     //animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[0]);
             }
@@ -159,6 +182,24 @@ namespace PenisPotato.Units
             }
 
             canBuild = canBuild && (!player.buildingTiles.Contains(piecePosition) && !player.dupeBuildingTiles.Contains(piecePosition));
+        }
+
+        private void AnimateMovement(Player.Player player)
+        {
+            if (unitType.Equals((byte)UnitType.Infantry))
+                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[0]);
+            else if (unitType.Equals((byte)UnitType.Tank))
+                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[1]);
+            else if (unitType.Equals((byte)UnitType.Jet))
+                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[2]);
+        }
+
+        private void FlipUnit()
+        {
+            if (movementPoints[0].X > piecePosition.X)
+                unitEffects = SpriteEffects.None;
+            else if (movementPoints[0].X < piecePosition.X)
+                unitEffects = SpriteEffects.FlipHorizontally;
         }
 
         private bool CheckIfNoEnemyOnTile(Player.Player player, Vector2 pos)
@@ -211,6 +252,10 @@ namespace PenisPotato.Units
 
             if (numUnits > 1)
                 spriteBatch.DrawString(font, numUnits.ToString(), new Vector2(pieceRect.X + 5, pieceRect.Y + pieceRect.Height - (font.LineSpacing * 3)), playerColor, 0.0f, Vector2.Zero, 3.0f, SpriteEffects.None, 0.0f);
+
+            if (followingUnits != null)
+                spriteBatch.Draw(ScreenManager.textureRepo[2], new Rectangle(pieceRect.X + tileWidth - 80, pieceRect.Y + 10, 80, 80),  playerColor);
+                //spriteBatch.DrawString(font, "L", new Vector2(pieceRect.X + tileWidth - 30, pieceRect.Y + 10), playerColor);
         }
     }
 

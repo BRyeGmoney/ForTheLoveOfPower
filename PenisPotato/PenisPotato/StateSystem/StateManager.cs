@@ -187,6 +187,7 @@ namespace PenisPotato.StateSystem
             textureRepo = new List<Texture2D>();
             textureRepo.Add(content.Load<Texture2D>("Icons//Modifiers//minusMoney"));
             textureRepo.Add(content.Load<Texture2D>("Icons//Modifiers//plusMoney"));
+            textureRepo.Add(content.Load<Texture2D>("Icons/Modifiers/SquadLeader"));
         }
 
         private void SetupAnimationRepository(ContentManager content)
