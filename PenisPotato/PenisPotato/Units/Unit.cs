@@ -105,7 +105,7 @@ namespace PenisPotato.Units
                     player.masterState.players.ForEach(curPlayer =>
                         {
                             if (curPlayer.playerUnits.Exists(pU => pU.piecePosition.Equals(movementPoints[0]) && !pU.Equals(this)))
-                                unitOnTile = curPlayer.playerUnits.Find(pU => ((pU.piecePosition.Equals(movementPoints[0]) && (this.followingUnits == null) || (this.followingUnits != null && !this.followingUnits.Contains(pU)))));
+                                unitOnTile = curPlayer.playerUnits.Find(pU => ((pU.piecePosition.Equals(movementPoints[0]) && !(this.followingUnits != null && !this.followingUnits.Contains(pU)))));
 
                             if (curPlayer.playerSettlements.Exists(pS => pS.piecePosition.Equals(movementPoints[0])))
                             {
@@ -116,7 +116,7 @@ namespace PenisPotato.Units
                             }
                         });
 
-                    if (unitOnTile == null)
+                    if (unitOnTile == null || (followingUnits != null && followingUnits.Contains(unitOnTile)))
                     {
                         //if there is no unit here then we continue on as if nothing
                         Vector2 diff = new Vector2(movementPoints[0].X - piecePosition.X, movementPoints[0].Y - piecePosition.Y);
@@ -136,18 +136,21 @@ namespace PenisPotato.Units
                     }
                     else if (unitOnTile.playerColor.Equals(player.playerColor))
                     {
-                        //if the unit on this tile is one of ours then we clear any further movement
+                        //if the unit on this tile is one of ours and isn't part of this group then we clear any further movement
                         movementPoints.Clear();
 
                         //if the unit is also the same type, we add our 
-                        if (unitOnTile.unitType.Equals(this.unitType))
+                        if (unitOnTile.unitType.Equals(this.unitType) && movementPoints.Count > 0)
                         {
                             unitOnTile.AddUnits(this.numUnits);
                             this.numUnits -= this.numUnits;
                         }
                         else
                         {
-                            unitOnTile.AddFollowingUnit(this, player);
+                            if (unitOnTile.leaderUnitIndex < 0)
+                                unitOnTile.AddFollowingUnit(this, player);
+                            else
+                                player.playerUnits[unitOnTile.leaderUnitIndex].AddFollowingUnit(this, player);
                         }
                     }
                     else
