@@ -114,7 +114,7 @@ namespace PenisPotato.Graphics.Animation
                     // Advance the frame index; looping or clamping as appropriate.
                     if (Animation.IsLooping)
                     {
-                        frameIndex = (frameIndex + 1) % Animation.FrameCount;
+                        frameIndex = Math.Max(Animation.FrameToLoopFrom, (frameIndex + 1) % Animation.FrameCount);
                     }
                     else
                     {

@@ -41,6 +41,12 @@ namespace PenisPotato.Graphics.Animation
             }
             bool isLooping;
 
+            public int FrameToLoopFrom
+            {
+                get { return frameToLoopFrom; }
+            }
+            int frameToLoopFrom = 0;
+
             /// <summary>
             /// Gets the number of frames in the animation.
             /// </summary>
@@ -67,8 +73,26 @@ namespace PenisPotato.Graphics.Animation
             }
 
             /// <summary>
-            /// Constructors a new animation.
-            /// </summary>        
+            /// Constructs a new animation
+            /// </summary>
+            /// <param name="texture">The entire spritesheet for parsing</param>
+            /// <param name="frameTime">the duration each frame spends on screen</param>
+            /// <param name="isLooping">Whether the animation actually loops</param>
+            /// <param name="frameToLoopFrom">The frame from which you wish to start the animation the second time around.</param>
+            public Animation(Texture2D texture, float frameTime, bool isLooping, int frameToLoopFrom)
+            {
+                this.texture = texture;
+                this.frameTime = frameTime;
+                this.isLooping = isLooping;
+                this.frameToLoopFrom = frameToLoopFrom;
+            }
+
+            /// <summary>
+            /// Constructs a new animation
+            /// </summary>
+            /// <param name="texture">The entire spritesheet for parsing</param>
+            /// <param name="frameTime">the duration each frame spends on screen</param>
+            /// <param name="isLooping">Whether the animation actually loops</param>
             public Animation(Texture2D texture, float frameTime, bool isLooping)
             {
                 this.texture = texture;
