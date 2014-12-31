@@ -129,10 +129,22 @@ namespace PenisPotato.Units
                                 {
                                     fU.AnimateMovement(player);
                                     fU.unitEffects = this.unitEffects;
-                                    //if (allowY)
-                                    //    fU.piecePosition = new Vector2(piecePosition.X - (diff.X - fU.piecePosition.X), fU.piecePosition.Y - (piecePosition.Y - diff.Y));
-                                    //else
-                                        fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y + (diff.Y + (piecePosition.X % 2)));
+                                    if ((fU.piecePosition.X + diff.X) % 2 != 0)
+                                    {
+                                        if (diff.Y < 0)
+                                            fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y);
+                                        else
+                                            fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y + 1);
+                                    }
+                                    else
+                                    {
+                                        if (diff.Y == 0)
+                                            fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y - 1);
+                                        else
+                                            fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y);
+                                    }
+                                    //fU.piecePosition = new Vector2(piecePosition.X - (diff.X - fU.piecePosition.X), fU.piecePosition.Y - (piecePosition.Y - diff.Y));
+                                    //fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y + (diff.Y + (piecePosition.X % 2)));
                                 });
                         }
                         piecePosition = movementPoints[0];
@@ -213,19 +225,6 @@ namespace PenisPotato.Units
         private bool CheckIfNoEnemyOnTile(Player.Player player, Vector2 pos)
         {
             bool noEnemy = true;
-            /*if (player.netPlayer != null)
-            {
-                player.netPlayer.peers.ForEach(peer =>
-                    {
-                        peer.buildingTiles.ForEach(bT =>
-                            {
-                                if (bT.Equals(pos))
-                                    noEnemy = false;
-                            });
-                    });
-            }
-            else
-            {*/
                 player.masterState.players.ForEach(playee =>
                     {
                         playee.buildingTiles.ForEach(bT =>
@@ -234,7 +233,6 @@ namespace PenisPotato.Units
                                     noEnemy = false;
                             });
                     });
-            //}
             return noEnemy;
         }
 
