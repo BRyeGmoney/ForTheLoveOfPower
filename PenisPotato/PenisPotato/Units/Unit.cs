@@ -119,18 +119,23 @@ namespace PenisPotato.Units
                     if (unitOnTile == null || (followingUnits != null && followingUnits.Contains(unitOnTile)))
                     {
                         //if there is no unit here then we continue on as if nothing
-                        Vector2 diff = new Vector2(movementPoints[0].X - piecePosition.X, movementPoints[0].Y - piecePosition.Y);
-                        piecePosition = movementPoints[0];
+                        Vector2 diff = new Vector2(movementPoints[0].X - piecePosition.X, (movementPoints[0].Y - piecePosition.Y));
 
                         if (followingUnits != null)
                         {
+                            List<Vector2> unitPoss = new List<Vector2>();
+                            //bool allowY = piecePosition.X > diff.X & piecePosition.Y >= diff.Y || piecePosition.X < diff.Y & piecePosition.Y <= diff.Y;
                             followingUnits.ForEach(fU =>
                                 {
                                     fU.AnimateMovement(player);
                                     fU.unitEffects = this.unitEffects;
-                                    fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y + diff.Y);
+                                    //if (allowY)
+                                    //    fU.piecePosition = new Vector2(piecePosition.X - (diff.X - fU.piecePosition.X), fU.piecePosition.Y - (piecePosition.Y - diff.Y));
+                                    //else
+                                        fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y + (diff.Y + (piecePosition.X % 2)));
                                 });
                         }
+                        piecePosition = movementPoints[0];
                         movementPoints.RemoveAt(0);
                         canBuild = CheckIfNoEnemyOnTile(player, piecePosition);
                     }

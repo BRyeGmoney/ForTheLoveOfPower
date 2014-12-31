@@ -68,7 +68,7 @@ namespace PenisPotato
 
             // Activate the first screens.
             screenManager.AddScreen(new StateSystem.Screens.BackgroundScreen(), null);
-            screenManager.AddScreen(new StateSystem.Screens.MainMenuScreen(), null);
+            screenManager.AddScreen(new StateSystem.Screens.MainMenuScreenOld(), null);
         }
 
         /// <summary>

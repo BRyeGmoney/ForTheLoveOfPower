@@ -155,6 +155,7 @@
     <Compile Include="StateSystem\Screens\GameplayScreen.cs" />
     <Compile Include="StateSystem\Screens\LoadingScreen.cs" />
     <Compile Include="StateSystem\Screens\MainMenuScreen.cs" />
+    <Compile Include="StateSystem\Screens\MainMenuScreenOld.cs" />
     <Compile Include="StateSystem\Screens\MenuEntry.cs" />
     <Compile Include="StateSystem\Screens\MenuScreen.cs" />
     <Compile Include="StateSystem\Screens\MessageBoxScreen.cs" />
