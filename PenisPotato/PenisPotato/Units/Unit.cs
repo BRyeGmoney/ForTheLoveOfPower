@@ -129,22 +129,30 @@ namespace PenisPotato.Units
                                 {
                                     fU.AnimateMovement(player);
                                     fU.unitEffects = this.unitEffects;
-                                    if ((fU.piecePosition.X + diff.X) % 2 != 0)
+                                    if ((fU.piecePosition.X - piecePosition.X) % 2 != 0)
                                     {
-                                        if (diff.Y < 0)
-                                            fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y);
+                                        if (Math.Abs(diff.X) > 0)
+                                        {
+                                            if ((fU.piecePosition.X + diff.X) % 2 != 0)
+                                            {
+                                                if (diff.Y < 0)
+                                                    fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y);
+                                                else
+                                                    fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y + 1);
+                                            }
+                                            else
+                                            {
+                                                if (diff.Y == 0)
+                                                    fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y - 1);
+                                                else
+                                                    fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y);
+                                            }
+                                        }
                                         else
-                                            fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y + 1);
+                                            fU.piecePosition = new Vector2(fU.piecePosition.X, fU.piecePosition.Y + diff.Y);
                                     }
                                     else
-                                    {
-                                        if (diff.Y == 0)
-                                            fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y - 1);
-                                        else
-                                            fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y);
-                                    }
-                                    //fU.piecePosition = new Vector2(piecePosition.X - (diff.X - fU.piecePosition.X), fU.piecePosition.Y - (piecePosition.Y - diff.Y));
-                                    //fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y + (diff.Y + (piecePosition.X % 2)));
+                                        fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y + diff.Y);
                                 });
                         }
                         piecePosition = movementPoints[0];
