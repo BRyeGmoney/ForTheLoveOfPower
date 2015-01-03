@@ -269,7 +269,7 @@ namespace PenisPotato.StateSystem.Screens
                 {
                     rect = new Rectangle(x * tileWidth, (y * tileWidth) - Math.Abs(x % 2) * (tileWidth / 2), tileWidth, tileWidth);
                     spriteBatch.Draw(tile, rect, Color.Cyan);
-                    spriteBatch.DrawString(ScreenManager.Font, x + ", " + y, new Vector2(rect.X + 10, rect.Y + 5), Color.Cyan, 0.0f, Vector2.Zero, 2.2f, SpriteEffects.None, 0.0f);
+                    //spriteBatch.DrawString(ScreenManager.Font, x + ", " + y, new Vector2(rect.X + 10, rect.Y + 5), Color.Cyan, 0.0f, Vector2.Zero, 2.2f, SpriteEffects.None, 0.0f);
                 }
             }
         }

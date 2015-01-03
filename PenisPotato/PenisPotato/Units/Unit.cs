@@ -120,44 +120,68 @@ namespace PenisPotato.Units
                     {
                         //if there is no unit here then we continue on as if nothing
                         Vector2 diff = new Vector2(movementPoints[0].X - piecePosition.X, (movementPoints[0].Y - piecePosition.Y));
+                        bool canMove = true;
+                        //see if the unit can move
+                        canBuild = CheckIfNoEnemyOnTile(player, movementPoints[0]);
 
-                        if (followingUnits != null)
+                        if (followingUnits != null && canBuild)
                         {
                             List<Vector2> unitPoss = new List<Vector2>();
                             //bool allowY = piecePosition.X > diff.X & piecePosition.Y >= diff.Y || piecePosition.X < diff.Y & piecePosition.Y <= diff.Y;
                             followingUnits.ForEach(fU =>
                                 {
-                                    fU.AnimateMovement(player);
-                                    fU.unitEffects = this.unitEffects;
-                                    if ((fU.piecePosition.X - piecePosition.X) % 2 != 0)
+                                    if (canMove)
                                     {
-                                        if (Math.Abs(diff.X) > 0)
+                                        fU.AnimateMovement(player);
+                                        fU.unitEffects = this.unitEffects;
+                                        if ((fU.piecePosition.X - piecePosition.X) % 2 != 0)
                                         {
-                                            if ((fU.piecePosition.X + diff.X) % 2 != 0)
+                                            if (Math.Abs(diff.X) > 0)
                                             {
-                                                if (diff.Y < 0)
-                                                    fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y);
+                                                if ((fU.piecePosition.X + diff.X) % 2 != 0)
+                                                {
+                                                    if (diff.Y < 0)
+                                                        fU.movementPoints.Add(new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y));//fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y);
+                                                    else
+                                                        fU.movementPoints.Add(new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y + 1));
+                                                }
                                                 else
-                                                    fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y + 1);
+                                                {
+                                                    if (diff.Y == 0)
+                                                        fU.movementPoints.Add(new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y - 1));
+                                                    else
+                                                        fU.movementPoints.Add(new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y));
+                                                }
                                             }
                                             else
-                                            {
-                                                if (diff.Y == 0)
-                                                    fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y - 1);
-                                                else
-                                                    fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y);
-                                            }
+                                                fU.movementPoints.Add(new Vector2(fU.piecePosition.X, fU.piecePosition.Y + diff.Y));
                                         }
                                         else
-                                            fU.piecePosition = new Vector2(fU.piecePosition.X, fU.piecePosition.Y + diff.Y);
+                                            fU.movementPoints.Add(new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y + diff.Y));
+
+                                        if (CheckIfNoEnemyOnTile(player, fU.movementPoints.First()))
+                                            fU.canBuild = true;
+                                        else
+                                            canMove = false;
                                     }
-                                    else
-                                        fU.piecePosition = new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y + diff.Y);
+                                });
+
+                                followingUnits.ForEach(fU =>
+                                {
+                                    if (canMove)
+                                        fU.piecePosition = fU.movementPoints[0];
+
+                                    fU.movementPoints.RemoveAt(0);
                                 });
                         }
-                        piecePosition = movementPoints[0];
-                        movementPoints.RemoveAt(0);
-                        canBuild = CheckIfNoEnemyOnTile(player, piecePosition);
+
+                        if (canMove)
+                        {
+                            piecePosition = movementPoints[0];
+                            movementPoints.RemoveAt(0);
+                        }
+                        else
+                            movementPoints.Clear();                  
                     }
                     else if (unitOnTile.playerColor.Equals(player.playerColor))
                     {
