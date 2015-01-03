@@ -80,6 +80,29 @@ namespace PenisPotato.Units
                 followingUnits = null;
         }
 
+        public Unit CheckIfEnemyOnTile(Player.Player player, Unit checkingUnit)
+        {
+            Unit unitOnTile = null;
+
+            player.masterState.players.ForEach(curPlayer =>
+            {
+                if (curPlayer.playerUnits.Exists(pU => pU.piecePosition.Equals(checkingUnit.movementPoints[0]) && !pU.Equals(checkingUnit)))
+                    unitOnTile = curPlayer.playerUnits.Find(pU => ((pU.piecePosition.Equals(checkingUnit.movementPoints[0]))));
+
+                if (unitOnTile != null && checkingUnit.followingUnits != null && checkingUnit.followingUnits.Contains(unitOnTile))
+                    unitOnTile = null;
+
+                if (curPlayer.playerSettlements.Exists(pS => pS.piecePosition.Equals(checkingUnit.movementPoints[0])))
+                {
+                    Structures.Civil.Settlement curSettlement = curPlayer.playerSettlements.Find(pS => pS.piecePosition.Equals(checkingUnit.movementPoints[0]));
+                    curSettlement.isCityBeingConquered = true;
+                    if (player.netPlayer != null)
+                        player.netPlayer.packetsToSend.Enqueue(new Player.StructureNetworkPacket() { packetType = (byte)Player.PacketType.SETTLEMENT_UPDATE, building = curSettlement, invaderId = player.netPlayer.uniqueIdentifer, defenderId = (curPlayer as Player.NetworkPlayer).uniqueIdentifer, lengthOfTransmission = 4 });
+                }
+            });
+
+            return unitOnTile;
+        }
 
         public virtual void Update(GameTime gameTime, Player.Player player)
         {
@@ -89,6 +112,7 @@ namespace PenisPotato.Units
             {
                 moveTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+                //If a unit tries to move and is owned by a leader, remove this unit from the leader's units.
                 if (leaderUnitIndex > -1)
                     player.playerUnits[leaderUnitIndex].RemoveFollowingUnit(this);
 
@@ -102,19 +126,7 @@ namespace PenisPotato.Units
 
                     AnimateMovement(player);
 
-                    player.masterState.players.ForEach(curPlayer =>
-                        {
-                            if (curPlayer.playerUnits.Exists(pU => pU.piecePosition.Equals(movementPoints[0]) && !pU.Equals(this)))
-                                unitOnTile = curPlayer.playerUnits.Find(pU => ((pU.piecePosition.Equals(movementPoints[0]) && !(this.followingUnits != null && !this.followingUnits.Contains(pU)))));
-
-                            if (curPlayer.playerSettlements.Exists(pS => pS.piecePosition.Equals(movementPoints[0])))
-                            {
-                                Structures.Civil.Settlement curSettlement = curPlayer.playerSettlements.Find(pS => pS.piecePosition.Equals(movementPoints[0]));
-                                curSettlement.isCityBeingConquered = true;
-                                if (player.netPlayer != null)
-                                    player.netPlayer.packetsToSend.Enqueue(new Player.StructureNetworkPacket() { packetType = (byte)Player.PacketType.SETTLEMENT_UPDATE, building = curSettlement, invaderId = player.netPlayer.uniqueIdentifer, defenderId = (curPlayer as Player.NetworkPlayer).uniqueIdentifer, lengthOfTransmission = 4 });
-                            }
-                        });
+                    unitOnTile = CheckIfEnemyOnTile(player, this);
 
                     if (unitOnTile == null || (followingUnits != null && followingUnits.Contains(unitOnTile)))
                     {
@@ -122,7 +134,7 @@ namespace PenisPotato.Units
                         Vector2 diff = new Vector2(movementPoints[0].X - piecePosition.X, (movementPoints[0].Y - piecePosition.Y));
                         bool canMove = true;
                         //see if the unit can move
-                        canBuild = CheckIfNoEnemyOnTile(player, movementPoints[0]);
+                        canBuild = CheckIfBuildOnTile(player, movementPoints[0]);
 
                         if (followingUnits != null && canBuild)
                         {
@@ -159,7 +171,7 @@ namespace PenisPotato.Units
                                         else
                                             fU.movementPoints.Add(new Vector2(fU.piecePosition.X + diff.X, fU.piecePosition.Y + diff.Y));
 
-                                        if (CheckIfNoEnemyOnTile(player, fU.movementPoints.First()))
+                                        if (CheckIfBuildOnTile(player, fU.movementPoints.First()))
                                             fU.canBuild = true;
                                         else
                                             canMove = false;
@@ -171,7 +183,7 @@ namespace PenisPotato.Units
                                     if (canMove)
                                         fU.piecePosition = fU.movementPoints[0];
 
-                                    fU.movementPoints.RemoveAt(0);
+                                    fU.movementPoints.Clear();
                                 });
                         }
 
@@ -205,6 +217,17 @@ namespace PenisPotato.Units
                     else
                     {
                         movementPoints.Clear();
+
+                        if (followingUnits != null)
+                        {
+                            followingUnits.ForEach(fU =>
+                               {
+                                   fU.leaderUnitIndex = -1;
+                               });
+
+                            followingUnits.Clear();
+                        }
+
                         if (player.netPlayer != null)
                         {
                             player.combat.Add(new SkeletonCombat(this, unitOnTile, player.netPlayer.uniqueIdentifer, player.netPlayer.peers.Find(peer => peer.playerUnits.Contains(unitOnTile)).uniqueIdentifer));
@@ -254,12 +277,12 @@ namespace PenisPotato.Units
                 unitEffects = SpriteEffects.FlipHorizontally;
         }
 
-        private bool CheckIfNoEnemyOnTile(Player.Player player, Vector2 pos)
+        private bool CheckIfBuildOnTile(Player.Player player, Vector2 pos)
         {
             bool noEnemy = true;
                 player.masterState.players.ForEach(playee =>
                     {
-                        playee.buildingTiles.ForEach(bT =>
+                        playee.playerStructures.ForEach(bT =>
                             {
                                 if (bT.Equals(pos))
                                     noEnemy = false;
