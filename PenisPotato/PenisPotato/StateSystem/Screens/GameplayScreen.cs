@@ -169,10 +169,21 @@ namespace PenisPotato.StateSystem.Screens
                     }
                     else
                         fight.Update(gameTime);
-                        
+
                 }
                 else
+                {
+                    fight.attacker.ForEach(s =>
+                        {
+                            s.animPlayer.KillAnimation();
+                        });
+                    fight.defender.ForEach(s =>
+                        {
+                            s.animPlayer.KillAnimation();
+                        });
+
                     playerOne.combat.Remove(fight);
+                }
             });
         }
 

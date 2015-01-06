@@ -49,5 +49,8 @@ Content\Icons\Modifiers\SquadLeader.xnb
 Content\Fonts\debugFont.xnb
 Content\Audio\heart.xnb
 Content\Audio\hex.xnb
+Content\Textures\Units\Military\Unit_InfantryCombat.xnb
+Content\Textures\Units\Military\Unit_PlaneCombat.xnb
+Content\Textures\Units\Military\Unit_TankCombat.xnb
 Content\Audio\heart.wma
 Content\Audio\hex.wma

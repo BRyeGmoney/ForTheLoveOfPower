@@ -462,6 +462,33 @@
       <Extra>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Audio\hex.wma</Extra>
       <Time>2014-09-24T22:50:02.7335008-07:00</Time>
     </Item>
+    <Item>
+      <Source>Textures\Units\Military\Unit_InfantryCombat.png</Source>
+      <Name>Textures\Units\Military\Unit_InfantryCombat</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_InfantryCombat.xnb</Output>
+      <Time>2015-01-05T18:36:49.3132456-08:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\Units\Military\Unit_PlaneCombat.png</Source>
+      <Name>Textures\Units\Military\Unit_PlaneCombat</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_PlaneCombat.xnb</Output>
+      <Time>2015-01-05T18:37:11.1325197-08:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\Units\Military\Unit_TankCombat.png</Source>
+      <Name>Textures\Units\Military\Unit_TankCombat</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_TankCombat.xnb</Output>
+      <Time>2015-01-05T18:37:35.3971918-08:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

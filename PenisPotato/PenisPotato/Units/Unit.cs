@@ -20,6 +20,7 @@ namespace PenisPotato.Units
         public byte unitType;
         public UnitType goodAgainst;
         public bool canBuild = true;
+        public bool inCombat = false;
         public Graphics.Animation.AnimationPlayer animPlayer;
         public List<Unit> followingUnits;
         private int leaderUnitIndex = -1;
@@ -174,7 +175,19 @@ namespace PenisPotato.Units
                                         if (CheckIfBuildOnTile(player, fU.movementPoints.First()))
                                             fU.canBuild = true;
                                         else
+                                            fU.canBuild = false;
+                                        unitOnTile = CheckIfEnemyOnTile(player, fU);
+                                        if (unitOnTile != null)
+                                        {
                                             canMove = false;
+                                            if (player.netPlayer != null)
+                                            {
+                                                player.combat.Add(new SkeletonCombat(fU, unitOnTile, player.netPlayer.uniqueIdentifer, player.netPlayer.peers.Find(peer => peer.playerUnits.Contains(unitOnTile)).uniqueIdentifer));
+                                                player.netPlayer.ongoingFights.Enqueue(player.combat[player.combat.Count - 1]);
+                                            }
+                                            else
+                                                player.combat.Add(new Combat(fU, unitOnTile, player.masterState));
+                                        }
                                     }
                                 });
 
@@ -245,9 +258,8 @@ namespace PenisPotato.Units
             }
             else
             {
-                if ((animPlayer.Animation != null && leaderUnitIndex < 0) ^ (leaderUnitIndex > -1 && player.playerUnits[leaderUnitIndex].movementPoints.Count.Equals(0)))//this.GetType().Equals(typeof(Units.Tank)))
+                if (!inCombat && (animPlayer.Animation != null && leaderUnitIndex < 0) ^ (leaderUnitIndex > -1 && player.playerUnits[leaderUnitIndex].movementPoints.Count.Equals(0)))
                     animPlayer.KillAnimation();
-                    //animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[0]);
             }
 
             if (player.netPlayer != null && needsUpdate)
@@ -259,14 +271,24 @@ namespace PenisPotato.Units
             canBuild = canBuild && (!player.buildingTiles.Contains(piecePosition) && !player.dupeBuildingTiles.Contains(piecePosition));
         }
 
-        private void AnimateMovement(Player.Player player)
+        public void AnimateMovement(Player.Player player)
         {
             if (unitType.Equals((byte)UnitType.Infantry))
                 animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[0]);
             else if (unitType.Equals((byte)UnitType.Tank))
-                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[1]);
-            else if (unitType.Equals((byte)UnitType.Jet))
                 animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[2]);
+            else if (unitType.Equals((byte)UnitType.Jet))
+                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[4]);
+        }
+
+        public void AnimateCombat(Player.Player player)
+        {
+            if (unitType.Equals((byte)UnitType.Infantry))
+                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[1]);
+            else if (unitType.Equals((byte)UnitType.Tank))
+                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[3]);
+            else if (unitType.Equals((byte)UnitType.Jet))
+                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[5]);
         }
 
         private void FlipUnit()
