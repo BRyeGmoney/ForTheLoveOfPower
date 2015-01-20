@@ -316,7 +316,12 @@ namespace PenisPotato.Units
         public virtual void Update(GameTime gameTime, Player.EnemyPlayer enemyPlayer)
         {
             if (numUnits < 1)
+            {
+                if (this.unitType.Equals((byte)UnitType.Dictator))
+                    enemyPlayer.hasLost = true;
+
                 enemyPlayer.playerUnits.Remove(this);
+            }
             
         }
 

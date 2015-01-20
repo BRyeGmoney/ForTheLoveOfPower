@@ -21,7 +21,6 @@ namespace PenisPotato
         StateSystem.StateManager screenManager;
 
         //Major Components
-        //BloomComponent bloom;
         /*Camera camera;
 
         //Map
@@ -47,7 +46,6 @@ namespace PenisPotato
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            //bloom = new BloomComponent(this) { Visible = false };
 
             graphics.IsFullScreen = false;
             graphics.PreferredBackBufferHeight = 480;
@@ -55,9 +53,6 @@ namespace PenisPotato
             this.IsMouseVisible = true;
 
             Content.RootDirectory = "Content";
-
-            //Components.Add(bloom);
-            //bloom.Settings = new BloomSettings(null, 0.15f, 2, 1.25f, 1, 1.5f, 1);
 
             // Create the screen manager component.
             screenManager = new StateSystem.StateManager(this);
@@ -68,7 +63,7 @@ namespace PenisPotato
 
             // Activate the first screens.
             screenManager.AddScreen(new StateSystem.Screens.BackgroundScreen(), null);
-            screenManager.AddScreen(new StateSystem.Screens.MainMenuScreenOld(), null);
+            screenManager.AddScreen(new StateSystem.Screens.MainMenuScreen(), null);
         }
 
         /// <summary>
@@ -122,8 +117,7 @@ namespace PenisPotato
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
-            
+            //GraphicsDevice.Clear(Color.Black);
 
             base.Draw(gameTime);
         }

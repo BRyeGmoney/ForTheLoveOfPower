@@ -29,6 +29,9 @@ namespace PenisPotato.StateSystem.Networking
         public CreateOrFindSessionScreen()
             : base("Create Or Find Session")
         {
+            // Tell all the current screens to transition off.
+            foreach (GameScreen screen in ScreenManager.GetScreens())
+                screen.ExitScreen();
 
             // Create our menu entries.
             MenuEntry createSessionMenuEntry = new MenuEntry(Resources.CreateSession);

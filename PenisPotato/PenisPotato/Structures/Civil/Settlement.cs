@@ -115,7 +115,7 @@ namespace PenisPotato.Structures.Civil
                     if (player.netPlayer != null)
                         player.netPlayer.packetsToSend.Enqueue(new Player.StructureNetworkPacket() { packetType = (byte)Player.PacketType.SETTLEMENT_UPDATE, defenderId = player.netPlayer.uniqueIdentifer, invaderId = invadingPlayerId, building = this, percentageConquered = (short)this.conquered, lengthOfTransmission = 6 });
                 }
-                else if (conqueredIndex > -1)
+                else if (conqueredIndex > -1 && this.settlementProperties.Count > 0)
                 {
                     this.settlementProperties[conqueredIndex].conquered = MathHelper.Clamp(this.settlementProperties[conqueredIndex].conquered - 20.0f, 0, 100);
 
@@ -134,7 +134,7 @@ namespace PenisPotato.Structures.Civil
                 lastTime = 0.0f;
             }
 
-            if (player.playerUnits[0].piecePosition.Equals(piecePosition))
+            if (player.playerUnits.Count > 0 && player.playerUnits[0].unitType.Equals((byte)Units.UnitType.Dictator) && player.playerUnits[0].piecePosition.Equals(piecePosition))
                 isDictatorInCity = true;
             else
                 isDictatorInCity = false;
@@ -177,6 +177,7 @@ namespace PenisPotato.Structures.Civil
                 if (conqueredIndex < 0)
                     conqueredIndex = 0;
 
+                //if there are more properties to steal in this place, start stealing them first
                 if (settlementProperties.Count() > conqueredIndex)
                 {
                     this.settlementProperties[conqueredIndex].conquered = MathHelper.Clamp(this.settlementProperties[conqueredIndex].conquered + 20.0f, 0, 100);
@@ -187,6 +188,7 @@ namespace PenisPotato.Structures.Civil
                     if (this.settlementProperties[conqueredIndex].conquered >= 100.0f)
                         conqueredIndex++;
                 }
+                //no more? or none to start? Just steal the settlement then.
                 else
                 {
                     this.conquered = MathHelper.Clamp(this.conquered + 30.0f, 0, 100.0f);

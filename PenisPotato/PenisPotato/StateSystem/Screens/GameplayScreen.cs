@@ -185,6 +185,14 @@ namespace PenisPotato.StateSystem.Screens
                     playerOne.combat.Remove(fight);
                 }
             });
+
+            players.ForEach(player =>
+            {
+                if (player.hasLost)
+                {
+                    LoadingScreen.Load(ScreenManager, false, PlayerIndex.One, new MainMenuScreen());
+                }
+            });
         }
 
 
