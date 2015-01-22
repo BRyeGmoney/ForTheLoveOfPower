@@ -43,7 +43,7 @@ namespace PenisPotato.StateSystem.Screens
 
             confirmQuitMessageBox.Accepted += ConfirmQuitMessageBoxAccepted;
 
-            ScreenManager.AddScreen(confirmQuitMessageBox, ControllingPlayer);
+            ScreenManager.AddScreen(confirmQuitMessageBox, ControllingPlayer, false);
         }
 
 

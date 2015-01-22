@@ -196,10 +196,13 @@ namespace PenisPotato.StateSystem
             
             animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_InfantryMove"), 0.125f, true, 0));
             animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_InfantryCombat"), 0.2f, true));
+            animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_InfantryDeath"), 0.2f, false));
             animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_TankMove"), 0.2f, true, 2));
             animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_TankCombat"), 0.2f, true));
+            animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_TankDeath"), 0.2f, false));
             animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_PlaneMove"), 0.2f, true, 0));
             animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_PlaneCombat"), 0.2f, true));
+            animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_PlaneDeath"), 0.2f, false));
         }
 
         /// <summary>
@@ -323,7 +326,7 @@ namespace PenisPotato.StateSystem
         /// <summary>
         /// Adds a new screen to the screen manager.
         /// </summary>
-        public void AddScreen(GameScreen screen, PlayerIndex? controllingPlayer)
+        public void AddScreen(GameScreen screen, PlayerIndex? controllingPlayer, bool killAllButBg)
         {
             screen.ControllingPlayer = controllingPlayer;
             screen.ScreenManager = this;

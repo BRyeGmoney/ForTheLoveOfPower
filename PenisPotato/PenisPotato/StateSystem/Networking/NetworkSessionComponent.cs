@@ -287,8 +287,8 @@ namespace PenisPotato.StateSystem.Networking
             }
             catch (Exception exception)
             {
-                screenManager.AddScreen(new MainMenuScreen(), null);
-                screenManager.AddScreen(new NetworkErrorScreen(exception), null);
+                screenManager.AddScreen(new MainMenuScreen(), null, false);
+                screenManager.AddScreen(new NetworkErrorScreen(exception), null, false);
             }
         }
 
@@ -410,7 +410,7 @@ namespace PenisPotato.StateSystem.Networking
                     self.LeaveSession();
                 };
 
-                screenManager.AddScreen(confirmMessageBox, playerIndex);
+                screenManager.AddScreen(confirmMessageBox, playerIndex, false);
             }
         }
 
@@ -469,7 +469,7 @@ namespace PenisPotato.StateSystem.Networking
 
                     // Display the why-did-the-session-end message box.
                     if (messageBox != null)
-                        screenManager.AddScreen(messageBox, null);
+                        screenManager.AddScreen(messageBox, null, false);
 
                     return;
                 }

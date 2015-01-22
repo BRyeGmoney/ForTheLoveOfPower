@@ -81,13 +81,13 @@ namespace PenisPotato.StateSystem.Networking
 
                 busyScreen.OperationCompleted += JoinSessionOperationCompleted;
 
-                ScreenManager.AddScreen(busyScreen, ControllingPlayer);
+                ScreenManager.AddScreen(busyScreen, ControllingPlayer, false);
             }
             catch (Exception exception)
             {
                 NetworkErrorScreen errorScreen = new NetworkErrorScreen(exception);
 
-                ScreenManager.AddScreen(errorScreen, ControllingPlayer);
+                ScreenManager.AddScreen(errorScreen, ControllingPlayer, false);
             }
         }
 
@@ -117,7 +117,7 @@ namespace PenisPotato.StateSystem.Networking
             {
                 NetworkErrorScreen errorScreen = new NetworkErrorScreen(exception);
 
-                ScreenManager.AddScreen(errorScreen, ControllingPlayer);
+                ScreenManager.AddScreen(errorScreen, ControllingPlayer, false);
             }
         }
 

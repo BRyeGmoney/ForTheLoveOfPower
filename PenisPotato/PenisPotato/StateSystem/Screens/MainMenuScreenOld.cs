@@ -54,7 +54,7 @@ namespace PenisPotato.StateSystem.Screens
 
         void MultiPlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            ScreenManager.AddScreen(new Networking.CreateOrFindSessionScreen(), e.PlayerIndex);
+            ScreenManager.AddScreen(new Networking.CreateOrFindSessionScreen(), e.PlayerIndex, false);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace PenisPotato.StateSystem.Screens
         /// </summary>
         void OptionsMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            ScreenManager.AddScreen(new OptionsMenuScreen(ScreenManager), e.PlayerIndex);
+            ScreenManager.AddScreen(new OptionsMenuScreen(ScreenManager), e.PlayerIndex, false);
         }
 
 
@@ -77,7 +77,7 @@ namespace PenisPotato.StateSystem.Screens
 
             confirmExitMessageBox.Accepted += ConfirmExitMessageBoxAccepted;
 
-            ScreenManager.AddScreen(confirmExitMessageBox, playerIndex);
+            ScreenManager.AddScreen(confirmExitMessageBox, playerIndex, false);
         }
 
 

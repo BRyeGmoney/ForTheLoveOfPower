@@ -61,7 +61,7 @@ namespace PenisPotato.StateSystem.Screens
                                                             loadingIsSlow,
                                                             screensToLoad);
 
-            screenManager.AddScreen(loadingScreen, controllingPlayer);
+            screenManager.AddScreen(loadingScreen, controllingPlayer, false);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace PenisPotato.StateSystem.Screens
                                                             networkPlayers,
                                                             screensToLoad);
 
-            screenManager.AddScreen(loadingScreen, controllingPlayer);
+            screenManager.AddScreen(loadingScreen, controllingPlayer, false);
         }
 
         #endregion
@@ -111,7 +111,7 @@ namespace PenisPotato.StateSystem.Screens
                 {
                     if (screen != null)
                     {
-                        ScreenManager.AddScreen(screen, ControllingPlayer);
+                        ScreenManager.AddScreen(screen, ControllingPlayer, false);
                     }
                 }
 

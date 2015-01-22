@@ -44,8 +44,6 @@ namespace PenisPotato.StateSystem.Screens
 
         public override void HandleInput(GameTime gameTime, InputState input)
         {
-            bool isClose = false;
-
             if (input.CurrentMouseStates[0].LeftButton == ButtonState.Pressed && input.LastMouseStates[0].LeftButton == ButtonState.Released)
             {
                 menuItems.ForEach(mi =>
@@ -53,13 +51,9 @@ namespace PenisPotato.StateSystem.Screens
                         if (mi.position.Contains(input.CurrentMouseStates[0].X, input.CurrentMouseStates[0].Y))
                         {
                             mi.PerformFunction(ScreenManager);
-                            isClose = true;
                         }
                     });
             }
-
-            //if (isClose.Equals(true))
-              //  ScreenManager.RemoveScreen(this);
         }
 
         public override void Draw(GameTime gameTime)
@@ -68,9 +62,10 @@ namespace PenisPotato.StateSystem.Screens
                                                Color.Black, 0, 0);
 
             bloom.BeginDraw();
-            ScreenManager.SpriteBatch.Begin(SpriteSortMode.Immediate,
-                    null, SamplerState.PointClamp, null, null, null,
-                    camera.GetTransformation());
+            ScreenManager.SpriteBatch.Begin();
+            //ScreenManager.SpriteBatch.Begin(SpriteSortMode.Immediate,
+            //        null, SamplerState.PointClamp, null, null, null,
+            //        camera.GetTransformation());
 
             ScreenManager.SpriteBatch.FillRectangle(new Rectangle(0, 0, ScreenManager.GraphicsDevice.Viewport.Width, ScreenManager.GraphicsDevice.Viewport.Height), Color.Black);
 
@@ -131,7 +126,7 @@ namespace PenisPotato.StateSystem.Screens
 
         void MultiPlayGameMenuEntrySelected(StateManager ScreenManager, PlayerIndex e)
         {
-            ScreenManager.AddScreen(new Networking.CreateOrFindSessionScreen(), e);
+            ScreenManager.AddScreen(new Networking.CreateOrFindSessionScreen(), e, true);
         }
 
         /// <summary>
@@ -139,7 +134,7 @@ namespace PenisPotato.StateSystem.Screens
         /// </summary>
         void OptionsMenuEntrySelected(StateManager ScreenManager, PlayerIndex e)
         {
-            ScreenManager.AddScreen(new OptionsMenuScreen(ScreenManager), e);
+            ScreenManager.AddScreen(new OptionsMenuScreen(ScreenManager), e, true);
         }
 
         public void Draw(SpriteBatch spriteBatch)

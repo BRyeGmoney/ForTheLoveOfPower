@@ -90,6 +90,7 @@ namespace PenisPotato.Player
                 {
                     if (pU.unitType.Equals((byte)Units.UnitType.Dictator))
                         this.hasLost = true;
+                    pU.AnimateDeath(this);
                     playerUnits.Remove(pU);
                 }
             });
@@ -117,7 +118,7 @@ namespace PenisPotato.Player
         public void UpdateInput(GameTime gameTime, StateSystem.InputState input, Camera camera)
         {
             if (input.IsPauseGame(PlayerIndex.One))
-                ScreenManager.AddScreen(new StateSystem.Screens.PauseMenuScreen(), PlayerIndex.One);
+                ScreenManager.AddScreen(new StateSystem.Screens.PauseMenuScreen(), PlayerIndex.One, false);
             else
             {
                 // Adjust zoom if the mouse wheel has moved
@@ -195,14 +196,14 @@ namespace PenisPotato.Player
                             {
                                 if (!performedAction && pU.piecePosition.Equals(selectedTilePos) && pU.canBuild)
                                 {
-                                    ScreenManager.AddScreen(new StateSystem.Screens.BuildMenuScreen(ScreenManager, this, true), PlayerIndex.One);
+                                    ScreenManager.AddScreen(new StateSystem.Screens.BuildMenuScreen(ScreenManager, this, true), PlayerIndex.One, false);
                                     performedAction = true;
                                 }
                             });
 
                             //Otherwise, lets do this shit.
                             if (!performedAction && buildingTiles.Contains(selectedTilePos))
-                                ScreenManager.AddScreen(new StateSystem.Screens.BuildMenuScreen(ScreenManager, this, false), PlayerIndex.One);
+                                ScreenManager.AddScreen(new StateSystem.Screens.BuildMenuScreen(ScreenManager, this, false), PlayerIndex.One, false);
                         }
                     }
                 }

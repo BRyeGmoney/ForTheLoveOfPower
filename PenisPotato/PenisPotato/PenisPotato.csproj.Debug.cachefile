@@ -52,5 +52,8 @@ Content\Audio\hex.xnb
 Content\Textures\Units\Military\Unit_InfantryCombat.xnb
 Content\Textures\Units\Military\Unit_PlaneCombat.xnb
 Content\Textures\Units\Military\Unit_TankCombat.xnb
+Content\Textures\Units\Military\Unit_InfantryDeath.xnb
+Content\Textures\Units\Military\Unit_PlaneDeath.xnb
+Content\Textures\Units\Military\Unit_TankDeath.xnb
 Content\Audio\heart.wma
 Content\Audio\hex.wma

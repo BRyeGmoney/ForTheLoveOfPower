@@ -82,7 +82,7 @@ namespace PenisPotato.StateSystem.Screens
 
             nameTypeMessageBox.Accepted += NameTypeMessageBoxAccepted;
 
-            ScreenManager.AddScreen(nameTypeMessageBox, ControllingPlayer);
+            ScreenManager.AddScreen(nameTypeMessageBox, ControllingPlayer, false);
         }
 
         /// <summary>

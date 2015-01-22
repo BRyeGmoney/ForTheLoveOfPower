@@ -180,7 +180,7 @@ namespace PenisPotato.StateSystem.Networking
 
                 messageBox.Accepted += ConfirmStartGameMessageBoxAccepted;
 
-                ScreenManager.AddScreen(messageBox, PlayerIndex.One);
+                ScreenManager.AddScreen(messageBox, PlayerIndex.One, false);
             }
         }
 

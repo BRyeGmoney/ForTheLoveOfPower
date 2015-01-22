@@ -489,6 +489,33 @@
       <Output>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_TankCombat.xnb</Output>
       <Time>2015-01-05T18:37:35.3971918-08:00</Time>
     </Item>
+    <Item>
+      <Source>Textures\Units\Military\Unit_InfantryDeath.png</Source>
+      <Name>Textures\Units\Military\Unit_InfantryDeath</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_InfantryDeath.xnb</Output>
+      <Time>2015-01-21T17:51:58.7677036-08:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\Units\Military\Unit_PlaneDeath.png</Source>
+      <Name>Textures\Units\Military\Unit_PlaneDeath</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_PlaneDeath.xnb</Output>
+      <Time>2015-01-21T17:52:21.7930205-08:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\Units\Military\Unit_TankDeath.png</Source>
+      <Name>Textures\Units\Military\Unit_TankDeath</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Textures\Units\Military\Unit_TankDeath.xnb</Output>
+      <Time>2015-01-21T17:52:44.3603113-08:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

@@ -47,7 +47,7 @@ namespace PenisPotato.Structures.Economy
                     player.playerSettlements[settlementOwnerIndex].economyAvailable[0, 1] - player.playerSettlements[settlementOwnerIndex].economyAvailable[1, 1], 
                     player.playerSettlements[settlementOwnerIndex].economyAvailable[0, 2] - player.playerSettlements[settlementOwnerIndex].economyAvailable[1, 2] };
 
-                player.ScreenManager.AddScreen(new StateSystem.Screens.EconomyScreen(player, player.ScreenManager, this, Structures.PieceTypes.Factory, minEco), PlayerIndex.One);
+                player.ScreenManager.AddScreen(new StateSystem.Screens.EconomyScreen(player, player.ScreenManager, this, Structures.PieceTypes.Factory, minEco), PlayerIndex.One, false);
             }
         }
 

@@ -29,10 +29,6 @@ namespace PenisPotato.StateSystem.Networking
         public CreateOrFindSessionScreen()
             : base("Create Or Find Session")
         {
-            // Tell all the current screens to transition off.
-            foreach (GameScreen screen in ScreenManager.GetScreens())
-                screen.ExitScreen();
-
             // Create our menu entries.
             MenuEntry createSessionMenuEntry = new MenuEntry(Resources.CreateSession);
             MenuEntry findSessionsMenuEntry = new MenuEntry(Resources.FindLocalSessions);
@@ -73,7 +69,7 @@ namespace PenisPotato.StateSystem.Networking
             }
 
             if (retries <= 50)
-                ScreenManager.AddScreen(new LobbyScreen(gameServer, ScreenManager), PlayerIndex.One);
+                ScreenManager.AddScreen(new LobbyScreen(gameServer, ScreenManager), PlayerIndex.One, false);
         }
 
 
@@ -93,7 +89,7 @@ namespace PenisPotato.StateSystem.Networking
         /// </summary>
         void FindSessionsMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            ScreenManager.AddScreen(new LobbyScreen("", ScreenManager), PlayerIndex.One);
+            ScreenManager.AddScreen(new LobbyScreen("", ScreenManager), PlayerIndex.One, false);
         }
 
 
@@ -108,7 +104,7 @@ namespace PenisPotato.StateSystem.Networking
 
             inputIPMessageBox.Accepted += InputIPMessageBoxAccepted;
 
-            ScreenManager.AddScreen(inputIPMessageBox, ControllingPlayer);
+            ScreenManager.AddScreen(inputIPMessageBox, ControllingPlayer, false);
         }
 
 
@@ -120,7 +116,7 @@ namespace PenisPotato.StateSystem.Networking
         void InputIPMessageBoxAccepted(object sender, PlayerIndexEventArgs e)
         {
             MessageBoxScreen msg = sender as MessageBoxScreen;
-            ScreenManager.AddScreen(new LobbyScreen(msg.IPAddress, ScreenManager), PlayerIndex.One);
+            ScreenManager.AddScreen(new LobbyScreen(msg.IPAddress, ScreenManager), PlayerIndex.One, false);
         }
 
 

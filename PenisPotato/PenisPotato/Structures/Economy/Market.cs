@@ -37,7 +37,7 @@ namespace PenisPotato.Structures.Economy
         public override void Clicked(GameTime gameTime, Player.MainPlayer player)
         {
             if (built >= 100)
-                player.ScreenManager.AddScreen(new StateSystem.Screens.EconomyScreen(player, player.ScreenManager, this, Structures.PieceTypes.Market, new int[3] {0,0,0}), PlayerIndex.One);
+                player.ScreenManager.AddScreen(new StateSystem.Screens.EconomyScreen(player, player.ScreenManager, this, Structures.PieceTypes.Market, new int[3] {0,0,0}), PlayerIndex.One, false);
         }
 
         public void DoneModifyingEconomy(Player.Player player)

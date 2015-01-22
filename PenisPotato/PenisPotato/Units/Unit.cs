@@ -214,7 +214,7 @@ namespace PenisPotato.Units
                         movementPoints.Clear();
 
                         //if the unit is also the same type, we add our 
-                        if (unitOnTile.unitType.Equals(this.unitType) && movementPoints.Count > 0)
+                        if (unitOnTile.unitType.Equals(this.unitType) && unitOnTile.movementPoints.Count.Equals(0))
                         {
                             unitOnTile.AddUnits(this.numUnits);
                             this.numUnits -= this.numUnits;
@@ -276,9 +276,9 @@ namespace PenisPotato.Units
             if (unitType.Equals((byte)UnitType.Infantry))
                 animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[0]);
             else if (unitType.Equals((byte)UnitType.Tank))
-                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[2]);
+                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[3]);
             else if (unitType.Equals((byte)UnitType.Jet))
-                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[4]);
+                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[6]);
         }
 
         public void AnimateCombat(Player.Player player)
@@ -286,9 +286,19 @@ namespace PenisPotato.Units
             if (unitType.Equals((byte)UnitType.Infantry))
                 animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[1]);
             else if (unitType.Equals((byte)UnitType.Tank))
-                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[3]);
+                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[4]);
             else if (unitType.Equals((byte)UnitType.Jet))
+                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[7]);
+        }
+
+        public void AnimateDeath(Player.Player player)
+        {
+            if (unitType.Equals((byte)UnitType.Infantry))
+                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[2]);
+            else if (unitType.Equals((byte)UnitType.Tank))
                 animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[5]);
+            else if (unitType.Equals((byte)UnitType.Jet))
+                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[8]);
         }
 
         private void FlipUnit()
@@ -320,6 +330,7 @@ namespace PenisPotato.Units
                 if (this.unitType.Equals((byte)UnitType.Dictator))
                     enemyPlayer.hasLost = true;
 
+                this.AnimateDeath(enemyPlayer);
                 enemyPlayer.playerUnits.Remove(this);
             }
             
