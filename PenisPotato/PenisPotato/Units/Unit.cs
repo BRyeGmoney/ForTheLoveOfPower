@@ -194,13 +194,17 @@ namespace PenisPotato.Units
                                         if (unitOnTile != null && unitOnTile != this && !followingUnits.Contains(unitOnTile))
                                         {
                                             canMove = false;
-                                            if (player.netPlayer != null)
+                                            //If we want the following units to do something other than just stop the whole group, this is the place to do it
+                                            if (!unitOnTile.playerColor.Equals(this.playerColor))
                                             {
-                                                player.combat.Add(new SkeletonCombat(fU, unitOnTile, player.netPlayer.uniqueIdentifer, player.netPlayer.peers.Find(peer => peer.playerUnits.Contains(unitOnTile)).uniqueIdentifer));
-                                                player.netPlayer.ongoingFights.Enqueue(player.combat[player.combat.Count - 1]);
+                                                if (player.netPlayer != null)
+                                                {
+                                                    player.combat.Add(new SkeletonCombat(fU, unitOnTile, player.netPlayer.uniqueIdentifer, player.netPlayer.peers.Find(peer => peer.playerUnits.Contains(unitOnTile)).uniqueIdentifer));
+                                                    player.netPlayer.ongoingFights.Enqueue(player.combat[player.combat.Count - 1]);
+                                                }
+                                                else
+                                                    player.combat.Add(new Combat(fU, unitOnTile, player.masterState));
                                             }
-                                            else
-                                                player.combat.Add(new Combat(fU, unitOnTile, player.masterState));
                                         }
                                     }
                                 });
