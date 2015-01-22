@@ -12,7 +12,7 @@ namespace PenisPotato.Units.Misc
     {
         public Dictator() { }
 
-        public Dictator(Vector2 pos, Color color, Texture2D pieceTex)
+        public Dictator(Vector2 pos, Color color, Texture2D pieceTex, int unitId)
         {
             this.piecePosition = pos;
             this.playerColor = color;
@@ -21,6 +21,7 @@ namespace PenisPotato.Units.Misc
             this.movementPoints = new List<Vector2>();
             this.unitSpeed = 2.0f;
             this.tileWidth = Convert.ToInt16(Resources.tileWidth);
+            this.unitID = unitId;
         }
 
         public override void LoadContent(ContentManager Content)

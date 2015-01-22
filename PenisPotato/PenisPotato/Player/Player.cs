@@ -19,6 +19,7 @@ namespace PenisPotato.Player
        
         public String playerName;
         public NetworkPlayer netPlayer;
+        private Int32 UnitIDTracker = -1;
 
         public Int32 Money { get { return money; } set { money = value; } }
         public Color playerColor;
@@ -129,6 +130,11 @@ namespace PenisPotato.Player
 
                 //netPlayer.structuresToSend.Enqueue(playerStructures[playerStructures.Count - diff]);
             }
+        }
+
+        public int GetNextUnitId()
+        {
+            return UnitIDTracker++;
         }
 
         public int ToRoundX(float num)

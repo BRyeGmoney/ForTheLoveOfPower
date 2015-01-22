@@ -175,7 +175,7 @@ namespace PenisPotato.Player
                         //If there's no buildings yet then we have to create an mvp
                         if (playerUnits.Count < 1)
                         {
-                            playerUnits.Add(new Units.Misc.Dictator(selectedTilePos, playerColor, dictatorTex));
+                            playerUnits.Add(new Units.Misc.Dictator(selectedTilePos, playerColor, dictatorTex, GetNextUnitId()));
                             //err i know this is awkward placement for this but whatever
                             if (netPlayer != null)
                                 netPlayer.unitsToSend.Enqueue(playerUnits[playerUnits.Count - 1]);

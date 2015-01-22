@@ -23,8 +23,8 @@ namespace PenisPotato.Units
         public bool inCombat = false;
         public Graphics.Animation.AnimationPlayer animPlayer;
         public List<Unit> followingUnits;
+        public int unitID;
         private int leaderUnitIndex = -1;
-
         public int numUnits = 1;
         private bool needsUpdate = false;
 
@@ -32,12 +32,13 @@ namespace PenisPotato.Units
 
         public Unit() { }
 
-        public Unit(Vector2 position, Texture2D pieceText)
+        public Unit(Vector2 position, Texture2D pieceText, int unitId)
         {
             this.piecePosition = position;
             this.pieceTexture = pieceText;
             this.movementPoints = new List<Vector2>();
             this.numUnits = 1;
+            this.unitID = unitId;
         }
 
         public virtual void LoadContent(ContentManager Content) { }
@@ -66,7 +67,7 @@ namespace PenisPotato.Units
                 followingUnits = new List<Unit>();
 
             followingUnits.Add(followingUnit);
-            followingUnit.leaderUnitIndex = player.playerUnits.IndexOf(this); 
+            followingUnit.leaderUnitIndex = this.unitID; 
         }
 
         public void RemoveFollowingUnit(Unit followingUnit)
@@ -115,7 +116,12 @@ namespace PenisPotato.Units
 
                 //If a unit tries to move and is owned by a leader, remove this unit from the leader's units.
                 if (leaderUnitIndex > -1)
-                    player.playerUnits[leaderUnitIndex].RemoveFollowingUnit(this);
+                {
+                    if (player.playerUnits.Where(u => u.unitID.Equals(leaderUnitIndex)).Count() > 0)
+                        player.playerUnits[leaderUnitIndex].RemoveFollowingUnit(this);
+                    else
+                        leaderUnitIndex = -1;
+                }
 
                 FlipUnit();
 
@@ -177,7 +183,7 @@ namespace PenisPotato.Units
                                         else
                                             fU.canBuild = false;
                                         unitOnTile = CheckIfEnemyOnTile(player, fU);
-                                        if (unitOnTile != null)
+                                        if (unitOnTile != null && unitOnTile != this && !followingUnits.Contains(unitOnTile))
                                         {
                                             canMove = false;
                                             if (player.netPlayer != null)

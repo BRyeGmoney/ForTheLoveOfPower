@@ -28,7 +28,7 @@ namespace PenisPotato.Structures.Military
 
                 if (unitInSpace == null)
                 {
-                    player.playerUnits.Add(new Units.Jet(this.piecePosition, player.playerColor, 1, player.ScreenManager.buildItems[14].menuItem));
+                    player.playerUnits.Add(new Units.Jet(this.piecePosition, player.playerColor, 1, player.ScreenManager.buildItems[14].menuItem, player.GetNextUnitId()));
                     if (player.netPlayer != null)
                         player.netPlayer.unitsToSend.Enqueue(player.playerUnits[player.playerUnits.Count - 1]);
                 }

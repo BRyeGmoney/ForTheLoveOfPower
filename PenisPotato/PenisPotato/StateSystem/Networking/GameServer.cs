@@ -375,13 +375,13 @@ namespace PenisPotato.StateSystem.Networking
             switch (type)
             {
                 case (byte)Units.UnitType.Dictator:
-                    return new Units.Misc.Dictator(piecePosition, nP.playerColor, null);
+                    return new Units.Misc.Dictator(piecePosition, nP.playerColor, null, nP.GetNextUnitId());
                 case (byte)Units.UnitType.Infantry:
-                    return new Units.Infantry(piecePosition, nP.playerColor, numUnits, null);
+                    return new Units.Infantry(piecePosition, nP.playerColor, numUnits, null, nP.GetNextUnitId());
                 case (byte)Units.UnitType.Tank:
-                    return new Units.Tank(piecePosition, nP.playerColor, numUnits, null);
+                    return new Units.Tank(piecePosition, nP.playerColor, numUnits, null, nP.GetNextUnitId());
                 case (byte)Units.UnitType.Jet:
-                    return new Units.Jet(piecePosition, nP.playerColor, numUnits, null);
+                    return new Units.Jet(piecePosition, nP.playerColor, numUnits, null, nP.GetNextUnitId());
                 default:
                     return null;
             }

@@ -50,10 +50,10 @@ namespace PenisPotato.Player
             this.dupeBuildingTiles = new List<Vector2>();
             this.buildingTiles = new List<Vector2>();
 
-            playerUnits.Add(new Units.Misc.Dictator(new Vector2(6, 6), playerColor, ScreenManager.buildItems[(int)StateSystem.BuildItems.dictator].menuItem));
-            playerUnits.Add(new Units.Infantry(new Vector2(4, 4), playerColor, 20, ScreenManager.buildItems[(int)StateSystem.BuildItems.infantry].menuItem));
-            playerUnits.Add(new Units.Tank(new Vector2(5, 7), playerColor, 20, ScreenManager.buildItems[(int)StateSystem.BuildItems.tank].menuItem));
-            playerUnits.Add(new Units.Jet(new Vector2(6, 4), playerColor, 20, ScreenManager.buildItems[(int)StateSystem.BuildItems.plane].menuItem));
+            playerUnits.Add(new Units.Misc.Dictator(new Vector2(6, 6), playerColor, ScreenManager.buildItems[(int)StateSystem.BuildItems.dictator].menuItem, GetNextUnitId()));
+            playerUnits.Add(new Units.Infantry(new Vector2(4, 4), playerColor, 20, ScreenManager.buildItems[(int)StateSystem.BuildItems.infantry].menuItem, GetNextUnitId()));
+            playerUnits.Add(new Units.Tank(new Vector2(5, 7), playerColor, 20, ScreenManager.buildItems[(int)StateSystem.BuildItems.tank].menuItem, GetNextUnitId()));
+            playerUnits.Add(new Units.Jet(new Vector2(6, 4), playerColor, 20, ScreenManager.buildItems[(int)StateSystem.BuildItems.plane].menuItem, GetNextUnitId()));
             playerSettlements.Add(new Structures.Civil.Settlement(new Vector2(4, 5), playerColor, ScreenManager.buildItems[(int)StateSystem.BuildItems.settlement].menuItem));
             playerStructures.Add(playerSettlements.Last());
         }

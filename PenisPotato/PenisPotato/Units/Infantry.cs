@@ -12,7 +12,7 @@ namespace PenisPotato.Units
     {
         public Infantry() { }
 
-        public Infantry(Vector2 pos, Color color, int numUnits, Texture2D pieceTex)
+        public Infantry(Vector2 pos, Color color, int numUnits, Texture2D pieceTex, int unitId)
         {
             this.piecePosition = pos;
             this.playerColor = color;
@@ -23,6 +23,7 @@ namespace PenisPotato.Units
             this.tileWidth = Convert.ToInt16(Resources.tileWidth);
             this.unitType = (byte)UnitType.Infantry;
             this.goodAgainst = UnitType.Tank;
+            this.unitID = unitId;
             animPlayer = new Graphics.Animation.AnimationPlayer();
         }
     }

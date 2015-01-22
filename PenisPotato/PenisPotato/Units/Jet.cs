@@ -12,7 +12,7 @@ namespace PenisPotato.Units
     {
         public Jet() { }
 
-        public Jet(Vector2 pos, Color color, int numUnits, Texture2D pieceTex)
+        public Jet(Vector2 pos, Color color, int numUnits, Texture2D pieceTex, int unitId)
         {
             this.piecePosition = pos;
             this.playerColor = color;
@@ -22,6 +22,7 @@ namespace PenisPotato.Units
             this.numUnits = numUnits;
             this.tileWidth = Convert.ToInt16(Resources.tileWidth);
             this.unitType = (byte)UnitType.Jet;
+            this.unitID = unitID;
             this.goodAgainst = UnitType.Infantry;
             animPlayer = new Graphics.Animation.AnimationPlayer();
         }

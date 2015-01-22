@@ -412,13 +412,13 @@ namespace PenisPotato.Player
             switch (type)
             {
                 case (byte)Units.UnitType.Dictator:
-                    return new Units.Misc.Dictator(piecePosition, nP.playerColor, nP.ScreenManager.buildItems[(int)StateSystem.BuildItems.dictator].menuItem);
+                    return new Units.Misc.Dictator(piecePosition, nP.playerColor, nP.ScreenManager.buildItems[(int)StateSystem.BuildItems.dictator].menuItem, nP.GetNextUnitId());
                 case (byte)Units.UnitType.Infantry:
-                    return new Units.Infantry(piecePosition, nP.playerColor, numUnits, nP.ScreenManager.buildItems[(int)StateSystem.BuildItems.infantry].menuItem);
+                    return new Units.Infantry(piecePosition, nP.playerColor, numUnits, nP.ScreenManager.buildItems[(int)StateSystem.BuildItems.infantry].menuItem, nP.GetNextUnitId());
                 case (byte)Units.UnitType.Tank:
-                    return new Units.Tank(piecePosition, nP.playerColor, numUnits, nP.ScreenManager.buildItems[(int)StateSystem.BuildItems.tank].menuItem);
+                    return new Units.Tank(piecePosition, nP.playerColor, numUnits, nP.ScreenManager.buildItems[(int)StateSystem.BuildItems.tank].menuItem, nP.GetNextUnitId());
                 case (byte)Units.UnitType.Jet:
-                    return new Units.Jet(piecePosition, nP.playerColor, numUnits, nP.ScreenManager.buildItems[(int)StateSystem.BuildItems.plane].menuItem);
+                    return new Units.Jet(piecePosition, nP.playerColor, numUnits, nP.ScreenManager.buildItems[(int)StateSystem.BuildItems.plane].menuItem, nP.GetNextUnitId());
                 default:
                     return null;
             }
