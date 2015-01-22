@@ -67,7 +67,15 @@ namespace PenisPotato.Units
                 followingUnits = new List<Unit>();
 
             followingUnits.Add(followingUnit);
-            followingUnit.leaderUnitIndex = this.unitID; 
+            followingUnit.leaderUnitIndex = this.unitID;
+
+            if (followingUnit.followingUnits != null)
+            {
+                followingUnit.followingUnits.ForEach(fU => fU.leaderUnitIndex = this.unitID);
+                followingUnits.AddRange(followingUnit.followingUnits);
+                followingUnit.followingUnits.Clear();
+                followingUnit.followingUnits = null;
+            }
         }
 
         public void RemoveFollowingUnit(Unit followingUnit)

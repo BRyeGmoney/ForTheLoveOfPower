@@ -134,7 +134,8 @@ namespace PenisPotato.Player
 
         public int GetNextUnitId()
         {
-            return UnitIDTracker++;
+            UnitIDTracker += 1;
+            return UnitIDTracker;
         }
 
         public int ToRoundX(float num)
