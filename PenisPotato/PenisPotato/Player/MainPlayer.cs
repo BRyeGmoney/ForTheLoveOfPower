@@ -90,8 +90,14 @@ namespace PenisPotato.Player
                 {
                     if (pU.unitType.Equals((byte)Units.UnitType.Dictator))
                         this.hasLost = true;
-                    pU.AnimateDeath(this);
-                    playerUnits.Remove(pU);
+
+                    if (pU.animPlayer.Animation != null && pU.animPlayer.Animation.IsStopped)
+                    {
+                        playerUnits.Remove(pU);
+                        pU = null;
+                    }
+                    else
+                        pU.AnimateDeath(this);
                 }
             });
 

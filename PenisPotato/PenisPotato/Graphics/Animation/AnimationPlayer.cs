@@ -90,6 +90,7 @@ namespace PenisPotato.Graphics.Animation
                     else
                     {
                         frameIndex = Math.Min(frameIndex + 1, Animation.FrameCount - 1);
+                        Animation.IsStopped = frameIndex.Equals(Animation.FrameCount - 1) ? true : false;
                     }
                 }
 
@@ -119,6 +120,7 @@ namespace PenisPotato.Graphics.Animation
                     else
                     {
                         frameIndex = Math.Min(frameIndex + 1, Animation.FrameCount - 1);
+                        Animation.IsStopped = frameIndex.Equals(Animation.FrameCount - 1) ? true : false;
                     }
                 }
 

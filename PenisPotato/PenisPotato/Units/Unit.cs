@@ -276,7 +276,8 @@ namespace PenisPotato.Units
             }
             else
             {
-                if (!inCombat && (animPlayer.Animation != null && leaderUnitIndex < 0) ^ (leaderUnitIndex > -1 && player.playerUnits[leaderUnitIndex].movementPoints.Count.Equals(0)))
+                //fix this line. more specifically remove leaderunitindex as an index and refer it to the unitID
+                if (!inCombat && (animPlayer.Animation != null && leaderUnitIndex < 0) ^ (leaderUnitIndex > -1 && player.playerUnits.Find(pu => pu.unitID.Equals(leaderUnitIndex)).movementPoints.Count.Equals(0)))//player.playerUnits[leaderUnitIndex].movementPoints.Count.Equals(0)))
                     animPlayer.KillAnimation();
             }
 
@@ -348,8 +349,10 @@ namespace PenisPotato.Units
                 if (this.unitType.Equals((byte)UnitType.Dictator))
                     enemyPlayer.hasLost = true;
 
+                if (this.animPlayer.Animation != null && this.animPlayer.Animation.IsStopped)
+                    enemyPlayer.playerUnits.Remove(this);
+
                 this.AnimateDeath(enemyPlayer);
-                enemyPlayer.playerUnits.Remove(this);
             }
             
         }
