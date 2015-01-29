@@ -307,7 +307,7 @@ namespace PenisPotato.Units
             else if (unitType.Equals((byte)UnitType.Tank))
                 animPlayer.PlayAnimation(new Animation(player.ScreenManager.animationsRepo[4], 0.2f, true));
             else if (unitType.Equals((byte)UnitType.Jet))
-                animPlayer.PlayAnimation(new Animation(player.ScreenManager.animationsRepo[7], 0.2f, true));
+                animPlayer.PlayAnimation(new Animation(player.ScreenManager.animationsRepo[7], 0.1f, true));
         }
 
         public void AnimateDeath(Player.Player player)
@@ -317,7 +317,7 @@ namespace PenisPotato.Units
             else if (unitType.Equals((byte)UnitType.Tank))
                 animPlayer.PlayAnimation(new Animation(player.ScreenManager.animationsRepo[5], 0.2f, false) { IsDeathAnimation = true });
             else if (unitType.Equals((byte)UnitType.Jet))
-                animPlayer.PlayAnimation(new Animation(player.ScreenManager.animationsRepo[8], 0.2f, false) { IsDeathAnimation = true });
+                animPlayer.PlayAnimation(new Animation(player.ScreenManager.animationsRepo[8], 0.215f, false) { IsDeathAnimation = true });
         }
 
         private void FlipUnit()

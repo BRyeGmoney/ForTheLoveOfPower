@@ -205,7 +205,7 @@ namespace PenisPotato.StateSystem
             animationsRepo.Add(content.Load<Texture2D>("Textures/Units/Military/Unit_PlaneDeath"));
             /*animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_InfantryMove"), 0.125f, true, 0));
             animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_InfantryCombat"), 0.2f, true));
-            animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_InfantryDeath"), 0.2f, false));
+            animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_InfantryDeath"), 0.205f, false));
             animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_TankMove"), 0.2f, true, 2));
             animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_TankCombat"), 0.2f, true));
             animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_TankDeath"), 0.2f, false));
