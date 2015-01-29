@@ -72,11 +72,8 @@ namespace PenisPotato.Graphics.Animation
                 get { return Texture.Height; }
             }
 
-            public bool IsStopped
-            {
-                get;
-                set;
-            }
+            public bool IsStopped { get; set; }
+            public bool IsDeathAnimation { get; set; }
 
             /// <summary>
             /// Constructs a new animation

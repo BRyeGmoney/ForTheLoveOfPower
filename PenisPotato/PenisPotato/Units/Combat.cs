@@ -28,9 +28,6 @@ namespace PenisPotato.Units
             this.masterState = masterState;
             this.attacker.Add(attacker);
             this.defender.Add(defender);
-
-            attacker.inCombat = true;
-            defender.inCombat = true;
         }
 
         /*public Combat(List<Unit> attacks, List<Unit> defends, StateSystem.Screens.GameplayScreen masterState)
@@ -118,7 +115,7 @@ namespace PenisPotato.Units
 
         public void Update(GameTime gameTime)
         {
-            if (timeToFight > 0.3)
+            if (timeToFight > 1)
             {
                 Random random = new Random();
                 int attackPower = 0, defendPower = 0;
@@ -130,7 +127,9 @@ namespace PenisPotato.Units
 
                 attacker.ForEach(s =>
                 {
-                    s.AnimateCombat(masterState.players.Find(player => player.playerUnits.Contains(s)));
+                    s.inCombat = true;
+                    if (s.animPlayer.Animation == null)
+                        s.AnimateCombat(masterState.players.Find(player => player.playerUnits.Contains(s)));
                     
                     //Standard random attack power that everyone gets. No modifiers put in yet
                     for (int x = 0; x < s.numUnits; x++)
@@ -139,7 +138,9 @@ namespace PenisPotato.Units
 
                 defender.ForEach(s =>
                 {
-                    s.AnimateCombat(masterState.players.Find(player => player.playerUnits.Contains(s)));
+                    s.inCombat = true;
+                    if (s.animPlayer.Animation == null)
+                        s.AnimateCombat(masterState.players.Find(player => player.playerUnits.Contains(s)));
 
                     //Standard random attack power that everyone gets. No modifiers put in yet
                     for (int x = 0; x < s.numUnits; x++)

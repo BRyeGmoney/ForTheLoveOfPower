@@ -35,9 +35,9 @@ namespace PenisPotato.StateSystem.Screens
             Vector2 origin = new Vector2(ScreenManager.GraphicsDevice.Viewport.X + (ScreenManager.GraphicsDevice.Viewport.Width / 2), ScreenManager.GraphicsDevice.Viewport.Y + (ScreenManager.GraphicsDevice.Viewport.Height / 2));
 
             menuItems = new List<MenuItem>();
-            menuItems.Add(new Screens.MenuItem(new Vector2(origin.X - (ScreenManager.tile.Width / 2), origin.Y - ScreenManager.tile.Height), content.Load<Texture2D>("Textures/Misc/Menu_Manipulation"), ScreenManager.tile, MenuItemStates.SinglePlayer, Color.Crimson));
-            menuItems.Add(new Screens.MenuItem(new Vector2(origin.X - ScreenManager.tile.Width, origin.Y), content.Load<Texture2D>("Textures/Misc/Menu_Manipulation"), ScreenManager.tile, MenuItemStates.Multiplayer,Color.Magenta));
-            menuItems.Add(new Screens.MenuItem(new Vector2(origin.X - (ScreenManager.tile.Width / 2), origin.Y + ScreenManager.tile.Height), content.Load<Texture2D>("Textures/Misc/Menu_Manipulation"), ScreenManager.tile, MenuItemStates.Options, Color.Orange));
+            menuItems.Add(new Screens.MenuItem(new Vector2(origin.X - ((ScreenManager.tile.Width / 2) * 3), origin.Y - ScreenManager.tile.Height), content.Load<Texture2D>("Textures/Misc/Menu_Manipulation"), ScreenManager.tile, MenuItemStates.SinglePlayer, Color.Crimson));
+            menuItems.Add(new Screens.MenuItem(new Vector2(origin.X - (ScreenManager.tile.Width * 2), origin.Y), content.Load<Texture2D>("Textures/Misc/Menu_Manipulation"), ScreenManager.tile, MenuItemStates.Multiplayer,Color.Magenta));
+            menuItems.Add(new Screens.MenuItem(new Vector2(origin.X - ((ScreenManager.tile.Width / 2)* 3), origin.Y + ScreenManager.tile.Height), content.Load<Texture2D>("Textures/Misc/Menu_Manipulation"), ScreenManager.tile, MenuItemStates.Options, Color.Orange));
 
             base.LoadContent();
         }
@@ -76,7 +76,7 @@ namespace PenisPotato.StateSystem.Screens
 
             ScreenManager.SpriteBatch.DrawString(ScreenManager.Font, "Single Player", new Vector2(menuItems[0].position.X + 64, menuItems[0].position.Y + (64 / 5)), Color.Crimson);
             ScreenManager.SpriteBatch.DrawString(ScreenManager.Font, "Multiplayer", new Vector2(menuItems[1].position.X + 64, menuItems[1].position.Y + (64 / 5)), Color.Magenta);
-            ScreenManager.SpriteBatch.DrawString(ScreenManager.Font, "Options", new Vector2(menuItems[2].position.X + 64, menuItems[2].position.Y + (64 / 5)), Color.Orange);
+            ScreenManager.SpriteBatch.DrawString(ScreenManager.Font, "Preferences", new Vector2(menuItems[2].position.X + 64, menuItems[2].position.Y + (64 / 5)), Color.Orange);
             ScreenManager.SpriteBatch.End();
         }
     }

@@ -30,7 +30,7 @@ namespace PenisPotato.StateSystem
 
         public List<Screens.BuildMenuItem> buildItems;
         public List<Texture2D> textureRepo;
-        public List<Graphics.Animation.Animation> animationsRepo;
+        public List<Texture2D> animationsRepo;
 
         public Audio.AudioManager audioManager;
 
@@ -192,9 +192,18 @@ namespace PenisPotato.StateSystem
 
         private void SetupAnimationRepository(ContentManager content)
         {
-            animationsRepo = new List<Graphics.Animation.Animation>();
-            
-            animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_InfantryMove"), 0.125f, true, 0));
+            animationsRepo = new List<Texture2D>();
+
+            animationsRepo.Add(content.Load<Texture2D>("Textures/Units/Military/Unit_InfantryMove"));
+            animationsRepo.Add(content.Load<Texture2D>("Textures/Units/Military/Unit_InfantryCombat"));
+            animationsRepo.Add(content.Load<Texture2D>("Textures/Units/Military/Unit_InfantryDeath"));
+            animationsRepo.Add(content.Load<Texture2D>("Textures/Units/Military/Unit_TankMove"));
+            animationsRepo.Add(content.Load<Texture2D>("Textures/Units/Military/Unit_TankCombat"));
+            animationsRepo.Add(content.Load<Texture2D>("Textures/Units/Military/Unit_TankDeath"));
+            animationsRepo.Add(content.Load<Texture2D>("Textures/Units/Military/Unit_PlaneMove"));
+            animationsRepo.Add(content.Load<Texture2D>("Textures/Units/Military/Unit_PlaneCombat"));
+            animationsRepo.Add(content.Load<Texture2D>("Textures/Units/Military/Unit_PlaneDeath"));
+            /*animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_InfantryMove"), 0.125f, true, 0));
             animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_InfantryCombat"), 0.2f, true));
             animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_InfantryDeath"), 0.2f, false));
             animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_TankMove"), 0.2f, true, 2));
@@ -202,7 +211,7 @@ namespace PenisPotato.StateSystem
             animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_TankDeath"), 0.2f, false));
             animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_PlaneMove"), 0.2f, true, 0));
             animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_PlaneCombat"), 0.2f, true));
-            animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_PlaneDeath"), 0.2f, false));
+            animationsRepo.Add(new Graphics.Animation.Animation(content.Load<Texture2D>("Textures/Units/Military/Unit_PlaneDeath"), 0.2f, false));*/
         }
 
         /// <summary>

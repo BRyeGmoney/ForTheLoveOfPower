@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using PenisPotato.Graphics.Animation;
 
 namespace PenisPotato.Units
 {
@@ -126,7 +127,7 @@ namespace PenisPotato.Units
                 if (leaderUnitIndex > -1)
                 {
                     if (player.playerUnits.Where(u => u.unitID.Equals(leaderUnitIndex)).Count() > 0)
-                        player.playerUnits[leaderUnitIndex].RemoveFollowingUnit(this);
+                        player.playerUnits.Find(pU => pU.unitID.Equals(leaderUnitIndex)).RemoveFollowingUnit(this);
                     else
                         leaderUnitIndex = -1;
                 }
@@ -235,14 +236,14 @@ namespace PenisPotato.Units
                         if (unitOnTile.unitType.Equals(this.unitType) && unitOnTile.movementPoints.Count.Equals(0))
                         {
                             unitOnTile.AddUnits(this.numUnits);
-                            this.numUnits -= this.numUnits;
+                            this.numUnits -= this.numUnits + 1;
                         }
                         else
                         {
                             if (unitOnTile.leaderUnitIndex < 0)
                                 unitOnTile.AddFollowingUnit(this, player);
                             else
-                                player.playerUnits[unitOnTile.leaderUnitIndex].AddFollowingUnit(this, player);
+                                player.playerUnits.Find(pU => pU.unitID.Equals(unitOnTile.leaderUnitIndex)).AddFollowingUnit(this, player);
                         }
                     }
                     else
@@ -274,10 +275,9 @@ namespace PenisPotato.Units
 
                 }
             }
-            else
+            else if (animPlayer.Animation != null && !animPlayer.Animation.IsDeathAnimation)
             {
-                //fix this line. more specifically remove leaderunitindex as an index and refer it to the unitID
-                if (!inCombat && (animPlayer.Animation != null && leaderUnitIndex < 0) ^ (leaderUnitIndex > -1 && player.playerUnits.Find(pu => pu.unitID.Equals(leaderUnitIndex)).movementPoints.Count.Equals(0)))//player.playerUnits[leaderUnitIndex].movementPoints.Count.Equals(0)))
+                if (!inCombat && (animPlayer.Animation != null && leaderUnitIndex < 0) ^ (leaderUnitIndex > -1 && player.playerUnits.Find(pu => pu.unitID.Equals(leaderUnitIndex)).movementPoints.Count.Equals(0)))
                     animPlayer.KillAnimation();
             }
 
@@ -293,31 +293,31 @@ namespace PenisPotato.Units
         public void AnimateMovement(Player.Player player)
         {
             if (unitType.Equals((byte)UnitType.Infantry))
-                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[0]);
+                animPlayer.PlayAnimation(new Animation(player.ScreenManager.animationsRepo[0], 0.125f, true, 0));
             else if (unitType.Equals((byte)UnitType.Tank))
-                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[3]);
+                animPlayer.PlayAnimation(new Animation(player.ScreenManager.animationsRepo[3], 0.2f, true, 2));
             else if (unitType.Equals((byte)UnitType.Jet))
-                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[6]);
+                animPlayer.PlayAnimation(new Animation(player.ScreenManager.animationsRepo[6], 0.2f, true, 0));
         }
 
         public void AnimateCombat(Player.Player player)
         {
             if (unitType.Equals((byte)UnitType.Infantry))
-                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[1]);
+                animPlayer.PlayAnimation(new Animation(player.ScreenManager.animationsRepo[1], 0.2f, true));
             else if (unitType.Equals((byte)UnitType.Tank))
-                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[4]);
+                animPlayer.PlayAnimation(new Animation(player.ScreenManager.animationsRepo[4], 0.2f, true));
             else if (unitType.Equals((byte)UnitType.Jet))
-                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[7]);
+                animPlayer.PlayAnimation(new Animation(player.ScreenManager.animationsRepo[7], 0.2f, true));
         }
 
         public void AnimateDeath(Player.Player player)
         {
             if (unitType.Equals((byte)UnitType.Infantry))
-                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[2]);
+                animPlayer.PlayAnimation(new Animation(player.ScreenManager.animationsRepo[2], 0.2f, false) { IsDeathAnimation = true });
             else if (unitType.Equals((byte)UnitType.Tank))
-                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[5]);
+                animPlayer.PlayAnimation(new Animation(player.ScreenManager.animationsRepo[5], 0.2f, false) { IsDeathAnimation = true });
             else if (unitType.Equals((byte)UnitType.Jet))
-                animPlayer.PlayAnimation(player.ScreenManager.animationsRepo[8]);
+                animPlayer.PlayAnimation(new Animation(player.ScreenManager.animationsRepo[8], 0.2f, false) { IsDeathAnimation = true });
         }
 
         private void FlipUnit()

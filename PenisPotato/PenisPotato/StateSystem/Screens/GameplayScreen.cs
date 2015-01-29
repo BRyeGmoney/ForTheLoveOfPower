@@ -176,10 +176,12 @@ namespace PenisPotato.StateSystem.Screens
                     fight.attacker.ForEach(s =>
                         {
                             s.animPlayer.KillAnimation();
+                            s.inCombat = false;
                         });
                     fight.defender.ForEach(s =>
                         {
                             s.animPlayer.KillAnimation();
+                            s.inCombat = false;
                         });
 
                     playerOne.combat.Remove(fight);
