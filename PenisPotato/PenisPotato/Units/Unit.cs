@@ -313,7 +313,7 @@ namespace PenisPotato.Units
         public void AnimateDeath(Player.Player player)
         {
             if (unitType.Equals((byte)UnitType.Infantry))
-                animPlayer.PlayAnimation(new Animation(player.ScreenManager.animationsRepo[2], 0.2f, false) { IsDeathAnimation = true });
+                animPlayer.PlayAnimation(new Animation(player.ScreenManager.animationsRepo[2], 0.205f, false) { IsDeathAnimation = true });
             else if (unitType.Equals((byte)UnitType.Tank))
                 animPlayer.PlayAnimation(new Animation(player.ScreenManager.animationsRepo[5], 0.2f, false) { IsDeathAnimation = true });
             else if (unitType.Equals((byte)UnitType.Jet))
