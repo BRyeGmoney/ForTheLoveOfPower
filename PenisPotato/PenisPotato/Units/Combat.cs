@@ -14,6 +14,8 @@ namespace PenisPotato.Units
         Vector2 searchPos;
         public List<Units.Unit> attacker;
         public List<Units.Unit> defender;
+        private Color attackColor;
+        private Color defendColor;
         public float timeToFight = 0.0f;
 
         private StateSystem.Screens.GameplayScreen masterState;
@@ -30,6 +32,8 @@ namespace PenisPotato.Units
             this.attacker.Add(attacker);
             this.defender.Add(defender);
             this.searchPos = attacker.piecePosition;
+            attackColor = attacker.playerColor;
+            defendColor = defender.playerColor;
         }
 
         /*public Combat(List<Unit> attacks, List<Unit> defends, StateSystem.Screens.GameplayScreen masterState)
@@ -48,10 +52,12 @@ namespace PenisPotato.Units
 
         public void ClearUnitsLists()
         {
-            if (attacker.Count > 1)
+            attacker.Clear();
+            defender.Clear();
+            /*if (attacker.Count > 1)
                 attacker.RemoveRange(1, attacker.Count-1);
             if (defender.Count > 1)
-                defender.RemoveRange(1, defender.Count-1);
+                defender.RemoveRange(1, defender.Count-1);*/
         }
 
 
@@ -67,6 +73,22 @@ namespace PenisPotato.Units
             List<Vector2> surroundingTiles = GetSurroundingTiles(searchPos);
 
             masterState.players.Find(player => !player.playerUnits.Contains(toSearchAround)).playerUnits.ForEach(pU =>
+            {
+                if (surroundingTiles.Contains(pU.piecePosition) && pU.numUnits > 0)
+                {
+                    if (isAttacker && !defender.Contains(pU))
+                        defender.Add(pU);
+                    else if (!isAttacker && !attacker.Contains(pU))
+                        attacker.Add(pU);
+                }
+            });
+        }
+
+        private void FindNeighboringEnemies(Color playerColor, bool isAttacker)
+        {
+            List<Vector2> surroundingTiles = GetSurroundingTiles(searchPos);
+
+            masterState.players.Find(player => !player.playerColor.Equals(playerColor)).playerUnits.ForEach(pU =>
             {
                 if (surroundingTiles.Contains(pU.piecePosition) && pU.numUnits > 0)
                 {
@@ -127,8 +149,10 @@ namespace PenisPotato.Units
                 ClearUnitsLists();
 
                 //Run the process now to find all of the units around the attacker and defender and add them to the list
-                FindNeighboringEnemies(attacker[0], true);
-                FindNeighboringEnemies(defender[0], false);
+                //FindNeighboringEnemies(attacker[0], true);
+                //FindNeighboringEnemies(defender[0], false);
+                FindNeighboringEnemies(attackColor, true);
+                FindNeighboringEnemies(defendColor, false);
 
 
                 attacker.ForEach(s =>
