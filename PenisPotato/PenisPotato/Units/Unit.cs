@@ -53,12 +53,18 @@ namespace PenisPotato.Units
         public void RemoveUnits(int unitsToRemove)
         {
             numUnits -= unitsToRemove;
+            if (numUnits < 1)
+                this.animPlayer.Animation = null;
+
             needsUpdate = true;
         }
 
         public void KillUnit()
         {
             numUnits -= 1;
+            if (numUnits < 1)
+                this.animPlayer.Animation = null;
+
             needsUpdate = true;
         }
 

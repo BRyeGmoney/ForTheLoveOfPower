@@ -11,6 +11,7 @@ namespace PenisPotato.Units
 {
     public class Combat
     {
+        Vector2 searchPos;
         public List<Units.Unit> attacker;
         public List<Units.Unit> defender;
         public float timeToFight = 0.0f;
@@ -28,6 +29,7 @@ namespace PenisPotato.Units
             this.masterState = masterState;
             this.attacker.Add(attacker);
             this.defender.Add(defender);
+            this.searchPos = attacker.piecePosition;
         }
 
         /*public Combat(List<Unit> attacks, List<Unit> defends, StateSystem.Screens.GameplayScreen masterState)
@@ -46,8 +48,10 @@ namespace PenisPotato.Units
 
         public void ClearUnitsLists()
         {
-            attacker.RemoveRange(1, attacker.Count);
-            defender.RemoveRange(1, defender.Count);
+            if (attacker.Count > 1)
+                attacker.RemoveRange(1, attacker.Count-1);
+            if (defender.Count > 1)
+                defender.RemoveRange(1, defender.Count-1);
         }
 
 
@@ -60,11 +64,11 @@ namespace PenisPotato.Units
         /// <param name="isAttacker"></param>
         private void FindNeighboringEnemies(Unit toSearchAround, bool isAttacker)
         {
-            List<Vector2> surroundingTiles = GetSurroundingTiles(toSearchAround.piecePosition);
+            List<Vector2> surroundingTiles = GetSurroundingTiles(searchPos);
 
             masterState.players.Find(player => !player.playerUnits.Contains(toSearchAround)).playerUnits.ForEach(pU =>
             {
-                if (surroundingTiles.Contains(pU.piecePosition))
+                if (surroundingTiles.Contains(pU.piecePosition) && pU.numUnits > 0)
                 {
                     if (isAttacker && !defender.Contains(pU))
                         defender.Add(pU);
@@ -119,6 +123,8 @@ namespace PenisPotato.Units
             {
                 Random random = new Random();
                 int attackPower = 0, defendPower = 0;
+
+                ClearUnitsLists();
 
                 //Run the process now to find all of the units around the attacker and defender and add them to the list
                 FindNeighboringEnemies(attacker[0], true);

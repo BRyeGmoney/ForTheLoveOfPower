@@ -155,7 +155,7 @@ namespace PenisPotato.StateSystem.Screens
 
             playerOne.combat.ForEach(fight =>
             {
-                if (fight.attacker[0].numUnits > 0 && fight.defender[0].numUnits > 0)
+                if ((fight.attacker.Count > 0 && fight.defender.Count > 0) && fight.attacker[0].numUnits > 0 && fight.defender[0].numUnits > 0)
                 {
                     if (playerOne.netPlayer != null)
                     {
