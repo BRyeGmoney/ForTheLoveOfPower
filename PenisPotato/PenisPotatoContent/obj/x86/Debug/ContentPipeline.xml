@@ -516,6 +516,33 @@
       <Extra>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Audio\hex.wma</Extra>
       <Time>2014-09-24T22:50:02.7335008-07:00</Time>
     </Item>
+    <Item>
+      <Source>Fonts\simplificaFont.bmp</Source>
+      <Name>Fonts\simplificaFont</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>FontTextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Fonts\simplificaFont.xnb</Output>
+      <Time>2015-02-19T19:27:26.5157902-08:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\simplificaFontBig.bmp</Source>
+      <Name>Fonts\simplificaFontBig</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>FontTextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Fonts\simplificaFontBig.xnb</Output>
+      <Time>2015-02-19T19:30:56.6878114-08:00</Time>
+    </Item>
+    <Item>
+      <Source>Icons\powerBtn.png</Source>
+      <Name>Icons\powerBtn</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Angela Schmold\Desktop\PenisPotato\PenisPotato\PenisPotato\bin\x86\Debug\Content\Icons\powerBtn.xnb</Output>
+      <Time>2015-02-19T19:32:04.4516872-08:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

@@ -163,6 +163,7 @@
     <Compile Include="StateSystem\Screens\OptionsMenuScreen.cs" />
     <Compile Include="StateSystem\Screens\PauseMenuScreen.cs" />
     <Compile Include="StateSystem\Screens\PlayerIndexEventArgs.cs" />
+    <Compile Include="StateSystem\Screens\TitleScreen.cs" />
     <Compile Include="StateSystem\StateManager.cs" />
     <Compile Include="Structures\Civil\Settlement.cs" />
     <Compile Include="Structures\Civil\TownCentre.cs" />
