@@ -19,6 +19,7 @@ namespace PenisPotato.Units
         public float timeToFight = 0.0f;
 
         private StateSystem.Screens.GameplayScreen masterState;
+        static Random random = new Random();
 
         public Combat() 
         {
@@ -139,11 +140,24 @@ namespace PenisPotato.Units
                 defender.AddRange(unit);
         }
 
+        public Double RandomNormal(double mean, double stdDev)
+        {
+            double r1 = random.NextDouble();
+            double r2 = random.NextDouble();
+            return mean + (stdDev * (Math.Sqrt(-2 * Math.Log(r1)) * Math.Cos(6.28 * r2)));
+        }
+
+        public int RandomNormal(int mean, int stdDev, int min, int max)
+        {
+            int r1 = random.Next(min, max);
+            int r2 = random.Next(min, max);
+            return (int)(mean + (stdDev * (Math.Sqrt(-2 * Math.Log(r1)) * Math.Cos(6.28 * r2))));
+        }
+
         public void Update(GameTime gameTime)
         {
             if (timeToFight > 1)
             {
-                Random random = new Random();
                 int attackPower = 0, defendPower = 0;
 
                 ClearUnitsLists();
@@ -163,7 +177,7 @@ namespace PenisPotato.Units
                     
                     //Standard random attack power that everyone gets. No modifiers put in yet
                     for (int x = 0; x < s.numUnits; x++)
-                        attackPower += random.Next(0, 6);
+                        attackPower += RandomNormal(3, 3, 0, 7);
                 });
 
                 defender.ForEach(s =>
@@ -174,7 +188,7 @@ namespace PenisPotato.Units
 
                     //Standard random attack power that everyone gets. No modifiers put in yet
                     for (int x = 0; x < s.numUnits; x++)
-                        defendPower += random.Next(0, 6);
+                        defendPower += RandomNormal(3, 3, 0, 7);
                 });
 
                 if (attackPower > defendPower)
