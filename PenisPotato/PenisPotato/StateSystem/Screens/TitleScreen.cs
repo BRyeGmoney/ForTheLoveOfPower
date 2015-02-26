@@ -25,6 +25,7 @@ namespace PenisPotato.StateSystem.Screens
 
         private Rectangle powerBtnRect;
         int counter;
+        bool finalFlicker = false;
 
         /// <summary>
         /// Load graphics content for the game.
@@ -76,7 +77,7 @@ namespace PenisPotato.StateSystem.Screens
                     counter++;
                 }
 
-                if (counter > 4)
+                if (counter > 6)
                 {
                     currentState = TitleScreenState.RuleAllLoad;
                     modifierTimer = 0;
@@ -151,41 +152,64 @@ namespace PenisPotato.StateSystem.Screens
 
         private void DrawTitlePresentation()
         {
-            if (counter < 1)
+            if (counter < 5)
             {
-                spriteBatch.DrawString(ScreenManager.Font, "POWER", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - (powerBtnTex.Width / 2) + 15, ScreenManager.GraphicsDevice.Viewport.Height / 2 + (powerBtnTex.Height / 2)), new Color(238, 50, 51), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 1);
-                spriteBatch.DrawString(ScreenManager.Font, "LOVE", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 + 5, ScreenManager.GraphicsDevice.Viewport.Height / 2 - (powerBtnTex.Height / 2)), new Color(238, 50, 51) * Math.Min(1, modifierTimer), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
+                if (counter < 1)
+                {
+                    spriteBatch.DrawString(ScreenManager.Font, "POWER", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - (powerBtnTex.Width / 2) + 15, ScreenManager.GraphicsDevice.Viewport.Height / 2 + (powerBtnTex.Height / 2)), new Color(238, 50, 51), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 1);
+                    spriteBatch.DrawString(ScreenManager.Font, "LOVE", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 + 5, ScreenManager.GraphicsDevice.Viewport.Height / 2 - (powerBtnTex.Height / 2)), new Color(238, 50, 51) * Math.Min(1, modifierTimer), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
+                }
+                else
+                {
+                    spriteBatch.DrawString(ScreenManager.Font, "POWER", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - (powerBtnTex.Width / 2) + 15, ScreenManager.GraphicsDevice.Viewport.Height / 2 + (powerBtnTex.Height / 2)), new Color(238, 50, 51), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 1);
+                    spriteBatch.DrawString(ScreenManager.Font, "LOVE", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 + 5, ScreenManager.GraphicsDevice.Viewport.Height / 2 - (powerBtnTex.Height / 2)), new Color(238, 50, 51), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
+                }
+
+                if (counter > 0 && counter < 2)
+                {
+                    spriteBatch.DrawString(ScreenManager.Font, "Absurd-O-Matic Games", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - 130, 40), Color.AntiqueWhite * Math.Min(1, modifierTimer), 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 0f);
+                    spriteBatch.DrawString(ScreenManager.Font, "Presents", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - 40, 80), Color.AntiqueWhite * Math.Min(1, modifierTimer), 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 0f);
+                }
+                else if (counter >= 2)
+                {
+                    spriteBatch.DrawString(ScreenManager.Font, "Absurd-O-Matic Games", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - 130, 40), Color.AntiqueWhite, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 0f);
+                    spriteBatch.DrawString(ScreenManager.Font, "Presents", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - 40, 80), Color.AntiqueWhite, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 0f);
+                }
+
+                if (counter < 4 && counter > 2)
+                {
+                    //spriteBatch.DrawString(ScreenManager.Font, "POWER", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - (powerBtnTex.Width / 2) + 15, ScreenManager.GraphicsDevice.Viewport.Height / 2 + (powerBtnTex.Height / 2)), new Color(238, 50, 51) * Math.Min(1, modifierTimer), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 1);
+                    spriteBatch.DrawString(ScreenManager.Font, "FOR THE      OF", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - (powerBtnTex.Width) + 5, ScreenManager.GraphicsDevice.Viewport.Height / 2 - (powerBtnTex.Height / 2)), new Color(238, 50, 51) * (float)(RandomNormal(0.5, 0.5)), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
+                    //spriteBatch.DrawString(ScreenManager.Font, "LOVE", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 + 5, ScreenManager.GraphicsDevice.Viewport.Height / 2 - (powerBtnTex.Height / 2)), new Color(238, 50, 51) * Math.Min(1, modifierTimer), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
+                }
+                else if (counter > 3)
+                {
+                    //spriteBatch.DrawString(ScreenManager.Font, "POWER", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - (powerBtnTex.Width / 2) + 15, ScreenManager.GraphicsDevice.Viewport.Height / 2 + (powerBtnTex.Height / 2)), new Color(238, 50, 51), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 1);
+                    spriteBatch.DrawString(ScreenManager.Font, "FOR THE      OF", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - (powerBtnTex.Width) + 5, ScreenManager.GraphicsDevice.Viewport.Height / 2 - (powerBtnTex.Height / 2)), new Color(238, 50, 51), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
+                    //spriteBatch.DrawString(ScreenManager.Font, "LOVE", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 + 5, ScreenManager.GraphicsDevice.Viewport.Height / 2 - (powerBtnTex.Height / 2)), new Color(238, 50, 51), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
+                }
             }
             else
             {
-                spriteBatch.DrawString(ScreenManager.Font, "POWER", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - (powerBtnTex.Width / 2) + 15, ScreenManager.GraphicsDevice.Viewport.Height / 2 + (powerBtnTex.Height / 2)), new Color(238, 50, 51), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 1);
-                spriteBatch.DrawString(ScreenManager.Font, "LOVE", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 + 5, ScreenManager.GraphicsDevice.Viewport.Height / 2 - (powerBtnTex.Height / 2)), new Color(238, 50, 51), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
+                if (modifierTimer < 0.5 && !finalFlicker)
+                {
+                    float r = (float)(RandomNormal(0.5, 0.5));
+                    spriteBatch.DrawString(ScreenManager.Font, "Absurd-O-Matic Games", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - 130, 40), Color.AntiqueWhite * r, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 0f);
+                    spriteBatch.DrawString(ScreenManager.Font, "Presents", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - 40, 80), Color.AntiqueWhite * r, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 0f);
+                    spriteBatch.DrawString(ScreenManager.Font, "FOR THE      OF", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - (powerBtnTex.Width) + 5, ScreenManager.GraphicsDevice.Viewport.Height / 2 - (powerBtnTex.Height / 2)), new Color(238, 50, 51) * r, 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
+                    spriteBatch.DrawString(ScreenManager.Font, "POWER", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - (powerBtnTex.Width / 2) + 15, ScreenManager.GraphicsDevice.Viewport.Height / 2 + (powerBtnTex.Height / 2)), new Color(238, 50, 51) * r, 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 1);
+                    spriteBatch.DrawString(ScreenManager.Font, "LOVE", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 + 5, ScreenManager.GraphicsDevice.Viewport.Height / 2 - (powerBtnTex.Height / 2)), new Color(238, 50, 51) * r, 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
+                }
+                else if (modifierTimer < 0.7 && !finalFlicker)
+                {
+                    spriteBatch.DrawString(ScreenManager.Font, "Absurd-O-Matic Games", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - 130, 40), Color.AntiqueWhite, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 0f);
+                    spriteBatch.DrawString(ScreenManager.Font, "Presents", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - 40, 80), Color.AntiqueWhite, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 0f);
+                    spriteBatch.DrawString(ScreenManager.Font, "FOR THE      OF", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - (powerBtnTex.Width) + 5, ScreenManager.GraphicsDevice.Viewport.Height / 2 - (powerBtnTex.Height / 2)), new Color(238, 50, 51), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
+                    spriteBatch.DrawString(ScreenManager.Font, "POWER", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - (powerBtnTex.Width / 2) + 15, ScreenManager.GraphicsDevice.Viewport.Height / 2 + (powerBtnTex.Height / 2)), new Color(238, 50, 51), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 1);
+                    spriteBatch.DrawString(ScreenManager.Font, "LOVE", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 + 5, ScreenManager.GraphicsDevice.Viewport.Height / 2 - (powerBtnTex.Height / 2)), new Color(238, 50, 51), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
+                    finalFlicker = true;
+                }
             }
-
-            if (counter > 0 && counter < 2)
-            {
-                spriteBatch.DrawString(ScreenManager.Font, "Absurd-O-Matic Games", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - 130, 40), Color.AntiqueWhite * Math.Min(1, modifierTimer), 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 0f);
-                spriteBatch.DrawString(ScreenManager.Font, "Presents", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - 40, 80), Color.AntiqueWhite * Math.Min(1, modifierTimer), 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 0f);
-            }
-            else if (counter >= 2)
-            {
-                spriteBatch.DrawString(ScreenManager.Font, "Absurd-O-Matic Games", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - 130, 40), Color.AntiqueWhite, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 0f);
-                spriteBatch.DrawString(ScreenManager.Font, "Presents", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - 40, 80), Color.AntiqueWhite, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 0f);
-            }
-
-            if (counter < 4 && counter > 2)
-            {
-                //spriteBatch.DrawString(ScreenManager.Font, "POWER", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - (powerBtnTex.Width / 2) + 15, ScreenManager.GraphicsDevice.Viewport.Height / 2 + (powerBtnTex.Height / 2)), new Color(238, 50, 51) * Math.Min(1, modifierTimer), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 1);
-                spriteBatch.DrawString(ScreenManager.Font, "FOR THE      OF", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - (powerBtnTex.Width) + 5, ScreenManager.GraphicsDevice.Viewport.Height / 2 - (powerBtnTex.Height / 2)), new Color(238, 50, 51) * (float)(RandomNormal(0.5, 0.5)), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
-                //spriteBatch.DrawString(ScreenManager.Font, "LOVE", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 + 5, ScreenManager.GraphicsDevice.Viewport.Height / 2 - (powerBtnTex.Height / 2)), new Color(238, 50, 51) * Math.Min(1, modifierTimer), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
-            }
-            else if (counter > 3)
-            {
-                //spriteBatch.DrawString(ScreenManager.Font, "POWER", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - (powerBtnTex.Width / 2) + 15, ScreenManager.GraphicsDevice.Viewport.Height / 2 + (powerBtnTex.Height / 2)), new Color(238, 50, 51), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 1);
-                spriteBatch.DrawString(ScreenManager.Font, "FOR THE      OF", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 - (powerBtnTex.Width) + 5, ScreenManager.GraphicsDevice.Viewport.Height / 2 - (powerBtnTex.Height / 2)), new Color(238, 50, 51), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
-                //spriteBatch.DrawString(ScreenManager.Font, "LOVE", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width / 2 + 5, ScreenManager.GraphicsDevice.Viewport.Height / 2 - (powerBtnTex.Height / 2)), new Color(238, 50, 51), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
-            }
-
         }
 
         private void DrawRuleAllLoad()
