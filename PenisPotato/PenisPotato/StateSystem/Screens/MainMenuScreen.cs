@@ -16,6 +16,8 @@ namespace PenisPotato.StateSystem.Screens
         BloomComponent bloom;
         Camera camera;
 
+        bool changeScreen = false;
+
         public MainMenuScreen()
         {
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
@@ -42,10 +44,20 @@ namespace PenisPotato.StateSystem.Screens
             base.LoadContent();
         }
 
+        /*public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
+        {
+            //if (changeScreen)
+             //   LoadingScreen.Load(ScreenManager, true, PlayerIndex.One, new GameplayScreen());
+                //ScreenManager.AddScreen(new Networking.CreateOrFindSessionScreen(), null, true);
+            changeScreen = false;
+            //base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+        } */
+
         public override void HandleInput(GameTime gameTime, InputState input)
         {
             if (input.CurrentMouseStates[0].LeftButton == ButtonState.Pressed && input.LastMouseStates[0].LeftButton == ButtonState.Released)
             {
+                changeScreen = true;
                 menuItems.ForEach(mi =>
                     {
                         if (mi.position.Contains(input.CurrentMouseStates[0].X, input.CurrentMouseStates[0].Y))

@@ -25,12 +25,15 @@ namespace PenisPotato.StateSystem
         Texture2D blankTexture;
         public Texture2D tile;
         public Texture2D tracer;
+        public Texture2D part;
 
         public MPSaveData mpPlayerInfo;
 
         public List<Screens.BuildMenuItem> buildItems;
         public List<Texture2D> textureRepo;
         public List<Texture2D> animationsRepo;
+
+        public Random rand = new Random();
 
         public Audio.AudioManager audioManager;
 
@@ -114,6 +117,7 @@ namespace PenisPotato.StateSystem
             font = content.Load<SpriteFont>("Fonts/simplificaFontBig");
             blankTexture = content.Load<Texture2D>("Textures/Misc/blank");
             tile = content.Load<Texture2D>("Textures/Map/square");
+            part = content.Load<Texture2D>("Textures/Misc/particle");
 
             // create 1x1 texture for line drawing
             tracer = new Texture2D(GraphicsDevice, 1, 1);

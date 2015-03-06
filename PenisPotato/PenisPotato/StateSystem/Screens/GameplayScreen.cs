@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PenisPotato.Graphics.ParticleEffects;
 
 namespace PenisPotato.StateSystem.Screens
 {
@@ -13,6 +14,7 @@ namespace PenisPotato.StateSystem.Screens
     {
         #region Fields
 
+        public ParticleManager<ParticleState> ParticleManager { get; private set; }
         GraphicsDevice graphics;
         ContentManager content;
         SpriteBatch spriteBatch;
@@ -78,6 +80,7 @@ namespace PenisPotato.StateSystem.Screens
             bloom = new BloomComponent(ScreenManager.Game);
             tile = content.Load<Texture2D>("Textures/Map/square2");
 
+            ParticleManager = new ParticleManager<ParticleState>(1024 * 20, ParticleState.UpdateParticle);
             camera = new Camera(graphics.Viewport, 10000000, 10000000, 0.4f);
             ScreenManager.Game.Components.Add(bloom);
             bloom.Settings = new BloomSettings(null, 0.15f, 2, 1.25f, 1, 1.5f, 1);
@@ -195,6 +198,8 @@ namespace PenisPotato.StateSystem.Screens
                     LoadingScreen.Load(ScreenManager, false, PlayerIndex.One, new MainMenuScreen());
                 }
             });
+
+            ParticleManager.Update();
         }
 
 
@@ -260,6 +265,7 @@ namespace PenisPotato.StateSystem.Screens
                 player.Draw(spriteBatch, gameTime, camera);
             });
             //enemyOne.Draw(spriteBatch, gameTime, camera);
+            ParticleManager.Draw(spriteBatch);
             spriteBatch.End();
 
             

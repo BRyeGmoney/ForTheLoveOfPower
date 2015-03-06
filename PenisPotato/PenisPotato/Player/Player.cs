@@ -47,50 +47,6 @@ namespace PenisPotato.Player
 
         public Player() { }
 
-        /*public Player(ContentManager content, GraphicsDevice graphics, StateSystem.StateManager stateManager, StateSystem.Screens.MultiplayerGameplayScreen master, NetworkPlayer netPlayer, Color color)
-        {
-            this.graphics = graphics;
-            this.Content = content;
-            this.ScreenManager = stateManager;
-            //this.masterState = master;
-            this.netPlayer = netPlayer;
-            this.playerColor = color;
-            if (netPlayer != null)
-            {
-                netPlayer.InitGamePlayer(true);
-                netPlayer.stateManager = ScreenManager;
-            }
-            playerStructures = new List<Structures.Structure>();
-            playerSettlements = new List<Structures.Civil.Settlement>();
-            playerUnits = new List<Units.Unit>();
-            buildingTiles = new List<Vector2>();
-            movementTiles = new List<Vector2>();
-
-            LoadContent();
-        }
-
-        public Player(ContentManager content, GraphicsDevice graphics, StateSystem.StateManager stateManager, StateSystem.Screens.GameplayScreen master, NetworkPlayer netPlayer, Color color)
-        {
-            this.graphics = graphics;
-            this.Content = content;
-            this.ScreenManager = stateManager;
-            this.masterState = master;
-            this.netPlayer = netPlayer;
-            this.playerColor = color;
-            if (netPlayer != null)
-            {
-                netPlayer.InitGamePlayer(true);
-                netPlayer.stateManager = ScreenManager;
-            }
-            playerStructures = new List<Structures.Structure>();
-            playerSettlements = new List<Structures.Civil.Settlement>();
-            playerUnits = new List<Units.Unit>();
-            buildingTiles = new List<Vector2>();
-            movementTiles = new List<Vector2>();
-
-            LoadContent();
-        }*/
-
         public virtual void LoadContent()
         {
             dictatorTex = Content.Load<Texture2D>("Textures/Units/Unit_Dictator");
