@@ -334,6 +334,14 @@ namespace PenisPotato.Units
                 unitEffects = SpriteEffects.FlipHorizontally;
         }
 
+        public void FlipUnit(bool flip)
+        {
+            if (flip)
+                unitEffects = SpriteEffects.FlipHorizontally;
+            else
+                unitEffects = SpriteEffects.None;
+        }
+
         private bool CheckIfBuildOnTile(Player.Player player, Vector2 pos)
         {
             bool noEnemy = true;

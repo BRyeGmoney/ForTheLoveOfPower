@@ -104,7 +104,7 @@ namespace PenisPotato.Player
                                 LengthMultiplier = 1f
                             };
 
-                            masterState.ParticleManager.CreateParticle(ScreenManager.part, new Vector2(pU.piecePosition.X * pU.tileWidth + pU.tileWidth / 2, pU.piecePosition.Y * pU.tileWidth), playerColor, 10, 0.8f, state);
+                            masterState.ParticleManager.CreateParticle(ScreenManager.part, new Vector2((pU.piecePosition.X * pU.tileWidth) + pU.tileWidth / 2, (pU.piecePosition.Y * pU.tileWidth) + (pU.tileWidth)), playerColor, 10, 0.8f, state);
                         }*/
                         playerUnits.Remove(pU);
                         pU = null;
@@ -142,9 +142,17 @@ namespace PenisPotato.Player
             {
                 // Adjust zoom if the mouse wheel has moved
                 if (input.CurrentMouseStates[0].ScrollWheelValue > input.LastMouseStates[0].ScrollWheelValue)
+                {
                     camera.Zoom += zoomIncrement;
+
+                    if (masterState.currentView.Equals(StateSystem.Screens.ZoomTypes.TacticalView))
+                        camera.Zoom = camera.zoomLowerLimit;
+                }
                 else if (input.CurrentMouseStates[0].ScrollWheelValue < input.LastMouseStates[0].ScrollWheelValue)
-                    camera.Zoom -= zoomIncrement;
+                {
+                    if (masterState.currentView.Equals(StateSystem.Screens.ZoomTypes.ActionView))
+                        camera.Zoom -= zoomIncrement;
+                }
 
                 if (input.CurrentMouseStates[0].RightButton == ButtonState.Pressed)
                     cameraMovement = (new Vector2(input.LastMouseStates[0].X, input.LastMouseStates[0].Y) - new Vector2(input.CurrentMouseStates[0].X, input.CurrentMouseStates[0].Y)) / camera.Zoom;
@@ -161,10 +169,10 @@ namespace PenisPotato.Player
                             navigatingUnit = pS;
                     });
 
-                    if (navigatingUnit != null && !movementTiles.Contains(selectedTilePos) && !navigatingUnit.piecePosition.Equals(selectedTilePos))
+                    if (navigatingUnit != null)// && !movementTiles.Contains(selectedTilePos) && !navigatingUnit.piecePosition.Equals(selectedTilePos))
                     {
                         navigatingUnit.movementPoints.Clear();
-                        movementTiles.Add(selectedTilePos);
+                        //movementTiles.Add(selectedTilePos);
                     }
                 }
                 //continuing press onto the screen
@@ -173,8 +181,9 @@ namespace PenisPotato.Player
                     selectedTilePos = GetMouseStateRelative(input.CurrentMouseStates[0], camera);
                     DetermineSelectedTile(camera);
 
-                    if (navigatingUnit != null && !movementTiles.Contains(selectedTilePos) && !navigatingUnit.piecePosition.Equals(selectedTilePos))
-                        movementTiles.Add(selectedTilePos);
+                    if (navigatingUnit != null) //&& !movementTiles.Contains(selectedTilePos) && !navigatingUnit.piecePosition.Equals(selectedTilePos))
+                        CreateRouteToTile(selectedTilePos, navigatingUnit.piecePosition);
+                        //movementTiles.Add(selectedTilePos);
                 }
                 //release of press onto the screen
                 if (input.CurrentMouseStates[0].LeftButton == ButtonState.Released && input.LastMouseStates[0].LeftButton == ButtonState.Pressed)
@@ -238,6 +247,81 @@ namespace PenisPotato.Player
             {
                 camera.Pos += cameraMovement;
                 cameraMovement *= 0.9f;
+            }
+        }
+
+        private void CreateRouteToTile(Vector2 selectedTile, Vector2 startPos)
+        {
+            movementTiles.Clear();
+
+            if (selectedTile != startPos)
+            {
+                Vector2 curPos = startPos;
+                int x = (int)(selectedTile.X - startPos.X);
+                int y = (int)(selectedTile.Y - startPos.Y);
+                int countLim = Math.Abs(x) + Math.Abs(y);
+
+                for (int newTile = 0; newTile < countLim; newTile++)
+                {
+                    //if we're running newTile on an even number, or if we're just out of y movements
+                    if (y == 0 || (newTile % 2 == 0 && x != 0))
+                    {
+                        //move x
+                        if (x > 0)
+                        {
+                            curPos.X = curPos.X + 1;
+                            x = x - 1;
+
+                            if (curPos.X % 2 == 0)
+                            {
+                                if (y < 0)
+                                {
+                                    curPos.Y -= 1;
+                                    y = y + 1;
+                                    //readjust for cheated position
+                                    countLim -= 1;
+                                }
+                            }
+                            else
+                            {
+                                if (y > 0)
+                                {
+                                    curPos.Y += 1;
+                                    y = y - 1;
+                                    countLim -= 1;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            curPos.X = curPos.X - 1;
+                            x = x + 1;
+
+                            if (curPos.X % 2 == 0 && y < 0)
+                            {
+                                curPos.Y -= 1;
+                                y = y + 1;
+                                //readjust for cheated position
+                                countLim -= 1;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //move y
+                        if (y > 0)
+                        {
+                            curPos.Y = curPos.Y + 1;
+                            y = y - 1;
+                        }
+                        else
+                        {
+                            curPos.Y = curPos.Y - 1;
+                            y = y + 1;
+                        }
+                    }
+                    movementTiles.Add(curPos);
+                }
             }
         }
 

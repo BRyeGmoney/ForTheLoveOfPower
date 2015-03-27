@@ -7,9 +7,17 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PenisPotato.Graphics.ParticleEffects;
+using PenisPotato.Graphics;
 
 namespace PenisPotato.StateSystem.Screens
 {
+    public enum ZoomTypes
+    {
+        ActionView,
+        TacticalView,
+        StatisticsView,
+    }
+
     public class GameplayScreen : GameScreen
     {
         #region Fields
@@ -20,6 +28,7 @@ namespace PenisPotato.StateSystem.Screens
         SpriteBatch spriteBatch;
         BloomComponent bloom;
         Camera camera;
+        public ZoomTypes currentView;
 
         bool isMpMatch = false;
 
@@ -85,6 +94,7 @@ namespace PenisPotato.StateSystem.Screens
             ScreenManager.Game.Components.Add(bloom);
             bloom.Settings = new BloomSettings(null, 0.15f, 2, 1.25f, 1, 1.5f, 1);
             spriteBatch = ScreenManager.SpriteBatch;
+            currentView = ZoomTypes.ActionView;
 
             //Players
             if (isMpMatch)
@@ -101,7 +111,7 @@ namespace PenisPotato.StateSystem.Screens
             }
             else
             {
-                playerOne = new Player.MainPlayer(content, graphics, ScreenManager, this, null, Color.PaleVioletRed);
+                playerOne = new Player.MainPlayer(content, graphics, ScreenManager, this, null, new Color(133, 69, 184));
                 playerOne.money = 10000;
                 enemyOne = new Player.EnemyPlayer(ScreenManager, this, Color.Chartreuse);
                 players = new List<Player.Player>();
@@ -153,6 +163,15 @@ namespace PenisPotato.StateSystem.Screens
                 pauseAlpha = Math.Max(pauseAlpha - 1f / 32, 0);
 
             playerOne.Update(gameTime);
+
+            if (camera.Zoom >= camera.zoomLowerLimit && !currentView.Equals(ZoomTypes.ActionView))
+                currentView = ZoomTypes.ActionView;
+            else if (!currentView.Equals(ZoomTypes.TacticalView) && camera.Zoom < camera.zoomLowerLimit && camera.lowerLimReached)
+            {
+                camera.Zoom = camera.zoomActionLowerLimit;
+                currentView = ZoomTypes.TacticalView;
+            }
+
             if (!isMpMatch)
                 enemyOne.Update(gameTime);
 
@@ -235,45 +254,56 @@ namespace PenisPotato.StateSystem.Screens
             spriteBatch.Begin(SpriteSortMode.Immediate,
                     null, SamplerState.PointClamp, null, null, null,
                     camera.GetTransformation());
-
-            //Only draw a chunk of tiles around the camera. This way we can draw an "infinite" amount of tiles without bogging down the cpu with endless
-            //tiles that we're not even looking at.
-            for (int y = starty -15; y < starty + 15; y += 5)
+            if (currentView.Equals(ZoomTypes.ActionView))
             {
-                for (int x = startx - 15; x < startx + 15; x += 5)
-                    DrawChunk(spriteBatch, x, y, tileWidth);
-            }
+                //Only draw a chunk of tiles around the camera. This way we can draw an "infinite" amount of tiles without bogging down the cpu with endless
+                //tiles that we're not even looking at.
+                for (int y = starty -15; y < starty + 15; y += 5)
+                {
+                    for (int x = startx - 15; x < startx + 15; x += 5)
+                        DrawChunk(spriteBatch, x, y, tileWidth);
+                }
 
-            players.ForEach(player =>
+                players.ForEach(player =>
                 {
                     player.buildingTiles.ForEach(pS => { spriteBatch.Draw(tile, new Rectangle((int)(pS.X * tileWidth), (int)((pS.Y * tileWidth) - Math.Abs(pS.X % 2) * (tileWidth / 2)), tileWidth, tileWidth), player.playerColor); });
                 });
 
-            playerOne.buildingTiles.ForEach(pS =>
-            {
-                spriteBatch.Draw(tile, new Rectangle((int)(pS.X * tileWidth), (int)((pS.Y * tileWidth) - Math.Abs(pS.X % 2) * (tileWidth / 2)), tileWidth, tileWidth), playerOne.playerColor);
-            });
-            playerOne.movementTiles.ForEach(pS =>
-            {
-                spriteBatch.Draw(tile, new Rectangle((int)(pS.X * tileWidth), (int)((pS.Y * tileWidth) - Math.Abs(pS.X % 2) * (tileWidth / 2)), tileWidth, tileWidth), playerOne.playerColor);
-            });
+                playerOne.buildingTiles.ForEach(pS =>
+                {
+                    spriteBatch.Draw(tile, new Rectangle((int)(pS.X * tileWidth), (int)((pS.Y * tileWidth) - Math.Abs(pS.X % 2) * (tileWidth / 2)), tileWidth, tileWidth), playerOne.playerColor);
+                });
+                playerOne.movementTiles.ForEach(pS =>
+                {
+                    spriteBatch.Draw(tile, new Rectangle((int)(pS.X * tileWidth), (int)((pS.Y * tileWidth) - Math.Abs(pS.X % 2) * (tileWidth / 2)), tileWidth, tileWidth), playerOne.playerColor);
+                });
 
             
-            playerOne.Draw(spriteBatch, gameTime, camera);
-            players.ForEach(player =>
+                playerOne.Draw(spriteBatch, gameTime, camera);
+                players.ForEach(player =>
+                {
+                    player.Draw(spriteBatch, gameTime, camera);
+                });
+                //enemyOne.Draw(spriteBatch, gameTime, camera);
+                ParticleManager.Draw(spriteBatch);
+                
+            }
+            else if (currentView.Equals(ZoomTypes.TacticalView))
             {
-                player.Draw(spriteBatch, gameTime, camera);
-            });
-            //enemyOne.Draw(spriteBatch, gameTime, camera);
-            ParticleManager.Draw(spriteBatch);
+                ScreenManager.SpriteBatch.FillRectangle(new Rectangle(0, 0, ScreenManager.GraphicsDevice.Viewport.Width, ScreenManager.GraphicsDevice.Viewport.Height), Color.Black);
+            }
+            else if (currentView.Equals(ZoomTypes.StatisticsView))
+            {
+            }
+
             spriteBatch.End();
-
-            
             //Hud spritebatch
             if (playerOne.MoneyString != null)
             {
                 spriteBatch.Begin();
                 spriteBatch.DrawString(ScreenManager.Font, playerOne.MoneyString, Vector2.Zero, Color.White);
+                //if (playerOne.navigatingUnit != null)
+                    //spriteBatch.DrawString(ScreenManager.Font, playerOne.wingus + ", " + playerOne.dingus, Vector2.Zero, Color.White);
                 spriteBatch.End();
             }
 

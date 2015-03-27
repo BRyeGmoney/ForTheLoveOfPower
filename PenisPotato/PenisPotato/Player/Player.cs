@@ -39,6 +39,7 @@ namespace PenisPotato.Player
         public int prevStructures;
         public int prevUnits;
         public bool performedAction = false;
+        public int wingus, dingus;
 
         public int money = 0;
         public bool hasLost = false;

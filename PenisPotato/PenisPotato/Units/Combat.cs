@@ -149,9 +149,9 @@ namespace PenisPotato.Units
 
         public int RandomNormal(int mean, int stdDev, int min, int max)
         {
-            int r1 = random.Next(min, max);
-            int r2 = random.Next(min, max);
-            return (int)(mean + (stdDev * (Math.Sqrt(-2 * Math.Log(r1)) * Math.Cos(6.28 * r2))));
+            double r1 = random.NextDouble();//random.Next(min, max);
+            double r2 = random.NextDouble();//random.Next(min, max);
+            return (int)(max * (mean + (stdDev * (Math.Sqrt(-2 * Math.Log(r1)) * Math.Cos(6.28 * r2)))));
         }
 
         public void Update(GameTime gameTime)
@@ -159,36 +159,101 @@ namespace PenisPotato.Units
             if (timeToFight > 1)
             {
                 int attackPower = 0, defendPower = 0;
-
+                int ainf = 0, atank = 0, ajet = 0;
+                int dinf = 0, dtank = 0, djet = 0;
+                int tempInf, tempTank, tempJet, diff;
                 ClearUnitsLists();
 
                 //Run the process now to find all of the units around the attacker and defender and add them to the list
-                //FindNeighboringEnemies(attacker[0], true);
-                //FindNeighboringEnemies(defender[0], false);
                 FindNeighboringEnemies(attackColor, true);
                 FindNeighboringEnemies(defendColor, false);
 
+                defender.ForEach(s =>
+                    {
+                        if (s.unitType.Equals((byte)UnitType.Infantry))
+                            dinf += s.numUnits;
+                        else if (s.unitType.Equals((byte)UnitType.Tank))
+                            dtank += s.numUnits;
+                        else if (s.unitType.Equals((byte)UnitType.Jet))
+                            djet += s.numUnits;
+                    });
+
+                tempInf = dinf;
+                tempTank = dtank;
+                tempJet = dtank;
 
                 attacker.ForEach(s =>
                 {
+                    if (s.unitType.Equals((byte)UnitType.Infantry))
+                    {
+                        diff = Math.Max(1, Math.Min(tempTank, s.numUnits));
+                        tempTank -= s.numUnits;
+                        ainf += s.numUnits;
+                    }
+                    else if (s.unitType.Equals((byte)UnitType.Tank))
+                    {
+                        diff = Math.Max(1, Math.Min(tempJet, s.numUnits));
+                        tempJet -= s.numUnits;
+                        atank += s.numUnits;
+                    }
+                    else if (s.unitType.Equals((byte)UnitType.Jet))
+                    {
+                        diff = Math.Max(1, Math.Min(tempInf, s.numUnits));
+                        tempInf -= s.numUnits;
+                        ajet += s.numUnits;
+                    }
+                    else
+                        diff = 1;
+
                     s.inCombat = true;
+                    s.FlipUnit(defender[0].piecePosition.X < s.piecePosition.X);
+
                     if (s.animPlayer.Animation == null)
                         s.AnimateCombat(masterState.players.Find(player => player.playerUnits.Contains(s)));
                     
                     //Standard random attack power that everyone gets. No modifiers put in yet
                     for (int x = 0; x < s.numUnits; x++)
                         attackPower += RandomNormal(3, 3, 0, 7);
+
+                    attackPower *= diff;
                 });
+
+                //reset temp values to attacker nums now
+                tempInf = ainf;
+                tempTank = atank;
+                tempJet = ajet;
 
                 defender.ForEach(s =>
                 {
+                    if (s.unitType.Equals((byte)UnitType.Infantry))
+                    {
+                        diff = Math.Max(1, Math.Min(tempTank, s.numUnits));
+                        tempTank -= s.numUnits;
+                    }
+                    else if (s.unitType.Equals((byte)UnitType.Tank))
+                    {
+                        diff = Math.Max(1, Math.Min(tempJet, s.numUnits));
+                        tempJet -= s.numUnits;
+                    }
+                    else if (s.unitType.Equals((byte)UnitType.Jet))
+                    {
+                        diff = Math.Max(1, Math.Min(tempInf, s.numUnits));
+                        tempInf -= s.numUnits;
+                    }
+                    else
+                        diff = 1;
+
                     s.inCombat = true;
+                    s.FlipUnit(attacker[0].piecePosition.X < s.piecePosition.X);
+
                     if (s.animPlayer.Animation == null)
                         s.AnimateCombat(masterState.players.Find(player => player.playerUnits.Contains(s)));
 
                     //Standard random attack power that everyone gets. No modifiers put in yet
                     for (int x = 0; x < s.numUnits; x++)
                         defendPower += RandomNormal(3, 3, 0, 7);
+
+                    defendPower *= diff;
                 });
 
                 if (attackPower > defendPower)

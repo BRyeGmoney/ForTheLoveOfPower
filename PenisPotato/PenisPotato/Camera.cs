@@ -17,8 +17,9 @@ namespace PenisPotato
         /// <summary>
         /// This is the shit.
         /// </summary>
-        private const float zoomUpperLimit = 1.5f;
-        private const float zoomLowerLimit = .2f;
+        public float zoomActionLowerLimit = -1f;
+        public const float zoomUpperLimit = 1.5f;
+        public float zoomLowerLimit = .2f;
 
         //public int numUnitsDrawn = 0;
         //public int numStructsDrawn = 0;
@@ -31,6 +32,7 @@ namespace PenisPotato
         public int _viewportHeight;
         private int _worldWidth;
         private int _worldHeight;
+        public bool lowerLimReached = false;
 
         public Camera(Viewport viewport, int worldWidth,
            int worldHeight, float initialZoom)
@@ -52,10 +54,16 @@ namespace PenisPotato
             set
             {
                 _zoom = value;
-                if (_zoom < zoomLowerLimit)
+                if (_zoom < zoomLowerLimit && !lowerLimReached)
+                {
                     _zoom = zoomLowerLimit;
+                    lowerLimReached = true;
+                }
                 if (_zoom > zoomUpperLimit)
                     _zoom = zoomUpperLimit;
+
+                if (_zoom > zoomLowerLimit && lowerLimReached)
+                    lowerLimReached = false;
             }
         }
 
