@@ -65,7 +65,14 @@ namespace PenisPotato.Player
                     if (pU.unitType.Equals((byte)Units.UnitType.Dictator))
                         this.hasLost = true;
 
-                    playerUnits.Remove(pU);
+                    //if there is an animation and its not a death animation or if it is a death animation and its stopped
+                    if (pU.numUnits < 0 || (pU.animPlayer.Animation != null && (pU.animPlayer.Animation.IsDeathAnimation && pU.animPlayer.Animation.IsStopped)))
+                    {
+                        playerUnits.Remove(pU);
+                        pU = null;
+                    }
+                    else if (pU.animPlayer.Animation == null)
+                        pU.AnimateDeath(this);
                 }
             });
         }

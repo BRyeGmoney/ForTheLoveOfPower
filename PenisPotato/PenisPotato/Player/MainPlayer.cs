@@ -94,7 +94,7 @@ namespace PenisPotato.Player
                     //if there is an animation and its not a death animation or if it is a death animation and its stopped
                     if (pU.numUnits < 0 || (pU.animPlayer.Animation != null && (pU.animPlayer.Animation.IsDeathAnimation && pU.animPlayer.Animation.IsStopped)))
                     {
-                        /*for (int i = 0; i < 120; i++)
+                        for (int i = 0; i < 120; i++)
                         {
                             float speed = 18f * (1f - 1 / ScreenManager.rand.NextFloat(1f, 10f));
                             var state = new Graphics.ParticleEffects.ParticleState()
@@ -105,7 +105,7 @@ namespace PenisPotato.Player
                             };
 
                             masterState.ParticleManager.CreateParticle(ScreenManager.part, new Vector2((pU.piecePosition.X * pU.tileWidth) + pU.tileWidth / 2, (pU.piecePosition.Y * pU.tileWidth) + (pU.tileWidth)), playerColor, 10, 0.8f, state);
-                        }*/
+                        }
                         playerUnits.Remove(pU);
                         pU = null;
                     }

@@ -52,12 +52,12 @@ Content\Textures\Units\Military\Unit_TankCombat.xnb
 Content\Textures\Units\Military\Unit_InfantryDeath.xnb
 Content\Textures\Units\Military\Unit_PlaneDeath.xnb
 Content\Textures\Units\Military\Unit_TankDeath.xnb
-Content\Fonts\debugFont.xnb
-Content\Audio\heart.xnb
-Content\Audio\hex.xnb
 Content\Fonts\simplificaFont.xnb
 Content\Fonts\simplificaFontBig.xnb
 Content\Icons\powerBtn.xnb
 Content\Textures\Misc\particle.xnb
+Content\Fonts\debugFont.xnb
+Content\Audio\heart.xnb
+Content\Audio\hex.xnb
 Content\Audio\heart.wma
 Content\Audio\hex.wma
