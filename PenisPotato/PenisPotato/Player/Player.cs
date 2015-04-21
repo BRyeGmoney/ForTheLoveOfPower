@@ -120,13 +120,11 @@ namespace PenisPotato.Player
 
         
 
-        public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime, Camera camera)
+        public virtual void ActionDraw(SpriteBatch spriteBatch, GameTime gameTime, Camera camera)
         {
             float minboundsx = (camera.Pos.X * camera.Zoom) - camera._viewportWidth, maxboundsx = (camera.Pos.X * camera.Zoom) + camera._viewportWidth;
             float minboundsy = (camera.Pos.Y * camera.Zoom) - camera._viewportHeight, maxboundsy = (camera.Pos.Y * camera.Zoom) + camera._viewportHeight;
             float modTileWidth = tileWidth * camera.Zoom;
-
-            //camera.numStructsDrawn = 0; camera.numUnitsDrawn = 0;
 
             foreach (Units.Unit unit in playerUnits)
                 if (isInRange(unit.piecePosition.X * modTileWidth, minboundsx - modTileWidth, maxboundsx) && isInRange(unit.piecePosition.Y * modTileWidth, minboundsy - modTileWidth, maxboundsy))
@@ -137,6 +135,20 @@ namespace PenisPotato.Player
             /*foreach (Structures.Structure structure in playerStructures)
                 if (isInRange(structure.piecePosition.X * modTileWidth, minboundsx - modTileWidth, maxboundsx) && isInRange(structure.piecePosition.Y * modTileWidth, minboundsy - modTileWidth, maxboundsy))
                     structure.Draw(spriteBatch, gameTime, ScreenManager, this);*/
+        }
+
+        public virtual void TacticalDraw(SpriteBatch spriteBatch, GameTime gameTime, Camera camera)
+        {
+            float tileWid = 25 / camera.Zoom;
+            playerSettlements.ForEach(pS =>
+                {
+                    Rectangle pieceRect = new Rectangle((int)(pS.piecePosition.X * tileWid), (int)(pS.piecePosition.Y * tileWid - Math.Abs(pS.piecePosition.X % 2) * (tileWid / 2)), (int)tileWid, (int)tileWid);
+                    spriteBatch.Draw(ScreenManager.textureRepo[3], pieceRect, new Rectangle(0,0,tileWidth, tileWidth), pS.playerColor, 0f, Vector2.Zero, SpriteEffects.None, 0f);
+                });
+            /*playerUnits.ForEach(unit =>
+                {
+                    
+                });*/
         }
 
         private bool isInRange(float value, float min, float max)

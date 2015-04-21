@@ -192,6 +192,11 @@ namespace PenisPotato.StateSystem
             textureRepo.Add(content.Load<Texture2D>("Icons//Modifiers//minusMoney"));
             textureRepo.Add(content.Load<Texture2D>("Icons//Modifiers//plusMoney"));
             textureRepo.Add(content.Load<Texture2D>("Icons/Modifiers/SquadLeader"));
+
+            textureRepo.Add(content.Load<Texture2D>("Textures/Units/Military/circle"));
+            textureRepo.Add(content.Load<Texture2D>("Textures/Units/Military/square"));
+            textureRepo.Add(content.Load<Texture2D>("Textures/Units/Military/triangle"));
+            textureRepo.Add(content.Load<Texture2D>("Textures/Units/Military/pentagon"));
         }
 
         private void SetupAnimationRepository(ContentManager content)

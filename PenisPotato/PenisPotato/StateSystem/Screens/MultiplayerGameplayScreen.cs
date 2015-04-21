@@ -182,9 +182,9 @@ namespace PenisPotato.StateSystem.Screens
 
 
             players.ForEach(player =>{
-                player.Draw(spriteBatch, gameTime, camera);
+                player.ActionDraw(spriteBatch, gameTime, camera);
             });
-            playerOne.Draw(spriteBatch, gameTime, camera);
+            playerOne.ActionDraw(spriteBatch, gameTime, camera);
             spriteBatch.End();
 
             //Hud spritebatch

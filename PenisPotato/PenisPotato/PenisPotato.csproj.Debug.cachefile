@@ -59,5 +59,9 @@ Content\Textures\Misc\particle.xnb
 Content\Fonts\debugFont.xnb
 Content\Audio\heart.xnb
 Content\Audio\hex.xnb
+Content\Textures\Units\Military\circle.xnb
+Content\Textures\Units\Military\square.xnb
+Content\Textures\Units\Military\triangle.xnb
+Content\Textures\Units\Military\pentagon.xnb
 Content\Audio\heart.wma
 Content\Audio\hex.wma

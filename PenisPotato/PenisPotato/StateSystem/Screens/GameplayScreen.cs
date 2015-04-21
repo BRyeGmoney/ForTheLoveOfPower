@@ -164,7 +164,7 @@ namespace PenisPotato.StateSystem.Screens
 
             playerOne.Update(gameTime);
 
-            if (camera.Zoom >= camera.zoomLowerLimit && !currentView.Equals(ZoomTypes.ActionView))
+            if (!currentView.Equals(ZoomTypes.ActionView) && camera.Zoom == camera.zoomLowerLimit)
                 currentView = ZoomTypes.ActionView;
             else if (!currentView.Equals(ZoomTypes.TacticalView) && camera.Zoom < camera.zoomLowerLimit && camera.lowerLimReached)
             {
@@ -279,10 +279,10 @@ namespace PenisPotato.StateSystem.Screens
                 });
 
             
-                playerOne.Draw(spriteBatch, gameTime, camera);
+                //playerOne.ActionDraw(spriteBatch, gameTime, camera);
                 players.ForEach(player =>
                 {
-                    player.Draw(spriteBatch, gameTime, camera);
+                    player.ActionDraw(spriteBatch, gameTime, camera);
                 });
                 //enemyOne.Draw(spriteBatch, gameTime, camera);
                 ParticleManager.Draw(spriteBatch);
@@ -290,7 +290,15 @@ namespace PenisPotato.StateSystem.Screens
             }
             else if (currentView.Equals(ZoomTypes.TacticalView))
             {
-                ScreenManager.SpriteBatch.FillRectangle(new Rectangle(0, 0, ScreenManager.GraphicsDevice.Viewport.Width, ScreenManager.GraphicsDevice.Viewport.Height), Color.Black);
+                //ScreenManager.SpriteBatch.FillRectangle(new Rectangle((int)(camera.Pos.X - (ScreenManager.GraphicsDevice.Viewport.Width / 2)) - 5, (int)(camera.Pos.Y - (ScreenManager.GraphicsDevice.Viewport.Height / 2)) - 5, ScreenManager.GraphicsDevice.Viewport.Width * 2, ScreenManager.GraphicsDevice.Viewport.Height * 2), Color.Black);
+                ScreenManager.SpriteBatch.FillRectangle(new Rectangle((int)(camera.Pos.X - ScreenManager.GraphicsDevice.Viewport.Width / camera.Zoom), (int)(((camera.Pos.Y - ScreenManager.GraphicsDevice.Viewport.Height / camera.Zoom))), 
+                    (int)(ScreenManager.GraphicsDevice.Viewport.Width / camera.Zoom) * 2, (int)(ScreenManager.GraphicsDevice.Viewport.Height / camera.Zoom) * 2), 
+                    Color.Black);
+
+                players.ForEach(player =>
+                {
+                    player.TacticalDraw(spriteBatch, gameTime, camera);
+                });
             }
             else if (currentView.Equals(ZoomTypes.StatisticsView))
             {

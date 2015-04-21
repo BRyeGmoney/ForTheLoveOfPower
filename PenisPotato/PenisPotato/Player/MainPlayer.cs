@@ -18,6 +18,9 @@ namespace PenisPotato.Player
         float zoomIncrement = 0.1f;
         Vector2 cameraMovement = Vector2.Zero;
 
+        bool isSingleClicked = false;
+        float timer;
+
         //Text
         public String MoneyString { get; set; }
 
@@ -94,7 +97,7 @@ namespace PenisPotato.Player
                     //if there is an animation and its not a death animation or if it is a death animation and its stopped
                     if (pU.numUnits < 0 || (pU.animPlayer.Animation != null && (pU.animPlayer.Animation.IsDeathAnimation && pU.animPlayer.Animation.IsStopped)))
                     {
-                        for (int i = 0; i < 120; i++)
+                        /*for (int i = 0; i < 120; i++)
                         {
                             float speed = 18f * (1f - 1 / ScreenManager.rand.NextFloat(1f, 10f));
                             var state = new Graphics.ParticleEffects.ParticleState()
@@ -105,7 +108,7 @@ namespace PenisPotato.Player
                             };
 
                             masterState.ParticleManager.CreateParticle(ScreenManager.part, new Vector2((pU.piecePosition.X * pU.tileWidth) + pU.tileWidth / 2, (pU.piecePosition.Y * pU.tileWidth) + (pU.tileWidth)), playerColor, 10, 0.8f, state);
-                        }
+                        }*/
                         playerUnits.Remove(pU);
                         pU = null;
                     }
@@ -157,96 +160,125 @@ namespace PenisPotato.Player
                 if (input.CurrentMouseStates[0].RightButton == ButtonState.Pressed)
                     cameraMovement = (new Vector2(input.LastMouseStates[0].X, input.LastMouseStates[0].Y) - new Vector2(input.CurrentMouseStates[0].X, input.CurrentMouseStates[0].Y)) / camera.Zoom;
 
-                //Initial press onto the screen
-                if (input.CurrentMouseStates[0].LeftButton == ButtonState.Pressed && input.LastMouseStates[0].LeftButton == ButtonState.Released)
+                if (masterState.currentView.Equals(StateSystem.Screens.ZoomTypes.ActionView))
                 {
-                    selectedTilePos = GetMouseStateRelative(input.CurrentMouseStates[0], camera);
-                    DetermineSelectedTile(camera);
-
-                    playerUnits.ForEach(pS =>
-                    {
-                        if (pS.piecePosition.Equals(selectedTilePos))
-                            navigatingUnit = pS;
-                    });
-
-                    if (navigatingUnit != null)// && !movementTiles.Contains(selectedTilePos) && !navigatingUnit.piecePosition.Equals(selectedTilePos))
-                    {
-                        navigatingUnit.movementPoints.Clear();
-                        //movementTiles.Add(selectedTilePos);
-                    }
+                    ActionDrawInput(gameTime, input, camera);
                 }
-                //continuing press onto the screen
-                else if (input.CurrentMouseStates[0].LeftButton == ButtonState.Pressed && input.LastMouseStates[0].LeftButton == ButtonState.Pressed)
+                else if (masterState.currentView.Equals(StateSystem.Screens.ZoomTypes.TacticalView))
                 {
-                    selectedTilePos = GetMouseStateRelative(input.CurrentMouseStates[0], camera);
-                    DetermineSelectedTile(camera);
-
-                    if (navigatingUnit != null) //&& !movementTiles.Contains(selectedTilePos) && !navigatingUnit.piecePosition.Equals(selectedTilePos))
-                        CreateRouteToTile(selectedTilePos, navigatingUnit.piecePosition);
-                        //movementTiles.Add(selectedTilePos);
+                    TacticalDrawInput(gameTime, input, camera);
                 }
-                //release of press onto the screen
-                if (input.CurrentMouseStates[0].LeftButton == ButtonState.Released && input.LastMouseStates[0].LeftButton == ButtonState.Pressed)
-                {
-                    //Dump the tiles we've highlighted for moving into the navigating unit's repertoire.
-                    if (navigatingUnit != null && movementTiles.Count > 0)
-                    {
-                        //Clear the movement points because the new set of movement points is being sent to the navigating unit
-                        navigatingUnit.movementPoints.AddRange(movementTiles);
-
-                        //kill the reference to the navigating unit and clear movement points.
-                        navigatingUnit = null;
-                        movementTiles.Clear();
-                    }
-                    else
-                    {
-                        //If there's no buildings yet then we have to create an mvp
-                        if (playerUnits.Count < 1)
-                        {
-                            playerUnits.Add(new Units.Misc.Dictator(selectedTilePos, playerColor, dictatorTex, GetNextUnitId()));
-                            //err i know this is awkward placement for this but whatever
-                            if (netPlayer != null)
-                                netPlayer.unitsToSend.Enqueue(playerUnits[playerUnits.Count - 1]);
-                        }
-                        else
-                        {
-
-                            playerStructures.ForEach(pS =>
-                            {
-                                if (pS.piecePosition.Equals(selectedTilePos))
-                                {
-                                    pS.Clicked(gameTime, this);
-                                    performedAction = true;
-                                }
-                            });
-
-                            playerUnits.ForEach(pU =>
-                            {
-                                if (!performedAction && pU.piecePosition.Equals(selectedTilePos) && pU.canBuild)
-                                {
-                                    ScreenManager.AddScreen(new StateSystem.Screens.BuildMenuScreen(ScreenManager, this, true), PlayerIndex.One, false);
-                                    performedAction = true;
-                                }
-                            });
-
-                            //Otherwise, lets do this shit.
-                            if (!performedAction && buildingTiles.Contains(selectedTilePos))
-                                ScreenManager.AddScreen(new StateSystem.Screens.BuildMenuScreen(ScreenManager, this, false), PlayerIndex.One, false);
-                        }
-                    }
-                }
-                else if (input.CurrentMouseStates[0].LeftButton == ButtonState.Released && input.LastMouseStates[0].LeftButton == ButtonState.Released)
-                {
-                    navigatingUnit = null;
-                    movementTiles.Clear();
-                }
-                performedAction = false;
             }
 
             if (Math.Abs(cameraMovement.X) > 0.1 || Math.Abs(cameraMovement.Y) > 0.1)
             {
                 camera.Pos += cameraMovement;
                 cameraMovement *= 0.9f;
+            }
+        }
+
+        private void ActionDrawInput(GameTime gameTime, StateSystem.InputState input, Camera camera)
+        {
+            //Initial press onto the screen
+            if (input.CurrentMouseStates[0].LeftButton == ButtonState.Pressed && input.LastMouseStates[0].LeftButton == ButtonState.Released)
+            {
+                selectedTilePos = GetMouseStateRelative(input.CurrentMouseStates[0], camera);
+                DetermineSelectedTile(camera);
+
+                playerUnits.ForEach(pS =>
+                {
+                    if (pS.piecePosition.Equals(selectedTilePos))
+                        navigatingUnit = pS;
+                });
+
+                if (navigatingUnit != null)// && !movementTiles.Contains(selectedTilePos) && !navigatingUnit.piecePosition.Equals(selectedTilePos))
+                {
+                    navigatingUnit.movementPoints.Clear();
+                    //movementTiles.Add(selectedTilePos);
+                }
+            }
+            //continuing press onto the screen
+            else if (input.CurrentMouseStates[0].LeftButton == ButtonState.Pressed && input.LastMouseStates[0].LeftButton == ButtonState.Pressed)
+            {
+                selectedTilePos = GetMouseStateRelative(input.CurrentMouseStates[0], camera);
+                DetermineSelectedTile(camera);
+
+                if (navigatingUnit != null) //&& !movementTiles.Contains(selectedTilePos) && !navigatingUnit.piecePosition.Equals(selectedTilePos))
+                    CreateRouteToTile(selectedTilePos, navigatingUnit.piecePosition);
+                //movementTiles.Add(selectedTilePos);
+            }
+            //release of press onto the screen
+            if (input.CurrentMouseStates[0].LeftButton == ButtonState.Released && input.LastMouseStates[0].LeftButton == ButtonState.Pressed)
+            {
+                //Dump the tiles we've highlighted for moving into the navigating unit's repertoire.
+                if (navigatingUnit != null && movementTiles.Count > 0)
+                {
+                    //Clear the movement points because the new set of movement points is being sent to the navigating unit
+                    navigatingUnit.movementPoints.AddRange(movementTiles);
+
+                    //kill the reference to the navigating unit and clear movement points.
+                    navigatingUnit = null;
+                    movementTiles.Clear();
+                }
+                else
+                {
+                    //If there's no buildings yet then we have to create an mvp
+                    if (playerUnits.Count < 1)
+                    {
+                        playerUnits.Add(new Units.Misc.Dictator(selectedTilePos, playerColor, dictatorTex, GetNextUnitId()));
+                        //err i know this is awkward placement for this but whatever
+                        if (netPlayer != null)
+                            netPlayer.unitsToSend.Enqueue(playerUnits[playerUnits.Count - 1]);
+                    }
+                    else
+                    {
+
+                        playerStructures.ForEach(pS =>
+                        {
+                            if (pS.piecePosition.Equals(selectedTilePos))
+                            {
+                                pS.Clicked(gameTime, this);
+                                performedAction = true;
+                            }
+                        });
+
+                        playerUnits.ForEach(pU =>
+                        {
+                            if (!performedAction && pU.piecePosition.Equals(selectedTilePos) && pU.canBuild)
+                            {
+                                ScreenManager.AddScreen(new StateSystem.Screens.BuildMenuScreen(ScreenManager, this, true), PlayerIndex.One, false);
+                                performedAction = true;
+                            }
+                        });
+
+                        //Otherwise, lets do this shit.
+                        if (!performedAction && buildingTiles.Contains(selectedTilePos))
+                            ScreenManager.AddScreen(new StateSystem.Screens.BuildMenuScreen(ScreenManager, this, false), PlayerIndex.One, false);
+                    }
+                }
+            }
+            else if (input.CurrentMouseStates[0].LeftButton == ButtonState.Released && input.LastMouseStates[0].LeftButton == ButtonState.Released)
+            {
+                navigatingUnit = null;
+                movementTiles.Clear();
+            }
+            performedAction = false;
+        }
+
+        private void TacticalDrawInput(GameTime gameTime, StateSystem.InputState input, Camera camera)
+        {
+            if (input.CurrentMouseStates[0].LeftButton == ButtonState.Pressed && input.LastMouseStates[0].LeftButton == ButtonState.Released)
+            {
+                if ((gameTime.TotalGameTime.TotalSeconds - timer < 0.5))
+                {
+                    //(input.CurrentMouseStates[0].X / camera.Zoom) - (ScreenManager.GraphicsDevice.Viewport.Width / 2) / camera.Zoom
+                    camera.Pos = new Vector2((input.CurrentMouseStates[0].X - (ScreenManager.GraphicsDevice.Viewport.Width / 2)) / camera.Zoom, (input.CurrentMouseStates[0].Y - (ScreenManager.GraphicsDevice.Viewport.Height / 2)) / camera.Zoom);
+                    //camera.Zoom = camera.zoomLowerLimit;
+                }
+                else
+                {
+                   timer = (float)gameTime.TotalGameTime.TotalSeconds;
+                }
             }
         }
 
