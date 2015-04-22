@@ -17,7 +17,7 @@ namespace PenisPotato
         /// <summary>
         /// This is the shit.
         /// </summary>
-        public float zoomActionLowerLimit = 0.19f;
+        public float zoomActionLowerLimit = 0.05f;
         public const float zoomUpperLimit = 1.5f;
         public float zoomLowerLimit = .2f;
 

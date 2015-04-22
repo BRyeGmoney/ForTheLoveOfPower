@@ -139,16 +139,19 @@ namespace PenisPotato.Player
 
         public virtual void TacticalDraw(SpriteBatch spriteBatch, GameTime gameTime, Camera camera)
         {
-            float tileWid = 25 / camera.Zoom;
+            float tileWid = tileWidth;//256 * camera.Zoom;
             playerSettlements.ForEach(pS =>
                 {
                     Rectangle pieceRect = new Rectangle((int)(pS.piecePosition.X * tileWid), (int)(pS.piecePosition.Y * tileWid - Math.Abs(pS.piecePosition.X % 2) * (tileWid / 2)), (int)tileWid, (int)tileWid);
                     spriteBatch.Draw(ScreenManager.textureRepo[3], pieceRect, new Rectangle(0,0,tileWidth, tileWidth), pS.playerColor, 0f, Vector2.Zero, SpriteEffects.None, 0f);
                 });
-            /*playerUnits.ForEach(unit =>
+            playerUnits.ForEach(pS =>
                 {
-                    
-                });*/
+                    Rectangle pieceRect = new Rectangle((int)(pS.piecePosition.X * tileWid), (int)(pS.piecePosition.Y * tileWid - Math.Abs(pS.piecePosition.X % 2) * (tileWid / 2)), (int)tileWid, (int)tileWid);
+                    spriteBatch.Draw(ScreenManager.textureRepo[4], pieceRect, new Rectangle(0, 0, tileWidth, tileWidth), pS.playerColor, 0f, Vector2.Zero, SpriteEffects.None, 0f);
+                });
+
+            
         }
 
         private bool isInRange(float value, float min, float max)
