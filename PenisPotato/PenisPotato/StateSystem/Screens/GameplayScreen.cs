@@ -309,9 +309,9 @@ namespace PenisPotato.StateSystem.Screens
             if (playerOne.MoneyString != null)
             {
                 spriteBatch.Begin();
-                spriteBatch.DrawString(ScreenManager.Font, String.Format("X: {0}, Y: {1}", camera.Pos.X, camera.Pos.Y), Vector2.Zero, Color.White);
-                spriteBatch.DrawString(ScreenManager.Font, String.Format("X: {0}, Y: {1}", playerOne.cPoos.X, playerOne.cPoos.Y), new Vector2(0, 20), Color.White);
-                //spriteBatch.DrawString(ScreenManager.Font, playerOne.MoneyString, Vector2.Zero, Color.White);
+                //spriteBatch.DrawString(ScreenManager.Font, String.Format("X: {0}, Y: {1}", camera.Pos.X, camera.Pos.Y), Vector2.Zero, Color.White);
+                //spriteBatch.DrawString(ScreenManager.Font, String.Format("X: {0}, Y: {1}", playerOne.cPoos.X, playerOne.cPoos.Y), new Vector2(0, 20), Color.White);
+                spriteBatch.DrawString(ScreenManager.Font, playerOne.MoneyString, Vector2.Zero, Color.White);
                 //if (playerOne.navigatingUnit != null)
                     //spriteBatch.DrawString(ScreenManager.Font, playerOne.wingus + ", " + playerOne.dingus, Vector2.Zero, Color.White);
                 spriteBatch.End();
