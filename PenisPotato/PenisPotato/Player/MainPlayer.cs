@@ -18,6 +18,7 @@ namespace PenisPotato.Player
         float zoomIncrement = 0.1f;
         Vector2 cameraMovement = Vector2.Zero;
 
+        //for double click
         float timer;
 
         //Text
