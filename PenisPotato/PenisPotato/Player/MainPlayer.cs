@@ -17,7 +17,6 @@ namespace PenisPotato.Player
         //Game input
         float zoomIncrement = 0.1f;
         Vector2 cameraMovement = Vector2.Zero;
-        public Vector2 cPoos = Vector2.Zero;
 
         float timer;
 
@@ -271,10 +270,8 @@ namespace PenisPotato.Player
             {
                 if ((gameTime.TotalGameTime.TotalSeconds - timer < 0.5))
                 {
-                    //(input.CurrentMouseStates[0].X / camera.Zoom) - (ScreenManager.GraphicsDevice.Viewport.Width / 2) / camera.Zoom
-                    cPoos = new Vector2(input.CurrentMouseStates[0].X, input.CurrentMouseStates[0].Y);
-                    camera.Pos = cPoos * camera.Zoom;//new Vector2((input.CurrentMouseStates[0].X - (ScreenManager.GraphicsDevice.Viewport.Width / 2)), (input.CurrentMouseStates[0].Y - (ScreenManager.GraphicsDevice.Viewport.Height / 2)));
-                    //camera.Zoom = camera.zoomLowerLimit;
+                    camera.Pos = GetMouseStateRelative(input.CurrentMouseStates[0], camera);
+                    camera.Zoom = camera.zoomLowerLimit;
                 }
                 else
                 {
