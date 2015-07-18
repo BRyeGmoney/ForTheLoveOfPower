@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{71FB0D6B-6F77-7738-4FE8-1BBDEFE09416}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+	<BaseDirectory>Assets</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_5_0_2;UNITY_5_0;UNITY_5;ENABLE_LICENSE_RENAME;ENABLE_NEW_BUGREPORTER;ENABLE_2D_PHYSICS;ENABLE_4_6_FEATURES;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_NEW_HIERARCHY;ENABLE_PHYSICS;ENABLE_PHYSICS_PHYSX3;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_AUDIOMIXER_SUSPEND;ENABLE_NONPRO;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_MONO;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="System" />
+    <Reference Include="System.XML" />
+	<Reference Include="System.Core" />
+	<Reference Include="System.Xml.Linq" />
+	<Reference Include="UnityEngine">
+	  <HintPath>E:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>E:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	</Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\3D\HexWorld.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\Algorithms\DiffusionHex.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\Algorithms\MazeBuilder.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\Algorithms\PrimsAlgorithmHex.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\BasicGridSetup\FlatBrickTest.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\BasicGridSetup\FlatHexTest.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\BasicGridSetup\MazeAlgorithmsHex.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\BasicGridSetup\PointyBrickTest.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\BasicGridSetup\PointyHexTest.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\BasicGridSetup\PolarFlatBrickGridMain.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\BasicGridSetup\PolarPointyBrickGridMain.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\CustomBuilderTests\PointyBrickCustomMapBuilder.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\CustomBuilderTests\PointyHexCustomMapBuilder.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\CustomBuilderTests\PointyHexGrid_Test.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\Games\LightsOut\LightsOutHex.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\Games\Lines\Lines.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\Games\Lines\LinesCell.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\Stress\StressTestHex.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\3D\RectWorld.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\AdvanedGridSetup\AnimatedGrid.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\AdvanedGridSetup\AnimatedGridMap.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\AdvanedGridSetup\ChainMailGrid.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Algorithms\DiffusionRect.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Algorithms\MazeAlgorithmsRect.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Algorithms\MazeCell.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Algorithms\PrimsAlgorithmRect.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\BasicGridSetup\DiamondTest.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\BasicGridSetup\PolarRectGridMain.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\BasicGridSetup\RectTest.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Games\BlocksSlider\BlocksSlider.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Games\SliderPuzzle\SilderPuzzle.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Helpers\ExampleUtils.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Helpers\IResetable.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Helpers\ResetButtonHandler.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Helpers\ScreenShotTaker.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Maps\ImageMapTest.cs" />
+     <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Stress\StressTestRect.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Attributes\NonNegativeAttribute.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Attributes\PositiveAttribute.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\BinaryHeap\BinaryHeap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\Generators\BatchGenerator.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\Generators\Buffer.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\Generators\IGenerator.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\Generators\ShuffledBatchGenerator.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\KDTree\IDistanceFunction.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\KDTree\IntervalHeap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\KDTree\KDNode.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\KDTree\KDTree.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\KDTree\MinHeap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\KDTree\NearestNeighbour.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\ResponseCurve\ResponseCurveBase.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\ResponseCurve\ResponseCurveColor.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\ResponseCurve\ResponseCurveFloat.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\ResponseCurve\ResponseCurveVector2.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\ResponseCurve\ResponseCurveVector3.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\ResponseCurve\ResponseCurveVector4.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Debug\GLDebug.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\Clock.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\CollectionExtensions.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\ColorExtensions.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\GLMonoBehaviour.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\GLPlayerPrefs.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\GLRandom.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\ImmutableAttribute.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\MainPage.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\MinMaxFloat.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\Singleton.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\StateMachine.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\TransformExtensions.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\VectorExtensions.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Builders\AbstractOp.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Builders\AbstractShapeInfo.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Builders\AbstractSplicedShapeInfo.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Builders\IShapeInfo.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Builders\ShapeMethodAttribute.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Builders\ShapeStorageInfo.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\ExtraDocumentation\MainPage.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\Diamond\DiamondGrid.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\Diamond\DiamondMap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\Diamond\DiamondOp.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\Diamond\DiamondPoint.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\FlatHex\FlatBricksMap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\FlatHex\FlatHexGrid.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\FlatHex\FlatHexMap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\FlatHex\FlatHexOp.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\FlatHex\FlatHexPoint.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\FlatHex\PolarFlatBrickMap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\PointyHex\PointyBrickMap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\PointyHex\PointyHexGrid.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\PointyHex\PointyHexHorizontalRectangleWrapper.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\PointyHex\PointyHexMap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\PointyHex\PointyHexOp.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\PointyHex\PointyHexPoint.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\PointyHex\PolarPointyBrickMap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\Rect\NestedRectGrid.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\Rect\PolarRectMap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\Rect\RectGrid.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\Rect\RectMap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\Rect\RectOp.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\Rect\RectPoint.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Grids\AbstractSplicedGrid.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Grids\AbstractUniformGrid.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Grids\GenericSplicedGrid.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Grids\GridExtensions.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Grids\IEvenGrid.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Grids\IGrid.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Grids\IGridSpace.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Grids\IVectorGrid.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Grids\LayeredGrid.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Grids\WrappedGrid.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Helper\ArrayPoint.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Helper\IntExtensions.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Helper\IntRect.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Helper\Mathi.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Helper\Vector2Transforms.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\AbstractMap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\CompoundMap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\IGridToWorldMap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\IMap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\IMap3D.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\IPolarMap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\ImageMap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\Map3DExtensions.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\Map3DXY.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\Map3DXZ.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\MapExtensions.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\PolygonGridMap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\SplicedMap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\WindowedMap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Meta\ExperimentalAttribute.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Obsolete\ObsoleteExtensions.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Obsolete\TextureCell.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Points\IEdge.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Points\IGridPoint.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Points\IPointWrapper.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Points\ISplicedPoint.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Points\ISplicedVectorPoint.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Points\ISupportsEdges.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Points\ISupportsVertices.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Points\IVectorPoint.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Points\IVertex.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Points\VectorPoint.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Shapes\IShape.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Shapes\Shape.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\CompilerHints.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\CompilerHints_GL.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\Grid.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\HexAlgorithm.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\HexPoint.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\Op.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\Point.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\ShapeAbbreviations.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\ShapeInfo.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\SplicedGrid.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\SplicedOp.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\SplicedPoint.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\TemplateCode.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\TemplateCode1.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\TemplateCode4.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\UniformGrid.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\VertexEdgeGrid.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\AnimatableMap.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Cells\Block.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Cells\ICell.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Cells\IColorableCell.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Cells\MeshTileCell.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Cells\SpriteCell.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Cells\TileCell.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Cells\UIImageCell.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Cells\UIImageTextCell.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Cells\UITextCell.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Cells\UVCell.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GLGizmos.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\CustomGridBuilder.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\CustomMapBuilder.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\DiamondTileGridBuilder.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\FlatHexTileGridBuilder.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\GridBehaviour.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\GridBuilder.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\GridBuilderUtils.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\ITileGrid.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\PointyHexTileGridBuilder.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\PolarFlatBrickTileGridBuilder.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\PolarPointyBrickTileGridBuilder.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\PolarRectTileGridBuilder.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\PolarTileGridBuilder.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\RectTileGridBuilder.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\TileGridBuilder.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\IGLScriptableObject.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\IGridBuilderBase.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Inspectable\ColorFunction.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Inspectable\InspectableVectorPoint.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Inspectable\InspectableVectorPoint_Hex.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Inspectable\InspectableVectorPoint_Rect.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\MapAlignment.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\MapPlane.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\PoissonDiskProperties.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\PolarGridProperties.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\RectNeighborType.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\UpdateType.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\MeshUtils.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\Vector2Extensions.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Utils\Algorithms.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Utils\PointComparer.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Utils\PointList.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Utils\PointStack.cs" />
+     <Compile Include="Assets\Gamelogic\Plugins\Grids\Utils\PoissonDisk.cs" />
+     <None Include="Assets\Gamelogic\Plugins\Common\Datastructures\BinaryHeap\BinaryHeapLincense.txt" />
+     <None Include="Assets\Gamelogic\Examples\Grids\Shaders\Unlit - Transparent Colored.shader" />
+     <None Include="Assets\Gamelogic\Examples\Grids\Shaders\Transparent Colored.shader" />
+     <None Include="Assets\Gamelogic\Plugins\Common\Datastructures\KDTree\KDTreeLicense.txt" />
+ <Reference Include="UnityEngine.UI">
+ <HintPath>E:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+ <HintPath>E:/Program Files (x86)/Unity/Editor/Data/PlaybackEngines/iossupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>
