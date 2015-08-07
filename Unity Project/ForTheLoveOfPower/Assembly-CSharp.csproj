@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs" />
+     <Compile Include="Assets\ForTheLoveOfPower\Scripts\UnitCell.cs" />
      <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\3D\HexWorld.cs" />
      <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\Algorithms\DiffusionHex.cs" />
      <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\Algorithms\MazeBuilder.cs" />

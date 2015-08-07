@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using System;
 using System.Collections.Generic;
 using Gamelogic;
@@ -7,6 +8,7 @@ using Gamelogic.Grids;
 public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 	PointyHexPoint startPoint;
+	UnitCell startCell;
 	PointyHexPoint endPoint;
 	IEnumerable<PointyHexPoint> path;
 
@@ -19,39 +21,40 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	void Update () {
 		Camera.main.orthographicSize -= Input.GetAxis ("Mouse ScrollWheel") * 200f;
 		Camera.main.orthographicSize = Mathf.Clamp (Camera.main.orthographicSize, 200, 1000);
-		Debug.Log (Camera.main.orthographicSize);
 	}
 
 	public void OnClick(PointyHexPoint clickedPoint)
 	{
-		if (startPoint.Z == 0) 
-		{
+		UnitCell clickedCell = Grid [clickedPoint] as UnitCell;
+
+
+		if (startCell == null) {
 			startPoint = clickedPoint;
-			(Grid[startPoint] as SpriteCell).HighlightOn = true;
-		} 
-		else if (clickedPoint != startPoint) 
-		{
-			if (path != null) 
-			{
+			startCell = Grid[startPoint] as UnitCell;
+			clickedCell.HighlightOn = true;
+			clickedCell.foreground = new SpriteRenderer();
+			Debug.Log ("Hey: " + Resources.Load<Sprite>("Sprites/Units/Unit_Dictator").name);
+			clickedCell.foreground.sprite = Resources.Load<Sprite>("Sprites/Units/Unit_Dictator");
+
+		} else if (clickedCell != (Grid [startPoint] as UnitCell)) {
+			if (path != null) {
 				foreach (PointyHexPoint point in path) {
-					(Grid[point] as SpriteCell).HighlightOn = false;
+					clickedCell.HighlightOn = false;
 				}
 			}
-			(Grid[endPoint] as SpriteCell).HighlightOn = false;
+			(Grid [endPoint] as UnitCell).HighlightOn = false;
 
 			endPoint = clickedPoint;
-			(Grid[endPoint] as SpriteCell).HighlightOn = true;
+			(Grid [endPoint] as UnitCell).HighlightOn = true;
 
 			path = GetGridPath ();
 
 			foreach (PointyHexPoint point in path) {
-				(Grid[point] as SpriteCell).HighlightOn = true;
+				(Grid [point] as SpriteCell).HighlightOn = true;
 			}
-		} 
-		else 
-		{
-			(Grid[startPoint] as SpriteCell).HighlightOn = false;
-			(Grid[endPoint] as SpriteCell).HighlightOn = false;
+		} else {
+			(Grid [startPoint] as UnitCell).HighlightOn = false;
+			(Grid [endPoint] as UnitCell).HighlightOn = false;
 		}
 		//Do something, such as
 		//(Grid[clickedPoint] as SpriteCell).HighlightOn = !(Grid[clickedPoint] as SpriteCell).HighlightOn;
