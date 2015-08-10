@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Gamelogic;
 using Gamelogic.Grids;
 
 namespace AssemblyCSharp
@@ -22,11 +23,32 @@ namespace AssemblyCSharp
 		Jet,
 	}
 
+	public enum MilitaryUnitAnimationIndex
+	{
+		Circle = 0,
+		Pentagon = 1,
+		Square = 2,
+		Triangle = 3,
+		Infantry_Idle = 4,
+		Infantry_Move = 5,
+		Plane_Idle = 6,
+		Plane_Combat = 7,
+		Plane_Death = 8,
+		Plane_Move = 9,
+		Tank_Idle = 10,
+		Tank_Combat = 11,
+		Tank_Death = 12,
+		Tank_Move = 13,
+		Dictator_Idle = 14,
+	}
+
 	public class MilitaryUnit
 	{
-		private List<PointyHexPoint> movementPath;
+		private PointList<PointyHexPoint> movementPath;
 		private int unitAmount = 1;
+		private float moveTime;
 
+		//Properties
 		public List<MilitaryUnit> Subordinates
 		{
 			get { return subordinates; }
@@ -40,18 +62,29 @@ namespace AssemblyCSharp
 		}
 		private MilitaryUnitType unitType;
 
+		public Int16 IdleAnimation { get; set; }
+		public Int16 CombatAnimation { get; set; }
+		public Int16 DeathAnimation { get; set; }
+		public Int16 MoveAnimation { get; set; }
+
+		public Color UnitColor { get; set; }
+
 		public MilitaryUnit ()
 		{
 		}
 
-		public PointyHexPoint GetNextMoveInPath()
+		public void MoveNextMoveInPath(IGrid<PointyHexPoint> grid, Sprite[] unitSprites)
 		{
-			PointyHexPoint nextPoint = movementPath [0];
-			movementPath.RemoveAt (0);
-			return nextPoint;
+			if (movementPath != null) {
+				if (movementPath.Count > 1) {
+					(grid [movementPath [0]] as UnitCell).RemoveUnit ();
+					movementPath.RemoveAt (0);
+					(grid [movementPath [0]] as UnitCell).AddUnitToTile (this, unitSprites);
+				}
+			}
 		}
 
-		public void SetMovementPath(List<PointyHexPoint> newPath)
+		public void SetMovementPath(PointList<PointyHexPoint> newPath)
 		{
 			movementPath = newPath;
 		}
@@ -77,14 +110,31 @@ namespace AssemblyCSharp
 			subordinates.AddRange (unitsToCommand);
 		}
 
+		public void Update(IGrid<PointyHexPoint> grid, Sprite[] unitSprites)
+		{
+			if (unitType.Equals (MilitaryUnitType.Dictator) && moveTime > 2f) {
+				MoveNextMoveInPath (grid, unitSprites);
+				moveTime = 0f;
+			} else if (unitType.Equals (MilitaryUnitType.Infantry) && moveTime > 1.75f) {
+				MoveNextMoveInPath (grid, unitSprites);
+				moveTime = 0f;
+			} else if (unitType.Equals (MilitaryUnitType.Tank) && moveTime > 1.25f) {
+				MoveNextMoveInPath (grid, unitSprites);
+				moveTime = 0f;
+			} else if (moveTime > 1f) {
+				MoveNextMoveInPath (grid, unitSprites);
+				moveTime = 0f;
+			}
 
+			moveTime += Time.deltaTime;
+		}
 	}
 
 	public static class CreateMilitaryUnit
 	{
-		public static MilitaryUnit CreateDictator()
+		public static MilitaryUnit CreateDictator(Color unitColor)
 		{
-			return new MilitaryUnit() { UnitType = MilitaryUnitType.Dictator };
+			return new MilitaryUnit() { UnitType = MilitaryUnitType.Dictator, IdleAnimation = (short)MilitaryUnitAnimationIndex.Dictator_Idle, UnitColor = unitColor };
 		}
 	}
 }

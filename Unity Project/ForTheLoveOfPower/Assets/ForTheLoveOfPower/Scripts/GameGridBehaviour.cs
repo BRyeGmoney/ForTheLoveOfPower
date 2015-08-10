@@ -2,6 +2,7 @@
 using UnityEditor;
 using System;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using Gamelogic;
 using Gamelogic.Grids;
 
@@ -12,8 +13,11 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	UnitCell prevClickedCell;
 	PointyHexPoint endPoint;
 	IEnumerable<PointyHexPoint> path;
+	Sprite[] structureSprites;
+	Sprite[] unitSprites;
 
 	Player playingPlayer;
+	public Text moneyText;
 
 	float timer = 0f;
 	bool startChosen = false;
@@ -21,6 +25,8 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	// Use this for initialization
 	void Start () {
 		playingPlayer = GameObject.Find ("playerOne").GetComponent<Player>();
+		structureSprites = Resources.LoadAll<Sprite> ("Sprites/Buildings");
+		unitSprites = Resources.LoadAll<Sprite> ("Sprites/Units");
 	}
 	
 	// Update is called once per frame
@@ -28,13 +34,20 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		Camera.main.orthographicSize -= Input.GetAxis ("Mouse ScrollWheel") * 200f;
 		Camera.main.orthographicSize = Mathf.Clamp (Camera.main.orthographicSize, 200, 1000);
 
-		timer += Time.deltaTime;
 		if (timer > 1f) {
 			if (path != null) {
-			foreach (PointyHexPoint point in path) 
-				(Grid [point] as SpriteCell).HighlightOn = false;
+				foreach (PointyHexPoint point in path) 
+					(Grid [point] as SpriteCell).HighlightOn = false;
+				path = null;
 			}
 		}
+
+		playingPlayer.milUnits.ForEach (unit => unit.Update (Grid, unitSprites));
+
+		moneyText.text = String.Concat ("Money: ", playingPlayer.Cash); 
+
+		//update our timer
+		timer += Time.deltaTime;
 	}
 
 	public void OnClick(PointyHexPoint clickedPoint)
@@ -57,6 +70,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 				path = GetGridPath ();
 				foreach (PointyHexPoint point in path) 
 					(Grid [point] as SpriteCell).HighlightOn = true;
+				prevClickedCell.unitOnTile.SetMovementPath (path.ToPointList ());
 
 				//start the timer to make it dissapear and then reset the flag that tells
 				//us if we're trying to move something
@@ -69,13 +83,30 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 
 		} else if (clickedCell.buildingOnTile != null) {
+		} else if (clickedCell.Color == playingPlayer.PlayerColor) {
+			AssemblyCSharp.StructureUnit newBuilding = AssemblyCSharp.CreateStructureUnit.CreateFactory (playingPlayer.PlayerColor);
+			playingPlayer.structUnits.Add (newBuilding);
+			clickedCell.AddStructureToTile (newBuilding, structureSprites);
+
+			playingPlayer.AddToOwnedTiles (Grid, GetSurroundingTiles (clickedPoint));
 		} else {
 			//if the player has no units, then this is how we let them place the dictator
 			if (playingPlayer.milUnits.IsEmpty()) {
-				AssemblyCSharp.MilitaryUnit dictator = AssemblyCSharp.CreateMilitaryUnit.CreateDictator ();
+				AssemblyCSharp.MilitaryUnit dictator = AssemblyCSharp.CreateMilitaryUnit.CreateDictator (playingPlayer.PlayerColor);
 				playingPlayer.milUnits.Add (dictator);
-				clickedCell.AddUnitToTile (dictator);
+				clickedCell.AddUnitToTile (dictator, unitSprites);
+				clickedCell.HighlightOn = false;
 			} else { //else, bring up the bulding selection screen
+				AssemblyCSharp.Settlement newSettlement = AssemblyCSharp.CreateStructureUnit.CreateSettlement (playingPlayer.PlayerColor);
+				playingPlayer.structUnits.Add (newSettlement);
+				clickedCell.AddStructureToTile (newSettlement, structureSprites);
+
+				//playingPlayer.AddToOwnedTiles (Grid, clickedPoint);
+				playingPlayer.AddToOwnedTiles(Grid, GetSurroundingTiles(clickedPoint));
+
+				//Insert Build Menu here
+
+				clickedCell.HighlightOn = false;
 			}
 		}
 
@@ -126,5 +157,16 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			(p, q) => 1);
 		
 		return path;
+	}
+
+	public PointList<PointyHexPoint> GetSurroundingTiles(PointyHexPoint clickedPoint)
+	{
+		var path = Algorithms.GetPointsInRangeCost (Grid,
+		                                           clickedPoint, 
+		                                           tile => true,
+		                                           (p,q) => 1,
+		                                           1);
+
+		return path.Keys.ToPointList<PointyHexPoint>();
 	}
 }

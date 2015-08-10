@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System;
+using UnityEngine;
+
 namespace AssemblyCSharp
 {
 	public enum StructureUnitType
@@ -27,10 +29,51 @@ namespace AssemblyCSharp
 		TankDepot
 	}
 
+	public enum StructureAnimationIndex
+	{
+		Capitol = 0,
+		CityHall = 1,
+		Settlement = 2,
+		TownHall = 3,
+		Exporter = 4,
+		Factory = 5,
+		Market = 6,
+		Contractor = 7,
+		LabourCamp = 8,
+		Propaganda = 9,
+		Airport = 10,
+		Barracks = 11,
+		TankDepot = 12,
+	}
+
 	public class StructureUnit
 	{
+		//Properties
+		public Int16 StructureSpriteIndex { get; set; }
+		public Color StructColor { get; set; }
+
+		public StructureUnitType StructureType
+		{
+			get { return structureType; }
+			set { structureType = value; }
+		}
+		private StructureUnitType structureType;
+
 		public StructureUnit ()
 		{
+		}
+	}
+
+	public static class CreateStructureUnit
+	{
+		public static Settlement CreateSettlement(Color structColor)
+		{
+			return new Settlement () { StructureType = StructureUnitType.Settlement, StructureSpriteIndex = 2, StructColor = structColor };
+		}
+
+		public static StructureUnit CreateFactory(Color structColor)
+		{
+			return new StructureUnit () { StructureType = StructureUnitType.Factory, StructureSpriteIndex = 5, StructColor = structColor };
 		}
 	}
 }
