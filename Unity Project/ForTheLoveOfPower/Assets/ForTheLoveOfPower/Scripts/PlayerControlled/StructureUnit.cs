@@ -68,12 +68,52 @@ namespace AssemblyCSharp
 	{
 		public static Settlement CreateSettlement(Color structColor)
 		{
-			return new Settlement () { StructureType = StructureUnitType.Settlement, StructureSpriteIndex = 2, StructColor = structColor };
+			return new Settlement () { StructureType = StructureUnitType.Settlement, StructureSpriteIndex = (short)StructureAnimationIndex.Settlement, StructColor = structColor };
 		}
 
 		public static StructureUnit CreateFactory(Color structColor)
 		{
-			return new StructureUnit () { StructureType = StructureUnitType.Factory, StructureSpriteIndex = 5, StructColor = structColor };
+			return new StructureUnit () { StructureType = StructureUnitType.Factory, StructureSpriteIndex = (short)StructureAnimationIndex.Factory, StructColor = structColor };
+		}
+
+		public static StructureUnit CreateExporter(Color structColor)
+		{
+			return new StructureUnit () { StructureType = StructureUnitType.Exporter, StructureSpriteIndex = (short)StructureAnimationIndex.Exporter, StructColor = structColor };
+		}
+
+		public static StructureUnit CreateMarket(Color structColor)
+		{
+			return new StructureUnit () { StructureType = StructureUnitType.Market, StructureSpriteIndex = (short)StructureAnimationIndex.Market, StructColor = structColor };
+		}
+
+		public static StructureUnit CreateContractor(Color structColor)
+		{
+			return new StructureUnit () { StructureType = StructureUnitType.Contractor, StructureSpriteIndex = (short)StructureAnimationIndex.Contractor, StructColor = structColor };
+		}
+
+		public static StructureUnit CreateLabourCamp(Color structColor)
+		{
+			return new StructureUnit () { StructureType = StructureUnitType.LabourCamp, StructureSpriteIndex = (short)StructureAnimationIndex.LabourCamp, StructColor = structColor };
+		}
+
+		public static StructureUnit CreatePropaganda(Color structColor)
+		{
+			return new StructureUnit () { StructureType = StructureUnitType.Propaganda, StructureSpriteIndex = (short)StructureAnimationIndex.Propaganda, StructColor = structColor };
+		}
+
+		public static StructureUnit CreateBarracks(Color structColor)
+		{
+			return new StructureUnit () { StructureType = StructureUnitType.Barracks, StructureSpriteIndex = (short)StructureAnimationIndex.Barracks, StructColor = structColor };
+		}
+
+		public static StructureUnit CreateTankDepot(Color structColor)
+		{
+			return new StructureUnit () { StructureType = StructureUnitType.TankDepot, StructureSpriteIndex = (short)StructureAnimationIndex.TankDepot, StructColor = structColor };
+		}
+
+		public static StructureUnit CreateAirport(Color structColor)
+		{
+			return new StructureUnit () { StructureType = StructureUnitType.Airport, StructureSpriteIndex = (short)StructureAnimationIndex.Airport, StructColor = structColor };
 		}
 	}
 }

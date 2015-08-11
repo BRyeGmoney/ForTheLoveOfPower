@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using Gamelogic;
 using Gamelogic.Grids;
+using AssemblyCSharp;
 
 public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
@@ -17,6 +18,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	Sprite[] unitSprites;
 
 	Player playingPlayer;
+	AIPlayer aiPlayer;
 	public Text moneyText;
 
 	float timer = 0f;
@@ -25,8 +27,11 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	// Use this for initialization
 	void Start () {
 		playingPlayer = GameObject.Find ("playerOne").GetComponent<Player>();
+		aiPlayer = GameObject.Find ("playerTwoAI").GetComponent<AIPlayer> ();
 		structureSprites = Resources.LoadAll<Sprite> ("Sprites/Buildings");
 		unitSprites = Resources.LoadAll<Sprite> ("Sprites/Units");
+
+		aiPlayer.CreateBasePlayer (unitSprites, structureSprites, Grid);
 	}
 	
 	// Update is called once per frame
@@ -83,8 +88,17 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 
 		} else if (clickedCell.buildingOnTile != null) {
+			if (clickedCell.buildingOnTile.StructureType.Equals (StructureUnitType.Barracks)) {
+				if (clickedCell.unitOnTile != null) { //if someone's already here, just add to their count
+					clickedCell.unitOnTile.AddUnits (1);
+				} else { //create a unit here if not and of same type
+					MilitaryUnit infantryMan = CreateMilitaryUnit.CreateInfantry (playingPlayer.PlayerColor);
+					playingPlayer.milUnits.Add (infantryMan);
+					clickedCell.AddUnitToTile (infantryMan, unitSprites);
+				}
+			}
 		} else if (clickedCell.Color == playingPlayer.PlayerColor) {
-			AssemblyCSharp.StructureUnit newBuilding = AssemblyCSharp.CreateStructureUnit.CreateFactory (playingPlayer.PlayerColor);
+			StructureUnit newBuilding = CreateStructureUnit.CreateBarracks (playingPlayer.PlayerColor);
 			playingPlayer.structUnits.Add (newBuilding);
 			clickedCell.AddStructureToTile (newBuilding, structureSprites);
 
@@ -92,12 +106,12 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		} else {
 			//if the player has no units, then this is how we let them place the dictator
 			if (playingPlayer.milUnits.IsEmpty()) {
-				AssemblyCSharp.MilitaryUnit dictator = AssemblyCSharp.CreateMilitaryUnit.CreateDictator (playingPlayer.PlayerColor);
+				MilitaryUnit dictator = CreateMilitaryUnit.CreateDictator (playingPlayer.PlayerColor);
 				playingPlayer.milUnits.Add (dictator);
 				clickedCell.AddUnitToTile (dictator, unitSprites);
 				clickedCell.HighlightOn = false;
 			} else { //else, bring up the bulding selection screen
-				AssemblyCSharp.Settlement newSettlement = AssemblyCSharp.CreateStructureUnit.CreateSettlement (playingPlayer.PlayerColor);
+				Settlement newSettlement = CreateStructureUnit.CreateSettlement (playingPlayer.PlayerColor);
 				playingPlayer.structUnits.Add (newSettlement);
 				clickedCell.AddStructureToTile (newSettlement, structureSprites);
 
@@ -168,5 +182,21 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		                                           1);
 
 		return path.Keys.ToPointList<PointyHexPoint>();
+	}
+
+	void OnGUI()
+	{
+		int w = Screen.width, h = Screen.height;
+		
+		GUIStyle style = new GUIStyle();
+		
+		Rect rect = new Rect(0, 0, w, h * 2 / 100);
+		style.alignment = TextAnchor.LowerRight;
+		style.fontSize = h * 2 / 100;
+		style.normal.textColor = new Color (0.0f, 0.0f, 0.5f, 1.0f);
+		float msec = Time.deltaTime * 1000.0f;
+		float fps = 1.0f / Time.deltaTime;
+		string text = string.Format("{0:0.0} ms ({1:0.} fps)", msec, fps);
+		GUI.Label(rect, text, style);
 	}
 }

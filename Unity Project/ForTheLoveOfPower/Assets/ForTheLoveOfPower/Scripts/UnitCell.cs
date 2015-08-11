@@ -11,13 +11,17 @@ public class UnitCell : SpriteCell {
 	public AssemblyCSharp.MilitaryUnit unitOnTile;
 	public AssemblyCSharp.StructureUnit buildingOnTile;
 
+	private Sprite holdingSprite;
 
 	public void AddUnitToTile(AssemblyCSharp.MilitaryUnit unitToDisplay, Sprite[] unitSprites)
 	{
 		unitOnTile = unitToDisplay;
 		if (foreground == null) {
 			foreground = this.gameObject.AddComponent<SpriteRenderer> ();
+		} else {
+			holdingSprite = foreground.sprite;
 		}
+
 		foreground.sprite = unitSprites[unitOnTile.IdleAnimation];
 		foreground.color = unitOnTile.UnitColor;
 	}
@@ -40,6 +44,13 @@ public class UnitCell : SpriteCell {
 	public void RemoveUnit()
 	{
 		unitOnTile = null;
-		foreground.sprite = null;
+		if (foreground != null)
+			foreground.sprite = null;
+
+		if (buildingOnTile != null)
+		{
+			foreground.sprite = holdingSprite;
+			foreground.color = buildingOnTile.StructColor;
+		}
 	}
 }

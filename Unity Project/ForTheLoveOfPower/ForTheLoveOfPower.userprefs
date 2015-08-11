@@ -1,13 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\AIPlayer.cs">
     <Files>
-      <File FileName="Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs" Line="91" Column="77" />
-      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\Player.cs" Line="35" Column="94" />
-      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\StructureUnit.cs" Line="76" Column="129" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs" Line="107" Column="81" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\Player.cs" Line="26" Column="11" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\StructureUnit.cs" Line="116" Column="107" />
       <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\Settlement.cs" Line="17" Column="49" />
-      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\MilitaryUnit.cs" Line="137" Column="156" />
-      <File FileName="Assets\ForTheLoveOfPower\Scripts\UnitCell.cs" Line="37" Column="26" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\MilitaryUnit.cs" Line="157" Column="91" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\UnitCell.cs" Line="27" Column="1" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\AIPlayer.cs" Line="18" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -136,6 +136,26 @@ namespace AssemblyCSharp
 		{
 			return new MilitaryUnit() { UnitType = MilitaryUnitType.Dictator, IdleAnimation = (short)MilitaryUnitAnimationIndex.Dictator_Idle, UnitColor = unitColor };
 		}
+
+		public static MilitaryUnit CreateInfantry(Color unitColor)
+		{
+			return new MilitaryUnit () { UnitType = MilitaryUnitType.Infantry, IdleAnimation = (short)MilitaryUnitAnimationIndex.Infantry_Idle, 
+				MoveAnimation = (short)MilitaryUnitAnimationIndex.Infantry_Move, UnitColor = unitColor };
+		}
+
+		public static MilitaryUnit CreateTank(Color unitColor)
+		{
+			return new MilitaryUnit () { UnitType = MilitaryUnitType.Tank, IdleAnimation = (short)MilitaryUnitAnimationIndex.Tank_Idle, 
+				MoveAnimation = (short)MilitaryUnitAnimationIndex.Tank_Move, CombatAnimation = (short)MilitaryUnitAnimationIndex.Tank_Combat,
+				DeathAnimation = (short)MilitaryUnitAnimationIndex.Tank_Death, UnitColor = unitColor };
+		}
+
+		public static MilitaryUnit CreatePlane(Color unitColor)
+		{
+			return new MilitaryUnit () { UnitType = MilitaryUnitType.Jet, IdleAnimation = (short)MilitaryUnitAnimationIndex.Plane_Idle,
+				MoveAnimation = (short)MilitaryUnitAnimationIndex.Plane_Move, CombatAnimation = (short)MilitaryUnitAnimationIndex.Plane_Combat,
+				DeathAnimation = (short)MilitaryUnitAnimationIndex.Plane_Death, UnitColor = unitColor };
+		}
 	}
 }
 
