@@ -24,8 +24,11 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	float timer = 0f;
 	bool startChosen = false;
 
+	private List<Combat> listofCurrentCombats;
+
 	// Use this for initialization
 	void Start () {
+		listofCurrentCombats = new List<Combat> ();
 		playingPlayer = GameObject.Find ("playerOne").GetComponent<Player>();
 		aiPlayer = GameObject.Find ("playerTwoAI").GetComponent<AIPlayer> ();
 		structureSprites = Resources.LoadAll<Sprite> ("Sprites/Buildings");
@@ -47,7 +50,36 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			}
 		}
 
-		playingPlayer.milUnits.ForEach (unit => unit.Update (Grid, unitSprites));
+		listofCurrentCombats.ForEach (fight => {
+			fight.Update ();
+
+			if (fight.fightOver) {
+				listofCurrentCombats.Remove (fight);
+				fight = null;
+			}
+		});
+
+		playingPlayer.milUnits.ForEach (unit => {
+			unit.UpdateUnit(Grid, unitSprites, playingPlayer);
+			if (unit.GetUnitAmount () < 1) {
+				playingPlayer.milUnits.Remove (unit);
+				(Grid[unit.TilePoint] as UnitCell).RemoveUnit ();
+			} else if (unit.combatToUpdateGame != null) {
+				this.listofCurrentCombats.Add (unit.combatToUpdateGame);
+				unit.combatToUpdateGame = null;
+			}
+		});
+		
+		aiPlayer.milUnits.ForEach (unit => {
+			unit.UpdateUnit (Grid, unitSprites, aiPlayer);
+			if (unit.GetUnitAmount () < 1) {
+				aiPlayer.milUnits.Remove (unit);
+				(Grid[unit.TilePoint] as UnitCell).RemoveUnit ();
+			} else if (unit.combatToUpdateGame != null) {
+				this.listofCurrentCombats.Add (unit.combatToUpdateGame);
+				unit.combatToUpdateGame = null;
+			}
+		});
 
 		moneyText.text = String.Concat ("Money: ", playingPlayer.Cash); 
 
@@ -64,7 +96,28 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		clickedCell.HighlightOn = true;
 
 		//If there is a unit on this tile, or if we have previously chosen a unit
-		if (clickedCell.unitOnTile != null || startChosen) {
+		if (Input.GetMouseButtonDown (1)) {
+			//UnitCell clickedCell = Grid[clickedPoint] as UnitCell;
+			if( clickedCell.unitOnTile != null || startChosen) {
+				if (startChosen) {
+					endPoint = clickedPoint;
+					
+					path = GetGridPath ();
+					foreach (PointyHexPoint point in path) 
+						(Grid [point] as SpriteCell).HighlightOn = true;
+					prevClickedCell.unitOnTile.SetMovementPath (path.ToPointList ());
+					
+					//start the timer to make it dissapear and then reset the flag that tells
+					//us if we're trying to move something
+					timer = 0f;
+					startChosen = false;
+				} else if (!startChosen) {
+					startPoint = clickedPoint;
+					startChosen = true;
+				}
+			}
+		} else if (Input.GetMouseButtonDown (0)) {
+		/*if (clickedCell.unitOnTile != null || startChosen) {
 
 			//if we've previously chosen a unit
 			if (startChosen) {
@@ -87,12 +140,12 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			}
 
 
-		} else if (clickedCell.buildingOnTile != null) {
+		} */if (clickedCell.buildingOnTile != null) {
 			if (clickedCell.buildingOnTile.StructureType.Equals (StructureUnitType.Barracks)) {
 				if (clickedCell.unitOnTile != null) { //if someone's already here, just add to their count
 					clickedCell.unitOnTile.AddUnits (1);
 				} else { //create a unit here if not and of same type
-					MilitaryUnit infantryMan = CreateMilitaryUnit.CreateInfantry (playingPlayer.PlayerColor);
+					MilitaryUnit infantryMan = CreateMilitaryUnit.CreateInfantry (playingPlayer.PlayerColor, clickedPoint);
 					playingPlayer.milUnits.Add (infantryMan);
 					clickedCell.AddUnitToTile (infantryMan, unitSprites);
 				}
@@ -106,7 +159,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		} else {
 			//if the player has no units, then this is how we let them place the dictator
 			if (playingPlayer.milUnits.IsEmpty()) {
-				MilitaryUnit dictator = CreateMilitaryUnit.CreateDictator (playingPlayer.PlayerColor);
+				MilitaryUnit dictator = CreateMilitaryUnit.CreateDictator (playingPlayer.PlayerColor, clickedPoint);
 				playingPlayer.milUnits.Add (dictator);
 				clickedCell.AddUnitToTile (dictator, unitSprites);
 				clickedCell.HighlightOn = false;
@@ -122,6 +175,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 				clickedCell.HighlightOn = false;
 			}
+		}
 		}
 
 		/*if (startCell == null) {
