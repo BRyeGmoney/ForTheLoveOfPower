@@ -9,6 +9,8 @@ using AssemblyCSharp;
 
 public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
+	static public bool didWin;
+
 	PointyHexPoint startPoint;
 	UnitCell startCell;
 	UnitCell prevClickedCell;
@@ -39,6 +41,8 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	
 	// Update is called once per frame
 	void Update () {
+		CheckEndGame ();
+
 		Camera.main.orthographicSize -= Input.GetAxis ("Mouse ScrollWheel") * 200f;
 		Camera.main.orthographicSize = Mathf.Clamp (Camera.main.orthographicSize, 200, 1000);
 
@@ -64,6 +68,9 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			if (unit.GetUnitAmount () < 1) {
 				playingPlayer.milUnits.Remove (unit);
 				(Grid[unit.TilePoint] as UnitCell).RemoveUnit ();
+
+				if (unit.UnitType.Equals (MilitaryUnitType.Dictator))
+					playingPlayer.DictatorAlive = false;
 			} else if (unit.combatToUpdateGame != null) {
 				this.listofCurrentCombats.Add (unit.combatToUpdateGame);
 				unit.combatToUpdateGame = null;
@@ -75,6 +82,8 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			if (unit.GetUnitAmount () < 1) {
 				aiPlayer.milUnits.Remove (unit);
 				(Grid[unit.TilePoint] as UnitCell).RemoveUnit ();
+				if (unit.UnitType.Equals (MilitaryUnitType.Dictator))
+					aiPlayer.DictatorAlive = false;
 			} else if (unit.combatToUpdateGame != null) {
 				this.listofCurrentCombats.Add (unit.combatToUpdateGame);
 				unit.combatToUpdateGame = null;
@@ -85,6 +94,19 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 		//update our timer
 		timer += Time.deltaTime;
+	}
+
+	private void CheckEndGame ()
+	{
+		if (!playingPlayer.DictatorAlive || !aiPlayer.DictatorAlive) {
+
+			if (!playingPlayer.DictatorAlive)
+				GameGridBehaviour.didWin = false;
+			else
+				GameGridBehaviour.didWin = true;
+
+			Application.LoadLevel ("StatsScreen");
+		}
 	}
 
 	public void OnClick(PointyHexPoint clickedPoint)
@@ -117,97 +139,44 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 				}
 			}
 		} else if (Input.GetMouseButtonDown (0)) {
-		/*if (clickedCell.unitOnTile != null || startChosen) {
-
-			//if we've previously chosen a unit
-			if (startChosen) {
-				//this is the point he is moving to
-				endPoint = clickedPoint;
-
-				//get and draw the path
-				path = GetGridPath ();
-				foreach (PointyHexPoint point in path) 
-					(Grid [point] as SpriteCell).HighlightOn = true;
-				prevClickedCell.unitOnTile.SetMovementPath (path.ToPointList ());
-
-				//start the timer to make it dissapear and then reset the flag that tells
-				//us if we're trying to move something
-				timer = 0f;
-				startChosen = false;
-			} else if (!startChosen) {
-				startPoint = clickedPoint;
-				startChosen = true;
-			}
-
-
-		} */if (clickedCell.buildingOnTile != null) {
-			if (clickedCell.buildingOnTile.StructureType.Equals (StructureUnitType.Barracks)) {
-				if (clickedCell.unitOnTile != null) { //if someone's already here, just add to their count
-					clickedCell.unitOnTile.AddUnits (1);
-				} else { //create a unit here if not and of same type
-					MilitaryUnit infantryMan = CreateMilitaryUnit.CreateInfantry (playingPlayer.PlayerColor, clickedPoint);
-					playingPlayer.milUnits.Add (infantryMan);
-					clickedCell.AddUnitToTile (infantryMan, unitSprites);
+			if (clickedCell.buildingOnTile != null) {
+				if (clickedCell.buildingOnTile.StructureType.Equals (StructureUnitType.Barracks)) {
+					if (clickedCell.unitOnTile != null) { //if someone's already here, just add to their count
+						clickedCell.unitOnTile.AddUnits (1);
+					} else { //create a unit here if not and of same type
+						MilitaryUnit infantryMan = CreateMilitaryUnit.CreateInfantry (playingPlayer.PlayerColor, clickedPoint);
+						playingPlayer.milUnits.Add (infantryMan);
+						clickedCell.AddUnitToTile (infantryMan, unitSprites);
+					}
 				}
-			}
-		} else if (clickedCell.Color == playingPlayer.PlayerColor) {
-			StructureUnit newBuilding = CreateStructureUnit.CreateBarracks (playingPlayer.PlayerColor);
-			playingPlayer.structUnits.Add (newBuilding);
-			clickedCell.AddStructureToTile (newBuilding, structureSprites);
+			} else if (clickedCell.Color == playingPlayer.PlayerColor) {
+				StructureUnit newBuilding = CreateStructureUnit.CreateBarracks (playingPlayer.PlayerColor);
+				playingPlayer.structUnits.Add (newBuilding);
+				clickedCell.AddStructureToTile (newBuilding, structureSprites);
 
-			playingPlayer.AddToOwnedTiles (Grid, GetSurroundingTiles (clickedPoint));
-		} else {
-			//if the player has no units, then this is how we let them place the dictator
-			if (playingPlayer.milUnits.IsEmpty()) {
-				MilitaryUnit dictator = CreateMilitaryUnit.CreateDictator (playingPlayer.PlayerColor, clickedPoint);
-				playingPlayer.milUnits.Add (dictator);
-				clickedCell.AddUnitToTile (dictator, unitSprites);
-				clickedCell.HighlightOn = false;
-			} else { //else, bring up the bulding selection screen
-				Settlement newSettlement = CreateStructureUnit.CreateSettlement (playingPlayer.PlayerColor);
-				playingPlayer.structUnits.Add (newSettlement);
-				clickedCell.AddStructureToTile (newSettlement, structureSprites);
+				playingPlayer.AddToOwnedTiles (Grid, GetSurroundingTiles (clickedPoint));
+			} else {
+				//if the player has no units, then this is how we let them place the dictator
+				if (playingPlayer.milUnits.IsEmpty()) {
+					MilitaryUnit dictator = CreateMilitaryUnit.CreateDictator (playingPlayer.PlayerColor, clickedPoint);
+					playingPlayer.milUnits.Add (dictator);
+					clickedCell.AddUnitToTile (dictator, unitSprites);
+					clickedCell.HighlightOn = false;
+				} else { //else, bring up the bulding selection screen
+					Settlement newSettlement = CreateStructureUnit.CreateSettlement (playingPlayer.PlayerColor);
+					playingPlayer.structUnits.Add (newSettlement);
+					clickedCell.AddStructureToTile (newSettlement, structureSprites);
 
-				//playingPlayer.AddToOwnedTiles (Grid, clickedPoint);
-				playingPlayer.AddToOwnedTiles(Grid, GetSurroundingTiles(clickedPoint));
+					//playingPlayer.AddToOwnedTiles (Grid, clickedPoint);
+					playingPlayer.AddToOwnedTiles(Grid, GetSurroundingTiles(clickedPoint));
 
-				//Insert Build Menu here
+					//Insert Build Menu here
 
-				clickedCell.HighlightOn = false;
-			}
-		}
-		}
-
-		/*if (startCell == null) {
-			startPoint = clickedPoint;
-			startCell = Grid[startPoint] as UnitCell;
-			clickedCell.HighlightOn = true;
-
-			clickedCell.foreground = clickedCell.gameObject.AddComponent<SpriteRenderer>();
-			clickedCell.foreground.sprite = Resources.Load<Sprite>("Sprites/Units/Unit_Dictator");
-
-		} else if (clickedCell != (Grid [startPoint] as UnitCell)) {
-			if (path != null) {
-				foreach (PointyHexPoint point in path) {
 					clickedCell.HighlightOn = false;
 				}
 			}
-			(Grid [endPoint] as UnitCell).HighlightOn = false;
+		}
 
-			endPoint = clickedPoint;
-			(Grid [endPoint] as UnitCell).HighlightOn = true;
-
-			path = GetGridPath ();
-
-			foreach (PointyHexPoint point in path) {
-				(Grid [point] as SpriteCell).HighlightOn = true;
-			}
-		} else {
-			(Grid [startPoint] as UnitCell).HighlightOn = false;
-			(Grid [endPoint] as UnitCell).HighlightOn = false;
-		}*/
-		//Do something, such as
-		//(Grid[clickedPoint] as SpriteCell).HighlightOn = !(Grid[clickedPoint] as SpriteCell).HighlightOn;
 		prevClickedCell = clickedCell;
 	}
 

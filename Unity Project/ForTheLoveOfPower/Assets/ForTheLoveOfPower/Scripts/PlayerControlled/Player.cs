@@ -13,6 +13,8 @@ public class Player : MonoBehaviour {
 	public Color PlayerColor { get { return playerColor; } }
 	protected Color playerColor;
 
+	public Boolean DictatorAlive { get; set; }
+
 	private PointList<PointyHexPoint> ownedTiles;
 
 	// Use this for initialization
@@ -29,6 +31,7 @@ public class Player : MonoBehaviour {
 		structUnits = new List<AssemblyCSharp.StructureUnit> ();
 		
 		ownedTiles = new PointList<PointyHexPoint> ();
+		DictatorAlive = true;
 	}
 
 	public void AddToOwnedTiles(IGrid<PointyHexPoint> gameGrid, PointyHexPoint pointToAdd)
