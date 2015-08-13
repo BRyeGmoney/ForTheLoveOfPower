@@ -59,7 +59,13 @@ namespace AssemblyCSharp
 		}
 		private StructureUnitType structureType;
 
+		public Settlement owningSettlement { get; set; }
+
 		public StructureUnit ()
+		{
+		}
+
+		public void UpdateBuilding(Player owningPlayer)
 		{
 		}
 	}

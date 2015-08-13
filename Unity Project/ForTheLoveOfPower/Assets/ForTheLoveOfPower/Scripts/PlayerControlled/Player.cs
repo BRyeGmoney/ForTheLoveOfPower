@@ -7,7 +7,7 @@ using Gamelogic.Grids;
 public class Player : MonoBehaviour {
 
 	public List<AssemblyCSharp.MilitaryUnit> milUnits;
-	public List<AssemblyCSharp.StructureUnit> structUnits;
+	public List<AssemblyCSharp.Settlement> settlements;
 	public Int32 Cash { get; set; }
 
 	public Color PlayerColor { get { return playerColor; } }
@@ -28,7 +28,7 @@ public class Player : MonoBehaviour {
 	protected void InitBasePlayer()
 	{
 		milUnits = new List<AssemblyCSharp.MilitaryUnit> ();
-		structUnits = new List<AssemblyCSharp.StructureUnit> ();
+		settlements = new List<AssemblyCSharp.Settlement> ();
 		
 		ownedTiles = new PointList<PointyHexPoint> ();
 		DictatorAlive = true;

@@ -56,6 +56,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			}
 		}
 
+		//Update All the Fights Going On
 		listofCurrentCombats.ForEach (fight => {
 			fight.Update ();
 
@@ -65,6 +66,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			}
 		});
 
+		//Update All the player's units, post fight, in case anyone died, we can get rid of them now
 		playingPlayer.milUnits.ForEach (unit => {
 			unit.UpdateUnit(Grid, unitSprites, playingPlayer);
 			if (unit.GetUnitAmount () < 1) {
@@ -78,7 +80,8 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 				unit.combatToUpdateGame = null;
 			}
 		});
-		
+
+		//Update all the second player's units, post fight, in case anyone died
 		aiPlayer.milUnits.ForEach (unit => {
 			unit.UpdateUnit (Grid, unitSprites, aiPlayer);
 			if (unit.GetUnitAmount () < 1) {
@@ -92,6 +95,17 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			}
 		});
 
+		//Update All of the player's settlements, in case enemy units have died on something being taken over
+		playingPlayer.settlements.ForEach (settle => {
+			settle.UpdateBuildingList(playingPlayer);
+		});
+
+		//Update All of the second player's settlements, in case one of our units has died on something being taken over
+		aiPlayer.settlements.ForEach (settle => {
+			settle.UpdateBuildingList (aiPlayer);
+		});
+
+		//Display the player's money
 		moneyText.text = String.Concat ("Money: ", playingPlayer.Cash); 
 
 		//update our timer
@@ -155,11 +169,6 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 				PointyHexTileGridBuilder me = this.GetComponent<PointyHexTileGridBuilder>();
 				me.enabled = false;
 				SetupBuildMenu (false);
-				//StructureUnit newBuilding = CreateStructureUnit.CreateBarracks (playingPlayer.PlayerColor);
-				//playingPlayer.structUnits.Add (newBuilding);
-				//clickedCell.AddStructureToTile (newBuilding, structureSprites);
-
-				//playingPlayer.AddToOwnedTiles (Grid, GetSurroundingTiles (clickedPoint));
 			} else {
 				//if the player has no units, then this is how we let them place the dictator
 				if (playingPlayer.milUnits.IsEmpty()) {
@@ -194,15 +203,53 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	{
 		if (e.toBuild != null)
 		{
-			StructureUnit buildingBuilt = CreateStructureUnit.CreateFromType (e.toBuild, playingPlayer.PlayerColor);
-			playingPlayer.structUnits.Add (buildingBuilt);
-			prevClickedCell.AddStructureToTile (buildingBuilt, structureSprites);
-			playingPlayer.AddToOwnedTiles(Grid, GetSurroundingTiles(prevClickedPoint));
+			StructureUnit buildingBuilt;
+
+			if (e.IsSettlement) {
+				buildingBuilt = CreateStructureUnit.CreateSettlement(playingPlayer.PlayerColor);
+				playingPlayer.settlements.Add (buildingBuilt as Settlement);
+			} else {
+				buildingBuilt = CreateStructureUnit.CreateFromType (e.toBuild, playingPlayer.PlayerColor);
+				Settlement owningSettlement = FindOwningSettlement (prevClickedPoint, playingPlayer.PlayerColor);
+
+				if (owningSettlement != null)
+					owningSettlement.cachedBuildingList.Add (buildingBuilt);
+				else
+					buildingBuilt = null;
+			}
+
+			if (buildingBuilt != null) {
+				prevClickedCell.AddStructureToTile (buildingBuilt, structureSprites);
+				playingPlayer.AddToOwnedTiles(Grid, GetSurroundingTiles(prevClickedPoint));
+			}
 		}
 
 		PointyHexTileGridBuilder me = this.GetComponent<PointyHexTileGridBuilder>();
 		me.enabled = true;
+		buildScreen.GetComponent<BuildMenuBehaviour> ().structChosen -= HandlestructChosen;
 		buildScreen.SetActive (false);
+	}
+
+	/// <summary>
+	/// We need to know which settlement a building belongs to. and since buildings HAVE to be connected by
+	/// atleast a single other building, and from inception be told what their owning settlement is, we can
+	/// pull the data from any neighbor of the same colour and not just a settlement
+	/// </summary>
+	/// <param name="pointToSearchFrom">Point to search from.</param>
+	/// <param name="owningPlayerColor">Owning player color.</param>
+	private Settlement FindOwningSettlement(PointyHexPoint pointToSearchFrom, Color owningPlayerColor)
+	{
+		foreach (PointyHexPoint point in GetSurroundingTiles (pointToSearchFrom)) {
+			UnitCell currCell = (Grid[point] as UnitCell);
+			if (currCell.buildingOnTile != null && currCell.buildingOnTile.StructColor.Equals (owningPlayerColor)) {
+				if (currCell.buildingOnTile.StructureType.Equals (StructureUnitType.Settlement))
+				    return currCell.buildingOnTile as Settlement;
+				else
+					return currCell.buildingOnTile.owningSettlement;
+			}
+		}
+
+		return null;
 	}
 
 	public IEnumerable<PointyHexPoint> GetGridPath()

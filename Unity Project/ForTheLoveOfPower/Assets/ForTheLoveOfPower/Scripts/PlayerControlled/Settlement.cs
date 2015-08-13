@@ -8,20 +8,43 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System;
+using UnityEngine;
 using System.Collections.Generic;
 
 namespace AssemblyCSharp
 {
 	public class Settlement : StructureUnit
 	{
+		public Boolean RefreshCachedBuildings { get; set; }
+
 		public List<StructureUnit> cachedBuildingList;
+		public float updateTimer;
 
 		public Settlement ()
 		{
+			cachedBuildingList = new List<StructureUnit> ();
 		}
 
-		public void UpdateBuildingList()
+		public void UpdateBuildingList(Player owningPlayer)
 		{
+			if (RefreshCachedBuildings)
+				RefreshBuildingsOwned ();
+
+			if (updateTimer > 10f) {
+				cachedBuildingList.ForEach (build => {
+					if (build.StructureType.Equals (StructureUnitType.Factory))
+						owningPlayer.Cash += 200;
+				});
+
+
+				updateTimer = 0f;
+			}
+
+			updateTimer += Time.deltaTime;
+		}
+
+		public void RefreshBuildingsOwned() {
+
 		}
 	}
 }
