@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\ForTheLoveOfPower\Scripts\Combat.cs" />
      <Compile Include="Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs" />
+     <Compile Include="Assets\ForTheLoveOfPower\Scripts\MenuScripts\BuildMenuBehaviour.cs" />
      <Compile Include="Assets\ForTheLoveOfPower\Scripts\MenuScripts\MenuBehaviour.cs" />
      <Compile Include="Assets\ForTheLoveOfPower\Scripts\MenuScripts\StatsBehaviour.cs" />
      <Compile Include="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\AIPlayer.cs" />

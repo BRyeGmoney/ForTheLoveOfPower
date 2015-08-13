@@ -8,20 +8,22 @@ using Gamelogic.Grids;
 using AssemblyCSharp;
 
 public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
-
 	static public bool didWin;
 
 	PointyHexPoint startPoint;
 	UnitCell startCell;
 	UnitCell prevClickedCell;
+	PointyHexPoint prevClickedPoint;
 	PointyHexPoint endPoint;
 	IEnumerable<PointyHexPoint> path;
 	Sprite[] structureSprites;
 	Sprite[] unitSprites;
 
+
 	Player playingPlayer;
 	AIPlayer aiPlayer;
 	public Text moneyText;
+	public GameObject buildScreen;
 
 	float timer = 0f;
 	bool startChosen = false;
@@ -150,11 +152,14 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 					}
 				}
 			} else if (clickedCell.Color == playingPlayer.PlayerColor) {
-				StructureUnit newBuilding = CreateStructureUnit.CreateBarracks (playingPlayer.PlayerColor);
-				playingPlayer.structUnits.Add (newBuilding);
-				clickedCell.AddStructureToTile (newBuilding, structureSprites);
+				PointyHexTileGridBuilder me = this.GetComponent<PointyHexTileGridBuilder>();
+				me.enabled = false;
+				SetupBuildMenu (false);
+				//StructureUnit newBuilding = CreateStructureUnit.CreateBarracks (playingPlayer.PlayerColor);
+				//playingPlayer.structUnits.Add (newBuilding);
+				//clickedCell.AddStructureToTile (newBuilding, structureSprites);
 
-				playingPlayer.AddToOwnedTiles (Grid, GetSurroundingTiles (clickedPoint));
+				//playingPlayer.AddToOwnedTiles (Grid, GetSurroundingTiles (clickedPoint));
 			} else {
 				//if the player has no units, then this is how we let them place the dictator
 				if (playingPlayer.milUnits.IsEmpty()) {
@@ -163,21 +168,41 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 					clickedCell.AddUnitToTile (dictator, unitSprites);
 					clickedCell.HighlightOn = false;
 				} else { //else, bring up the bulding selection screen
-					Settlement newSettlement = CreateStructureUnit.CreateSettlement (playingPlayer.PlayerColor);
-					playingPlayer.structUnits.Add (newSettlement);
-					clickedCell.AddStructureToTile (newSettlement, structureSprites);
-
-					//playingPlayer.AddToOwnedTiles (Grid, clickedPoint);
-					playingPlayer.AddToOwnedTiles(Grid, GetSurroundingTiles(clickedPoint));
-
-					//Insert Build Menu here
+					PointyHexTileGridBuilder me = this.GetComponent<PointyHexTileGridBuilder>();
+					me.enabled = false;
+					SetupBuildMenu (true);
 
 					clickedCell.HighlightOn = false;
 				}
 			}
 		}
 
+		prevClickedPoint = clickedPoint;
 		prevClickedCell = clickedCell;
+	}
+
+	private void SetupBuildMenu(bool isSettlementMenu)
+	{
+		BuildMenuBehaviour buildScreenSettings = buildScreen.GetComponent<BuildMenuBehaviour> ();
+		buildScreenSettings.structChosen += HandlestructChosen;
+		buildScreenSettings.BgColor = playingPlayer.PlayerColor;
+		buildScreenSettings.DoSettlementMenu(isSettlementMenu);
+		buildScreen.SetActive (true);
+	}
+
+	void HandlestructChosen (object sender, BuildingChosenArgs e)
+	{
+		if (e.toBuild != null)
+		{
+			StructureUnit buildingBuilt = CreateStructureUnit.CreateFromType (e.toBuild, playingPlayer.PlayerColor);
+			playingPlayer.structUnits.Add (buildingBuilt);
+			prevClickedCell.AddStructureToTile (buildingBuilt, structureSprites);
+			playingPlayer.AddToOwnedTiles(Grid, GetSurroundingTiles(prevClickedPoint));
+		}
+
+		PointyHexTileGridBuilder me = this.GetComponent<PointyHexTileGridBuilder>();
+		me.enabled = true;
+		buildScreen.SetActive (false);
 	}
 
 	public IEnumerable<PointyHexPoint> GetGridPath()

@@ -66,6 +66,32 @@ namespace AssemblyCSharp
 
 	public static class CreateStructureUnit
 	{
+		public static StructureUnit CreateFromType(StructureUnitType structType, Color structColor)
+		{
+			if (structType.Equals (StructureUnitType.Settlement))
+				return CreateSettlement (structColor);
+			else if (structType.Equals (StructureUnitType.Factory))
+				return CreateFactory (structColor);
+			else if (structType.Equals (StructureUnitType.Exporter))
+				return CreateExporter (structColor);
+			else if (structType.Equals (StructureUnitType.Market))
+				return CreateMarket (structColor);
+			else if (structType.Equals (StructureUnitType.Barracks))
+				return CreateBarracks (structColor);
+			else if (structType.Equals (StructureUnitType.TankDepot))
+				return CreateTankDepot (structColor);
+			else if (structType.Equals (StructureUnitType.Airport))
+				return CreateAirport (structColor);
+			else if (structType.Equals (StructureUnitType.Contractor))
+				return CreateContractor (structColor);
+			else if (structType.Equals (StructureUnitType.LabourCamp))
+				return CreateLabourCamp (structColor);
+			else if (structType.Equals (StructureUnitType.Propaganda))
+				return CreatePropaganda (structColor);
+			else
+				return null;
+		}
+
 		public static Settlement CreateSettlement(Color structColor)
 		{
 			return new Settlement () { StructureType = StructureUnitType.Settlement, StructureSpriteIndex = (short)StructureAnimationIndex.Settlement, StructColor = structColor };
