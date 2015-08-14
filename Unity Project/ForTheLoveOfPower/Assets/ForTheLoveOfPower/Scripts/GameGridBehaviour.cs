@@ -135,8 +135,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 		//If there is a unit on this tile, or if we have previously chosen a unit
 		if (Input.GetMouseButtonDown (1)) {
-			//UnitCell clickedCell = Grid[clickedPoint] as UnitCell;
-			if( clickedCell.unitOnTile != null || startChosen) {
+			if(clickedCell.unitOnTile != null || startChosen) {
 				if (startChosen) {
 					endPoint = clickedPoint;
 					
@@ -203,24 +202,28 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	{
 		if (e.toBuild != null)
 		{
-			StructureUnit buildingBuilt;
+			StructureUnit buildingBuilt = null;
+			Settlement ownSettlement = null;
+			PointList<PointyHexPoint> surroundingTiles = GetSurroundingTiles(prevClickedPoint);
 
 			if (e.IsSettlement) {
-				buildingBuilt = CreateStructureUnit.CreateSettlement(playingPlayer.PlayerColor);
-				playingPlayer.settlements.Add (buildingBuilt as Settlement);
+				buildingBuilt = CreateStructureUnit.CreateSettlement(prevClickedPoint, playingPlayer.PlayerColor);
+				ownSettlement = buildingBuilt as Settlement;
+				playingPlayer.settlements.Add (ownSettlement);
 			} else {
-				buildingBuilt = CreateStructureUnit.CreateFromType (e.toBuild, playingPlayer.PlayerColor);
-				Settlement owningSettlement = FindOwningSettlement (prevClickedPoint, playingPlayer.PlayerColor);
+				ownSettlement = FindOwningSettlement (prevClickedPoint, surroundingTiles, playingPlayer.PlayerColor);
 
-				if (owningSettlement != null)
-					owningSettlement.cachedBuildingList.Add (buildingBuilt);
-				else
-					buildingBuilt = null;
+				if (ownSettlement != null)
+				{
+					buildingBuilt = CreateStructureUnit.CreateFromType (e.toBuild, prevClickedPoint, playingPlayer.PlayerColor);
+					buildingBuilt.OwningSettlement = ownSettlement;
+					ownSettlement.cachedBuildingList.Add (buildingBuilt);
+				}
 			}
 
 			if (buildingBuilt != null) {
 				prevClickedCell.AddStructureToTile (buildingBuilt, structureSprites);
-				playingPlayer.AddToOwnedTiles(Grid, GetSurroundingTiles(prevClickedPoint));
+				playingPlayer.AddToOwnedTiles(Grid, ownSettlement, aiPlayer, surroundingTiles);
 			}
 		}
 
@@ -228,6 +231,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		me.enabled = true;
 		buildScreen.GetComponent<BuildMenuBehaviour> ().structChosen -= HandlestructChosen;
 		buildScreen.SetActive (false);
+		prevClickedCell.HighlightOn = false;
 	}
 
 	/// <summary>
@@ -237,15 +241,15 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	/// </summary>
 	/// <param name="pointToSearchFrom">Point to search from.</param>
 	/// <param name="owningPlayerColor">Owning player color.</param>
-	private Settlement FindOwningSettlement(PointyHexPoint pointToSearchFrom, Color owningPlayerColor)
+	private Settlement FindOwningSettlement(PointyHexPoint pointToSearchFrom, PointList<PointyHexPoint> surroundingTiles, Color owningPlayerColor)
 	{
-		foreach (PointyHexPoint point in GetSurroundingTiles (pointToSearchFrom)) {
+		foreach (PointyHexPoint point in surroundingTiles) {
 			UnitCell currCell = (Grid[point] as UnitCell);
 			if (currCell.buildingOnTile != null && currCell.buildingOnTile.StructColor.Equals (owningPlayerColor)) {
 				if (currCell.buildingOnTile.StructureType.Equals (StructureUnitType.Settlement))
 				    return currCell.buildingOnTile as Settlement;
 				else
-					return currCell.buildingOnTile.owningSettlement;
+					return currCell.buildingOnTile.OwningSettlement;
 			}
 		}
 

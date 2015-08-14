@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System;
+using Gamelogic.Grids;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -18,11 +19,16 @@ namespace AssemblyCSharp
 		public Boolean RefreshCachedBuildings { get; set; }
 
 		public List<StructureUnit> cachedBuildingList;
+		public PointList<PointyHexPoint> tilesOwned;
 		public float updateTimer;
+
+		public float costOfUnitsInTown = 1.0f;
+		public int numEconUnitsProducedInTown = 10;
 
 		public Settlement ()
 		{
 			cachedBuildingList = new List<StructureUnit> ();
+			tilesOwned = new PointList<PointyHexPoint> ();
 		}
 
 		public void UpdateBuildingList(Player owningPlayer)
@@ -36,6 +42,7 @@ namespace AssemblyCSharp
 						owningPlayer.Cash += 200;
 				});
 
+				owningPlayer.Cash += 200;
 
 				updateTimer = 0f;
 			}

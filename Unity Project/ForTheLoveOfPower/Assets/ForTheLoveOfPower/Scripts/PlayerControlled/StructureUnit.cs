@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 using System;
 using UnityEngine;
+using Gamelogic.Grids;
 
 namespace AssemblyCSharp
 {
@@ -51,6 +52,7 @@ namespace AssemblyCSharp
 		//Properties
 		public Int16 StructureSpriteIndex { get; set; }
 		public Color StructColor { get; set; }
+		public PointyHexPoint pointOnMap { get; set; }
 
 		public StructureUnitType StructureType
 		{
@@ -59,7 +61,7 @@ namespace AssemblyCSharp
 		}
 		private StructureUnitType structureType;
 
-		public Settlement owningSettlement { get; set; }
+		public Settlement OwningSettlement { get; set; }
 
 		public StructureUnit ()
 		{
@@ -72,80 +74,80 @@ namespace AssemblyCSharp
 
 	public static class CreateStructureUnit
 	{
-		public static StructureUnit CreateFromType(StructureUnitType structType, Color structColor)
+		public static StructureUnit CreateFromType(StructureUnitType structType, PointyHexPoint pointOnGrid, Color structColor)
 		{
 			if (structType.Equals (StructureUnitType.Settlement))
-				return CreateSettlement (structColor);
+				return CreateSettlement (pointOnGrid, structColor);
 			else if (structType.Equals (StructureUnitType.Factory))
-				return CreateFactory (structColor);
+				return CreateFactory (pointOnGrid, structColor);
 			else if (structType.Equals (StructureUnitType.Exporter))
-				return CreateExporter (structColor);
+				return CreateExporter (pointOnGrid, structColor);
 			else if (structType.Equals (StructureUnitType.Market))
-				return CreateMarket (structColor);
+				return CreateMarket (pointOnGrid, structColor);
 			else if (structType.Equals (StructureUnitType.Barracks))
-				return CreateBarracks (structColor);
+				return CreateBarracks (pointOnGrid, structColor);
 			else if (structType.Equals (StructureUnitType.TankDepot))
-				return CreateTankDepot (structColor);
+				return CreateTankDepot (pointOnGrid, structColor);
 			else if (structType.Equals (StructureUnitType.Airport))
-				return CreateAirport (structColor);
+				return CreateAirport (pointOnGrid, structColor);
 			else if (structType.Equals (StructureUnitType.Contractor))
-				return CreateContractor (structColor);
+				return CreateContractor (pointOnGrid, structColor);
 			else if (structType.Equals (StructureUnitType.LabourCamp))
-				return CreateLabourCamp (structColor);
+				return CreateLabourCamp (pointOnGrid, structColor);
 			else if (structType.Equals (StructureUnitType.Propaganda))
-				return CreatePropaganda (structColor);
+				return CreatePropaganda (pointOnGrid, structColor);
 			else
 				return null;
 		}
 
-		public static Settlement CreateSettlement(Color structColor)
+		public static Settlement CreateSettlement(PointyHexPoint pointOnGrid, Color structColor)
 		{
-			return new Settlement () { StructureType = StructureUnitType.Settlement, StructureSpriteIndex = (short)StructureAnimationIndex.Settlement, StructColor = structColor };
+			return new Settlement () { StructureType = StructureUnitType.Settlement, StructureSpriteIndex = (short)StructureAnimationIndex.Settlement, StructColor = structColor, pointOnMap = pointOnGrid };
 		}
 
-		public static StructureUnit CreateFactory(Color structColor)
+		public static StructureUnit CreateFactory(PointyHexPoint pointOnGrid, Color structColor)
 		{
-			return new StructureUnit () { StructureType = StructureUnitType.Factory, StructureSpriteIndex = (short)StructureAnimationIndex.Factory, StructColor = structColor };
+			return new StructureUnit () { StructureType = StructureUnitType.Factory, StructureSpriteIndex = (short)StructureAnimationIndex.Factory, StructColor = structColor, pointOnMap = pointOnGrid };
 		}
 
-		public static StructureUnit CreateExporter(Color structColor)
+		public static StructureUnit CreateExporter(PointyHexPoint pointOnGrid, Color structColor)
 		{
-			return new StructureUnit () { StructureType = StructureUnitType.Exporter, StructureSpriteIndex = (short)StructureAnimationIndex.Exporter, StructColor = structColor };
+			return new StructureUnit () { StructureType = StructureUnitType.Exporter, StructureSpriteIndex = (short)StructureAnimationIndex.Exporter, StructColor = structColor, pointOnMap = pointOnGrid };
 		}
 
-		public static StructureUnit CreateMarket(Color structColor)
+		public static StructureUnit CreateMarket(PointyHexPoint pointOnGrid, Color structColor)
 		{
-			return new StructureUnit () { StructureType = StructureUnitType.Market, StructureSpriteIndex = (short)StructureAnimationIndex.Market, StructColor = structColor };
+			return new StructureUnit () { StructureType = StructureUnitType.Market, StructureSpriteIndex = (short)StructureAnimationIndex.Market, StructColor = structColor, pointOnMap = pointOnGrid };
 		}
 
-		public static StructureUnit CreateContractor(Color structColor)
+		public static StructureUnit CreateContractor(PointyHexPoint pointOnGrid, Color structColor)
 		{
-			return new StructureUnit () { StructureType = StructureUnitType.Contractor, StructureSpriteIndex = (short)StructureAnimationIndex.Contractor, StructColor = structColor };
+			return new StructureUnit () { StructureType = StructureUnitType.Contractor, StructureSpriteIndex = (short)StructureAnimationIndex.Contractor, StructColor = structColor, pointOnMap = pointOnGrid };
 		}
 
-		public static StructureUnit CreateLabourCamp(Color structColor)
+		public static StructureUnit CreateLabourCamp(PointyHexPoint pointOnGrid, Color structColor)
 		{
-			return new StructureUnit () { StructureType = StructureUnitType.LabourCamp, StructureSpriteIndex = (short)StructureAnimationIndex.LabourCamp, StructColor = structColor };
+			return new StructureUnit () { StructureType = StructureUnitType.LabourCamp, StructureSpriteIndex = (short)StructureAnimationIndex.LabourCamp, StructColor = structColor, pointOnMap = pointOnGrid };
 		}
 
-		public static StructureUnit CreatePropaganda(Color structColor)
+		public static StructureUnit CreatePropaganda(PointyHexPoint pointOnGrid, Color structColor)
 		{
-			return new StructureUnit () { StructureType = StructureUnitType.Propaganda, StructureSpriteIndex = (short)StructureAnimationIndex.Propaganda, StructColor = structColor };
+			return new StructureUnit () { StructureType = StructureUnitType.Propaganda, StructureSpriteIndex = (short)StructureAnimationIndex.Propaganda, StructColor = structColor, pointOnMap = pointOnGrid };
 		}
 
-		public static StructureUnit CreateBarracks(Color structColor)
+		public static StructureUnit CreateBarracks(PointyHexPoint pointOnGrid, Color structColor)
 		{
-			return new StructureUnit () { StructureType = StructureUnitType.Barracks, StructureSpriteIndex = (short)StructureAnimationIndex.Barracks, StructColor = structColor };
+			return new StructureUnit () { StructureType = StructureUnitType.Barracks, StructureSpriteIndex = (short)StructureAnimationIndex.Barracks, StructColor = structColor, pointOnMap = pointOnGrid };
 		}
 
-		public static StructureUnit CreateTankDepot(Color structColor)
+		public static StructureUnit CreateTankDepot(PointyHexPoint pointOnGrid, Color structColor)
 		{
-			return new StructureUnit () { StructureType = StructureUnitType.TankDepot, StructureSpriteIndex = (short)StructureAnimationIndex.TankDepot, StructColor = structColor };
+			return new StructureUnit () { StructureType = StructureUnitType.TankDepot, StructureSpriteIndex = (short)StructureAnimationIndex.TankDepot, StructColor = structColor, pointOnMap = pointOnGrid };
 		}
 
-		public static StructureUnit CreateAirport(Color structColor)
+		public static StructureUnit CreateAirport(PointyHexPoint pointOnGrid, Color structColor)
 		{
-			return new StructureUnit () { StructureType = StructureUnitType.Airport, StructureSpriteIndex = (short)StructureAnimationIndex.Airport, StructColor = structColor };
+			return new StructureUnit () { StructureType = StructureUnitType.Airport, StructureSpriteIndex = (short)StructureAnimationIndex.Airport, StructColor = structColor, pointOnMap = pointOnGrid };
 		}
 	}
 }
