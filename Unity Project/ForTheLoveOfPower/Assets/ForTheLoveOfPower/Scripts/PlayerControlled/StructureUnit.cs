@@ -15,6 +15,7 @@ namespace AssemblyCSharp
 {
 	public enum StructureUnitType
 	{
+		None,
 		Settlement,
 		TownHall,
 		CityHall,

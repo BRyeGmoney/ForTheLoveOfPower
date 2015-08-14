@@ -193,23 +193,25 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	{
 		BuildMenuBehaviour buildScreenSettings = buildScreen.GetComponent<BuildMenuBehaviour> ();
 		buildScreenSettings.structChosen += HandlestructChosen;
-		buildScreenSettings.BgColor = playingPlayer.PlayerColor;
+		buildScreenSettings.SetBGColor(playingPlayer.PlayerColor);
 		buildScreenSettings.DoSettlementMenu(isSettlementMenu);
 		buildScreen.SetActive (true);
 	}
 
 	void HandlestructChosen (object sender, BuildingChosenArgs e)
 	{
-		if (e.toBuild != null)
+		if (!e.toBuild.Equals (StructureUnitType.None))
 		{
 			StructureUnit buildingBuilt = null;
 			Settlement ownSettlement = null;
 			PointList<PointyHexPoint> surroundingTiles = GetSurroundingTiles(prevClickedPoint);
 
 			if (e.IsSettlement) {
-				buildingBuilt = CreateStructureUnit.CreateSettlement(prevClickedPoint, playingPlayer.PlayerColor);
-				ownSettlement = buildingBuilt as Settlement;
-				playingPlayer.settlements.Add (ownSettlement);
+				if (!IsBuildingInArea(prevClickedPoint, surroundingTiles, playingPlayer.PlayerColor)) {
+					buildingBuilt = CreateStructureUnit.CreateSettlement(prevClickedPoint, playingPlayer.PlayerColor);
+					ownSettlement = buildingBuilt as Settlement;
+					playingPlayer.settlements.Add (ownSettlement);
+				}
 			} else {
 				ownSettlement = FindOwningSettlement (prevClickedPoint, surroundingTiles, playingPlayer.PlayerColor);
 
@@ -254,6 +256,18 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		}
 
 		return null;
+	}
+
+	private bool IsBuildingInArea(PointyHexPoint pointToSearchFrom, PointList<PointyHexPoint> surroundingTiles, Color owningPlayerColor)
+	{
+		foreach (PointyHexPoint point in surroundingTiles) {
+			UnitCell currCell = (Grid[point] as UnitCell);
+
+			if (currCell.buildingOnTile != null)
+				return true;
+		}
+
+		return false;
 	}
 
 	public IEnumerable<PointyHexPoint> GetGridPath()
