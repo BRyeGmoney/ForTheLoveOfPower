@@ -10,6 +10,7 @@ public class UnitCell : SpriteCell {
 	public bool isStart;
 	public AssemblyCSharp.MilitaryUnit unitOnTile;
 	public AssemblyCSharp.StructureUnit buildingOnTile;
+	public Color prevTileColor;
 
 	private Sprite holdingSprite;
 
@@ -24,6 +25,7 @@ public class UnitCell : SpriteCell {
 
 		foreground.sprite = unitSprites[unitOnTile.IdleAnimation];
 		foreground.color = unitOnTile.UnitColor;
+		SetTileColor (unitOnTile.UnitColor);
 	}
 
 	public void AddStructureToTile(AssemblyCSharp.StructureUnit structToDisplay, Sprite[] structSprites)
@@ -38,6 +40,7 @@ public class UnitCell : SpriteCell {
 
 	public void SetTileColor(Color tileColor)
 	{
+		prevTileColor = this.Color;
 		this.Color = tileColor;
 	}
 
@@ -47,10 +50,14 @@ public class UnitCell : SpriteCell {
 		if (foreground != null)
 			foreground.sprite = null;
 
-		if (buildingOnTile != null)
-		{
+		if (buildingOnTile != null) {
 			foreground.sprite = holdingSprite;
 			foreground.color = buildingOnTile.StructColor;
+		} else {
+			if (prevTileColor != null) 
+				SetTileColor (prevTileColor);
+			else
+				SetTileColor (Color.white);
 		}
 	}
 }

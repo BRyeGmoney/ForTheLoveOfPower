@@ -22,7 +22,7 @@ public class Player : MonoBehaviour {
 		InitBasePlayer ();
 
 		//temp player color
-		playerColor = new Color (0, 255, 255);
+		playerColor = new Color32 (0, 255, 255, 255);
 	}
 
 	protected void InitBasePlayer()

@@ -1,14 +1,17 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\ForTheLoveOfPower\Scripts\UnitCell.cs">
     <Files>
-      <File FileName="Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs" Line="203" Column="8" />
-      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\Player.cs" Line="1" Column="1" />
-      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\StructureUnit.cs" Line="31" Column="12" />
-      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\Settlement.cs" Line="1" Column="1" />
-      <File FileName="Assets\ForTheLoveOfPower\Scripts\UnitCell.cs" Line="1" Column="1" />
-      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\AIPlayer.cs" Line="1" Column="1" />
-      <File FileName="Assets\ForTheLoveOfPower\Scripts\MenuScripts\BuildMenuBehaviour.cs" Line="27" Column="96" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs" Line="138" Column="8" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\CameraBehaviour.cs" Line="32" Column="3" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\Player.cs" Line="15" Column="2" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\StructureUnit.cs" Line="1" Column="1" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\Settlement.cs" Line="18" Column="3" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\UnitCell.cs" Line="50" Column="26" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\AIPlayer.cs" Line="13" Column="48" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\MenuScripts\BuildMenuBehaviour.cs" Line="1" Column="1" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\MilitaryUnit.cs" Line="169" Column="3" />
+      <File FileName="Assets\Gamelogic\Plugins\Grids\Grids\AbstractUniformGrid.cs" Line="75" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

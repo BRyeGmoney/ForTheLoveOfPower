@@ -45,8 +45,8 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	void Update () {
 		CheckEndGame ();
 
-		Camera.main.orthographicSize -= Input.GetAxis ("Mouse ScrollWheel") * 200f;
-		Camera.main.orthographicSize = Mathf.Clamp (Camera.main.orthographicSize, 200, 1000);
+		/*Camera.main.orthographicSize -= Input.GetAxis ("Mouse ScrollWheel") * 200f;
+		Camera.main.orthographicSize = Mathf.Clamp (Camera.main.orthographicSize, 200, 1000);*/
 
 		if (timer > 1f) {
 			if (path != null) {
@@ -135,7 +135,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 		//If there is a unit on this tile, or if we have previously chosen a unit
 		if (Input.GetMouseButtonDown (1)) {
-			if(clickedCell.unitOnTile != null || startChosen) {
+			if((clickedCell.unitOnTile != null && playingPlayer.milUnits.Contains (clickedCell.unitOnTile)) || startChosen) {
 				if (startChosen) {
 					endPoint = clickedPoint;
 					

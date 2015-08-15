@@ -10,7 +10,7 @@ public class AIPlayer : Player {
 	// Use this for initialization
 	void Start () {
 		InitBasePlayer ();
-		playerColor = new Color (50, 205, 50);
+		playerColor = new Color32 (50, 205, 50, 255);
 	}
 
 	//Create the basic setup for ai player
