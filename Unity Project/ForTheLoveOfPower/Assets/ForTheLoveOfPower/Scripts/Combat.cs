@@ -3,9 +3,6 @@ using System.Collections;
 using AssemblyCSharp;
 
 public class Combat {
-
-	private Random combatHitPointGenerator;
-
 	private float combatTimer;
 	private int attackerHitPoints = 0;
 	private int defenderHitPoints = 0;
@@ -22,7 +19,6 @@ public class Combat {
 
 	// Use this for initialization
 	void Start () {
-		combatHitPointGenerator = new Random ();
 	}
 
 	public void Setup(MilitaryUnit attacker, MilitaryUnit defender)

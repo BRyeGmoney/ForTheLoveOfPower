@@ -54,10 +54,10 @@ public class UnitCell : SpriteCell {
 			foreground.sprite = holdingSprite;
 			foreground.color = buildingOnTile.StructColor;
 		} else {
-			if (prevTileColor != null) 
+			if (!prevTileColor.Equals (Color.black)) 
 				SetTileColor (prevTileColor);
 			else
-				SetTileColor (Color.white);
+				SetTileColor (new Color32(83, 199, 175, 255));
 		}
 	}
 }
