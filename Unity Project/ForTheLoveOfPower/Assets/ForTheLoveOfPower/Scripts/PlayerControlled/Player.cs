@@ -84,7 +84,7 @@ public class Player : MonoBehaviour {
 		});
 
 		pointsToRemove.ToList<PointyHexPoint>().ForEach (point => {
-			(gameGrid[point] as UnitCell).SetTileColor (Color.white);
+			(gameGrid[point] as UnitCell).SetTileColor (new Color32(83, 199, 175, 255));
 		});
 
 		return pointsToAdd.Except (pointsToRemove).ToPointList<PointyHexPoint>();
