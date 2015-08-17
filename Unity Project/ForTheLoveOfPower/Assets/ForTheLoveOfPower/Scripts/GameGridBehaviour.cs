@@ -38,6 +38,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		unitSprites = Resources.LoadAll<Sprite> ("Sprites/Units");
 
 		aiPlayer.CreateBasePlayer (unitSprites, structureSprites, Grid);
+		moneyText.color = playingPlayer.PlayerColor;
 	}
 	
 	// Update is called once per frame

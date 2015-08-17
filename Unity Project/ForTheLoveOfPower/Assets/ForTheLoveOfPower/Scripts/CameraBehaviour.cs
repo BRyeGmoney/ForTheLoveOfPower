@@ -9,7 +9,6 @@ public class CameraBehaviour : MonoBehaviour {
 
 	//pinch
 	public int speed = 4;
-	public Camera selectedCamera;
 	public float MINSCALE = 2.0F;
 	public float MAXSCALE = 5.0F;
 	public float minPinchSpeed = 5.0F;
@@ -42,13 +41,13 @@ public class CameraBehaviour : MonoBehaviour {
 			if ((touchDelta + varianceInDistances <= 1) && (speedTouch0 > minPinchSpeed) && (speedTouch1 > minPinchSpeed))
 			{
 				
-				selectedCamera.fieldOfView = Mathf.Clamp(selectedCamera.fieldOfView + (1 * speed),15,90);
+				Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView + (1 * speed),15,90);
 			}
 			
 			if ((touchDelta +varianceInDistances > 1) && (speedTouch0 > minPinchSpeed) && (speedTouch1 > minPinchSpeed))
 			{
 				
-				selectedCamera.fieldOfView = Mathf.Clamp(selectedCamera.fieldOfView - (1 * speed),15,90);
+				Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView - (1 * speed),15,90);
 			}
 
 			Camera.main.transform.position = Vector3.Lerp (Camera.main.transform.position, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y)), 5 * Time.deltaTime);
