@@ -42,8 +42,10 @@ namespace AssemblyCSharp
 
 			if (updateTimer > 10f) {
 				cachedBuildingList.ForEach (build => {
-					if (build.StructureType.Equals (StructureUnitType.Factory))
+					if (build.StructureType.Equals (StructureUnitType.Factory)) {
 						owningPlayer.Cash += 200;
+						build.AnimationController.SetTrigger ("modifierAnim");
+					}
 				});
 
 				owningPlayer.Cash += 200;

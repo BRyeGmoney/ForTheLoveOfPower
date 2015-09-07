@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using Gamelogic;
@@ -18,8 +19,9 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	PointyHexTileGridBuilder me;
 	BuildMenuBehaviour buildScreenSettings;
 	
-	Player playingPlayer;
-	AIPlayer aiPlayer;
+	//Player playingPlayer;
+	//AIPlayer aiPlayer;
+	public Player[] listOfPlayers;
 	public Text moneyText;
 	public GameObject buildScreen;
 	public GameObject[] unitTypes;
@@ -33,14 +35,17 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	// Use this for initialization
 	void Start () {
 		listofCurrentCombats = new List<Combat> ();
-		playingPlayer = GameObject.Find ("playerOne").GetComponent<Player>();
-		aiPlayer = GameObject.Find ("playerTwoAI").GetComponent<AIPlayer> ();
+		//playingPlayer = gameObject.Find ("playerOne").GetComponent<Player>();
+		//aiPlayer = gameObject.Find ("playerTwoAI").GetComponent<AIPlayer> ();
 
 		me = gameObject.GetComponent<PointyHexTileGridBuilder> ();
 		buildScreenSettings = buildScreen.GetComponent<BuildMenuBehaviour> ();
 
-		//aiPlayer.CreateBasePlayer (unitSprites, structureSprites, Grid);
-		moneyText.color = playingPlayer.PlayerColor;
+		//Create ai player's beginnings
+		CreateNewMilitaryUnit (listOfPlayers[1], (int)MilitaryUnitType.Dictator, Grid [new PointyHexPoint (-3, 17)] as UnitCell, new PointyHexPoint (-3, 17));
+		CreateNewSettlement (listOfPlayers[1], Grid [new PointyHexPoint (-3, 18)] as UnitCell, new PointyHexPoint (-3, 18), GetSurroundingTiles (new PointyHexPoint(-3, 18)));
+		CreateNewMilitaryUnit (listOfPlayers[1], (int)MilitaryUnitType.Infantry, Grid [new PointyHexPoint (-4, 17)] as UnitCell, new PointyHexPoint (-4, 17)); 
+		moneyText.color = listOfPlayers[0].PlayerColor;
 	}
 	
 	// Update is called once per frame
@@ -66,15 +71,11 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		});
 
 		//Update All the player's units, post fight, in case anyone died, we can get rid of them now
-		playingPlayer.milUnits.ForEach (unit => {
-			unit.UpdateUnit(Grid, playingPlayer);
+		listOfPlayers[0].milUnits.ForEach (unit => {
+			unit.UpdateUnit(Grid, listOfPlayers);
 
 			if (unit.GetUnitAmount () < 1) {
-				playingPlayer.milUnits.Remove (unit);
-				(Grid[unit.TilePoint] as UnitCell).RemoveUnit ();
-
-				if (unit.UnitType.Equals (MilitaryUnitType.Dictator))
-					playingPlayer.DictatorAlive = false;
+				StartCoroutine (DestroyUnitAfterAnimation(unit, listOfPlayers[0]));
 			} else if (unit.combatToUpdateGame != null) {
 				this.listofCurrentCombats.Add (unit.combatToUpdateGame);
 				unit.combatToUpdateGame = null;
@@ -82,41 +83,52 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		});
 
 		//Update all the second player's units, post fight, in case anyone died
-		aiPlayer.milUnits.ForEach (unit => {
-			/*unit.UpdateUnit (Grid, unitSprites, aiPlayer);
+		listOfPlayers[1].milUnits.ForEach (unit => {
+			unit.UpdateUnit (Grid, listOfPlayers);
+
 			if (unit.GetUnitAmount () < 1) {
-				aiPlayer.milUnits.Remove (unit);
-				(Grid[unit.TilePoint] as UnitCell).RemoveUnit ();
-				if (unit.UnitType.Equals (MilitaryUnitType.Dictator))
-					aiPlayer.DictatorAlive = false;
+				StartCoroutine (DestroyUnitAfterAnimation (unit, listOfPlayers[1]));
 			} else if (unit.combatToUpdateGame != null) {
 				this.listofCurrentCombats.Add (unit.combatToUpdateGame);
 				unit.combatToUpdateGame = null;
-			}*/
+			}
 		});
 
 		//Update All of the player's settlements, in case enemy units have died on something being taken over
-		playingPlayer.settlements.ForEach (settle => {
-			settle.UpdateBuildingList(playingPlayer);
+		listOfPlayers[0].settlements.ForEach (settle => {
+			settle.UpdateBuildingList(listOfPlayers[0]);
 		});
 
 		//Update All of the second player's settlements, in case one of our units has died on something being taken over
-		aiPlayer.settlements.ForEach (settle => {
-			settle.UpdateBuildingList (aiPlayer);
+		listOfPlayers[0].settlements.ForEach (settle => {
+			settle.UpdateBuildingList (listOfPlayers[1]);
 		});
 
 		//Display the player's money
-		moneyText.text = String.Concat ("Money: ", playingPlayer.Cash); 
+		moneyText.text = String.Concat ("Money: ", listOfPlayers[0].Cash); 
 
 		//update our timer
 		timer += Time.deltaTime;
 	}
 
+	private IEnumerator DestroyUnitAfterAnimation(MilitaryUnit unit, Player playerUnitBelongsTo) 
+	{
+		playerUnitBelongsTo.milUnits.Remove (unit);
+		(Grid[unit.TilePoint] as UnitCell).RemoveUnit ();
+
+		yield return new WaitForSeconds(unit.GetUnitAnimationTime());
+				
+		if (unit.UnitType.Equals (MilitaryUnitType.Dictator))
+			listOfPlayers[1].DictatorAlive = false;
+				
+		Destroy (unit.gameObject);
+	}
+
 	private void CheckEndGame ()
 	{
-		if (!playingPlayer.DictatorAlive || !aiPlayer.DictatorAlive) {
+		if (!listOfPlayers[0].DictatorAlive || !listOfPlayers[1].DictatorAlive) {
 
-			if (!playingPlayer.DictatorAlive)
+			if (!listOfPlayers[0].DictatorAlive)
 				GameGridBehaviour.didWin = false;
 			else
 				GameGridBehaviour.didWin = true;
@@ -139,7 +151,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 				MilitaryUnit unitOnTile;
 
 				if (startChosen) {
-					unitOnTile = playingPlayer.milUnits.Find (unit => unit.TilePoint.Equals (prevClickedPoint));
+					unitOnTile = listOfPlayers[0].milUnits.Find (unit => unit.TilePoint.Equals (prevClickedPoint));
 					endPoint = clickedPoint;
 					
 					path = GetGridPath ();
@@ -152,7 +164,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 					timer = 0f;
 					startChosen = false;
 				} else if (!startChosen) {
-					if (playingPlayer.milUnits.Exists (unit => unit.TilePoint.Equals(clickedPoint))) {
+					if (listOfPlayers[0].milUnits.Exists (unit => unit.TilePoint.Equals(clickedPoint))) {
 						startPoint = clickedPoint;
 						startChosen = true;
 					}
@@ -165,25 +177,25 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 				if (clickedCell.structureOnTile.tag.Equals ("Military")) {
 					//if there's already a unit on this tile, we should just add to it
 					if (clickedCell.unitOnTile) {
-						MilitaryUnit unitOnTile = playingPlayer.milUnits.Find (unit => unit.TilePoint.Equals (clickedPoint));
+						MilitaryUnit unitOnTile = listOfPlayers[0].milUnits.Find (unit => unit.TilePoint.Equals (clickedPoint));
 
 						if (unitOnTile != null)
 							unitOnTile.AddUnits (1);
 					} else if (clickedCell.structureOnTile.StructureType.Equals (StructureUnitType.Barracks)) {
-						CreateNewMilitaryUnit (playingPlayer, (int)MilitaryUnitType.Infantry, clickedCell, clickedPoint);
+						CreateNewMilitaryUnit (listOfPlayers[0], (int)MilitaryUnitType.Infantry, clickedCell, clickedPoint);
 					} else if (clickedCell.structureOnTile.StructureType.Equals (StructureUnitType.TankDepot)) {
-						CreateNewMilitaryUnit (playingPlayer, (int)MilitaryUnitType.Tank, clickedCell, clickedPoint);
+						CreateNewMilitaryUnit (listOfPlayers[0], (int)MilitaryUnitType.Tank, clickedCell, clickedPoint);
 					} else {
-						CreateNewMilitaryUnit (playingPlayer, (int)MilitaryUnitType.Jet, clickedCell, clickedPoint);
+						CreateNewMilitaryUnit (listOfPlayers[0], (int)MilitaryUnitType.Jet, clickedCell, clickedPoint);
 					}
 				}
-			} else if (clickedCell.Color == playingPlayer.PlayerColor) {
+			} else if (clickedCell.Color == listOfPlayers[0].PlayerColor) {
 				me.enabled = false;
 				SetupBuildMenu (false);
 			} else {
 				//if the player has no units, then this is how we let them place the dictator
-				if (playingPlayer.milUnits.IsEmpty()) {
-					CreateNewMilitaryUnit (playingPlayer, (int)MilitaryUnitType.Dictator, clickedCell, clickedPoint);
+				if (listOfPlayers[0].milUnits.IsEmpty()) {
+					CreateNewMilitaryUnit (listOfPlayers[0], (int)MilitaryUnitType.Dictator, clickedCell, clickedPoint);
 				} else { //else, bring up the bulding selection screen
 					me.enabled = false;
 					SetupBuildMenu (true);
@@ -199,7 +211,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	private void SetupBuildMenu(bool isSettlementMenu)
 	{
 		buildScreenSettings.structChosen += HandlestructChosen;
-		buildScreenSettings.SetBGColor(playingPlayer.PlayerColor);
+		buildScreenSettings.SetBGColor(listOfPlayers[0].PlayerColor);
 		buildScreenSettings.DoSettlementMenu(isSettlementMenu);
 		buildScreen.SetActive (true);
 	}
@@ -211,13 +223,13 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			PointList<PointyHexPoint> surroundingTiles = GetSurroundingTiles(prevClickedPoint);
 
 			if (e.IsSettlement) {
-				if (!IsBuildingInArea (prevClickedPoint, surroundingTiles, playingPlayer.PlayerColor))
-					CreateNewSettlement (playingPlayer, prevClickedCell, prevClickedPoint, surroundingTiles);
+				if (!IsBuildingInArea (prevClickedPoint, surroundingTiles, listOfPlayers[0].PlayerColor))
+					CreateNewSettlement (listOfPlayers[0], prevClickedCell, prevClickedPoint, surroundingTiles);
 			} else {
-				Settlement owningSettlement = FindOwningSettlement (prevClickedPoint, surroundingTiles, playingPlayer.PlayerColor);
+				Settlement owningSettlement = FindOwningSettlement (prevClickedPoint, surroundingTiles, listOfPlayers[0].PlayerColor);
 
 				if (owningSettlement != null) {
-					CreateNewStructure(playingPlayer, (int)e.toBuild, prevClickedCell, prevClickedPoint, surroundingTiles, owningSettlement);
+					CreateNewStructure(listOfPlayers[0], (int)e.toBuild, prevClickedCell, prevClickedPoint, surroundingTiles, owningSettlement);
 				}
 			}
 		}
@@ -241,7 +253,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		Settlement newSettlement = Instantiate (structureTypes [(int)StructureUnitType.Settlement], gridCell.transform.position, Quaternion.identity).GetComponent<Settlement> ();
 		newSettlement.Initialize (player.PlayerColor, StructureUnitType.Settlement, gridPoint);
 		player.settlements.Add (newSettlement);
-		player.AddToOwnedTiles (Grid, newSettlement, aiPlayer, surroundingTiles);
+		player.AddToOwnedTiles (Grid, newSettlement, listOfPlayers[1], surroundingTiles);
 		gridCell.AddStructureToTile (newSettlement);
 	}
 
@@ -250,7 +262,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		StructureUnit newStructure = Instantiate (structureTypes [structType], gridCell.transform.position, Quaternion.identity).GetComponent<StructureUnit> ();
 		newStructure.Initialize (player.PlayerColor, (StructureUnitType)structType, gridPoint, owningSettlement);
 		owningSettlement.cachedBuildingList.Add (newStructure);
-		player.AddToOwnedTiles (Grid, owningSettlement, aiPlayer, surroundingTiles);
+		player.AddToOwnedTiles (Grid, owningSettlement, listOfPlayers[1], surroundingTiles);
 
 		gridCell.AddStructureToTile (newStructure);
 	}

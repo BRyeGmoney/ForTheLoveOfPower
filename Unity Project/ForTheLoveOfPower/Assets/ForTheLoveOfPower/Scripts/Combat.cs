@@ -25,18 +25,25 @@ public class Combat {
 	{
 		Attacker = attacker;
 		Defender = defender;
+
+		attacker.AnimationController.SetTrigger ("inCombat");
+		defender.AnimationController.SetTrigger ("inCombat");
 	}
 	
 	// Update is called once per frame
 	public void Update () {
 		if (Attacker != null && Defender != null) { //first lets make sure they exist
 			if (Attacker.GetUnitAmount () > 0 && Defender.GetUnitAmount () < 1) { //attacker wins!
+				Defender.StartDeathAnimation ();
+				Attacker.StopCombatAnimation ();
 				fightOver = true;
 			} else if (Defender.GetUnitAmount () > 0 && Attacker.GetUnitAmount () < 1) { //defender wins!
+				Attacker.StartDeathAnimation ();
+				Defender.StopCombatAnimation ();
 				fightOver = true;
 			}
 
-			if (!fightOver) {
+			if (!fightOver && combatTimer > 2f) {
 				//Collect attacker hit points
 				attackerHitPoints += Random.Range (0, 5);
 				defenderHitPoints += Random.Range (0, 5);

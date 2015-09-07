@@ -43,7 +43,11 @@ namespace AssemblyCSharp
 
 		public Settlement OwningSettlement { get; set; }
 
-
+		public Animator AnimationController 
+		{
+			get { return animator; }
+		}
+		private Animator animator;
 
 		public StructureUnit ()
 		{
@@ -55,6 +59,7 @@ namespace AssemblyCSharp
 			StructureType = structType;
 			pointOnMap = gridPoint;
 			gameObject.GetComponent<SpriteRenderer> ().color = StructColor;
+			animator = gameObject.GetComponent<Animator> ();
 		}
 
 		public void Initialize(Color structColor, StructureUnitType structType, PointyHexPoint gridPoint, Settlement owningSettlement)

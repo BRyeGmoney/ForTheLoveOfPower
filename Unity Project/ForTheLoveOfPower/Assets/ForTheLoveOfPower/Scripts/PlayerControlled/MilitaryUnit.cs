@@ -69,6 +69,10 @@ namespace AssemblyCSharp
 
 		public Combat combatToUpdateGame;
 
+		public Animator AnimationController 
+		{
+			get { return animator; }
+		}
 		private Animator animator;
 
 
@@ -83,6 +87,7 @@ namespace AssemblyCSharp
 			UnitType = uType;
 			gameObject.GetComponent<SpriteRenderer> ().color = UnitColor;
 			animator = gameObject.GetComponent<Animator> ();
+
 			GetMoveTimeLimitByType ();
 		}
 
@@ -101,7 +106,7 @@ namespace AssemblyCSharp
 		/// </summary>
 		/// <param name="grid">The playing Grid</param>
 		/// <param name="unitSprites">An array of pre-loaded sprites</param>
-		public void MoveNextMoveInPath(IGrid<PointyHexPoint> grid)
+		public void MoveNextMoveInPath(IGrid<PointyHexPoint> grid, Player[] listOfPlayers)
 		{
 			UnitCell newCell;
 
@@ -118,25 +123,50 @@ namespace AssemblyCSharp
 						TilePoint = movementPath[0];
 
 						if (movementPath.Count <= 1)
-							animator.SetBool ("isMoving", false);
+							StartMovingAnimation(false);
 					} else {
-						MilitaryUnit unitOnTile = new MilitaryUnit();//(grid[movementPath[1]] as UnitCell).unitOnTile;
+						//Stop the moving animation because we're going to be fighting now
+						StartMovingAnimation (false);
 
-						/*if (!unitOnTile.UnitColor.Equals (this.UnitColor)) {
-							combatToUpdateGame = new Combat();
-							combatToUpdateGame.Setup (this, unitOnTile);
-						}*/
+						MilitaryUnit unitOnTile;
+
+						if (newCell.Color.Equals (UnitColor)) { //if it is the same player's units
+
+						} else { //then it must be the other players'
+							unitOnTile = listOfPlayers[1].milUnits.Find(unit => unit.TilePoint.Equals(movementPath[1]));
+
+							if (unitOnTile != null) {
+								combatToUpdateGame = new Combat();
+								combatToUpdateGame.Setup (this, unitOnTile);
+							}
+						}
 						movementPath.Clear ();
 					}
 				}
 			}
 		}
 
+		void StartMovingAnimation(bool move) {
+			animator.SetBool ("isMoving", move);
+		}
+
+		public void StartCombatAnimation() {
+			animator.SetTrigger ("inCombat");
+		}
+
+		public void StopCombatAnimation() {
+			animator.SetTrigger ("wonCombat");
+		}
+
+		public void StartDeathAnimation() {
+			animator.SetTrigger ("isKilled");
+		}
+
 		public void SetMovementPath(PointList<PointyHexPoint> newPath)
 		{
 			movementPath = newPath;
 			if (movementPath.Count > 0)
-				animator.SetBool ("isMoving", true);
+				StartMovingAnimation (true);
 		}
 
 		public void AddUnits(int amountToAdd)
@@ -165,13 +195,13 @@ namespace AssemblyCSharp
 			subordinates.AddRange (unitsToCommand);
 		}
 
-		public void UpdateUnit(IGrid<PointyHexPoint> grid, Player playerInChargeOfUnit)
+		public void UpdateUnit(IGrid<PointyHexPoint> grid, Player[] listOfPlayers)
 		{
 			if (unitAmount <= 0) {
-				playerInChargeOfUnit.milUnits.Remove (this);
+				listOfPlayers[0].milUnits.Remove (this);
 			} else { //if he's still alive then lets update him
 				if (moveTime > MoveTimeLimit) {
-					MoveNextMoveInPath (grid);
+					MoveNextMoveInPath (grid, listOfPlayers);
 					moveTime = 0f;
 				}
 
@@ -188,6 +218,18 @@ namespace AssemblyCSharp
 				MoveTimeLimit = 1.25f;
 			else
 				MoveTimeLimit = 1f;
+		}
+
+		public float GetUnitAnimationTime()
+		{
+			if (UnitType.Equals (MilitaryUnitType.Infantry))
+				return 0.7272727f;
+			else if (UnitType.Equals (MilitaryUnitType.Tank))
+				return 0.625f;
+			else if (UnitType.Equals (MilitaryUnitType.Jet))
+				return 0.7857143f;
+			else
+				return 0.5f;
 		}
 	}
 
