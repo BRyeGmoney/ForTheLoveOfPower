@@ -18,6 +18,10 @@ namespace AssemblyCSharp
 	{
 		public Boolean RefreshCachedBuildings { get; set; }
 
+		public Sprite townHall;
+		public Sprite cityHall;
+		public Sprite capital;
+
 		public List<StructureUnit> cachedBuildingList;
 		public PointList<PointyHexPoint> tilesOwned;
 		public float updateTimer;

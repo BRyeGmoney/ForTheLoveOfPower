@@ -15,43 +15,22 @@ namespace AssemblyCSharp
 {
 	public enum StructureUnitType
 	{
-		None,
 		Settlement,
-		TownHall,
-		CityHall,
-		Capitol,
-		Exporter,
 		Factory,
+		Exporter,
 		Market,
+		Barracks,
+		TankDepot,
+		Airport,
 		Contractor,
 		LabourCamp,
 		Propaganda,
-		Airport,
-		Barracks,
-		TankDepot
+		None,
 	}
 
-	public enum StructureAnimationIndex
-	{
-		Capitol = 0,
-		CityHall = 1,
-		Settlement = 2,
-		TownHall = 3,
-		Exporter = 4,
-		Factory = 5,
-		Market = 6,
-		Contractor = 7,
-		LabourCamp = 8,
-		Propaganda = 9,
-		Airport = 10,
-		Barracks = 11,
-		TankDepot = 12,
-	}
-
-	public class StructureUnit
+	public class StructureUnit : MonoBehaviour
 	{
 		//Properties
-		public Int16 StructureSpriteIndex { get; set; }
 		public Color StructColor { get; set; }
 		public PointyHexPoint pointOnMap { get; set; }
 
@@ -64,8 +43,24 @@ namespace AssemblyCSharp
 
 		public Settlement OwningSettlement { get; set; }
 
+
+
 		public StructureUnit ()
 		{
+		}
+
+		public void Initialize(Color structColor, StructureUnitType structType, PointyHexPoint gridPoint)
+		{
+			StructColor = structColor;
+			StructureType = structType;
+			pointOnMap = gridPoint;
+			gameObject.GetComponent<SpriteRenderer> ().color = StructColor;
+		}
+
+		public void Initialize(Color structColor, StructureUnitType structType, PointyHexPoint gridPoint, Settlement owningSettlement)
+		{
+			Initialize (structColor, structType, gridPoint);
+			OwningSettlement = owningSettlement;
 		}
 
 		public void UpdateBuilding(Player owningPlayer)
@@ -77,8 +72,8 @@ namespace AssemblyCSharp
 	{
 		public static StructureUnit CreateFromType(StructureUnitType structType, PointyHexPoint pointOnGrid, Color structColor)
 		{
-			if (structType.Equals (StructureUnitType.Settlement))
-				return CreateSettlement (pointOnGrid, structColor);
+			/*if (structType.Equals (StructureUnitType.Settlement))
+				return null;// CreateSettlement (pointOnGrid, structColor);
 			else if (structType.Equals (StructureUnitType.Factory))
 				return CreateFactory (pointOnGrid, structColor);
 			else if (structType.Equals (StructureUnitType.Exporter))
@@ -97,13 +92,13 @@ namespace AssemblyCSharp
 				return CreateLabourCamp (pointOnGrid, structColor);
 			else if (structType.Equals (StructureUnitType.Propaganda))
 				return CreatePropaganda (pointOnGrid, structColor);
-			else
+			else*/
 				return null;
 		}
 
-		public static Settlement CreateSettlement(PointyHexPoint pointOnGrid, Color structColor)
+		/*public static Settlement CreateSettlement(PointyHexPoint pointOnGrid, Color structColor)
 		{
-			return new Settlement () { StructureType = StructureUnitType.Settlement, StructureSpriteIndex = (short)StructureAnimationIndex.Settlement, StructColor = structColor, pointOnMap = pointOnGrid };
+			return null;//new Settlement () { StructureType = StructureUnitType.Settlement, StructureSpriteIndex = (short)StructureAnimationIndex.Settlement, StructColor = structColor, pointOnMap = pointOnGrid };
 		}
 
 		public static StructureUnit CreateFactory(PointyHexPoint pointOnGrid, Color structColor)
@@ -149,7 +144,7 @@ namespace AssemblyCSharp
 		public static StructureUnit CreateAirport(PointyHexPoint pointOnGrid, Color structColor)
 		{
 			return new StructureUnit () { StructureType = StructureUnitType.Airport, StructureSpriteIndex = (short)StructureAnimationIndex.Airport, StructColor = structColor, pointOnMap = pointOnGrid };
-		}
+		}*/
 	}
 }
 

@@ -25,12 +25,18 @@ public class Player : MonoBehaviour {
 		playerColor = new Color32 (0, 255, 255, 255);
 	}
 
-	protected void InitBasePlayer()
+	/*protected void InitBasePlayer()
 	{
 		milUnits = new List<AssemblyCSharp.MilitaryUnit> ();
 		settlements = new List<AssemblyCSharp.Settlement> ();
 		
 		//ownedTiles = new PointList<PointyHexPoint> ();
+		DictatorAlive = true;
+	}*/
+	protected void InitBasePlayer()
+	{
+		milUnits = new List<AssemblyCSharp.MilitaryUnit> ();
+		settlements = new List<AssemblyCSharp.Settlement> ();
 		DictatorAlive = true;
 	}
 

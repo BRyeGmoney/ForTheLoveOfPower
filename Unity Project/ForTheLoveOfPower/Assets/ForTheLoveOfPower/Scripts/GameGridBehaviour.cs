@@ -15,14 +15,15 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	PointyHexPoint prevClickedPoint;
 	PointyHexPoint endPoint;
 	IEnumerable<PointyHexPoint> path;
-	Sprite[] structureSprites;
-	Sprite[] unitSprites;
-
-
+	PointyHexTileGridBuilder me;
+	BuildMenuBehaviour buildScreenSettings;
+	
 	Player playingPlayer;
 	AIPlayer aiPlayer;
 	public Text moneyText;
 	public GameObject buildScreen;
+	public GameObject[] unitTypes;
+	public GameObject[] structureTypes;
 
 	float timer = 0f;
 	bool startChosen = false;
@@ -34,19 +35,17 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		listofCurrentCombats = new List<Combat> ();
 		playingPlayer = GameObject.Find ("playerOne").GetComponent<Player>();
 		aiPlayer = GameObject.Find ("playerTwoAI").GetComponent<AIPlayer> ();
-		structureSprites = Resources.LoadAll<Sprite> ("Sprites/Buildings");
-		unitSprites = Resources.LoadAll<Sprite> ("Sprites/Units");
 
-		aiPlayer.CreateBasePlayer (unitSprites, structureSprites, Grid);
+		me = gameObject.GetComponent<PointyHexTileGridBuilder> ();
+		buildScreenSettings = buildScreen.GetComponent<BuildMenuBehaviour> ();
+
+		//aiPlayer.CreateBasePlayer (unitSprites, structureSprites, Grid);
 		moneyText.color = playingPlayer.PlayerColor;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		CheckEndGame ();
-
-		/*Camera.main.orthographicSize -= Input.GetAxis ("Mouse ScrollWheel") * 200f;
-		Camera.main.orthographicSize = Mathf.Clamp (Camera.main.orthographicSize, 200, 1000);*/
 
 		if (timer > 1f) {
 			if (path != null) {
@@ -68,7 +67,8 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 		//Update All the player's units, post fight, in case anyone died, we can get rid of them now
 		playingPlayer.milUnits.ForEach (unit => {
-			unit.UpdateUnit(Grid, unitSprites, playingPlayer);
+			unit.UpdateUnit(Grid, playingPlayer);
+
 			if (unit.GetUnitAmount () < 1) {
 				playingPlayer.milUnits.Remove (unit);
 				(Grid[unit.TilePoint] as UnitCell).RemoveUnit ();
@@ -83,7 +83,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 		//Update all the second player's units, post fight, in case anyone died
 		aiPlayer.milUnits.ForEach (unit => {
-			unit.UpdateUnit (Grid, unitSprites, aiPlayer);
+			/*unit.UpdateUnit (Grid, unitSprites, aiPlayer);
 			if (unit.GetUnitAmount () < 1) {
 				aiPlayer.milUnits.Remove (unit);
 				(Grid[unit.TilePoint] as UnitCell).RemoveUnit ();
@@ -92,7 +92,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			} else if (unit.combatToUpdateGame != null) {
 				this.listofCurrentCombats.Add (unit.combatToUpdateGame);
 				unit.combatToUpdateGame = null;
-			}
+			}*/
 		});
 
 		//Update All of the player's settlements, in case enemy units have died on something being taken over
@@ -135,53 +135,60 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 		//If there is a unit on this tile, or if we have previously chosen a unit
 		if (Input.GetMouseButtonDown (1)) {
-			if((clickedCell.unitOnTile != null && playingPlayer.milUnits.Contains (clickedCell.unitOnTile)) || startChosen) {
+			if((clickedCell.unitOnTile) || startChosen) {
+				MilitaryUnit unitOnTile;
+
 				if (startChosen) {
+					unitOnTile = playingPlayer.milUnits.Find (unit => unit.TilePoint.Equals (prevClickedPoint));
 					endPoint = clickedPoint;
 					
 					path = GetGridPath ();
 					foreach (PointyHexPoint point in path) 
 						(Grid [point] as SpriteCell).HighlightOn = true;
-					prevClickedCell.unitOnTile.SetMovementPath (path.ToPointList ());
+					unitOnTile.SetMovementPath (path.ToPointList ());
 					
 					//start the timer to make it dissapear and then reset the flag that tells
 					//us if we're trying to move something
 					timer = 0f;
 					startChosen = false;
 				} else if (!startChosen) {
-					startPoint = clickedPoint;
-					startChosen = true;
+					if (playingPlayer.milUnits.Exists (unit => unit.TilePoint.Equals(clickedPoint))) {
+						startPoint = clickedPoint;
+						startChosen = true;
+					}
 				}
 			}
 		} else if (Input.GetMouseButtonDown (0)) {
-			if (clickedCell.buildingOnTile != null) {
-				if (clickedCell.buildingOnTile.StructureType.Equals (StructureUnitType.Barracks)) {
-					if (clickedCell.unitOnTile != null) { //if someone's already here, just add to their count
-						clickedCell.unitOnTile.AddUnits (1);
-					} else { //create a unit here if not and of same type
-						MilitaryUnit infantryMan = CreateMilitaryUnit.CreateInfantry (playingPlayer.PlayerColor, clickedPoint);
-						playingPlayer.milUnits.Add (infantryMan);
-						clickedCell.AddUnitToTile (infantryMan, unitSprites);
+			//if there's a building on this tile
+			if (clickedCell.buildingOnTile) {
+				//if it is of the military variety
+				if (clickedCell.structureOnTile.tag.Equals ("Military")) {
+					//if there's already a unit on this tile, we should just add to it
+					if (clickedCell.unitOnTile) {
+						MilitaryUnit unitOnTile = playingPlayer.milUnits.Find (unit => unit.TilePoint.Equals (clickedPoint));
+
+						if (unitOnTile != null)
+							unitOnTile.AddUnits (1);
+					} else if (clickedCell.structureOnTile.StructureType.Equals (StructureUnitType.Barracks)) {
+						CreateNewMilitaryUnit (playingPlayer, (int)MilitaryUnitType.Infantry, clickedCell, clickedPoint);
+					} else if (clickedCell.structureOnTile.StructureType.Equals (StructureUnitType.TankDepot)) {
+						CreateNewMilitaryUnit (playingPlayer, (int)MilitaryUnitType.Tank, clickedCell, clickedPoint);
+					} else {
+						CreateNewMilitaryUnit (playingPlayer, (int)MilitaryUnitType.Jet, clickedCell, clickedPoint);
 					}
 				}
 			} else if (clickedCell.Color == playingPlayer.PlayerColor) {
-				PointyHexTileGridBuilder me = this.GetComponent<PointyHexTileGridBuilder>();
 				me.enabled = false;
 				SetupBuildMenu (false);
 			} else {
 				//if the player has no units, then this is how we let them place the dictator
 				if (playingPlayer.milUnits.IsEmpty()) {
-					MilitaryUnit dictator = CreateMilitaryUnit.CreateDictator (playingPlayer.PlayerColor, clickedPoint);
-					playingPlayer.milUnits.Add (dictator);
-					clickedCell.AddUnitToTile (dictator, unitSprites);
-					clickedCell.HighlightOn = false;
+					CreateNewMilitaryUnit (playingPlayer, (int)MilitaryUnitType.Dictator, clickedCell, clickedPoint);
 				} else { //else, bring up the bulding selection screen
-					PointyHexTileGridBuilder me = this.GetComponent<PointyHexTileGridBuilder>();
 					me.enabled = false;
 					SetupBuildMenu (true);
-
-					clickedCell.HighlightOn = false;
 				}
+				clickedCell.HighlightOn = false;
 			}
 		}
 
@@ -191,7 +198,6 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 	private void SetupBuildMenu(bool isSettlementMenu)
 	{
-		BuildMenuBehaviour buildScreenSettings = buildScreen.GetComponent<BuildMenuBehaviour> ();
 		buildScreenSettings.structChosen += HandlestructChosen;
 		buildScreenSettings.SetBGColor(playingPlayer.PlayerColor);
 		buildScreenSettings.DoSettlementMenu(isSettlementMenu);
@@ -202,38 +208,51 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	{
 		if (!e.toBuild.Equals (StructureUnitType.None))
 		{
-			StructureUnit buildingBuilt = null;
-			Settlement ownSettlement = null;
 			PointList<PointyHexPoint> surroundingTiles = GetSurroundingTiles(prevClickedPoint);
 
 			if (e.IsSettlement) {
-				if (!IsBuildingInArea(prevClickedPoint, surroundingTiles, playingPlayer.PlayerColor)) {
-					buildingBuilt = CreateStructureUnit.CreateSettlement(prevClickedPoint, playingPlayer.PlayerColor);
-					ownSettlement = buildingBuilt as Settlement;
-					playingPlayer.settlements.Add (ownSettlement);
-				}
+				if (!IsBuildingInArea (prevClickedPoint, surroundingTiles, playingPlayer.PlayerColor))
+					CreateNewSettlement (playingPlayer, prevClickedCell, prevClickedPoint, surroundingTiles);
 			} else {
-				ownSettlement = FindOwningSettlement (prevClickedPoint, surroundingTiles, playingPlayer.PlayerColor);
+				Settlement owningSettlement = FindOwningSettlement (prevClickedPoint, surroundingTiles, playingPlayer.PlayerColor);
 
-				if (ownSettlement != null)
-				{
-					buildingBuilt = CreateStructureUnit.CreateFromType (e.toBuild, prevClickedPoint, playingPlayer.PlayerColor);
-					buildingBuilt.OwningSettlement = ownSettlement;
-					ownSettlement.cachedBuildingList.Add (buildingBuilt);
+				if (owningSettlement != null) {
+					CreateNewStructure(playingPlayer, (int)e.toBuild, prevClickedCell, prevClickedPoint, surroundingTiles, owningSettlement);
 				}
-			}
-
-			if (buildingBuilt != null) {
-				prevClickedCell.AddStructureToTile (buildingBuilt, structureSprites);
-				playingPlayer.AddToOwnedTiles(Grid, ownSettlement, aiPlayer, surroundingTiles);
 			}
 		}
 
-		PointyHexTileGridBuilder me = this.GetComponent<PointyHexTileGridBuilder>();
 		me.enabled = true;
-		buildScreen.GetComponent<BuildMenuBehaviour> ().structChosen -= HandlestructChosen;
+		buildScreenSettings.structChosen -= HandlestructChosen;
 		buildScreen.SetActive (false);
 		prevClickedCell.HighlightOn = false;
+	}
+
+	void CreateNewMilitaryUnit(Player player, int unitType, UnitCell gridCell, PointyHexPoint gridPoint)
+	{
+		MilitaryUnit newUnit = Instantiate (unitTypes [unitType], gridCell.transform.position, Quaternion.identity).GetComponent<MilitaryUnit> ();
+		newUnit.Initialize (player.PlayerColor, (MilitaryUnitType)unitType, gridPoint);
+		player.milUnits.Add (newUnit);
+		gridCell.unitOnTile = true;
+	}
+	
+	void CreateNewSettlement(Player player, UnitCell gridCell, PointyHexPoint gridPoint, PointList<PointyHexPoint> surroundingTiles )
+	{
+		Settlement newSettlement = Instantiate (structureTypes [(int)StructureUnitType.Settlement], gridCell.transform.position, Quaternion.identity).GetComponent<Settlement> ();
+		newSettlement.Initialize (player.PlayerColor, StructureUnitType.Settlement, gridPoint);
+		player.settlements.Add (newSettlement);
+		player.AddToOwnedTiles (Grid, newSettlement, aiPlayer, surroundingTiles);
+		gridCell.AddStructureToTile (newSettlement);
+	}
+
+	void CreateNewStructure(Player player, int structType, UnitCell gridCell, PointyHexPoint gridPoint, PointList<PointyHexPoint> surroundingTiles, Settlement owningSettlement)
+	{
+		StructureUnit newStructure = Instantiate (structureTypes [structType], gridCell.transform.position, Quaternion.identity).GetComponent<StructureUnit> ();
+		newStructure.Initialize (player.PlayerColor, (StructureUnitType)structType, gridPoint, owningSettlement);
+		owningSettlement.cachedBuildingList.Add (newStructure);
+		player.AddToOwnedTiles (Grid, owningSettlement, aiPlayer, surroundingTiles);
+
+		gridCell.AddStructureToTile (newStructure);
 	}
 
 	/// <summary>
@@ -247,11 +266,11 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	{
 		foreach (PointyHexPoint point in surroundingTiles) {
 			UnitCell currCell = (Grid[point] as UnitCell);
-			if (currCell.buildingOnTile != null && currCell.buildingOnTile.StructColor.Equals (owningPlayerColor)) {
-				if (currCell.buildingOnTile.StructureType.Equals (StructureUnitType.Settlement))
-				    return currCell.buildingOnTile as Settlement;
+			if (currCell.buildingOnTile && currCell.structureOnTile.StructColor.Equals (owningPlayerColor)) {
+				if (currCell.structureOnTile.StructureType.Equals (StructureUnitType.Settlement))
+					return currCell.structureOnTile as Settlement;
 				else
-					return currCell.buildingOnTile.OwningSettlement;
+					return currCell.structureOnTile.OwningSettlement;
 			}
 		}
 
@@ -263,7 +282,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		foreach (PointyHexPoint point in surroundingTiles) {
 			UnitCell currCell = (Grid[point] as UnitCell);
 
-			if (currCell.buildingOnTile != null)
+			if (currCell.buildingOnTile)
 				return true;
 		}
 

@@ -43,7 +43,7 @@ namespace AssemblyCSharp
 		Dictator_Idle = 14,
 	}
 
-	public class MilitaryUnit
+	public class MilitaryUnit : MonoBehaviour
 	{
 		private PointList<PointyHexPoint> movementPath;
 		private int unitAmount = 1;
@@ -63,22 +63,27 @@ namespace AssemblyCSharp
 		}
 		private MilitaryUnitType unitType;
 
-
-
-		public Int16 IdleAnimation { get; set; }
-		public Int16 CombatAnimation { get; set; }
-		public Int16 DeathAnimation { get; set; }
-		public Int16 MoveAnimation { get; set; }
-
 		public Color UnitColor { get; set; }
 		public float MoveTimeLimit { get; set; }
 		public PointyHexPoint TilePoint { get; set; }
 
 		public Combat combatToUpdateGame;
 
+		private Animator animator;
+
 
 		public MilitaryUnit ()
 		{
+		}
+
+		public void Initialize(Color unitColor, MilitaryUnitType uType, PointyHexPoint curPoint)
+		{
+			UnitColor = unitColor;
+			TilePoint = curPoint;
+			UnitType = uType;
+			gameObject.GetComponent<SpriteRenderer> ().color = UnitColor;
+			animator = gameObject.GetComponent<Animator> ();
+			GetMoveTimeLimitByType ();
 		}
 
 		/// <summary>
@@ -96,22 +101,31 @@ namespace AssemblyCSharp
 		/// </summary>
 		/// <param name="grid">The playing Grid</param>
 		/// <param name="unitSprites">An array of pre-loaded sprites</param>
-		public void MoveNextMoveInPath(IGrid<PointyHexPoint> grid, Sprite[] unitSprites)
+		public void MoveNextMoveInPath(IGrid<PointyHexPoint> grid)
 		{
+			UnitCell newCell;
+
 			if (movementPath != null) {
 				if (movementPath.Count > 1) {
-					if ((grid[movementPath[1]] as UnitCell).unitOnTile == null) {
+					newCell = grid[movementPath[1]] as UnitCell;
+
+					if (!newCell.unitOnTile) {
 						(grid [movementPath [0]] as UnitCell).RemoveUnit ();
 						movementPath.RemoveAt (0);
-						(grid [movementPath [0]] as UnitCell).AddUnitToTile (this, unitSprites);
-						TilePoint = movementPath[0];
-					} else {
-						MilitaryUnit unitOnTile = (grid[movementPath[1]] as UnitCell).unitOnTile;
 
-						if (!unitOnTile.UnitColor.Equals (this.UnitColor)) {
+						newCell.AddUnitToTile (this);
+						gameObject.transform.position = newCell.transform.position;
+						TilePoint = movementPath[0];
+
+						if (movementPath.Count <= 1)
+							animator.SetBool ("isMoving", false);
+					} else {
+						MilitaryUnit unitOnTile = new MilitaryUnit();//(grid[movementPath[1]] as UnitCell).unitOnTile;
+
+						/*if (!unitOnTile.UnitColor.Equals (this.UnitColor)) {
 							combatToUpdateGame = new Combat();
 							combatToUpdateGame.Setup (this, unitOnTile);
-						}
+						}*/
 						movementPath.Clear ();
 					}
 				}
@@ -121,6 +135,8 @@ namespace AssemblyCSharp
 		public void SetMovementPath(PointList<PointyHexPoint> newPath)
 		{
 			movementPath = newPath;
+			if (movementPath.Count > 0)
+				animator.SetBool ("isMoving", true);
 		}
 
 		public void AddUnits(int amountToAdd)
@@ -149,47 +165,53 @@ namespace AssemblyCSharp
 			subordinates.AddRange (unitsToCommand);
 		}
 
-		public void UpdateUnit(IGrid<PointyHexPoint> grid, Sprite[] unitSprites, Player playerInChargeOfUnit)
+		public void UpdateUnit(IGrid<PointyHexPoint> grid, Player playerInChargeOfUnit)
 		{
 			if (unitAmount <= 0) {
 				playerInChargeOfUnit.milUnits.Remove (this);
 			} else { //if he's still alive then lets update him
 				if (moveTime > MoveTimeLimit) {
-					MoveNextMoveInPath (grid, unitSprites);
+					MoveNextMoveInPath (grid);
 					moveTime = 0f;
 				}
 
 				moveTime += Time.deltaTime;
 			}
 		}
+
+		private void GetMoveTimeLimitByType() {
+			if (UnitType.Equals (MilitaryUnitType.Dictator))
+				MoveTimeLimit = 2f;
+			else if (UnitType.Equals (MilitaryUnitType.Infantry))
+				MoveTimeLimit = 1.75f;
+			else if (UnitType.Equals (MilitaryUnitType.Tank))
+				MoveTimeLimit = 1.25f;
+			else
+				MoveTimeLimit = 1f;
+		}
 	}
 
 	public static class CreateMilitaryUnit
 	{
-		public static MilitaryUnit CreateDictator(Color unitColor, PointyHexPoint currentPoint)
+		/*public static MilitaryUnit CreateDictator(Color unitColor, PointyHexPoint currentPoint)
 		{
-			return new MilitaryUnit() { UnitType = MilitaryUnitType.Dictator, IdleAnimation = (short)MilitaryUnitAnimationIndex.Dictator_Idle, UnitColor = unitColor, 
-				MoveTimeLimit = 2f, TilePoint = currentPoint };
+			return new MilitaryUnit() { UnitType = MilitaryUnitType.Dictator, unitColor = unitColor, 
+				MoveTimeLimit = 2f, tilePoint = currentPoint };
 		}
 
 		public static MilitaryUnit CreateInfantry(Color unitColor, PointyHexPoint currentPoint)
 		{
-			return new MilitaryUnit () { UnitType = MilitaryUnitType.Infantry, IdleAnimation = (short)MilitaryUnitAnimationIndex.Infantry_Idle, 
-				MoveAnimation = (short)MilitaryUnitAnimationIndex.Infantry_Move, UnitColor = unitColor, MoveTimeLimit = 1.75f, TilePoint = currentPoint };
+			return new MilitaryUnit () { UnitType = MilitaryUnitType.Infantry, unitColor = unitColor, MoveTimeLimit = 1.75f, tilePoint = currentPoint };
 		}
 
 		public static MilitaryUnit CreateTank(Color unitColor, PointyHexPoint currentPoint)
 		{
-			return new MilitaryUnit () { UnitType = MilitaryUnitType.Tank, IdleAnimation = (short)MilitaryUnitAnimationIndex.Tank_Idle, 
-				MoveAnimation = (short)MilitaryUnitAnimationIndex.Tank_Move, CombatAnimation = (short)MilitaryUnitAnimationIndex.Tank_Combat,
-				DeathAnimation = (short)MilitaryUnitAnimationIndex.Tank_Death, UnitColor = unitColor, MoveTimeLimit = 1.25f, TilePoint = currentPoint };
+			return new MilitaryUnit () { UnitType = MilitaryUnitType.Tank, unitColor = unitColor, MoveTimeLimit = 1.25f, tilePoint = currentPoint };
 		}
 
 		public static MilitaryUnit CreatePlane(Color unitColor, PointyHexPoint currentPoint)
 		{
-			return new MilitaryUnit () { UnitType = MilitaryUnitType.Jet, IdleAnimation = (short)MilitaryUnitAnimationIndex.Plane_Idle,
-				MoveAnimation = (short)MilitaryUnitAnimationIndex.Plane_Move, CombatAnimation = (short)MilitaryUnitAnimationIndex.Plane_Combat,
-				DeathAnimation = (short)MilitaryUnitAnimationIndex.Plane_Death, UnitColor = unitColor, MoveTimeLimit = 1f, TilePoint = currentPoint };
-		}
+			return new MilitaryUnit () { UnitType = MilitaryUnitType.Jet, unitColor = unitColor, MoveTimeLimit = 1f, tilePoint = currentPoint };
+		}*/
 	}
 }
