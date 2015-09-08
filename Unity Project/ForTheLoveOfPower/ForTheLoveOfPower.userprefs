@@ -1,15 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\StructureUnit.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\ForTheLoveOfPower\Resources\Shaders\CustomSpriteShader.shader">
     <Files>
-      <File FileName="Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs" Line="87" Column="42" />
-      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\MilitaryUnit.cs" Line="67" Column="43" />
-      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\StructureUnit.cs" Line="62" Column="12" />
-      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\Settlement.cs" Line="47" Column="61" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\CameraBehaviour.cs" Line="1" Column="1" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs" Line="1" Column="1" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\MilitaryUnit.cs" Line="1" Column="1" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\StructureUnit.cs" Line="1" Column="1" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\Settlement.cs" Line="1" Column="1" />
       <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\Player.cs" Line="1" Column="1" />
-      <File FileName="Assets\ForTheLoveOfPower\Scripts\UnitCell.cs" Line="49" Column="1" />
-      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\AIPlayer.cs" Line="19" Column="1" />
-      <File FileName="Assets\ForTheLoveOfPower\Scripts\Combat.cs" Line="45" Column="1" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\UnitCell.cs" Line="1" Column="1" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\AIPlayer.cs" Line="1" Column="1" />
+      <File FileName="Assets\ForTheLoveOfPower\Scripts\Combat.cs" Line="1" Column="1" />
+      <File FileName="F:\Downloads\builtin_shaders-5.1.3f1\DefaultResources\Sprites-Default.shader" Line="22" Column="15" />
+      <File FileName="Assets\ForTheLoveOfPower\Resources\Shaders\CustomSpriteShader.shader" Line="49" Column="28" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
