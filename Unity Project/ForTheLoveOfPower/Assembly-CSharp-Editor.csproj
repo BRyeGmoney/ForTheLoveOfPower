@@ -171,6 +171,9 @@
  <Reference Include="UnityEditor.UI">
  <HintPath>E:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>
  </Reference>
+ <Reference Include="StrumpyShaderEditor">
+ <HintPath>C:/Users/BryanGrom/Documents/PenisPotato/Unity Project/ForTheLoveOfPower/Assets/StrumpyShaderEditor/Editor/StrumpyShaderEditor.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.Graphs">
  <HintPath>E:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
  </Reference>
@@ -203,9 +206,6 @@
  </Reference>
  <Reference Include="UnityEditor.OSXStandalone.Extensions">
  <HintPath>E:/Program Files (x86)/Unity/Editor/Data/PlaybackEngines/macstandalonesupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="StrumpyShaderEditor">
- <HintPath>C:/Users/BryanGrom/Documents/PenisPotato/Unity Project/ForTheLoveOfPower/Assets/StrumpyShaderEditor/Editor/StrumpyShaderEditor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>E:/Program Files (x86)/Unity/Editor/Data/PlaybackEngines/iossupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
