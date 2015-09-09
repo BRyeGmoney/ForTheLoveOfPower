@@ -24,6 +24,9 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	//AIPlayer aiPlayer;
 	public Player[] listOfPlayers;
 	public Text moneyText;
+	public Text touchCounts;
+	public Text touchTypes;
+	public Text enteredAndroidSection;
 	public GameObject buildScreen;
 	public GameObject[] unitTypes;
 	public GameObject[] structureTypes;
@@ -147,51 +150,55 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		clickedCell.HighlightOn = true;
 
 
-#if UNITY_ANDROID 
-		if (Input.touchCount == 1) {
-			if (Input.GetTouch (0).phase.Equals (TouchPhase.Ended) && prevTouch.phase.Equals (TouchPhase.Began)) { //single press 
-				PressTile (clickedCell, clickedPoint);
-			} else if (startChosen && Input.GetTouch (0).phase.Equals (TouchPhase.Moved)) {
-				if (prevClickedPoint != clickedPoint) {
-					PointList<PointyHexPoint> prevPath = path.ToPointList();
+		if (Input.touchSupported) { 
+			enteredAndroidSection.text = "true";
+			touchCounts.text = Input.touchCount.ToString ();
 
-					path = GetGridPath ();
+			if (Input.touchCount == 1) {
+				touchTypes.text = String.Format ("{0} & {1}", Input.GetTouch (0).phase.ToString (), prevTouch.phase.ToString ());
 
-					foreach (PointyHexPoint point in path)
-					{
-						prevPath.Remove (point);
-						(Grid[point] as SpriteCell).HighlightOn = true;
+				if (Input.GetTouch (0).phase.Equals (TouchPhase.Ended) && prevTouch.phase.Equals (TouchPhase.Began)) { //single press 
+					PressTile (clickedCell, clickedPoint);
+				} else if (startChosen && Input.GetTouch (0).phase.Equals (TouchPhase.Moved)) {
+					if (prevClickedPoint != clickedPoint) {
+						PointList<PointyHexPoint> prevPath = path.ToPointList ();
+
+						path = GetGridPath ();
+
+						foreach (PointyHexPoint point in path) {
+							prevPath.Remove (point);
+							(Grid [point] as SpriteCell).HighlightOn = true;
+						}
+
+						foreach (PointyHexPoint point in prevPath)
+							(Grid [point] as SpriteCell).HighlightOn = false;
 					}
+				} else if (Input.GetTouch (0).phase.Equals (TouchPhase.Moved) && prevTouch.phase.Equals (TouchPhase.Began) || prevTouch.phase.Equals (TouchPhase.Stationary)) { //we'll try to see if there was a unit to move in the prevClicked
+					MilitaryUnit unitOnTile = listOfPlayers [0].milUnits.Find (unit => unit.TilePoint.Equals (prevClickedPoint));
 
-					foreach (PointyHexPoint point in prevPath)
-						(Grid[point] as SpriteCell).HighlightOn = false;
+					if (unitOnTile != null) {
+						startChosen = true;
+						startPoint = prevClickedPoint;
+					}
 				}
-			} else if (Input.GetTouch (0).phase.Equals (TouchPhase.Moved) && prevTouch.phase.Equals (TouchPhase.Began) || prevTouch.phase.Equals (TouchPhase.Stationary)) { //we'll try to see if there was a unit to move in the prevClicked
-				MilitaryUnit unitOnTile = listOfPlayers[0].milUnits.Find (unit => unit.TilePoint.Equals (prevClickedPoint));
 
-				if (unitOnTile != null) {
-					startChosen = true;
-					startPoint = prevClickedPoint;
+				prevTouch = Input.GetTouch (0);
+
+			} else {
+				touchTypes.text = String.Format ("none & {0}", prevTouch.phase.ToString ());
+				if (startChosen) { //that means we've decided the final point for the unit
+					MilitaryUnit unitOnTile = listOfPlayers [0].milUnits.Find (unit => unit.TilePoint.Equals (startPoint));
+
+					if (unitOnTile != null)
+						unitOnTile.SetMovementPath (path.ToPointList ());
+
+					timer = 0f;
+					startChosen = false;
 				}
 			}
-
-			prevTouch = Input.GetTouch (0);
 
 		} else {
-			if (startChosen) { //that means we've decided the final point for the unit
-				MilitaryUnit unitOnTile = listOfPlayers[0].milUnits.Find (unit => unit.TilePoint.Equals (startPoint));
-
-				if (unitOnTile != null)
-					unitOnTile.SetMovementPath (path.ToPointList ());
-
-				timer = 0f;
-				startChosen = false;
-			}
-		}
-
-
-#endif
-		if (!Input.touchSupported) {
+			enteredAndroidSection.color = new Color(0.5f, 0.5f, 0.5f);
 			//If there is a unit on this tile, or if we have previously chosen a unit
 			if (Input.GetMouseButtonDown (1)) {
 				if ((clickedCell.unitOnTile) || startChosen) {
