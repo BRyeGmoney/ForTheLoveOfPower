@@ -15,6 +15,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	UnitCell prevClickedCell;
 	PointyHexPoint prevClickedPoint;
 	PointyHexPoint endPoint;
+	Touch prevTouch;
 	IEnumerable<PointyHexPoint> path;
 	PointyHexTileGridBuilder me;
 	BuildMenuBehaviour buildScreenSettings;
@@ -145,67 +146,121 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 		clickedCell.HighlightOn = true;
 
-		//If there is a unit on this tile, or if we have previously chosen a unit
-		if (Input.GetMouseButtonDown (1)) {
-			if((clickedCell.unitOnTile) || startChosen) {
-				MilitaryUnit unitOnTile;
 
-				if (startChosen) {
-					unitOnTile = listOfPlayers[0].milUnits.Find (unit => unit.TilePoint.Equals (prevClickedPoint));
-					endPoint = clickedPoint;
-					
+#if UNITY_ANDROID 
+		if (Input.touchCount == 1) {
+			if (Input.GetTouch (0).phase.Equals (TouchPhase.Ended) && prevTouch.phase.Equals (TouchPhase.Began)) { //single press 
+				PressTile (clickedCell, clickedPoint);
+			} else if (startChosen && Input.GetTouch (0).phase.Equals (TouchPhase.Moved)) {
+				if (prevClickedPoint != clickedPoint) {
+					PointList<PointyHexPoint> prevPath = path.ToPointList();
+
 					path = GetGridPath ();
-					foreach (PointyHexPoint point in path) 
-						(Grid [point] as SpriteCell).HighlightOn = true;
-					unitOnTile.SetMovementPath (path.ToPointList ());
-					
-					//start the timer to make it dissapear and then reset the flag that tells
-					//us if we're trying to move something
-					timer = 0f;
-					startChosen = false;
-				} else if (!startChosen) {
-					if (listOfPlayers[0].milUnits.Exists (unit => unit.TilePoint.Equals(clickedPoint))) {
-						startPoint = clickedPoint;
-						startChosen = true;
+
+					foreach (PointyHexPoint point in path)
+					{
+						prevPath.Remove (point);
+						(Grid[point] as SpriteCell).HighlightOn = true;
 					}
+
+					foreach (PointyHexPoint point in prevPath)
+						(Grid[point] as SpriteCell).HighlightOn = false;
+				}
+			} else if (Input.GetTouch (0).phase.Equals (TouchPhase.Moved) && prevTouch.phase.Equals (TouchPhase.Began) || prevTouch.phase.Equals (TouchPhase.Stationary)) { //we'll try to see if there was a unit to move in the prevClicked
+				MilitaryUnit unitOnTile = listOfPlayers[0].milUnits.Find (unit => unit.TilePoint.Equals (prevClickedPoint));
+
+				if (unitOnTile != null) {
+					startChosen = true;
+					startPoint = prevClickedPoint;
 				}
 			}
-		} else if (Input.GetMouseButtonDown (0)) {
-			//if there's a building on this tile
-			if (clickedCell.buildingOnTile) {
-				//if it is of the military variety
-				if (clickedCell.structureOnTile.tag.Equals ("Military")) {
-					//if there's already a unit on this tile, we should just add to it
-					if (clickedCell.unitOnTile) {
-						MilitaryUnit unitOnTile = listOfPlayers[0].milUnits.Find (unit => unit.TilePoint.Equals (clickedPoint));
 
-						if (unitOnTile != null)
-							unitOnTile.AddUnits (1);
-					} else if (clickedCell.structureOnTile.StructureType.Equals (StructureUnitType.Barracks)) {
-						CreateNewMilitaryUnit (listOfPlayers[0], (int)MilitaryUnitType.Infantry, clickedCell, clickedPoint);
-					} else if (clickedCell.structureOnTile.StructureType.Equals (StructureUnitType.TankDepot)) {
-						CreateNewMilitaryUnit (listOfPlayers[0], (int)MilitaryUnitType.Tank, clickedCell, clickedPoint);
-					} else {
-						CreateNewMilitaryUnit (listOfPlayers[0], (int)MilitaryUnitType.Jet, clickedCell, clickedPoint);
+			prevTouch = Input.GetTouch (0);
+
+		} else {
+			if (startChosen) { //that means we've decided the final point for the unit
+				MilitaryUnit unitOnTile = listOfPlayers[0].milUnits.Find (unit => unit.TilePoint.Equals (startPoint));
+
+				if (unitOnTile != null)
+					unitOnTile.SetMovementPath (path.ToPointList ());
+
+				timer = 0f;
+				startChosen = false;
+			}
+		}
+
+
+#endif
+		if (!Input.touchSupported) {
+			//If there is a unit on this tile, or if we have previously chosen a unit
+			if (Input.GetMouseButtonDown (1)) {
+				if ((clickedCell.unitOnTile) || startChosen) {
+					MilitaryUnit unitOnTile;
+
+					if (startChosen) {
+						unitOnTile = listOfPlayers [0].milUnits.Find (unit => unit.TilePoint.Equals (prevClickedPoint));
+						endPoint = clickedPoint;
+					
+						path = GetGridPath ();
+						foreach (PointyHexPoint point in path) 
+							(Grid [point] as SpriteCell).HighlightOn = true;
+						unitOnTile.SetMovementPath (path.ToPointList ());
+					
+						//start the timer to make it dissapear and then reset the flag that tells
+						//us if we're trying to move something
+						timer = 0f;
+						startChosen = false;
+					} else if (!startChosen) {
+						if (listOfPlayers [0].milUnits.Exists (unit => unit.TilePoint.Equals (clickedPoint))) {
+							startPoint = clickedPoint;
+							startChosen = true;
+						}
 					}
 				}
-			} else if (clickedCell.Color == listOfPlayers[0].PlayerColor) {
-				me.enabled = false;
-				SetupBuildMenu (false);
-			} else {
-				//if the player has no units, then this is how we let them place the dictator
-				if (listOfPlayers[0].milUnits.IsEmpty()) {
-					CreateNewMilitaryUnit (listOfPlayers[0], (int)MilitaryUnitType.Dictator, clickedCell, clickedPoint);
-				} else { //else, bring up the bulding selection screen
-					me.enabled = false;
-					SetupBuildMenu (true);
-				}
-				clickedCell.HighlightOn = false;
+			} else if (Input.GetMouseButtonDown (0)) {
+				PressTile (clickedCell, clickedPoint);
 			}
 		}
 
 		prevClickedPoint = clickedPoint;
 		prevClickedCell = clickedCell;
+	}
+
+
+
+	private void PressTile(UnitCell clickedCell, PointyHexPoint clickedPoint)
+	{
+		//if there's a building on this tile
+		if (clickedCell.buildingOnTile) {
+			//if it is of the military variety
+			if (clickedCell.structureOnTile.tag.Equals ("Military")) {
+				//if there's already a unit on this tile, we should just add to it
+				if (clickedCell.unitOnTile) {
+					MilitaryUnit unitOnTile = listOfPlayers[0].milUnits.Find (unit => unit.TilePoint.Equals (clickedPoint));
+					
+					if (unitOnTile != null)
+						unitOnTile.AddUnits (1);
+				} else if (clickedCell.structureOnTile.StructureType.Equals (StructureUnitType.Barracks)) {
+					CreateNewMilitaryUnit (listOfPlayers[0], (int)MilitaryUnitType.Infantry, clickedCell, clickedPoint);
+				} else if (clickedCell.structureOnTile.StructureType.Equals (StructureUnitType.TankDepot)) {
+					CreateNewMilitaryUnit (listOfPlayers[0], (int)MilitaryUnitType.Tank, clickedCell, clickedPoint);
+				} else {
+					CreateNewMilitaryUnit (listOfPlayers[0], (int)MilitaryUnitType.Jet, clickedCell, clickedPoint);
+				}
+			}
+		} else if (clickedCell.Color == listOfPlayers[0].PlayerColor) {
+			me.enabled = false;
+			SetupBuildMenu (false);
+		} else {
+			//if the player has no units, then this is how we let them place the dictator
+			if (listOfPlayers[0].milUnits.IsEmpty()) {
+				CreateNewMilitaryUnit (listOfPlayers[0], (int)MilitaryUnitType.Dictator, clickedCell, clickedPoint);
+			} else { //else, bring up the bulding selection screen
+				me.enabled = false;
+				SetupBuildMenu (true);
+			}
+			clickedCell.HighlightOn = false;
+		}
 	}
 
 	private void SetupBuildMenu(bool isSettlementMenu)
