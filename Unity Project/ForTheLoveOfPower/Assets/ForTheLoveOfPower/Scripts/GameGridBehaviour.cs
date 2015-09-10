@@ -26,7 +26,6 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	public Text moneyText;
 	public Text touchCounts;
 	public Text touchTypes;
-	public Text enteredAndroidSection;
 	public GameObject buildScreen;
 	public GameObject[] unitTypes;
 	public GameObject[] structureTypes;
@@ -148,18 +147,18 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			prevClickedCell.HighlightOn = false;
 
 		clickedCell.HighlightOn = true;
+		touchCounts.text = Input.touchCount.ToString ();
 
-
-		if (Input.touchSupported) { 
-			enteredAndroidSection.text = "true";
-			touchCounts.text = Input.touchCount.ToString ();
-
+		if (Input.touchSupported) {
+			touchCounts.text = String.Format ("D: {0}", Input.touchCount.ToString ());
 			if (Input.touchCount == 1) {
-				touchTypes.text = String.Format ("{0} & {1}", Input.GetTouch (0).phase.ToString (), prevTouch.phase.ToString ());
+				Touch curTouch = Input.GetTouch (0);
 
-				if (Input.GetTouch (0).phase.Equals (TouchPhase.Ended) && prevTouch.phase.Equals (TouchPhase.Began)) { //single press 
+				touchTypes.text = String.Format ("{0} & {1}", curTouch.phase.ToString (), prevTouch.phase.ToString ());
+
+				if (curTouch.phase.Equals (TouchPhase.Ended) && prevTouch.phase.Equals (TouchPhase.Began)) { //single press 
 					PressTile (clickedCell, clickedPoint);
-				} else if (startChosen && Input.GetTouch (0).phase.Equals (TouchPhase.Moved)) {
+				} else if (startChosen && curTouch.phase.Equals (TouchPhase.Moved)) {
 					if (prevClickedPoint != clickedPoint) {
 						PointList<PointyHexPoint> prevPath = path.ToPointList ();
 
@@ -173,7 +172,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 						foreach (PointyHexPoint point in prevPath)
 							(Grid [point] as SpriteCell).HighlightOn = false;
 					}
-				} else if (Input.GetTouch (0).phase.Equals (TouchPhase.Moved) && prevTouch.phase.Equals (TouchPhase.Began) || prevTouch.phase.Equals (TouchPhase.Stationary)) { //we'll try to see if there was a unit to move in the prevClicked
+				} else if (curTouch.phase.Equals (TouchPhase.Moved) && prevTouch.phase.Equals (TouchPhase.Began) || prevTouch.phase.Equals (TouchPhase.Stationary)) { //we'll try to see if there was a unit to move in the prevClicked
 					MilitaryUnit unitOnTile = listOfPlayers [0].milUnits.Find (unit => unit.TilePoint.Equals (prevClickedPoint));
 
 					if (unitOnTile != null) {
@@ -182,7 +181,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 					}
 				}
 
-				prevTouch = Input.GetTouch (0);
+				prevTouch = curTouch;
 
 			} else {
 				touchTypes.text = String.Format ("none & {0}", prevTouch.phase.ToString ());
@@ -198,7 +197,6 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			}
 
 		} else {
-			enteredAndroidSection.color = new Color(0.5f, 0.5f, 0.5f);
 			//If there is a unit on this tile, or if we have previously chosen a unit
 			if (Input.GetMouseButtonDown (1)) {
 				if ((clickedCell.unitOnTile) || startChosen) {
