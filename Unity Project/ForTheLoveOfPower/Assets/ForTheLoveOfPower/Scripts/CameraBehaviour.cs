@@ -7,7 +7,7 @@ public class CameraBehaviour : MonoBehaviour {
 	Vector3 cameraMovement;
 	byte prevState = 0;
 
-	public float orthoZoomSpeed = 1f;        // The rate of change of the orthographic size in orthographic mode.
+	public float orthoZoomSpeed = 2f;        // The rate of change of the orthographic size in orthographic mode.
 	
 	// Use this for initialization
 	void Start () {
@@ -38,7 +38,7 @@ public class CameraBehaviour : MonoBehaviour {
 			// Find the difference in the distances between each frame.
 			float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
 
-			if (touchDeltaMag > 60) {
+			if (touchDeltaMag > 120) {
 				// ... change the orthographic size based on the change in distance between the touches.
 				Camera.main.orthographicSize += deltaMagnitudeDiff * orthoZoomSpeed;
 				
