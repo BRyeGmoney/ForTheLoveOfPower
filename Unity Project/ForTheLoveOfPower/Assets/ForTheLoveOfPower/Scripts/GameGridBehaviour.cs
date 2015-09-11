@@ -17,7 +17,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	PointyHexPoint endPoint;
 	Touch prevTouch;
 	IEnumerable<PointyHexPoint> path;
-	PointyHexTileGridBuilder me;
+	//PointyHexTileGridBuilder me;
 	BuildMenuBehaviour buildScreenSettings;
 	
 	//Player playingPlayer;
@@ -41,7 +41,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		//playingPlayer = gameObject.Find ("playerOne").GetComponent<Player>();
 		//aiPlayer = gameObject.Find ("playerTwoAI").GetComponent<AIPlayer> ();
 
-		me = gameObject.GetComponent<PointyHexTileGridBuilder> ();
+		//me = gameObject.GetComponent<PointyHexTileGridBuilder> ();
 		buildScreenSettings = buildScreen.GetComponent<BuildMenuBehaviour> ();
 
 		//Create ai player's beginnings
@@ -69,7 +69,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			
 				touchTypes.text = String.Format ("{0} & {1}", curTouch.phase.ToString (), prevTouch.phase.ToString ());
 			
-				if (curTouch.phase.Equals (TouchPhase.Ended) && prevTouch.phase.Equals (TouchPhase.Began)) { //single press 
+				if (curTouch.phase.Equals (TouchPhase.Ended) && (prevTouch.phase.Equals (TouchPhase.Began) || prevTouch.phase.Equals (TouchPhase.Stationary))) { //single press 
 					PressTile (clickedCell, clickedPoint);
 				} else if (startChosen && curTouch.phase.Equals (TouchPhase.Moved)) {
 					if (prevClickedPoint != clickedPoint) {
@@ -165,7 +165,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	void Update () {
 		CheckEndGame ();
 		if (!buildScreenSettings.isActiveAndEnabled) {
-			if (Input.touchSupported)
+			if (Input.touchSupported && Input.touchCount > 0)
 				CheckTouchInput ();
 			else
 				CheckMouseInput ();
@@ -277,14 +277,14 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 				}
 			}
 		} else if (clickedCell.Color == listOfPlayers[0].PlayerColor) {
-			me.enabled = false;
+			//me.enabled = false;
 			SetupBuildMenu (false);
 		} else {
 			//if the player has no units, then this is how we let them place the dictator
 			if (listOfPlayers[0].milUnits.IsEmpty()) {
 				CreateNewMilitaryUnit (listOfPlayers[0], (int)MilitaryUnitType.Dictator, clickedCell, clickedPoint);
 			} else { //else, bring up the bulding selection screen
-				me.enabled = false;
+				//me.enabled = false;
 				SetupBuildMenu (true);
 			}
 			clickedCell.HighlightOn = false;
@@ -317,7 +317,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			}
 		}
 
-		me.enabled = true;
+		//me.enabled = true;
 		buildScreenSettings.structChosen -= HandlestructChosen;
 		buildScreen.SetActive (false);
 		prevClickedCell.HighlightOn = false;
