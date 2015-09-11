@@ -32,6 +32,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 	float timer = 0f;
 	bool startChosen = false;
+	private int bloop;
 
 	private List<Combat> listofCurrentCombats;
 
@@ -56,8 +57,13 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	/// </summary>
 	private void CheckTouchInput()
 	{
-		touchCounts.text = String.Format ("D: {0}", Input.touchCount.ToString ());
-		touchTypes.text = String.Format ("none & none");
+		Debug.Log (String.Format ("We're Checking Touch Input: {0}", bloop));
+		//touchCounts.text = String.Format ("Checking {0}", bloop);
+		//touchTypes.text = String.Format ("none & none");
+		if (bloop > 10000)
+			bloop = 0;
+		else
+			bloop += 1;
 
 		if (Input.touchCount == 1) {
 			Touch curTouch = Input.GetTouch (0);
@@ -100,7 +106,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			}
 			
 		} else {
-			touchTypes.text = String.Format ("none & {0}", prevTouch.phase.ToString ());
+			//touchTypes.text = String.Format ("none & {0}", prevTouch.phase.ToString ());
 			if (startChosen) { //that means we've decided the final point for the unit
 				MilitaryUnit unitOnTile = listOfPlayers [0].milUnits.Find (unit => unit.TilePoint.Equals (startPoint));
 				
@@ -118,6 +124,12 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	/// </summary>
 	void CheckMouseInput()
 	{
+		Debug.Log (String.Format ("We're Checking Mouse Input: {0}", bloop));
+		if (bloop < -10000)
+			bloop = 0;
+		else
+			bloop -= 1;
+
 		//If there is a unit on this tile, or if we have previously chosen a unit
 		if (Input.GetMouseButtonDown (1)) {
 			PointyHexPoint clickedPoint = Map[GridBuilderUtils.ScreenToWorld (Input.mousePosition)];
@@ -164,10 +176,12 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	// Update is called once per frame
 	void Update () {
 		CheckEndGame ();
+
 		if (!buildScreenSettings.isActiveAndEnabled) {
+			Debug.Log ("Build settings are inactive");
 			if (Input.touchSupported && Input.touchCount > 0)
 				CheckTouchInput ();
-			else
+			else if (!Input.touchSupported)
 				CheckMouseInput ();
 		}
 
@@ -232,6 +246,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 	private IEnumerator DestroyUnitAfterAnimation(MilitaryUnit unit, Player playerUnitBelongsTo) 
 	{
+		Debug.Log ("destroying reference to unit");
 		playerUnitBelongsTo.milUnits.Remove (unit);
 		(Grid[unit.TilePoint] as UnitCell).RemoveUnit ();
 
@@ -258,6 +273,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 	private void PressTile(UnitCell clickedCell, PointyHexPoint clickedPoint)
 	{
+		Debug.Log ("We've pressed a tile");
 		//if there's a building on this tile
 		if (clickedCell.buildingOnTile) {
 			//if it is of the military variety
@@ -293,6 +309,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 	private void SetupBuildMenu(bool isSettlementMenu)
 	{
+		Debug.Log ("Setting up the build menu");
 		buildScreenSettings.structChosen += HandlestructChosen;
 		buildScreenSettings.SetBGColor(listOfPlayers[0].PlayerColor);
 		buildScreenSettings.DoSettlementMenu(isSettlementMenu);
@@ -301,6 +318,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 	void HandlestructChosen (object sender, BuildingChosenArgs e)
 	{
+		Debug.Log ("The Handler StructChosen is run");
 		if (!e.toBuild.Equals (StructureUnitType.None))
 		{
 			PointList<PointyHexPoint> surroundingTiles = GetSurroundingTiles(prevClickedPoint);
@@ -325,6 +343,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 	void CreateNewMilitaryUnit(Player player, int unitType, UnitCell gridCell, PointyHexPoint gridPoint)
 	{
+		Debug.Log ("new military unit created");
 		MilitaryUnit newUnit = Instantiate (unitTypes [unitType], gridCell.transform.position, Quaternion.identity).GetComponent<MilitaryUnit> ();
 		newUnit.Initialize (player.PlayerColor, (MilitaryUnitType)unitType, gridPoint);
 		player.milUnits.Add (newUnit);
@@ -333,6 +352,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	
 	void CreateNewSettlement(Player player, UnitCell gridCell, PointyHexPoint gridPoint, PointList<PointyHexPoint> surroundingTiles )
 	{
+		Debug.Log ("new settlement created");
 		Settlement newSettlement = Instantiate (structureTypes [(int)StructureUnitType.Settlement], gridCell.transform.position, Quaternion.identity).GetComponent<Settlement> ();
 		newSettlement.Initialize (player.PlayerColor, StructureUnitType.Settlement, gridPoint);
 		player.settlements.Add (newSettlement);
@@ -342,6 +362,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 	void CreateNewStructure(Player player, int structType, UnitCell gridCell, PointyHexPoint gridPoint, PointList<PointyHexPoint> surroundingTiles, Settlement owningSettlement)
 	{
+		Debug.Log ("new structure created");
 		StructureUnit newStructure = Instantiate (structureTypes [structType], gridCell.transform.position, Quaternion.identity).GetComponent<StructureUnit> ();
 		newStructure.Initialize (player.PlayerColor, (StructureUnitType)structType, gridPoint, owningSettlement);
 		owningSettlement.cachedBuildingList.Add (newStructure);
@@ -359,6 +380,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	/// <param name="owningPlayerColor">Owning player color.</param>
 	private Settlement FindOwningSettlement(PointyHexPoint pointToSearchFrom, PointList<PointyHexPoint> surroundingTiles, Color owningPlayerColor)
 	{
+		Debug.Log ("trying to find owning settlement");
 		foreach (PointyHexPoint point in surroundingTiles) {
 			UnitCell currCell = (Grid[point] as UnitCell);
 			if (currCell.buildingOnTile && currCell.structureOnTile.StructColor.Equals (owningPlayerColor)) {
@@ -374,6 +396,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 	private bool IsBuildingInArea(PointyHexPoint pointToSearchFrom, PointList<PointyHexPoint> surroundingTiles, Color owningPlayerColor)
 	{
+		Debug.Log ("trying to find a building in the area");
 		foreach (PointyHexPoint point in surroundingTiles) {
 			UnitCell currCell = (Grid[point] as UnitCell);
 
