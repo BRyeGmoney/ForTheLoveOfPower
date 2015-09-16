@@ -13,6 +13,7 @@ public class BuildMenuBehaviour : MonoBehaviour {
 
 	public void DoSettlementMenu(bool isSettlementMenu)
 	{
+
 		IsSettlementMenu = isSettlementMenu;
 
 		if (isSettlementMenu) {

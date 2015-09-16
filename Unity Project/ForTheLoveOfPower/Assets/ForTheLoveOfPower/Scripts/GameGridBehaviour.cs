@@ -45,10 +45,12 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		//me = gameObject.GetComponent<PointyHexTileGridBuilder> ();
 		buildScreenSettings = buildScreen.GetComponent<BuildMenuBehaviour> ();
 
+		Input.simulateMouseWithTouches = true;
+
 		//Create ai player's beginnings
-		CreateNewMilitaryUnit (listOfPlayers[1], (int)MilitaryUnitType.Dictator, Grid [new PointyHexPoint (-3, 17)] as UnitCell, new PointyHexPoint (-3, 17));
-		CreateNewSettlement (listOfPlayers[1], Grid [new PointyHexPoint (-3, 18)] as UnitCell, new PointyHexPoint (-3, 18), GetSurroundingTiles (new PointyHexPoint(-3, 18)));
-		CreateNewMilitaryUnit (listOfPlayers[1], (int)MilitaryUnitType.Infantry, Grid [new PointyHexPoint (-4, 17)] as UnitCell, new PointyHexPoint (-4, 17)); 
+		CreateNewMilitaryUnit (listOfPlayers[1], (int)MilitaryUnitType.Dictator, Grid [new PointyHexPoint (2, 13)] as UnitCell, new PointyHexPoint (2, 13));
+		CreateNewSettlement (listOfPlayers[1], Grid [new PointyHexPoint (2, 12)] as UnitCell, new PointyHexPoint (2, 12), GetSurroundingTiles (new PointyHexPoint(2, 12)));
+		CreateNewMilitaryUnit (listOfPlayers[1], (int)MilitaryUnitType.Infantry, Grid [new PointyHexPoint (4, 13)] as UnitCell, new PointyHexPoint (4, 13)); 
 		moneyText.color = listOfPlayers[0].PlayerColor;
 	}
 
@@ -178,10 +180,10 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		CheckEndGame ();
 
 		if (!buildScreenSettings.isActiveAndEnabled) {
-			Debug.Log ("Build settings are inactive");
-			if (Input.touchSupported && Input.touchCount > 0)
-				CheckTouchInput ();
-			else if (!Input.touchSupported)
+			//Debug.Log ("Build settings are inactive");
+			//if (Input.touchSupported && Input.touchCount > 0)
+				//CheckTouchInput ();
+			//else if (!Input.touchSupported)
 				CheckMouseInput ();
 		}
 

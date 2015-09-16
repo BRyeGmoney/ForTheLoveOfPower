@@ -44,7 +44,10 @@ namespace AssemblyCSharp
 				cachedBuildingList.ForEach (build => {
 					if (build.StructureType.Equals (StructureUnitType.Factory)) {
 						owningPlayer.Cash += 200;
-						build.AnimationController.SetTrigger ("modifierAnim");
+						if (build.modifierAnim < 3) {
+							build.AnimationController.SetTrigger ("modifierAnim");
+							build.modifierAnim += 1;
+						}
 					}
 				});
 

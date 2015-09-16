@@ -48,6 +48,7 @@ namespace AssemblyCSharp
 		private PointList<PointyHexPoint> movementPath;
 		private int unitAmount = 1;
 		private float moveTime;
+		private bool facingRight = true;
 
 		//Properties
 		public List<MilitaryUnit> Subordinates
@@ -69,6 +70,8 @@ namespace AssemblyCSharp
 
 		public Combat combatToUpdateGame;
 
+		//private SpriteRenderer SpriteGuy { get; set; }
+
 		public Animator AnimationController 
 		{
 			get { return animator; }
@@ -86,6 +89,7 @@ namespace AssemblyCSharp
 			TilePoint = curPoint;
 			UnitType = uType;
 			gameObject.GetComponent<SpriteRenderer> ().color = UnitColor;
+			//SpriteGuy.color = UnitColor;
 			animator = gameObject.GetComponent<Animator> ();
 
 			GetMoveTimeLimitByType ();
@@ -113,6 +117,16 @@ namespace AssemblyCSharp
 			if (movementPath != null) {
 				if (movementPath.Count > 1) {
 					newCell = grid[movementPath[1]] as UnitCell;
+					if (newCell.transform.position.x < gameObject.transform.position.x && facingRight)
+					{
+						animator.transform.Rotate (0, 180, 0);
+						facingRight = false;
+					}
+					else if (newCell.transform.position.x > gameObject.transform.position.x && !facingRight)
+					{
+						animator.transform.Rotate (0, 180, 0);
+						facingRight = true;
+					}
 
 					if (!newCell.unitOnTile) {
 						(grid [movementPath [0]] as UnitCell).RemoveUnit ();

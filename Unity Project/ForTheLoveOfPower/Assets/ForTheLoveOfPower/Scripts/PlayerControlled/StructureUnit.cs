@@ -49,6 +49,8 @@ namespace AssemblyCSharp
 		}
 		private Animator animator;
 
+		public int modifierAnim;
+
 		public StructureUnit ()
 		{
 		}
