@@ -70,6 +70,9 @@ namespace AssemblyCSharp
 
 		public Combat combatToUpdateGame;
 
+		public GameObject squadLeader;
+		public TextMesh unitNumText;
+
 		//private SpriteRenderer SpriteGuy { get; set; }
 
 		public Animator AnimationController 
@@ -91,6 +94,12 @@ namespace AssemblyCSharp
 			gameObject.GetComponent<SpriteRenderer> ().color = UnitColor;
 			//SpriteGuy.color = UnitColor;
 			animator = gameObject.GetComponent<Animator> ();
+
+			if (uType.Equals (MilitaryUnitType.Infantry)) {
+
+				squadLeader = gameObject.transform.GetChild (0).gameObject;
+				unitNumText = gameObject.GetComponentInChildren<TextMesh> ();
+			}
 
 			GetMoveTimeLimitByType ();
 		}
@@ -117,16 +126,6 @@ namespace AssemblyCSharp
 			if (movementPath != null) {
 				if (movementPath.Count > 1) {
 					newCell = grid[movementPath[1]] as UnitCell;
-					if (newCell.transform.position.x < gameObject.transform.position.x && facingRight)
-					{
-						animator.transform.Rotate (0, 180, 0);
-						facingRight = false;
-					}
-					else if (newCell.transform.position.x > gameObject.transform.position.x && !facingRight)
-					{
-						animator.transform.Rotate (0, 180, 0);
-						facingRight = true;
-					}
 
 					if (!newCell.unitOnTile) {
 						(grid [movementPath [0]] as UnitCell).RemoveUnit ();
@@ -157,6 +156,20 @@ namespace AssemblyCSharp
 						movementPath.Clear ();
 					}
 				}
+			}
+		}
+
+		public void ChangeSpriteDirection(UnitCell nextPoint)
+		{
+			if (nextPoint.transform.position.x < gameObject.transform.position.x && facingRight)
+			{
+				animator.transform.Rotate (0, 180, 0);
+				facingRight = false;
+			}
+			else if (nextPoint.transform.position.y > gameObject.transform.position.x && !facingRight)
+			{
+				animator.transform.Rotate (0, 180, 0);
+				facingRight = true;
 			}
 		}
 

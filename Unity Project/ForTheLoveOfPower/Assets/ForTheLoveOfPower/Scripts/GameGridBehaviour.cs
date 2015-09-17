@@ -24,7 +24,6 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	//AIPlayer aiPlayer;
 	public Player[] listOfPlayers;
 	public Text moneyText;
-	public Text touchCounts;
 	public Text touchTypes;
 	public GameObject buildScreen;
 	public GameObject[] unitTypes;
@@ -45,12 +44,12 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		//me = gameObject.GetComponent<PointyHexTileGridBuilder> ();
 		buildScreenSettings = buildScreen.GetComponent<BuildMenuBehaviour> ();
 
-		Input.simulateMouseWithTouches = true;
+		//Input.simulateMouseWithTouches = true;
 
 		//Create ai player's beginnings
 		CreateNewMilitaryUnit (listOfPlayers[1], (int)MilitaryUnitType.Dictator, Grid [new PointyHexPoint (2, 13)] as UnitCell, new PointyHexPoint (2, 13));
 		CreateNewSettlement (listOfPlayers[1], Grid [new PointyHexPoint (2, 12)] as UnitCell, new PointyHexPoint (2, 12), GetSurroundingTiles (new PointyHexPoint(2, 12)));
-		CreateNewMilitaryUnit (listOfPlayers[1], (int)MilitaryUnitType.Infantry, Grid [new PointyHexPoint (4, 13)] as UnitCell, new PointyHexPoint (4, 13)); 
+		CreateNewMilitaryUnit (listOfPlayers[1], (int)MilitaryUnitType.Infantry, Grid [new PointyHexPoint (3, 13)] as UnitCell, new PointyHexPoint (3, 13)); 
 		moneyText.color = listOfPlayers[0].PlayerColor;
 	}
 
@@ -59,13 +58,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	/// </summary>
 	private void CheckTouchInput()
 	{
-		Debug.Log (String.Format ("We're Checking Touch Input: {0}", bloop));
-		//touchCounts.text = String.Format ("Checking {0}", bloop);
-		//touchTypes.text = String.Format ("none & none");
-		if (bloop > 10000)
-			bloop = 0;
-		else
-			bloop += 1;
+		Debug.Log (String.Format ("We're Checking Touch Input"));
 
 		if (Input.touchCount == 1) {
 			Touch curTouch = Input.GetTouch (0);
@@ -136,7 +129,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		if (Input.GetMouseButtonDown (1)) {
 			PointyHexPoint clickedPoint = Map[GridBuilderUtils.ScreenToWorld (Input.mousePosition)];
 			UnitCell clickedCell = Grid[clickedPoint] as UnitCell;
-			clickedCell.Color = Color.red;
+			//clickedCell.Color = Color.red;
 
 			if ((clickedCell.unitOnTile) || startChosen) {
 				MilitaryUnit unitOnTile;
@@ -148,7 +141,9 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 					path = GetGridPath ();
 					foreach (PointyHexPoint point in path) 
 						(Grid [point] as SpriteCell).HighlightOn = true;
-					unitOnTile.SetMovementPath (path.ToPointList ());
+					PointList<PointyHexPoint> pathPointList = path.ToPointList ();
+					unitOnTile.SetMovementPath (pathPointList);
+					unitOnTile.ChangeSpriteDirection (Grid[pathPointList[1]] as UnitCell);
 					
 					//start the timer to make it dissapear and then reset the flag that tells
 					//us if we're trying to move something
@@ -178,12 +173,12 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	// Update is called once per frame
 	void Update () {
 		CheckEndGame ();
-
+		
 		if (!buildScreenSettings.isActiveAndEnabled) {
 			//Debug.Log ("Build settings are inactive");
-			//if (Input.touchSupported && Input.touchCount > 0)
-				//CheckTouchInput ();
-			//else if (!Input.touchSupported)
+			if (Input.touchCount > 0)
+				CheckTouchInput ();
+			else if (!Input.touchSupported)
 				CheckMouseInput ();
 		}
 
