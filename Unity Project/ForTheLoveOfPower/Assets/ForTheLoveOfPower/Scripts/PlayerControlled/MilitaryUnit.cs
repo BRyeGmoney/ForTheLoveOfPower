@@ -57,6 +57,8 @@ namespace AssemblyCSharp
 		}
 		private List<MilitaryUnit> subordinates;
 
+		public MilitaryUnit commandingUnit;
+
 		public MilitaryUnitType UnitType 
 		{ 
 			get { return unitType; } 
@@ -91,13 +93,13 @@ namespace AssemblyCSharp
 			UnitColor = unitColor;
 			TilePoint = curPoint;
 			UnitType = uType;
-			gameObject.GetComponent<SpriteRenderer> ().color = UnitColor;
+			gameObject.GetComponentInChildren<SpriteRenderer> ().color = UnitColor;
 			//SpriteGuy.color = UnitColor;
-			animator = gameObject.GetComponent<Animator> ();
+			animator = gameObject.GetComponentInChildren<Animator> ();
 
-			if (uType.Equals (MilitaryUnitType.Infantry)) {
+			if (!uType.Equals (MilitaryUnitType.Dictator)) {
 
-				squadLeader = gameObject.transform.GetChild (0).gameObject;
+				squadLeader = gameObject.transform.GetChild (1).gameObject;
 				unitNumText = gameObject.GetComponentInChildren<TextMesh> ();
 			}
 
@@ -127,16 +129,26 @@ namespace AssemblyCSharp
 				if (movementPath.Count > 1) {
 					newCell = grid[movementPath[1]] as UnitCell;
 
-					if (!newCell.unitOnTile) {
-						(grid [movementPath [0]] as UnitCell).RemoveUnit ();
-						movementPath.RemoveAt (0);
+					if (!newCell.unitOnTile || (subordinates != null && subordinates.Exists (sub => sub.TilePoint.Equals (movementPath[1])))) {
+						if (subordinates != null && subordinates.Count > 0) {
+							bool canMove = true;
+							subordinates.ForEach (subby => {
+								if (canMove) { //only continue the cycle if canmove hasn't already been set to false
+									PointyHexPoint newPoint = subby.TilePoint + (movementPath[1] - movementPath[0]);
+									canMove = subby.CheckIfNextSpotClear (newPoint, grid[newPoint] as UnitCell);
+								}
+							});
 
-						newCell.AddUnitToTile (this);
-						gameObject.transform.position = newCell.transform.position;
-						TilePoint = movementPath[0];
+							if (canMove) { //move all subbs and the unit itself
+								subordinates.ForEach (subby => {
+									subby.MoveToNext (grid, grid[subby.movementPath[1]] as UnitCell);
+								});
 
-						if (movementPath.Count <= 1)
-							StartMovingAnimation(false);
+								MoveToNext (grid, newCell);
+							}
+						} else {
+							MoveToNext (grid, newCell);
+						}
 					} else {
 						//Stop the moving animation because we're going to be fighting now
 						StartMovingAnimation (false);
@@ -144,7 +156,20 @@ namespace AssemblyCSharp
 						MilitaryUnit unitOnTile;
 
 						if (newCell.Color.Equals (UnitColor)) { //if it is the same player's units
+							unitOnTile = listOfPlayers[0].milUnits.Find (mU => mU.TilePoint.Equals (movementPath[1]));
+							if (unitOnTile.unitType.Equals (UnitType)) {//if its the same as the current unit type
+								unitOnTile.AddUnits (unitAmount);
+								(grid[movementPath[0]] as UnitCell).RemoveUnit ();
+								Destroy (gameObject);
+							} else {
+								if (subordinates != null && subordinates.Count > 0)
+								{
+									unitOnTile.AddSubordinates (subordinates);
+									RemoveSubordinates (subordinates);
+								}
 
+								unitOnTile.AddSubordinate (this);
+							}
 						} else { //then it must be the other players'
 							unitOnTile = listOfPlayers[1].milUnits.Find(unit => unit.TilePoint.Equals(movementPath[1]));
 
@@ -159,6 +184,38 @@ namespace AssemblyCSharp
 			}
 		}
 
+		public bool CheckIfNextSpotClear(PointyHexPoint nextPoint, UnitCell nextCell) 
+		{
+			bool canMove = false;
+
+			if (nextCell.Color.Equals (UnitColor)) { //if its one of ours, check if he's part of the group
+				if (!commandingUnit.TilePoint.Equals (nextPoint) && nextCell.unitOnTile)
+					canMove = commandingUnit.CheckIfSubordinateExists (nextPoint);
+				else
+					canMove = true;
+			} else if (nextCell.Color.Equals (GameGridBehaviour.baseFloorColor)) { //if its the same as the floor color
+				canMove = true;
+			}
+
+			if (canMove)
+				movementPath.Add (nextPoint);
+
+			return canMove;
+		}
+
+		public void MoveToNext(IGrid<PointyHexPoint> grid, UnitCell newCell)
+		{
+			(grid [movementPath [0]] as UnitCell).RemoveUnit ();
+			movementPath.RemoveAt (0);
+			
+			newCell.AddUnitToTile (this);
+			gameObject.transform.position = newCell.transform.position;
+			TilePoint = movementPath[0];
+			
+			if (movementPath.Count <= 1)
+				StartMovingAnimation(false);
+		}
+
 		public void ChangeSpriteDirection(UnitCell nextPoint)
 		{
 			if (nextPoint.transform.position.x < gameObject.transform.position.x && facingRight)
@@ -166,7 +223,7 @@ namespace AssemblyCSharp
 				animator.transform.Rotate (0, 180, 0);
 				facingRight = false;
 			}
-			else if (nextPoint.transform.position.y > gameObject.transform.position.x && !facingRight)
+			else if (nextPoint.transform.position.x > gameObject.transform.position.x && !facingRight)
 			{
 				animator.transform.Rotate (0, 180, 0);
 				facingRight = true;
@@ -199,6 +256,9 @@ namespace AssemblyCSharp
 		public void AddUnits(int amountToAdd)
 		{
 			unitAmount += amountToAdd;
+
+			if (unitAmount > 1)
+				unitNumText.text = unitAmount.ToString ();
 		}
 
 		public void RemoveUnits(int amountToRemove)
@@ -206,12 +266,27 @@ namespace AssemblyCSharp
 			unitAmount -= amountToRemove;
 		}
 
+		public bool CheckIfSubordinateExists(PointyHexPoint pointToCheck) 
+		{
+			if (subordinates != null) {
+				if (subordinates.Exists (unit => unit.TilePoint.Equals (pointToCheck)))
+					return true;
+				else
+					return false;
+			}
+
+			return false;
+		}
+
 		public void AddSubordinate(MilitaryUnit unitToCommand)
 		{
 			if (subordinates == null)
 				subordinates = new List<MilitaryUnit> ();
-			
+
+			squadLeader.SetActive (true);
+
 			subordinates.Add (unitToCommand);
+			unitToCommand.commandingUnit = this;
 		}
 
 		public void AddSubordinates(List<MilitaryUnit> unitsToCommand)
@@ -219,7 +294,30 @@ namespace AssemblyCSharp
 			if (subordinates == null)
 				subordinates = new List<MilitaryUnit> ();
 
+			squadLeader.SetActive (true);
+
+			unitsToCommand.ForEach (sub => sub.commandingUnit = this);
+
 			subordinates.AddRange (unitsToCommand);
+		}
+
+		public void RemoveSubordinate(MilitaryUnit unitToRemove)
+		{
+			subordinates.Remove (unitToRemove);
+
+			if (subordinates.Count < 1)
+				squadLeader.SetActive (false);
+		}
+
+
+		public void RemoveSubordinates(List<MilitaryUnit> unitsToRemove)
+		{
+			unitsToRemove.ForEach (unit => {
+				subordinates.Remove (unit);
+			});
+
+			if (subordinates.Count < 1)
+				squadLeader.SetActive (false);
 		}
 
 		public void UpdateUnit(IGrid<PointyHexPoint> grid, Player[] listOfPlayers)

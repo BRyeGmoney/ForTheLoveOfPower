@@ -9,6 +9,7 @@ using AssemblyCSharp;
 
 public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	static public bool didWin;
+	static public Color baseFloorColor;// = new Color (0.327f, 0.779f, 0.686f, 1f);
 
 	PointyHexPoint startPoint;
 	UnitCell startCell;
@@ -43,6 +44,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 		//me = gameObject.GetComponent<PointyHexTileGridBuilder> ();
 		buildScreenSettings = buildScreen.GetComponent<BuildMenuBehaviour> ();
+		baseFloorColor = GridBuilder.Colors [0];
 
 		//Input.simulateMouseWithTouches = true;
 
@@ -202,6 +204,8 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 		//Update All the player's units, post fight, in case anyone died, we can get rid of them now
 		listOfPlayers[0].milUnits.ForEach (unit => {
+
+			if (unit != null) {
 			unit.UpdateUnit(Grid, listOfPlayers);
 
 			if (unit.GetUnitAmount () < 1) {
@@ -210,6 +214,8 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 				this.listofCurrentCombats.Add (unit.combatToUpdateGame);
 				unit.combatToUpdateGame = null;
 			}
+			} else
+				listOfPlayers[0].milUnits.Remove (unit);
 		});
 
 		//Update all the second player's units, post fight, in case anyone died
