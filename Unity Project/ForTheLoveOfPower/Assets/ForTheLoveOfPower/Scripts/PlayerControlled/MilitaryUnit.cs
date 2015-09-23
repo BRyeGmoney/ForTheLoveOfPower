@@ -96,6 +96,7 @@ namespace AssemblyCSharp
 			gameObject.GetComponentInChildren<SpriteRenderer> ().color = UnitColor;
 			//SpriteGuy.color = UnitColor;
 			animator = gameObject.GetComponentInChildren<Animator> ();
+			movementPath = new PointList<PointyHexPoint> ();
 
 			if (!uType.Equals (MilitaryUnitType.Dictator)) {
 
@@ -126,15 +127,20 @@ namespace AssemblyCSharp
 			UnitCell newCell;
 
 			if (movementPath != null) {
-				if (movementPath.Count > 1) {
+				//make sure that this isn't the update cycle of a subordinate
+				if (movementPath.Count > 1 && commandingUnit == null) {
 					newCell = grid[movementPath[1]] as UnitCell;
 
+					ChangeSpriteDirection (newCell);
+
+					//if there's no unit on the next tile or if there is and this unit has subordinates, than its okay if its one of the subordinates
 					if (!newCell.unitOnTile || (subordinates != null && subordinates.Exists (sub => sub.TilePoint.Equals (movementPath[1])))) {
 						if (subordinates != null && subordinates.Count > 0) {
 							bool canMove = true;
+							//lets test the water with each subordinate to make sure the whole group can go
 							subordinates.ForEach (subby => {
 								if (canMove) { //only continue the cycle if canmove hasn't already been set to false
-									PointyHexPoint newPoint = subby.TilePoint + (movementPath[1] - movementPath[0]);
+									PointyHexPoint newPoint = subby.TilePoint + (movementPath[1] - movementPath[0]); //just a difference thing
 									canMove = subby.CheckIfNextSpotClear (newPoint, grid[newPoint] as UnitCell);
 								}
 							});
@@ -146,7 +152,7 @@ namespace AssemblyCSharp
 
 								MoveToNext (grid, newCell);
 							}
-						} else {
+						} else { //if this unit has no subordinates
 							MoveToNext (grid, newCell);
 						}
 					} else {
@@ -164,11 +170,18 @@ namespace AssemblyCSharp
 							} else {
 								if (subordinates != null && subordinates.Count > 0)
 								{
-									unitOnTile.AddSubordinates (subordinates);
+									if (unitOnTile.commandingUnit != null) {
+										unitOnTile.commandingUnit.AddSubordinates (subordinates);
+									} else {
+										unitOnTile.AddSubordinates (subordinates);
+									}
 									RemoveSubordinates (subordinates);
 								}
 
-								unitOnTile.AddSubordinate (this);
+								if (unitOnTile.commandingUnit != null)
+									unitOnTile.commandingUnit.AddSubordinate (this);
+								else
+									unitOnTile.AddSubordinate (this);
 							}
 						} else { //then it must be the other players'
 							unitOnTile = listOfPlayers[1].milUnits.Find(unit => unit.TilePoint.Equals(movementPath[1]));
@@ -218,38 +231,53 @@ namespace AssemblyCSharp
 
 		public void ChangeSpriteDirection(UnitCell nextPoint)
 		{
-			if (nextPoint.transform.position.x < gameObject.transform.position.x && facingRight)
-			{
-				animator.transform.Rotate (0, 180, 0);
-				facingRight = false;
-			}
-			else if (nextPoint.transform.position.x > gameObject.transform.position.x && !facingRight)
-			{
-				animator.transform.Rotate (0, 180, 0);
-				facingRight = true;
+			if (animator != null) {
+				if (nextPoint.transform.position.x < gameObject.transform.position.x && facingRight) {
+					animator.transform.Rotate (0, 180, 0);
+					facingRight = false;
+				} else if (nextPoint.transform.position.x > gameObject.transform.position.x && !facingRight) {
+					animator.transform.Rotate (0, 180, 0);
+					facingRight = true;
+				}
 			}
 		}
 
 		void StartMovingAnimation(bool move) {
-			animator.SetBool ("isMoving", move);
+			if (animator != null)
+				animator.SetBool ("isMoving", move);
 		}
 
 		public void StartCombatAnimation() {
-			animator.SetTrigger ("inCombat");
+			if (animator != null)
+				animator.SetTrigger ("inCombat");
 		}
 
 		public void StopCombatAnimation() {
-			animator.SetTrigger ("wonCombat");
+			if (animator != null)
+				animator.SetTrigger ("wonCombat");
 		}
 
 		public void StartDeathAnimation() {
-			animator.SetTrigger ("isKilled");
+			if (animator != null)
+				animator.SetTrigger ("isKilled");
 		}
 
 		public void SetMovementPath(PointList<PointyHexPoint> newPath)
 		{
 			movementPath = newPath;
-			if (movementPath.Count > 0)
+
+
+
+			if (subordinates != null) {
+				subordinates.ForEach (sub => {
+					sub.movementPath.Clear ();
+					sub.movementPath.Add (sub.TilePoint);
+
+					if (movementPath.Count > 1)
+						sub.StartMovingAnimation (true);
+				});
+			}
+			if (movementPath.Count > 1)
 				StartMovingAnimation (true);
 		}
 

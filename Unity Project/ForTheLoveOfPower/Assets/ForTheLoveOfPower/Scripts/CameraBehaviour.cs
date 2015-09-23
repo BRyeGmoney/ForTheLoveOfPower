@@ -17,9 +17,6 @@ public class CameraBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		Camera.main.orthographicSize -= Input.GetAxis ("Mouse ScrollWheel") * 200f;
-		Camera.main.orthographicSize = Mathf.Clamp (Camera.main.orthographicSize, 200, 1000);
-
 		// If there are two touches on the device...
 		if (Input.touchCount == 2)
 		{
@@ -48,9 +45,12 @@ public class CameraBehaviour : MonoBehaviour {
 			} else {
 				Camera.main.transform.parent.transform.Translate(-touchZero.deltaPosition.x * 5f, -touchZero.deltaPosition.y * 5f, 0);
 			}
-		}
+		} 
 
 		if (!Input.touchSupported) {
+			Camera.main.orthographicSize -= Input.GetAxis ("Mouse ScrollWheel") * 200f;
+			Camera.main.orthographicSize = Mathf.Clamp (Camera.main.orthographicSize, 200, 1000);
+
 			if (Input.GetMouseButton (1)) { // we're moving
 				Camera.main.transform.position = Vector3.Lerp (Camera.main.transform.position, Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y)), 5 * Time.deltaTime);
 				currMousePos = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0);

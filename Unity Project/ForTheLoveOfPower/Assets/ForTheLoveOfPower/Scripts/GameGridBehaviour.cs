@@ -144,6 +144,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 					foreach (PointyHexPoint point in path) 
 						(Grid [point] as SpriteCell).HighlightOn = true;
 					PointList<PointyHexPoint> pathPointList = path.ToPointList ();
+					//pathPointList.RemoveAt(0); //get rid of the first tile
 					unitOnTile.SetMovementPath (pathPointList);
 					unitOnTile.ChangeSpriteDirection (Grid[pathPointList[1]] as UnitCell);
 					

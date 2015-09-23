@@ -13,13 +13,16 @@ public class UnitCell : SpriteCell {
 	public bool unitOnTile;
 	public bool buildingOnTile;
 	public int playerOnTile;
+	private Color baseTileColor = new Color32 (83, 199, 175, 255);
 	private Color prevTileColor = Color.black;
 
 	private Sprite holdingSprite;
 
 	public void AddUnitToTile(AssemblyCSharp.MilitaryUnit unitToDisplay)
 	{
-		SetTileColor (unitToDisplay.UnitColor);
+		if (!buildingOnTile)
+			SetTileColor (unitToDisplay.UnitColor);
+
 		unitOnTile = true;
 	} 
 
@@ -31,8 +34,12 @@ public class UnitCell : SpriteCell {
 
 	public void SetTileColor(Color tileColor)
 	{
-		prevTileColor = this.Color;
-		this.Color = tileColor;
+		if (tileColor != this.Color || prevTileColor != this.Color)
+			prevTileColor = this.Color;
+		else
+			prevTileColor = Color.black;
+
+		this.Color = tileColor; 
 	}
 
 	public void RemoveUnit()
@@ -42,7 +49,7 @@ public class UnitCell : SpriteCell {
 			if (!prevTileColor.Equals (Color.black)) 
 				SetTileColor (prevTileColor);
 			else
-				SetTileColor (new Color32 (83, 199, 175, 255));
+				SetTileColor (baseTileColor);
 		}
 	}
 }
