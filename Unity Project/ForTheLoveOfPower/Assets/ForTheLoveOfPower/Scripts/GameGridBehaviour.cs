@@ -136,6 +136,8 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 				if (!startChosen) {
 					if (listOfPlayers [0].milUnits.Exists (unit => unit.TilePoint.Equals (clickedPoint))) {//quick check that someone is actually here
 						startPoint = clickedPoint;
+						unitToMove = listOfPlayers [0].milUnits.Find (unit => unit.TilePoint.Equals (startPoint));
+						unitToMove.ClearMovementPath ();
 						startChosen = true;
 					}
 				}
@@ -148,7 +150,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			clickedCell = Grid [clickedPoint] as UnitCell;
 
 			endPoint = clickedPoint;
-			if (clickedPoint != prevClickedPoint) {
+			if (clickedPoint != prevClickedPoint || clickedPoint != startPoint) {
 				if (path != null)
 					prevPath = path;
 
@@ -167,9 +169,12 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 				}
 			}
 		} else if (startChosen) {
-			unitToMove = listOfPlayers [0].milUnits.Find (unit => unit.TilePoint.Equals (startPoint));
-			unitToMove.SetMovementPath (path);
-			unitToMove.ChangeSpriteDirection (Grid [path [1]] as UnitCell);
+			if (path.Count > 1) {
+				unitToMove.SetMovementPath (path);
+				unitToMove.ChangeSpriteDirection (Grid [path [1]] as UnitCell);
+				path.Clear ();
+				prevPath.Clear ();
+			}
 
 			timer = 0f;
 			startChosen = false;

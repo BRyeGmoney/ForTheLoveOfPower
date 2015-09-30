@@ -264,8 +264,7 @@ namespace AssemblyCSharp
 
 		public void SetMovementPath(PointList<PointyHexPoint> newPath)
 		{
-			movementPath = newPath;
-
+			movementPath.AddRange(newPath);
 
 
 			if (subordinates != null) {
@@ -279,6 +278,11 @@ namespace AssemblyCSharp
 			}
 			if (movementPath.Count > 1)
 				StartMovingAnimation (true);
+		}
+
+		public void ClearMovementPath()
+		{
+			movementPath.Clear ();
 		}
 
 		public void AddUnits(int amountToAdd)
