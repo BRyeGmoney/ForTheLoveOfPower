@@ -51,7 +51,7 @@ public class CameraBehaviour : MonoBehaviour {
 			Camera.main.orthographicSize -= Input.GetAxis ("Mouse ScrollWheel") * 200f;
 			Camera.main.orthographicSize = Mathf.Clamp (Camera.main.orthographicSize, 200, 1000);
 
-			if (Input.GetMouseButton (1)) { // we're moving
+			if (Input.GetMouseButton (2)) { // we're moving
 				Camera.main.transform.position = Vector3.Lerp (Camera.main.transform.position, Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y)), 5 * Time.deltaTime);
 				currMousePos = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0);
 				prevState = 1;

@@ -1,10 +1,12 @@
-﻿Shader "Custom/CustomSpriteShader" {
+Shader "Custom/CustomSpriteShader" {
 	Properties
 	{
 		[PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
 		_Color ("Tint", Color) = (1,1,1,1)
 		_ColorToChangeTo ("NewColor", Color) = (1,1,1,1)
 		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
+		_PercentageBuilt ("Percentage Built", Float) = 0
+		_PercentageCaptured ("Percentage Captured", Float) = 0
 	}
 
 	SubShader
@@ -47,6 +49,8 @@
 			
 			fixed4 _Color;
 			fixed4 _ColorToChangeTo;
+			fixed _PercentageBuilt;
+			fixed _PercentageCaptured;
 
 			v2f vert(appdata_t IN)
 			{
@@ -66,6 +70,7 @@
 			fixed4 frag(v2f IN) : SV_Target
 			{
 				fixed4 c = tex2D(_MainTex, IN.texcoord) * IN.color;
+				
 				c.rgb *= c.a;
 				return c;
 			}

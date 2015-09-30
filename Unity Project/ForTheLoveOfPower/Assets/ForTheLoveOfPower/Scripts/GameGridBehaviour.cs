@@ -13,11 +13,15 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 	PointyHexPoint startPoint;
 	UnitCell startCell;
+	UnitCell clickedCell;
 	UnitCell prevClickedCell;
+	PointyHexPoint clickedPoint;
 	PointyHexPoint prevClickedPoint;
 	PointyHexPoint endPoint;
+	MilitaryUnit unitToMove;
 	Touch prevTouch;
-	IEnumerable<PointyHexPoint> path;
+	PointList<PointyHexPoint> path;
+	PointList<PointyHexPoint> prevPath;
 	//PointyHexTileGridBuilder me;
 	BuildMenuBehaviour buildScreenSettings;
 	
@@ -76,10 +80,11 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 					PressTile (clickedCell, clickedPoint);
 				} else if (startChosen && curTouch.phase.Equals (TouchPhase.Moved)) {
 					if (prevClickedPoint != clickedPoint) {
-						PointList<PointyHexPoint> prevPath = path.ToPointList ();
+						prevPath = path;
 					
-						path = GetGridPath ();
+						path = GetGridPath ().ToPointList ();
 					
+
 						foreach (PointyHexPoint point in path) {
 							prevPath.Remove (point);
 							(Grid [point] as SpriteCell).HighlightOn = true;
@@ -89,9 +94,9 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 							(Grid [point] as SpriteCell).HighlightOn = false;
 					}
 				} else if (curTouch.phase.Equals (TouchPhase.Moved) && prevTouch.phase.Equals (TouchPhase.Began) || prevTouch.phase.Equals (TouchPhase.Stationary)) { //we'll try to see if there was a unit to move in the prevClicked
-					MilitaryUnit unitOnTile = listOfPlayers [0].milUnits.Find (unit => unit.TilePoint.Equals (prevClickedPoint));
+					unitToMove = listOfPlayers [0].milUnits.Find (unit => unit.TilePoint.Equals (prevClickedPoint));
 				
-					if (unitOnTile != null) {
+					if (unitToMove != null) {
 						startChosen = true;
 						startPoint = prevClickedPoint;
 					}
@@ -105,10 +110,10 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		} else {
 			//touchTypes.text = String.Format ("none & {0}", prevTouch.phase.ToString ());
 			if (startChosen) { //that means we've decided the final point for the unit
-				MilitaryUnit unitOnTile = listOfPlayers [0].milUnits.Find (unit => unit.TilePoint.Equals (startPoint));
+				unitToMove = listOfPlayers [0].milUnits.Find (unit => unit.TilePoint.Equals (startPoint));
 				
-				if (unitOnTile != null)
-					unitOnTile.SetMovementPath (path.ToPointList ());
+				if (unitToMove != null)
+					unitToMove.SetMovementPath (path.ToPointList ());
 				
 				timer = 0f;
 				startChosen = false;
@@ -121,39 +126,15 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	/// </summary>
 	void CheckMouseInput()
 	{
-		Debug.Log (String.Format ("We're Checking Mouse Input: {0}", bloop));
-		if (bloop < -10000)
-			bloop = 0;
-		else
-			bloop -= 1;
-
-		//If there is a unit on this tile, or if we have previously chosen a unit
+		//We're checking for right mouse input, the first frame of it being down
 		if (Input.GetMouseButtonDown (1)) {
-			PointyHexPoint clickedPoint = Map[GridBuilderUtils.ScreenToWorld (Input.mousePosition)];
-			UnitCell clickedCell = Grid[clickedPoint] as UnitCell;
-			//clickedCell.Color = Color.red;
+			clickedPoint = Map [GridBuilderUtils.ScreenToWorld (Input.mousePosition)];
+			clickedCell = Grid [clickedPoint] as UnitCell;
 
-			if ((clickedCell.unitOnTile) || startChosen) {
-				MilitaryUnit unitOnTile;
-				
-				if (startChosen) {
-					unitOnTile = listOfPlayers [0].milUnits.Find (unit => unit.TilePoint.Equals (prevClickedPoint));
-					endPoint = clickedPoint;
-					
-					path = GetGridPath ();
-					foreach (PointyHexPoint point in path) 
-						(Grid [point] as SpriteCell).HighlightOn = true;
-					PointList<PointyHexPoint> pathPointList = path.ToPointList ();
-					//pathPointList.RemoveAt(0); //get rid of the first tile
-					unitOnTile.SetMovementPath (pathPointList);
-					unitOnTile.ChangeSpriteDirection (Grid[pathPointList[1]] as UnitCell);
-					
-					//start the timer to make it dissapear and then reset the flag that tells
-					//us if we're trying to move something
-					timer = 0f;
-					startChosen = false;
-				} else if (!startChosen) {
-					if (listOfPlayers [0].milUnits.Exists (unit => unit.TilePoint.Equals (clickedPoint))) {
+			//if the initial click succesfully targets a unit, lets set them
+			if ((clickedCell.unitOnTile)) {
+				if (!startChosen) {
+					if (listOfPlayers [0].milUnits.Exists (unit => unit.TilePoint.Equals (clickedPoint))) {//quick check that someone is actually here
 						startPoint = clickedPoint;
 						startChosen = true;
 					}
@@ -162,9 +143,41 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 			prevClickedPoint = clickedPoint;
 			prevClickedCell = clickedCell;
-		} else if (Input.GetMouseButtonDown (0)) {
-			PointyHexPoint clickedPoint = Map[GridBuilderUtils.ScreenToWorld (Input.mousePosition)];
-			UnitCell clickedCell = Grid[clickedPoint] as UnitCell;
+		} else if (Input.GetMouseButton (1) && startChosen) { //we're polling for if the right mouse is held down, and if the start tile has been chosen
+			clickedPoint = Map [GridBuilderUtils.ScreenToWorld (Input.mousePosition)];
+			clickedCell = Grid [clickedPoint] as UnitCell;
+
+			endPoint = clickedPoint;
+			if (clickedPoint != prevClickedPoint) {
+				if (path != null)
+					prevPath = path;
+
+				path = GetGridPath ().ToPointList();
+
+				foreach (PointyHexPoint point in path) {
+					if (prevPath != null && prevPath.Contains (point))
+						prevPath.Remove(point);
+
+					(Grid [point] as SpriteCell).Color = listOfPlayers[0].PlayerColor;
+				}
+
+				if (prevPath != null) {
+					foreach (PointyHexPoint point in prevPath) 
+						(Grid[point] as SpriteCell).Color = baseFloorColor;
+				}
+			}
+		} else if (startChosen) {
+			unitToMove = listOfPlayers [0].milUnits.Find (unit => unit.TilePoint.Equals (startPoint));
+			unitToMove.SetMovementPath (path);
+			unitToMove.ChangeSpriteDirection (Grid [path [1]] as UnitCell);
+
+			timer = 0f;
+			startChosen = false;
+		}
+		
+		if (Input.GetMouseButtonDown (0)) {
+			clickedPoint = Map[GridBuilderUtils.ScreenToWorld (Input.mousePosition)];
+			clickedCell = Grid[clickedPoint] as UnitCell;
 
 			PressTile (clickedCell, clickedPoint);
 
@@ -185,7 +198,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 				CheckMouseInput ();
 		}
 
-		if (timer > 1f) {
+		if (timer > 1f && !startChosen) {
 			if (path != null) {
 				foreach (PointyHexPoint point in path) 
 					(Grid [point] as SpriteCell).HighlightOn = false;
@@ -436,21 +449,5 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		                                           1);
 
 		return path.Keys.ToPointList<PointyHexPoint>();
-	}
-
-	void OnGUI()
-	{
-		int w = Screen.width, h = Screen.height;
-		
-		GUIStyle style = new GUIStyle();
-		
-		Rect rect = new Rect(0, 0, w, h * 2 / 100);
-		style.alignment = TextAnchor.LowerRight;
-		style.fontSize = h * 2 / 100;
-		style.normal.textColor = new Color (0.0f, 0.0f, 0.5f, 1.0f);
-		float msec = Time.deltaTime * 1000.0f;
-		float fps = 1.0f / Time.deltaTime;
-		string text = string.Format("{0:0.0} ms ({1:0.} fps)", msec, fps);
-		GUI.Label(rect, text, style);
 	}
 }
