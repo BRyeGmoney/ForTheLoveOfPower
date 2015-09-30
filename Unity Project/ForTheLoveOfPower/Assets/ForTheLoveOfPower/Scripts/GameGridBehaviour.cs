@@ -147,10 +147,11 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			prevClickedCell = clickedCell;
 		} else if (Input.GetMouseButton (1) && startChosen) { //we're polling for if the right mouse is held down, and if the start tile has been chosen
 			clickedPoint = Map [GridBuilderUtils.ScreenToWorld (Input.mousePosition)];
-			clickedCell = Grid [clickedPoint] as UnitCell;
 
-			endPoint = clickedPoint;
 			if (clickedPoint != prevClickedPoint || clickedPoint != startPoint) {
+				endPoint = clickedPoint;
+				clickedCell = Grid [clickedPoint] as UnitCell;
+
 				if (path != null)
 					prevPath = path;
 
@@ -160,12 +161,12 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 					if (prevPath != null && prevPath.Contains (point))
 						prevPath.Remove(point);
 
-					(Grid [point] as SpriteCell).Color = listOfPlayers[0].PlayerColor;
+					(Grid [point] as UnitCell).SetTileColorPath (listOfPlayers[0].PlayerColor);
 				}
 
 				if (prevPath != null) {
 					foreach (PointyHexPoint point in prevPath) 
-						(Grid[point] as SpriteCell).Color = baseFloorColor;
+						(Grid[point] as UnitCell).SetTileColorUnPath ();
 				}
 			}
 		} else if (startChosen) {

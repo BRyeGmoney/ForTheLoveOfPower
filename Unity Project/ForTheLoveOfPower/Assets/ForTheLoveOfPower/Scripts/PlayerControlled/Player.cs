@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
 
 	public List<AssemblyCSharp.MilitaryUnit> milUnits;
 	public List<AssemblyCSharp.Settlement> settlements;
+	public List<PointyHexPoint> ownedTiles;
 	public Int32 Cash { get; set; }
 
 	public Color PlayerColor { get { return playerColor; } }
@@ -24,15 +25,7 @@ public class Player : MonoBehaviour {
 		//temp player color
 		playerColor = new Color32 (0, 255, 255, 255);
 	}
-
-	/*protected void InitBasePlayer()
-	{
-		milUnits = new List<AssemblyCSharp.MilitaryUnit> ();
-		settlements = new List<AssemblyCSharp.Settlement> ();
-		
-		//ownedTiles = new PointList<PointyHexPoint> ();
-		DictatorAlive = true;
-	}*/
+	
 	protected void InitBasePlayer()
 	{
 		milUnits = new List<AssemblyCSharp.MilitaryUnit> ();
@@ -51,23 +44,27 @@ public class Player : MonoBehaviour {
 		return currList;
 	}
 
-	/*public void AddToOwnedTiles(IGrid<PointyHexPoint> gameGrid, PointyHexPoint pointToAdd)
-	{
-		if (!GetOwnedTiles ().Contains (pointToAdd)) {
-			ownedTiles.Add (pointToAdd);
-			(gameGrid [pointToAdd] as UnitCell).SetTileColor (PlayerColor);
-		}
-	}*/
-
 	public void AddToOwnedTiles(IGrid<PointyHexPoint> gameGrid, AssemblyCSharp.Settlement ownSettlement, Player enemyPlayer, PointList<PointyHexPoint> pointsToAdd)
 	{
-		//Add code to ensure player doesn't build two settlements together here
 		foreach (PointyHexPoint point in TileDoesNotBelongToOtherSettlement(gameGrid, ownSettlement, enemyPlayer, pointsToAdd)) {
 			if (!ownSettlement.tilesOwned.Contains (point)) {
 				ownSettlement.tilesOwned.Add (point);
-				(gameGrid [point] as UnitCell).SetTileColor (PlayerColor);
+				//ownedTiles.Add (point);
+				(gameGrid [point] as UnitCell).SetTileColorStructure (PlayerColor);
 			}
 		}
+	}
+
+	public void AddToOwnedTiles(IGrid<PointyHexPoint> gameGrid, Player enemyPlayer, PointyHexPoint pointToAdd)
+	{
+		if (!(gameGrid [pointToAdd] as UnitCell).buildingOnTile) {
+			ownedTiles.Add (pointToAdd);
+		}
+	}
+
+	public void RemoveFromOwnedTiles(PointyHexPoint pointToRemove)
+	{
+		ownedTiles.Remove (pointToRemove);
 	}
 
 	private PointList<PointyHexPoint> TileDoesNotBelongToOtherSettlement(IGrid<PointyHexPoint> gameGrid, AssemblyCSharp.Settlement ownSettlement, Player enemyPlayer, PointList<PointyHexPoint> pointsToAdd) 
@@ -90,7 +87,7 @@ public class Player : MonoBehaviour {
 		});
 
 		pointsToRemove.ToList<PointyHexPoint>().ForEach (point => {
-			(gameGrid[point] as UnitCell).SetTileColor (new Color32(83, 199, 175, 255));
+			(gameGrid[point] as UnitCell).SetTileColorUnPath ();
 		});
 
 		return pointsToAdd.Except (pointsToRemove).ToPointList<PointyHexPoint>();
