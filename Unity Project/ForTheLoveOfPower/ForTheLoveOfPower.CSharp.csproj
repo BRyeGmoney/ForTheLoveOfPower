@@ -1,0 +1,401 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{34A31C7A-2E65-1A53-CE16-2CD1E0A9BE2E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <CompilerResponseFile></CompilerResponseFile>
+    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityBuildTarget>Android:13</UnityBuildTarget>
+    <UnityVersion>5.2.1f1</UnityVersion>
+    <RootNamespace></RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\UnityVS_bin\Debug\</OutputPath>
+    <IntermediateOutputPath>Temp\UnityVS_obj\Debug\</IntermediateOutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_2_1;UNITY_5_2;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_2D_PHYSICS;ENABLE_4_6_FEATURES;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_REFLECTION_BUFFERS;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_SUBSTANCE;UNITY_ANDROID_API;ENABLE_TEXTUREID_MAP;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;DEVELOPMENT_BUILD;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN</DefineConstants>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\UnityVS_bin\Release\</OutputPath>
+    <IntermediateOutputPath>Temp\UnityVS_obj\Release\</IntermediateOutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>TRACE;UNITY_5_2_1;UNITY_5_2;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_2D_PHYSICS;ENABLE_4_6_FEATURES;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_REFLECTION_BUFFERS;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_SUBSTANCE;UNITY_ANDROID_API;ENABLE_TEXTUREID_MAP;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;DEVELOPMENT_BUILD;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN</DefineConstants>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Core" />
+    <Reference Include="Boo.Lang" />
+    <Reference Include="UnityScript.Lang" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UnityEngine">
+      <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="ForTheLoveOfPower.CSharp.Plugins.csproj">
+      <Project>{F9F1AB7C-3183-DC60-8111-F9DC36237849}</Project>
+      <Name>ForTheLoveOfPower.CSharp.Plugins</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\ForTheLoveOfPower\Scripts\CameraBehaviour.cs" />
+    <Compile Include="Assets\ForTheLoveOfPower\Scripts\Combat.cs" />
+    <Compile Include="Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs" />
+    <Compile Include="Assets\ForTheLoveOfPower\Scripts\MenuScripts\BuildMenuBehaviour.cs" />
+    <Compile Include="Assets\ForTheLoveOfPower\Scripts\MenuScripts\MenuBehaviour.cs" />
+    <Compile Include="Assets\ForTheLoveOfPower\Scripts\MenuScripts\StatsBehaviour.cs" />
+    <Compile Include="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\AIPlayer.cs" />
+    <Compile Include="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\MilitaryUnit.cs" />
+    <Compile Include="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\Player.cs" />
+    <Compile Include="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\Settlement.cs" />
+    <Compile Include="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\StructureUnit.cs" />
+    <Compile Include="Assets\ForTheLoveOfPower\Scripts\UnitCell.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\3D\HexWorld.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\Algorithms\DiffusionHex.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\Algorithms\MazeBuilder.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\Algorithms\PrimsAlgorithmHex.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\BasicGridSetup\FlatBrickTest.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\BasicGridSetup\FlatHexTest.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\BasicGridSetup\MazeAlgorithmsHex.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\BasicGridSetup\PointyBrickTest.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\BasicGridSetup\PointyHexTest.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\BasicGridSetup\PolarFlatBrickGridMain.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\BasicGridSetup\PolarPointyBrickGridMain.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\CustomBuilderTests\PointyBrickCustomMapBuilder.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\CustomBuilderTests\PointyHexCustomMapBuilder.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\CustomBuilderTests\PointyHexGrid_Test.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\Games\LightsOut\LightsOutHex.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\Games\Lines\Lines.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\Games\Lines\LinesCell.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Basic\Stress\StressTestHex.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\3D\RectWorld.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\AdvanedGridSetup\AnimatedGrid.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\AdvanedGridSetup\AnimatedGridMap.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\AdvanedGridSetup\ChainMailGrid.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Algorithms\DiffusionRect.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Algorithms\MazeAlgorithmsRect.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Algorithms\MazeCell.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Algorithms\PrimsAlgorithmRect.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\BasicGridSetup\DiamondTest.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\BasicGridSetup\PolarRectGridMain.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\BasicGridSetup\RectTest.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Games\BlocksSlider\BlocksSlider.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Games\SliderPuzzle\SilderPuzzle.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Helpers\ExampleUtils.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Helpers\IResetable.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Helpers\ResetButtonHandler.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Helpers\ScreenShotTaker.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Maps\ImageMapTest.cs" />
+    <Compile Include="Assets\Gamelogic\Examples\Grids\Scripts\Grids Lite\Stress\StressTestRect.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Attributes\NonNegativeAttribute.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Attributes\PositiveAttribute.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\BinaryHeap\BinaryHeap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\Generators\BatchGenerator.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\Generators\Buffer.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\Generators\IGenerator.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\Generators\ShuffledBatchGenerator.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\KDTree\IDistanceFunction.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\KDTree\IntervalHeap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\KDTree\KDNode.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\KDTree\KDTree.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\KDTree\MinHeap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\KDTree\NearestNeighbour.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\ResponseCurve\ResponseCurveBase.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\ResponseCurve\ResponseCurveColor.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\ResponseCurve\ResponseCurveFloat.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\ResponseCurve\ResponseCurveVector2.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\ResponseCurve\ResponseCurveVector3.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Datastructures\ResponseCurve\ResponseCurveVector4.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Debug\GLDebug.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\Clock.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\CollectionExtensions.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\ColorExtensions.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\GLMonoBehaviour.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\GLPlayerPrefs.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\GLRandom.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\ImmutableAttribute.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\MainPage.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\MinMaxFloat.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\Singleton.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\StateMachine.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\TransformExtensions.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Common\Extensions\VectorExtensions.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Builders\AbstractOp.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Builders\AbstractShapeInfo.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Builders\AbstractSplicedShapeInfo.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Builders\IShapeInfo.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Builders\ShapeMethodAttribute.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Builders\ShapeStorageInfo.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\ExtraDocumentation\MainPage.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\Diamond\DiamondGrid.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\Diamond\DiamondMap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\Diamond\DiamondOp.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\Diamond\DiamondPoint.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\FlatHex\FlatBricksMap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\FlatHex\FlatHexGrid.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\FlatHex\FlatHexMap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\FlatHex\FlatHexOp.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\FlatHex\FlatHexPoint.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\FlatHex\PolarFlatBrickMap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\PointyHex\PointyBrickMap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\PointyHex\PointyHexGrid.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\PointyHex\PointyHexHorizontalRectangleWrapper.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\PointyHex\PointyHexMap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\PointyHex\PointyHexOp.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\PointyHex\PointyHexPoint.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\PointyHex\PolarPointyBrickMap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\Rect\NestedRectGrid.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\Rect\PolarRectMap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\Rect\RectGrid.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\Rect\RectMap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\Rect\RectOp.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\GridTypes\Rect\RectPoint.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Grids\AbstractSplicedGrid.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Grids\AbstractUniformGrid.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Grids\GenericSplicedGrid.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Grids\GridExtensions.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Grids\IEvenGrid.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Grids\IGrid.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Grids\IGridSpace.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Grids\IVectorGrid.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Grids\LayeredGrid.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Grids\WrappedGrid.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Helper\ArrayPoint.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Helper\IntExtensions.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Helper\IntRect.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Helper\Mathi.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Helper\Vector2Transforms.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\AbstractMap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\CompoundMap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\IGridToWorldMap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\IMap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\IMap3D.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\IPolarMap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\ImageMap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\Map3DExtensions.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\Map3DXY.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\Map3DXZ.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\MapExtensions.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\PolygonGridMap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\SplicedMap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Maps\WindowedMap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Meta\ExperimentalAttribute.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Obsolete\ObsoleteExtensions.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Obsolete\TextureCell.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Points\IEdge.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Points\IGridPoint.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Points\IPointWrapper.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Points\ISplicedPoint.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Points\ISplicedVectorPoint.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Points\ISupportsEdges.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Points\ISupportsVertices.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Points\IVectorPoint.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Points\IVertex.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Points\VectorPoint.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Shapes\IShape.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Shapes\Shape.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\CompilerHints.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\CompilerHints_GL.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\Grid.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\HexAlgorithm.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\HexPoint.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\Op.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\Point.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\ShapeAbbreviations.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\ShapeInfo.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\SplicedGrid.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\SplicedOp.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\SplicedPoint.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\TemplateCode.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TemplateCode.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\TemplateCode1.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\TemplateCode4.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\UniformGrid.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\VertexEdgeGrid.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\AnimatableMap.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Cells\Block.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Cells\ICell.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Cells\IColorableCell.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Cells\MeshTileCell.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Cells\SpriteCell.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Cells\TileCell.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Cells\UIImageCell.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Cells\UIImageTextCell.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Cells\UITextCell.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Cells\UVCell.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GLGizmos.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\CustomGridBuilder.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\CustomMapBuilder.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\DiamondTileGridBuilder.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\FlatHexTileGridBuilder.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\GridBehaviour.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\GridBuilder.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\GridBuilderUtils.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\ITileGrid.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\PointyHexTileGridBuilder.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\PolarFlatBrickTileGridBuilder.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\PolarPointyBrickTileGridBuilder.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\PolarRectTileGridBuilder.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\PolarTileGridBuilder.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\RectTileGridBuilder.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\GridBuilders\TileGridBuilder.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\IGLScriptableObject.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\IGridBuilderBase.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Inspectable\ColorFunction.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Inspectable\InspectableVectorPoint.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Inspectable\InspectableVectorPoint_Hex.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\Inspectable\InspectableVectorPoint_Rect.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\MapAlignment.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\MapPlane.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\PoissonDiskProperties.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\PolarGridProperties.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\RectNeighborType.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\EditorSupport\UpdateType.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\MeshUtils.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Unity\Vector2Extensions.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Utils\Algorithms.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Utils\PointComparer.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Utils\PointList.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Utils\PointStack.cs" />
+    <Compile Include="Assets\Gamelogic\Plugins\Grids\Utils\PoissonDisk.cs" />
+    <Compile Include="Assets\Reporter\MultiKeyDictionary.cs" />
+    <Compile Include="Assets\Reporter\Reporter.cs" />
+    <Compile Include="Assets\Reporter\ReporterGUI.cs" />
+    <Compile Include="Assets\Reporter\ReporterMessageReceiver.cs" />
+    <Compile Include="Assets\Reporter\Test\Rotate.cs" />
+    <Compile Include="Assets\Reporter\Test\TestReporter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Gamelogic\Plugins\Grids\Templates\FullLib\TemplateCode.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TemplateCode.cs</LastGenOutput>
+    </None>
+    <None Include="Assets\ForTheLoveOfPower\Resources\Shaders\CustomSpriteShader.shader" />
+    <None Include="Assets\Gamelogic\Examples\Grids\Shaders\Transparent Colored.shader" />
+    <None Include="Assets\Gamelogic\Examples\Grids\Shaders\Unlit - Transparent Colored.shader" />
+    <None Include="Assets\Gamelogic\Plugins\Common\Datastructures\BinaryHeap\BinaryHeapLincense.txt" />
+    <None Include="Assets\Gamelogic\Plugins\Common\Datastructures\KDTree\KDTreeLicense.txt" />
+    <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlurEffectConeTaps.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\CameraMotionBlur.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\CameraMotionBlurDX11.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ChromaticAberrationShader.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ColorCorrection3DLut.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ColorCorrectionCurves.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ColorCorrectionCurvesSimple.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ColorCorrectionEffect.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ColorCorrectionSelective.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Adaptation.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Apply.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Luminance.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\MinMaxReduction.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ContrastComposite.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ConvertDepth.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\CreaseApply.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\EdgeDetectNormals.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\FisheyeShader.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\GlobalFog.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\GrayscaleEffect.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\MotionBlur.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\MotionBlurClear.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseAndGrain.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseAndGrainDX11.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderYUV.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\PrepareSunShaftsBlur.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\RadialBlur.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\SSAOShader.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ScreenSpaceAmbientObscurance.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\SepiaToneEffect.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ShowAlphaChannel.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\SimpleClear.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\SunShaftsComposite.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\TwirlEffect.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\VignettingShader.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\VortexEffect.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\DLAA.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\FXAA2.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\FXAA3Console.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\FXAAPreset2.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\FXAAPreset3.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\NFAA.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\SSAA.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\Blend.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendForBloom.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlurAndFlares.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BrightPassFilter.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BrightPassFilter2.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\LensFlareCreate.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MobileBloom.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MobileBlur.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MultiPassHollywoodFlares.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\SeparableBlurPlus.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\VignetteShader.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\Bokeh34.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\DepthOfField34.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\DepthOfFieldDX11.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\DepthOfFieldScatter.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\SeparableBlur.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\SeparableWeightedBlurDof34.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\TiltShiftHdrLensBlur.shader" />
+    <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\frag_ao.cginc" />
+    <None Include="Assets\Standard Assets\Effects\Projectors\Guidelines.txt" />
+    <None Include="Assets\Standard Assets\Effects\Projectors\Shaders\ProjectorLight.shader" />
+    <None Include="Assets\Standard Assets\Effects\Projectors\Shaders\ProjectorMultiply.shader" />
+    <None Include="Assets\Standard Assets\Effects\TessellationShaders\Shaders\BumpedSpecularDisplacement.shader" />
+    <None Include="Assets\Standard Assets\Effects\TessellationShaders\Shaders\BumpedSpecularSmooth.shader" />
+    <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasic.shader" />
+    <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasicOutline.shader" />
+    <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLit.shader" />
+    <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
+    <None Include="Assets\StreamingAssets\build_info.txt" />
+    <None Include="Assets\StrumpyShaderEditor\Editor\Resources\Internal\Temp\TempShader.shader" />
+    <None Include="Assets\StrumpyShaderEditor\Editor\Resources\Internal\TextureCopy.shader" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
+</Project>
