@@ -5,7 +5,7 @@ Shader "Custom/CustomSpriteShader" {
 		_Color ("Tint", Color) = (1,1,1,1)
 		_ColorToChangeTo ("NewColor", Color) = (1,1,1,1)
 		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
-		_PercentageBuilt ("Percentage Built", Float) = 0
+		_PercentageBuilt ("Percentage Built", Float) = 1
 		_PercentageCaptured ("Percentage Captured", Float) = 0
 	}
 
@@ -70,7 +70,9 @@ Shader "Custom/CustomSpriteShader" {
 			fixed4 frag(v2f IN) : SV_Target
 			{
 				fixed4 c = tex2D(_MainTex, IN.texcoord) * IN.color;
-				
+				//if (IN.vertex.y / 256 > _PercentageBuilt)
+				//	c.a = 0;
+					
 				c.rgb *= c.a;
 				return c;
 			}

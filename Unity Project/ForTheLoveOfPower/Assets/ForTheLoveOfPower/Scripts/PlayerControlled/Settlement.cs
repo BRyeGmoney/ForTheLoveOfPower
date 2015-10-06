@@ -59,8 +59,14 @@ namespace AssemblyCSharp
 			updateTimer += Time.deltaTime;
 		}
 
-		public void RefreshBuildingsOwned() {
+		public void RefreshBuildingsOwned() 
+		{
 
+		}
+
+		public bool TileBelongsToSettlement(PointyHexPoint tileToCheck) 
+		{
+			return tilesOwned.Contains (tileToCheck);
 		}
 	}
 }

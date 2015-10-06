@@ -44,6 +44,18 @@ public class Player : MonoBehaviour {
 		return currList;
 	}
 
+	public bool TileBelongsToSettlements(PointyHexPoint tileToCheck)
+	{
+		bool belongs = false;
+
+		settlements.ForEach (settlement => {
+			if (!belongs)
+				belongs = settlement.TileBelongsToSettlement (tileToCheck);
+		});
+
+		return belongs;
+	}
+
 	public void AddToOwnedTiles(IGrid<PointyHexPoint> gameGrid, AssemblyCSharp.Settlement ownSettlement, Player enemyPlayer, PointList<PointyHexPoint> pointsToAdd)
 	{
 		foreach (PointyHexPoint point in TileDoesNotBelongToOtherSettlement(gameGrid, ownSettlement, enemyPlayer, pointsToAdd)) {

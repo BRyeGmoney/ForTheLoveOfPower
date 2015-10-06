@@ -53,6 +53,8 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		//Input.simulateMouseWithTouches = true;
 
 		//Create ai player's beginnings
+		prevPath = new PointList<PointyHexPoint> ();
+		path = new PointList<PointyHexPoint> ();
 		CreateNewMilitaryUnit (listOfPlayers[1], (int)MilitaryUnitType.Dictator, Grid [new PointyHexPoint (2, 13)] as UnitCell, new PointyHexPoint (2, 13));
 		CreateNewSettlement (listOfPlayers[1], Grid [new PointyHexPoint (2, 12)] as UnitCell, new PointyHexPoint (2, 12), GetSurroundingTiles (new PointyHexPoint(2, 12)));
 		CreateNewMilitaryUnit (listOfPlayers[1], (int)MilitaryUnitType.Infantry, Grid [new PointyHexPoint (3, 13)] as UnitCell, new PointyHexPoint (3, 13)); 
@@ -139,6 +141,9 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 						unitToMove = listOfPlayers [0].milUnits.Find (unit => unit.TilePoint.Equals (startPoint));
 						unitToMove.ClearMovementPath ();
 						startChosen = true;
+
+						if (path.Count > 0) 
+							ClearPath ();
 					}
 				}
 			}
@@ -150,9 +155,11 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 			if (clickedPoint != prevClickedPoint || clickedPoint != startPoint) {
 				endPoint = clickedPoint;
+				AnimateTileBig (clickedPoint);
+				AnimateTileSmall (prevClickedPoint);
 				clickedCell = Grid [clickedPoint] as UnitCell;
 
-				if (path != null)
+				if (path.Count > 0)
 					prevPath = path;
 
 				path = GetGridPath ().ToPointList();
@@ -164,16 +171,17 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 					(Grid [point] as UnitCell).SetTileColorPath (listOfPlayers[0].PlayerColor);
 				}
 
-				if (prevPath != null) {
+				if (prevPath.Count > 0) {
 					foreach (PointyHexPoint point in prevPath) 
 						(Grid[point] as UnitCell).SetTileColorUnPath ();
 				}
 			}
 		} else if (startChosen) {
-			if (path.Count > 1) {
+			if (path.Count > 0) {
+				AnimateTileSmall(path[path.Count - 1]);
 				unitToMove.SetMovementPath (path);
 				unitToMove.ChangeSpriteDirection (Grid [path [1]] as UnitCell);
-				path.Clear ();
+				//path.Clear ();
 				prevPath.Clear ();
 			}
 
@@ -191,7 +199,25 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			prevClickedCell = clickedCell;
 		}
 	}
-	
+
+	void AnimateTileBig(PointyHexPoint toAnimate)
+	{
+		toAnimate.ScaleUp (2);
+	}
+
+	void AnimateTileSmall(PointyHexPoint toAnimate)
+	{
+		toAnimate.ScaleDown (2);
+	}
+
+	void ClearPath()
+	{
+		foreach (PointyHexPoint point in path)
+			(Grid [point] as UnitCell).SetTileColorUnPath ();
+
+		path.Clear ();
+	}
+
 	// Update is called once per frame
 	void Update () {
 		CheckEndGame ();
@@ -205,10 +231,8 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		}
 
 		if (timer > 1f && !startChosen) {
-			if (path != null) {
-				foreach (PointyHexPoint point in path) 
-					(Grid [point] as SpriteCell).HighlightOn = false;
-				path = null;
+			if (path.Count > 0) {
+				ClearPath ();
 			}
 		}
 
@@ -315,18 +339,15 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 					CreateNewMilitaryUnit (listOfPlayers[0], (int)MilitaryUnitType.Jet, clickedCell, clickedPoint);
 				}
 			}
-		} else if (clickedCell.Color == listOfPlayers[0].PlayerColor) {
-			//me.enabled = false;
+		} else if (clickedCell.Color == listOfPlayers[0].PlayerColor && (!clickedCell.unitOnTile || listOfPlayers[0].TileBelongsToSettlements (clickedPoint))) { //if its the same color and there isn't a unit or it is part of a settlement
 			SetupBuildMenu (false);
 		} else {
 			//if the player has no units, then this is how we let them place the dictator
 			if (listOfPlayers[0].milUnits.IsEmpty()) {
 				CreateNewMilitaryUnit (listOfPlayers[0], (int)MilitaryUnitType.Dictator, clickedCell, clickedPoint);
 			} else { //else, bring up the bulding selection screen
-				//me.enabled = false;
 				SetupBuildMenu (true);
 			}
-			clickedCell.HighlightOn = false;
 		}
 	}
 
@@ -370,7 +391,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		MilitaryUnit newUnit = Instantiate (unitTypes [unitType], gridCell.transform.position, Quaternion.identity).GetComponent<MilitaryUnit> ();
 		newUnit.Initialize (player.PlayerColor, (MilitaryUnitType)unitType, gridPoint);
 		player.milUnits.Add (newUnit);
-		gridCell.unitOnTile = true;
+		gridCell.AddUnitToTile (newUnit);
 	}
 	
 	void CreateNewSettlement(Player player, UnitCell gridCell, PointyHexPoint gridPoint, PointList<PointyHexPoint> surroundingTiles )
