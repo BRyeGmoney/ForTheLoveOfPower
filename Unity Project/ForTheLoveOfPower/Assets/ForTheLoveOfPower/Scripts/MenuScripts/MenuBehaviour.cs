@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 using System.Collections;
 
 public class MenuBehaviour : MonoBehaviour {
@@ -7,6 +8,9 @@ public class MenuBehaviour : MonoBehaviour {
     public Text mpPlayerText;
 
     private Animator animator;
+
+    public GameObject PlayerPrefab;
+    public GameObject AIPlayerPrefab;
 
 	// Use this for initialization
 	void Start () {
@@ -26,8 +30,9 @@ public class MenuBehaviour : MonoBehaviour {
 
     public void ChangeToMultiMenu()
     {
-        SetTextVisibility(false);
-        animator.SetTrigger("MultiplayerPressed");
+        //SetTextVisibility(false);
+        //animator.SetTrigger("MultiplayerPressed");
+
     }
 
     public void ChangeToMainMenu()
@@ -40,6 +45,7 @@ public class MenuBehaviour : MonoBehaviour {
     {
         SetTextStatus(TextStatus.WaitingForPlayer);
         SetTextVisibility(true);
+        
     }
 
     private void SetTextVisibility(bool isVisible)
@@ -71,6 +77,11 @@ public class MenuBehaviour : MonoBehaviour {
     }
 
 	public void StartGame() {
+        GameObject mainPlayer = Instantiate(PlayerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+        GameObject aiPlayer = Instantiate(AIPlayerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+        DontDestroyOnLoad(mainPlayer);
+        DontDestroyOnLoad(aiPlayer);
+
 		Application.LoadLevel ("MainScreen");
 	}
 

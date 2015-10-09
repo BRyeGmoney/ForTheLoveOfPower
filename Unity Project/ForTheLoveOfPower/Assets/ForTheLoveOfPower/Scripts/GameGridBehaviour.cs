@@ -10,6 +10,7 @@ using AssemblyCSharp;
 public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	static public bool didWin;
 	static public Color baseFloorColor;// = new Color (0.327f, 0.779f, 0.686f, 1f);
+    static bool multiGame = true;
 
 	PointyHexPoint startPoint;
 	UnitCell startCell;
@@ -43,6 +44,24 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	// Use this for initialization
 	void Start () {
 		listofCurrentCombats = new List<Combat> ();
+
+        GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("PlayerType");
+        listOfPlayers = new Player[playerObjects.Length];
+
+        int c = 0;
+        foreach (GameObject playerObj in playerObjects)
+        {
+            AIPlayer aiPlayer = playerObj.GetComponent<AIPlayer>();
+            if (aiPlayer != null)
+            { 
+                listOfPlayers[c] = aiPlayer;
+                multiGame = false;
+            }
+            else
+                listOfPlayers[c] = playerObj.GetComponent<Player>();
+
+            c++;
+        }
 		//playingPlayer = gameObject.Find ("playerOne").GetComponent<Player>();
 		//aiPlayer = gameObject.Find ("playerTwoAI").GetComponent<AIPlayer> ();
 
@@ -55,16 +74,19 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		//Create ai player's beginnings
 		prevPath = new PointList<PointyHexPoint> ();
 		path = new PointList<PointyHexPoint> ();
-		CreateNewMilitaryUnit (listOfPlayers[1], (int)MilitaryUnitType.Dictator, Grid [new PointyHexPoint (2, 13)] as UnitCell, new PointyHexPoint (2, 13));
-		CreateNewSettlement (listOfPlayers[1], Grid [new PointyHexPoint (2, 12)] as UnitCell, new PointyHexPoint (2, 12), GetSurroundingTiles (new PointyHexPoint(2, 12)));
-		CreateNewMilitaryUnit (listOfPlayers[1], (int)MilitaryUnitType.Infantry, Grid [new PointyHexPoint (3, 13)] as UnitCell, new PointyHexPoint (3, 13)); 
-		moneyText.color = listOfPlayers[0].PlayerColor;
-	}
+        if (!multiGame)
+        {
+            CreateNewMilitaryUnit (listOfPlayers[1], (int)MilitaryUnitType.Dictator, Grid [new PointyHexPoint (2, 13)] as UnitCell, new PointyHexPoint (2, 13));
+            CreateNewSettlement (listOfPlayers[1], Grid [new PointyHexPoint (2, 12)] as UnitCell, new PointyHexPoint (2, 12), GetSurroundingTiles (new PointyHexPoint(2, 12)));
+            CreateNewMilitaryUnit (listOfPlayers[1], (int)MilitaryUnitType.Infantry, Grid [new PointyHexPoint (3, 13)] as UnitCell, new PointyHexPoint (3, 13)); 
+        }
+        moneyText.color = listOfPlayers[0].PlayerColor;
+    }
 
-	/// <summary>
-	/// Checks the touch input.
-	/// </summary>
-	private void CheckTouchInput()
+    /// <summary>
+    /// Checks the touch input.
+    /// </summary>
+    private void CheckTouchInput()
 	{
 		Debug.Log (String.Format ("We're Checking Touch Input"));
 
@@ -275,14 +297,23 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		});
 
 		//Update All of the player's settlements, in case enemy units have died on something being taken over
-		listOfPlayers[0].settlements.ForEach (settle => {
+        foreach (Player player in listOfPlayers)
+        {
+            player.settlements.ForEach(settle =>
+            {
+                settle.UpdateBuildingList(player);
+            });
+            
+        }
+
+		/*listOfPlayers[0].settlements.ForEach (settle => {
 			settle.UpdateBuildingList(listOfPlayers[0]);
 		});
 
 		//Update All of the second player's settlements, in case one of our units has died on something being taken over
 		listOfPlayers[0].settlements.ForEach (settle => {
 			settle.UpdateBuildingList (listOfPlayers[1]);
-		});
+		});*/
 
 		//Display the player's money
 		moneyText.text = String.Concat ("Money: ", listOfPlayers[0].Cash); 
