@@ -11,41 +11,85 @@ public class MenuBehaviour : MonoBehaviour {
 
     public GameObject PlayerPrefab;
     public GameObject AIPlayerPrefab;
+    public MenuNetworkLobbyManager lobbyManager;
+
+    private ulong matchID;
 
 	// Use this for initialization
 	void Start () {
         animator = gameObject.GetComponent<Animator>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
     public void LookForMatch()
     {
         SetTextStatus(TextStatus.SearchingForGame);
         SetTextVisibility(true);
+
+        lobbyManager.StartMatchMaker();
+        lobbyManager.matchMaker.ListMatches(0, 10, "", ConnectToMatchOne);
+    }
+
+    private void ConnectToMatchOne(UnityEngine.Networking.Match.ListMatchResponse matchResponses)
+    {
+        if (matchResponses.matches.Count > 0 && System.Convert.ToUInt64(matchResponses.matches[0].networkId) != matchID)
+        {
+            UnityEngine.Networking.Match.MatchDesc match = matchResponses.matches[0];
+            lobbyManager.matchMaker.JoinMatch(match.networkId, "", OnJoinedMatch);
+        }
+    }
+
+    private void OnJoinedMatch(UnityEngine.Networking.Match.JoinMatchResponse joinedMatchResp)
+    {
+        SetTextStatus(TextStatus.HostFound);
     }
 
     public void ChangeToMultiMenu()
     {
-        //SetTextVisibility(false);
-        //animator.SetTrigger("MultiplayerPressed");
-
+        SetTextVisibility(false);
+        animator.SetTrigger("MultiplayerPressed");
     }
 
     public void ChangeToMainMenu()
     {
-        SetTextVisibility(false);
-        animator.SetTrigger("BackPressed");
+        lobbyManager.matchMaker.DestroyMatch((UnityEngine.Networking.Types.NetworkID)matchID, OnMatchDestroyed);
     }
 
     public void CreateRoom()
     {
         SetTextStatus(TextStatus.WaitingForPlayer);
         SetTextVisibility(true);
-        
+
+        lobbyManager.StartMatchMaker();
+        lobbyManager.matchMaker.CreateMatch(
+            "game",
+            (uint)lobbyManager.maxPlayers,
+            true,
+            "",
+            OnMatchCreate);
+
+
+    }
+
+    public void OnMatchCreate(UnityEngine.Networking.Match.CreateMatchResponse matchInfo)
+    {
+        lobbyManager.OnMatchCreate(matchInfo);
+
+        matchID = (System.UInt64)matchInfo.networkId;
+    }
+
+    private void OnMatchDestroyed(UnityEngine.Networking.Match.BasicResponse baseResponse)
+    {
+        matchID = (System.UInt64)UnityEngine.Networking.Types.NetworkID.Invalid;
+        lobbyManager.StopMatchMaker();
+        lobbyManager.StopHost();
+
+        SetTextVisibility(false);
+        animator.SetTrigger("BackPressed");
+    }
+
+    public void StartMPGame()
+    {
+        lobbyManager.CheckReadyToBegin();
     }
 
     private void SetTextVisibility(bool isVisible)
