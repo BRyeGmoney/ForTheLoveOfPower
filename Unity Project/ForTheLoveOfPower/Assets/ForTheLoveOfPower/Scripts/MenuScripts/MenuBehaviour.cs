@@ -49,6 +49,7 @@ public class MenuBehaviour : MonoBehaviour {
         if (matchResponses.matches.Count > 0 && System.Convert.ToUInt64(matchResponses.matches[0].networkId) != matchID)
         {
             UnityEngine.Networking.Match.MatchDesc match = matchResponses.matches[0];
+            
             lobbyManager.StartClient();
             lobbyManager.matchMaker.JoinMatch(match.networkId, "", OnJoinedMatch);
         }
@@ -90,9 +91,11 @@ public class MenuBehaviour : MonoBehaviour {
         SetTextStatus(TextStatus.WaitingForPlayer);
         SetTextVisibility(true);
 
+        lobbyManager.serverBindToIP = true;
+        lobbyManager.serverBindAddress = Network.player.externalIP;
         lobbyManager.StartMatchMaker();
         lobbyManager.matchMaker.CreateMatch(
-            "game",
+            PlayerName,
             (uint)lobbyManager.maxPlayers,
             true,
             "",
@@ -102,7 +105,7 @@ public class MenuBehaviour : MonoBehaviour {
     public void OnMatchCreate(UnityEngine.Networking.Match.CreateMatchResponse matchInfo)
     {
         lobbyManager.OnMatchCreate(matchInfo);
-
+        
         matchID = (System.UInt64)matchInfo.networkId;
     }
 
