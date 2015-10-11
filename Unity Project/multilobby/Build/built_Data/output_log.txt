@@ -17,55 +17,69 @@ Loading C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\multilobby\Build\
 Platform assembly: C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\multilobby\Build\built_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\multilobby\Build\built_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
 Platform assembly: C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\multilobby\Build\built_Data\Managed\System.Core.dll (this message is harmless)
-- Completed reload, in  0.047 seconds
+- Completed reload, in  0.048 seconds
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+Initialize engine version: 5.2.1f1 (44735ea161b3)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 560 Ti   (ID=0x1200)
+    Vendor:   NVIDIA
+    VRAM:     1996 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\multilobby\Build\built_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\multilobby\Build\built_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\multilobby\Build\built_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\multilobby\Build\built_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\multilobby\Build\built_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\multilobby\Build\built_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\multilobby\Build\built_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\multilobby\Build\built_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\multilobby\Build\built_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\multilobby\Build\built_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\multilobby\Build\built_Data\Managed\System.Core.dll (this message is harmless)
+- Completed reload, in  0.054 seconds
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
 Platform assembly: C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\multilobby\Build\built_Data\Managed\System.dll (this message is harmless)
+Platform assembly: C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\multilobby\Build\built_Data\Managed\System.dll (this message is harmless)
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 2a70 -> priority: 1 
-  Thread -> id: 6d8 -> priority: 1 
-MatchMakingClient ListMatches :https://mm.unet.unity3d.com/json/reply/ListMatchRequest
+  Thread -> id: 1dfc -> priority: 1 
+  Thread -> id: 3be0 -> priority: 1 
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 1dd8 -> priority: 1 
+  Thread -> id: 383c -> priority: 1 
+MatchMakingClient Create :https://mm.unet.unity3d.com/json/reply/CreateMatchRequest
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
 
-Request error: 500 NullReferenceException
+System.FormatException: FAILURE Returned from server: Failed because of invalid projectid setup. Please verify project setup at https://multiplayer.unity3d.com.
+  at UnityEngine.Networking.Match.Response.Parse (System.Object obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.Match.CreateMatchResponse.Parse (System.Object obj) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.Match.NetworkMatch+<ProcessMatchResponse>c__Iterator0`1[UnityEngine.Networking.Match.CreateMatchResponse].MoveNext () [0x00000] in <filename unknown>:0 
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
 
-Raw response: {"ResponseStatus":{"ErrorCode":"NullReferenceException","Message":"Object reference not set to an instance of an object.","StackTrace":null,"Errors":[],"Meta":null}}
+JSON Response: [[UnityEngine.Networking.Match.CreateMatchResponse]-success:False-extendedInfo:Failed because of invalid projectid setup. Please verify project setup at https://multiplayer.unity3d.com.]-address:,port:0,networkId:0x0000000000000000,nodeId:0x0000,usingRelay:False
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
 
-NullReferenceException: Object reference not set to an instance of an object
-  at UnityStandardAssets.Network.LobbyServerList.OnGUIMatchList (UnityEngine.Networking.Match.ListMatchResponse response) [0x00000] in <filename unknown>:0 
-  at UnityEngine.Networking.Match.NetworkMatch+<ProcessMatchResponse>c__Iterator0`1[UnityEngine.Networking.Match.ListMatchResponse].MoveNext () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.329093 ms
-
-Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 1314.
-Total: 1.937342 ms (FindLiveObjects: 0.040449 ms CreateObjectMapping: 0.044071 ms MarkObjects: 1.798184 ms  DeleteObjects: 0.054636 ms)
-
-Log: connection {1} has been disconnected by timeout; address {::ffff:127.0.0.1:7777}
-aissp: time {86055} lastRecTime {83844} DisTme {2000}, rtt {0} 
- 
-(Filename:  Line: 1848)
-
-UNet Client Disconnect Error: Timeout
+Create Failed:[[UnityEngine.Networking.Match.CreateMatchResponse]-success:False-extendedInfo:Failed because of invalid projectid setup. Please verify project setup at https://multiplayer.unity3d.com.]-address:,port:0,networkId:0x0000000000000000,nodeId:0x0000,usingRelay:False
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
 
 Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.677073 ms
+UnloadTime: 1.720002 ms
 Multiple NetworkManagers detected in the scene. Only one NetworkManager can exist at a time. The duplicate NetworkManager will not be used.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
 
 
-Unloading 351 unused Assets to reduce memory usage. Loaded Objects now: 636.
-Total: 0.865133 ms (FindLiveObjects: 0.042864 ms CreateObjectMapping: 0.028073 ms MarkObjects: 0.721447 ms  DeleteObjects: 0.072446 ms)
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 623.
+Total: 0.699411 ms (FindLiveObjects: 0.029582 ms CreateObjectMapping: 0.024450 ms MarkObjects: 0.636624 ms  DeleteObjects: 0.008452 ms)
 

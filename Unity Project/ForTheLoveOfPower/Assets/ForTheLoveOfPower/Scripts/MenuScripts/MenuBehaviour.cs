@@ -4,8 +4,9 @@ using UnityEngine.Networking;
 using System.Collections;
 
 public class MenuBehaviour : MonoBehaviour {
-
+    public static MenuBehaviour instance = null;
     public Text mpPlayerText;
+    public InputField nameInput;
 
     private Animator animator;
 
@@ -13,12 +14,26 @@ public class MenuBehaviour : MonoBehaviour {
     public GameObject AIPlayerPrefab;
     public MenuNetworkLobbyManager lobbyManager;
 
+    //public RectTransform LobbyPlayersPanel;
+    VerticalLayoutGroup layout;
+
+    public string PlayerName = "PlayerName";
     private ulong matchID;
 
 	// Use this for initialization
 	void Start () {
         animator = gameObject.GetComponent<Animator>();
+        //layout = LobbyPlayersPanel.GetComponent<VerticalLayoutGroup>();
+        instance = this;
 	}
+
+    void Update()
+    {
+        //this dirty the layout to force it to recompute evryframe (a sync problem between client/server
+        //sometime to child being assigned before layout was enabled/init, leading to broken layouting)
+        //if (layout)
+         //   layout.childAlignment = Time.frameCount % 2 == 0 ? TextAnchor.UpperCenter : TextAnchor.UpperLeft;
+    }
 
     public void LookForMatch()
     {
@@ -34,6 +49,7 @@ public class MenuBehaviour : MonoBehaviour {
         if (matchResponses.matches.Count > 0 && System.Convert.ToUInt64(matchResponses.matches[0].networkId) != matchID)
         {
             UnityEngine.Networking.Match.MatchDesc match = matchResponses.matches[0];
+            lobbyManager.StartClient();
             lobbyManager.matchMaker.JoinMatch(match.networkId, "", OnJoinedMatch);
         }
     }
@@ -49,9 +65,24 @@ public class MenuBehaviour : MonoBehaviour {
         animator.SetTrigger("MultiplayerPressed");
     }
 
-    public void ChangeToMainMenu()
+    public void ChangeToMainMenuFromMulti()
     {
-        lobbyManager.matchMaker.DestroyMatch((UnityEngine.Networking.Types.NetworkID)matchID, OnMatchDestroyed);
+        if (lobbyManager.matchMaker != null)
+            lobbyManager.matchMaker.DestroyMatch((UnityEngine.Networking.Types.NetworkID)matchID, OnMatchDestroyed);
+
+        SetTextVisibility(false);
+        animator.SetTrigger("BackPressed");
+    }
+
+    public void ChangeToMainMenuFromOpt()
+    {
+        animator.SetTrigger("BackPressed");
+    }
+
+    public void ChangeToOptionsMenu()
+    {
+        nameInput.text = PlayerName;
+        animator.SetTrigger("OptionsPressed");
     }
 
     public void CreateRoom()
@@ -66,8 +97,6 @@ public class MenuBehaviour : MonoBehaviour {
             true,
             "",
             OnMatchCreate);
-
-
     }
 
     public void OnMatchCreate(UnityEngine.Networking.Match.CreateMatchResponse matchInfo)
@@ -82,9 +111,6 @@ public class MenuBehaviour : MonoBehaviour {
         matchID = (System.UInt64)UnityEngine.Networking.Types.NetworkID.Invalid;
         lobbyManager.StopMatchMaker();
         lobbyManager.StopHost();
-
-        SetTextVisibility(false);
-        animator.SetTrigger("BackPressed");
     }
 
     public void StartMPGame()
@@ -132,6 +158,11 @@ public class MenuBehaviour : MonoBehaviour {
 	public void QuitGame() {
 		Application.Quit ();
 	}
+
+    public void SetPlayerName()
+    {
+        PlayerName = nameInput.text;
+    }
 }
 public enum TextStatus
 {

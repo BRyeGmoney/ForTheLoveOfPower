@@ -1,0 +1,302 @@
+-debug
+-target:library
+-nowarn:0169
+-out:Temp/Assembly-CSharp.dll
+-r:"E:\Program Files (x86)\Unity\Editor\Data\PlaybackEngines\windowsstandalonesupport/Managed/UnityEngine.dll"
+-r:Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll
+-r:"E:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Standalone/UnityEngine.UI.dll"
+-r:"E:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/Networking/Standalone/UnityEngine.Networking.dll"
+-define:UNITY_5_2_1
+-define:UNITY_5_2
+-define:UNITY_5
+-define:ENABLE_NEW_BUGREPORTER
+-define:ENABLE_2D_PHYSICS
+-define:ENABLE_4_6_FEATURES
+-define:ENABLE_AUDIO
+-define:ENABLE_CACHING
+-define:ENABLE_CLOTH
+-define:ENABLE_DUCK_TYPING
+-define:ENABLE_FRAME_DEBUGGER
+-define:ENABLE_GENERICS
+-define:ENABLE_HOME_SCREEN
+-define:ENABLE_IMAGEEFFECTS
+-define:ENABLE_LIGHT_PROBES_LEGACY
+-define:ENABLE_MICROPHONE
+-define:ENABLE_MULTIPLE_DISPLAYS
+-define:ENABLE_PHYSICS
+-define:ENABLE_PLUGIN_INSPECTOR
+-define:ENABLE_SHADOWS
+-define:ENABLE_SINGLE_INSTANCE_BUILD_SETTING
+-define:ENABLE_SPRITES
+-define:ENABLE_TERRAIN
+-define:ENABLE_RAKNET
+-define:ENABLE_UNET
+-define:ENABLE_UNITYEVENTS
+-define:ENABLE_VR
+-define:ENABLE_WEBCAM
+-define:ENABLE_WWW
+-define:ENABLE_CLOUD_SERVICES
+-define:ENABLE_CLOUD_SERVICES_ADS
+-define:ENABLE_CLOUD_HUB
+-define:ENABLE_CLOUD_PROJECT_ID
+-define:ENABLE_CLOUD_SERVICES_ANALYTICS
+-define:ENABLE_CLOUD_SERVICES_UNET
+-define:ENABLE_CLOUD_SERVICES_BUILD
+-define:ENABLE_CLOUD_LICENSE
+-define:ENABLE_EDITOR_METRICS
+-define:ENABLE_REFLECTION_BUFFERS
+-define:INCLUDE_DYNAMIC_GI
+-define:INCLUDE_GI
+-define:INCLUDE_IL2CPP
+-define:INCLUDE_DIRECTX12
+-define:PLATFORM_SUPPORTS_MONO
+-define:RENDER_SOFTWARE_CURSOR
+-define:ENABLE_LOCALIZATION
+-define:ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION
+-define:UNITY_STANDALONE_WIN
+-define:UNITY_STANDALONE
+-define:ENABLE_SUBSTANCE
+-define:ENABLE_TEXTUREID_MAP
+-define:ENABLE_RUNTIME_GI
+-define:ENABLE_MOVIES
+-define:ENABLE_NETWORK
+-define:ENABLE_CRUNCH_TEXTURE_COMPRESSION
+-define:ENABLE_LOG_MIXED_STACKTRACE
+-define:ENABLE_UNITYWEBREQUEST
+-define:ENABLE_EVENT_QUEUE
+-define:ENABLE_WEBSOCKET_HOST
+-define:ENABLE_MONO
+-define:DEVELOPMENT_BUILD
+-define:ENABLE_PROFILER
+-define:DEBUG
+-define:TRACE
+-define:UNITY_ASSERTIONS
+Assets/ForTheLoveOfPower/Scripts/CameraBehaviour.cs
+Assets/ForTheLoveOfPower/Scripts/Combat.cs
+Assets/ForTheLoveOfPower/Scripts/GameGridBehaviour.cs
+Assets/ForTheLoveOfPower/Scripts/MenuScripts/BuildMenuBehaviour.cs
+Assets/ForTheLoveOfPower/Scripts/MenuScripts/LobbyPlayer.cs
+Assets/ForTheLoveOfPower/Scripts/MenuScripts/MenuBehaviour.cs
+Assets/ForTheLoveOfPower/Scripts/MenuScripts/MenuNetworkLobbyManager.cs
+Assets/ForTheLoveOfPower/Scripts/MenuScripts/StatsBehaviour.cs
+Assets/ForTheLoveOfPower/Scripts/PlayerControlled/AIPlayer.cs
+Assets/ForTheLoveOfPower/Scripts/PlayerControlled/MilitaryUnit.cs
+Assets/ForTheLoveOfPower/Scripts/PlayerControlled/Player.cs
+Assets/ForTheLoveOfPower/Scripts/PlayerControlled/Settlement.cs
+Assets/ForTheLoveOfPower/Scripts/PlayerControlled/StructureUnit.cs
+Assets/ForTheLoveOfPower/Scripts/UnitCell.cs
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Basic/3D/HexWorld.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Basic/Algorithms/DiffusionHex.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Basic/Algorithms/MazeBuilder.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Basic/Algorithms/PrimsAlgorithmHex.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Basic/BasicGridSetup/FlatBrickTest.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Basic/BasicGridSetup/FlatHexTest.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Basic/BasicGridSetup/MazeAlgorithmsHex.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Basic/BasicGridSetup/PointyBrickTest.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Basic/BasicGridSetup/PointyHexTest.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Basic/BasicGridSetup/PolarFlatBrickGridMain.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Basic/BasicGridSetup/PolarPointyBrickGridMain.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Basic/CustomBuilderTests/PointyBrickCustomMapBuilder.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Basic/CustomBuilderTests/PointyHexCustomMapBuilder.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Basic/CustomBuilderTests/PointyHexGrid_Test.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Basic/Games/LightsOut/LightsOutHex.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Basic/Games/Lines/Lines.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Basic/Games/Lines/LinesCell.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Basic/Stress/StressTestHex.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Lite/3D/RectWorld.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Lite/AdvanedGridSetup/AnimatedGrid.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Lite/AdvanedGridSetup/AnimatedGridMap.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Lite/AdvanedGridSetup/ChainMailGrid.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Lite/Algorithms/DiffusionRect.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Lite/Algorithms/MazeAlgorithmsRect.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Lite/Algorithms/MazeCell.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Lite/Algorithms/PrimsAlgorithmRect.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Lite/BasicGridSetup/DiamondTest.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Lite/BasicGridSetup/PolarRectGridMain.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Lite/BasicGridSetup/RectTest.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Lite/Games/BlocksSlider/BlocksSlider.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Lite/Games/SliderPuzzle/SilderPuzzle.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Lite/Helpers/ExampleUtils.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Lite/Helpers/IResetable.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Lite/Helpers/ResetButtonHandler.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Lite/Helpers/ScreenShotTaker.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Lite/Maps/ImageMapTest.cs"
+"Assets/Gamelogic/Examples/Grids/Scripts/Grids Lite/Stress/StressTestRect.cs"
+Assets/Gamelogic/Plugins/Common/Attributes/NonNegativeAttribute.cs
+Assets/Gamelogic/Plugins/Common/Attributes/PositiveAttribute.cs
+Assets/Gamelogic/Plugins/Common/Datastructures/BinaryHeap/BinaryHeap.cs
+Assets/Gamelogic/Plugins/Common/Datastructures/Generators/BatchGenerator.cs
+Assets/Gamelogic/Plugins/Common/Datastructures/Generators/Buffer.cs
+Assets/Gamelogic/Plugins/Common/Datastructures/Generators/IGenerator.cs
+Assets/Gamelogic/Plugins/Common/Datastructures/Generators/ShuffledBatchGenerator.cs
+Assets/Gamelogic/Plugins/Common/Datastructures/KDTree/IDistanceFunction.cs
+Assets/Gamelogic/Plugins/Common/Datastructures/KDTree/IntervalHeap.cs
+Assets/Gamelogic/Plugins/Common/Datastructures/KDTree/KDNode.cs
+Assets/Gamelogic/Plugins/Common/Datastructures/KDTree/KDTree.cs
+Assets/Gamelogic/Plugins/Common/Datastructures/KDTree/MinHeap.cs
+Assets/Gamelogic/Plugins/Common/Datastructures/KDTree/NearestNeighbour.cs
+Assets/Gamelogic/Plugins/Common/Datastructures/ResponseCurve/ResponseCurveBase.cs
+Assets/Gamelogic/Plugins/Common/Datastructures/ResponseCurve/ResponseCurveColor.cs
+Assets/Gamelogic/Plugins/Common/Datastructures/ResponseCurve/ResponseCurveFloat.cs
+Assets/Gamelogic/Plugins/Common/Datastructures/ResponseCurve/ResponseCurveVector2.cs
+Assets/Gamelogic/Plugins/Common/Datastructures/ResponseCurve/ResponseCurveVector3.cs
+Assets/Gamelogic/Plugins/Common/Datastructures/ResponseCurve/ResponseCurveVector4.cs
+Assets/Gamelogic/Plugins/Common/Debug/GLDebug.cs
+Assets/Gamelogic/Plugins/Common/Extensions/Clock.cs
+Assets/Gamelogic/Plugins/Common/Extensions/CollectionExtensions.cs
+Assets/Gamelogic/Plugins/Common/Extensions/ColorExtensions.cs
+Assets/Gamelogic/Plugins/Common/Extensions/GLMonoBehaviour.cs
+Assets/Gamelogic/Plugins/Common/Extensions/GLPlayerPrefs.cs
+Assets/Gamelogic/Plugins/Common/Extensions/GLRandom.cs
+Assets/Gamelogic/Plugins/Common/Extensions/ImmutableAttribute.cs
+Assets/Gamelogic/Plugins/Common/Extensions/MainPage.cs
+Assets/Gamelogic/Plugins/Common/Extensions/MinMaxFloat.cs
+Assets/Gamelogic/Plugins/Common/Extensions/Singleton.cs
+Assets/Gamelogic/Plugins/Common/Extensions/StateMachine.cs
+Assets/Gamelogic/Plugins/Common/Extensions/TransformExtensions.cs
+Assets/Gamelogic/Plugins/Common/Extensions/VectorExtensions.cs
+Assets/Gamelogic/Plugins/Grids/Builders/AbstractOp.cs
+Assets/Gamelogic/Plugins/Grids/Builders/AbstractShapeInfo.cs
+Assets/Gamelogic/Plugins/Grids/Builders/AbstractSplicedShapeInfo.cs
+Assets/Gamelogic/Plugins/Grids/Builders/IShapeInfo.cs
+Assets/Gamelogic/Plugins/Grids/Builders/ShapeMethodAttribute.cs
+Assets/Gamelogic/Plugins/Grids/Builders/ShapeStorageInfo.cs
+Assets/Gamelogic/Plugins/Grids/ExtraDocumentation/MainPage.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/Diamond/DiamondGrid.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/Diamond/DiamondMap.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/Diamond/DiamondOp.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/Diamond/DiamondPoint.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/FlatHex/FlatBricksMap.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/FlatHex/FlatHexGrid.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/FlatHex/FlatHexMap.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/FlatHex/FlatHexOp.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/FlatHex/FlatHexPoint.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/FlatHex/PolarFlatBrickMap.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/PointyHex/PointyBrickMap.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/PointyHex/PointyHexGrid.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/PointyHex/PointyHexHorizontalRectangleWrapper.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/PointyHex/PointyHexMap.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/PointyHex/PointyHexOp.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/PointyHex/PointyHexPoint.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/PointyHex/PolarPointyBrickMap.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/Rect/NestedRectGrid.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/Rect/PolarRectMap.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/Rect/RectGrid.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/Rect/RectMap.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/Rect/RectOp.cs
+Assets/Gamelogic/Plugins/Grids/GridTypes/Rect/RectPoint.cs
+Assets/Gamelogic/Plugins/Grids/Grids/AbstractSplicedGrid.cs
+Assets/Gamelogic/Plugins/Grids/Grids/AbstractUniformGrid.cs
+Assets/Gamelogic/Plugins/Grids/Grids/GenericSplicedGrid.cs
+Assets/Gamelogic/Plugins/Grids/Grids/GridExtensions.cs
+Assets/Gamelogic/Plugins/Grids/Grids/IEvenGrid.cs
+Assets/Gamelogic/Plugins/Grids/Grids/IGrid.cs
+Assets/Gamelogic/Plugins/Grids/Grids/IGridSpace.cs
+Assets/Gamelogic/Plugins/Grids/Grids/IVectorGrid.cs
+Assets/Gamelogic/Plugins/Grids/Grids/LayeredGrid.cs
+Assets/Gamelogic/Plugins/Grids/Grids/WrappedGrid.cs
+Assets/Gamelogic/Plugins/Grids/Helper/ArrayPoint.cs
+Assets/Gamelogic/Plugins/Grids/Helper/IntExtensions.cs
+Assets/Gamelogic/Plugins/Grids/Helper/IntRect.cs
+Assets/Gamelogic/Plugins/Grids/Helper/Mathi.cs
+Assets/Gamelogic/Plugins/Grids/Helper/Vector2Transforms.cs
+Assets/Gamelogic/Plugins/Grids/Maps/AbstractMap.cs
+Assets/Gamelogic/Plugins/Grids/Maps/CompoundMap.cs
+Assets/Gamelogic/Plugins/Grids/Maps/IGridToWorldMap.cs
+Assets/Gamelogic/Plugins/Grids/Maps/IMap.cs
+Assets/Gamelogic/Plugins/Grids/Maps/IMap3D.cs
+Assets/Gamelogic/Plugins/Grids/Maps/IPolarMap.cs
+Assets/Gamelogic/Plugins/Grids/Maps/ImageMap.cs
+Assets/Gamelogic/Plugins/Grids/Maps/Map3DExtensions.cs
+Assets/Gamelogic/Plugins/Grids/Maps/Map3DXY.cs
+Assets/Gamelogic/Plugins/Grids/Maps/Map3DXZ.cs
+Assets/Gamelogic/Plugins/Grids/Maps/MapExtensions.cs
+Assets/Gamelogic/Plugins/Grids/Maps/PolygonGridMap.cs
+Assets/Gamelogic/Plugins/Grids/Maps/SplicedMap.cs
+Assets/Gamelogic/Plugins/Grids/Maps/WindowedMap.cs
+Assets/Gamelogic/Plugins/Grids/Meta/ExperimentalAttribute.cs
+Assets/Gamelogic/Plugins/Grids/Obsolete/ObsoleteExtensions.cs
+Assets/Gamelogic/Plugins/Grids/Obsolete/TextureCell.cs
+Assets/Gamelogic/Plugins/Grids/Points/IEdge.cs
+Assets/Gamelogic/Plugins/Grids/Points/IGridPoint.cs
+Assets/Gamelogic/Plugins/Grids/Points/IPointWrapper.cs
+Assets/Gamelogic/Plugins/Grids/Points/ISplicedPoint.cs
+Assets/Gamelogic/Plugins/Grids/Points/ISplicedVectorPoint.cs
+Assets/Gamelogic/Plugins/Grids/Points/ISupportsEdges.cs
+Assets/Gamelogic/Plugins/Grids/Points/ISupportsVertices.cs
+Assets/Gamelogic/Plugins/Grids/Points/IVectorPoint.cs
+Assets/Gamelogic/Plugins/Grids/Points/IVertex.cs
+Assets/Gamelogic/Plugins/Grids/Points/VectorPoint.cs
+Assets/Gamelogic/Plugins/Grids/Shapes/IShape.cs
+Assets/Gamelogic/Plugins/Grids/Shapes/Shape.cs
+Assets/Gamelogic/Plugins/Grids/Templates/FullLib/CompilerHints.cs
+Assets/Gamelogic/Plugins/Grids/Templates/FullLib/CompilerHints_GL.cs
+Assets/Gamelogic/Plugins/Grids/Templates/FullLib/Grid.cs
+Assets/Gamelogic/Plugins/Grids/Templates/FullLib/HexAlgorithm.cs
+Assets/Gamelogic/Plugins/Grids/Templates/FullLib/HexPoint.cs
+Assets/Gamelogic/Plugins/Grids/Templates/FullLib/Op.cs
+Assets/Gamelogic/Plugins/Grids/Templates/FullLib/Point.cs
+Assets/Gamelogic/Plugins/Grids/Templates/FullLib/ShapeAbbreviations.cs
+Assets/Gamelogic/Plugins/Grids/Templates/FullLib/ShapeInfo.cs
+Assets/Gamelogic/Plugins/Grids/Templates/FullLib/SplicedGrid.cs
+Assets/Gamelogic/Plugins/Grids/Templates/FullLib/SplicedOp.cs
+Assets/Gamelogic/Plugins/Grids/Templates/FullLib/SplicedPoint.cs
+Assets/Gamelogic/Plugins/Grids/Templates/FullLib/TemplateCode.cs
+Assets/Gamelogic/Plugins/Grids/Templates/FullLib/TemplateCode1.cs
+Assets/Gamelogic/Plugins/Grids/Templates/FullLib/TemplateCode4.cs
+Assets/Gamelogic/Plugins/Grids/Templates/FullLib/UniformGrid.cs
+Assets/Gamelogic/Plugins/Grids/Templates/FullLib/VertexEdgeGrid.cs
+Assets/Gamelogic/Plugins/Grids/Unity/AnimatableMap.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/Cells/Block.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/Cells/ICell.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/Cells/IColorableCell.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/Cells/MeshTileCell.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/Cells/SpriteCell.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/Cells/TileCell.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/Cells/UIImageCell.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/Cells/UIImageTextCell.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/Cells/UITextCell.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/Cells/UVCell.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/GLGizmos.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/GridBuilders/CustomGridBuilder.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/GridBuilders/CustomMapBuilder.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/GridBuilders/DiamondTileGridBuilder.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/GridBuilders/FlatHexTileGridBuilder.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/GridBuilders/GridBehaviour.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/GridBuilders/GridBuilder.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/GridBuilders/GridBuilderUtils.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/GridBuilders/ITileGrid.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/GridBuilders/PointyHexTileGridBuilder.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/GridBuilders/PolarFlatBrickTileGridBuilder.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/GridBuilders/PolarPointyBrickTileGridBuilder.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/GridBuilders/PolarRectTileGridBuilder.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/GridBuilders/PolarTileGridBuilder.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/GridBuilders/RectTileGridBuilder.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/GridBuilders/TileGridBuilder.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/IGLScriptableObject.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/IGridBuilderBase.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/Inspectable/ColorFunction.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/Inspectable/InspectableVectorPoint.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/Inspectable/InspectableVectorPoint_Hex.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/Inspectable/InspectableVectorPoint_Rect.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/MapAlignment.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/MapPlane.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/PoissonDiskProperties.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/PolarGridProperties.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/RectNeighborType.cs
+Assets/Gamelogic/Plugins/Grids/Unity/EditorSupport/UpdateType.cs
+Assets/Gamelogic/Plugins/Grids/Unity/MeshUtils.cs
+Assets/Gamelogic/Plugins/Grids/Unity/Vector2Extensions.cs
+Assets/Gamelogic/Plugins/Grids/Utils/Algorithms.cs
+Assets/Gamelogic/Plugins/Grids/Utils/PointComparer.cs
+Assets/Gamelogic/Plugins/Grids/Utils/PointList.cs
+Assets/Gamelogic/Plugins/Grids/Utils/PointStack.cs
+Assets/Gamelogic/Plugins/Grids/Utils/PoissonDisk.cs
+Assets/Reporter/MultiKeyDictionary.cs
+Assets/Reporter/Reporter.cs
+Assets/Reporter/ReporterGUI.cs
+Assets/Reporter/ReporterMessageReceiver.cs
+Assets/Reporter/Test/Rotate.cs
+Assets/Reporter/Test/TestReporter.cs
+-r:"E:\Program Files (x86)\Unity\Editor\Data\Mono\lib\mono\unity\System.Runtime.Serialization.dll"
+-r:"E:\Program Files (x86)\Unity\Editor\Data\Mono\lib\mono\unity\System.Xml.Linq.dll"
