@@ -49,7 +49,6 @@ public class MenuBehaviour : MonoBehaviour {
         if (matchResponses.matches.Count > 0 && System.Convert.ToUInt64(matchResponses.matches[0].networkId) != matchID)
         {
             UnityEngine.Networking.Match.MatchDesc match = matchResponses.matches[0];
-            
             lobbyManager.StartClient();
             lobbyManager.matchMaker.JoinMatch(match.networkId, "", OnJoinedMatch);
         }

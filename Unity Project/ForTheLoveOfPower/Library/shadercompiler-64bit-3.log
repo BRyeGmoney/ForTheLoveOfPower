@@ -1,54 +1,279 @@
 Base path: E:/Program Files (x86)/Unity/Editor/Data
-Pipe name: \\.\pipe\UnityShaderCompiler-64bit-3-4748
+Pipe name: \\.\pipe\UnityShaderCompiler-64bit-3-1572
 Cmd: getPlatforms
 Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-  api=4 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd= ok=0
+  api=9 type=1 insize=955 outsize=7 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
 Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-  api=4 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd= ok=0
+  api=9 type=1 insize=954 outsize=7 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
 Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON
-  api=4 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON pd= ok=0
+  api=9 type=1 insize=1135 outsize=7 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
 Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL
-  api=1 type=0 insize=6237 outsize=0 kw=DIRECTIONAL pd= ok=0
+  api=9 type=1 insize=3155 outsize=7 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
 Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL
+  api=9 type=0 insize=3160 outsize=8370 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=3203 outsize=3926 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=3212 outsize=7 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=3205 outsize=7 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=3201 outsize=7 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=1216 outsize=1198 kw=PIXELSNAP_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=1216 outsize=7 kw=PIXELSNAP_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=4605 outsize=7 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=4609 outsize=7 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=4619 outsize=7 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1298 outsize=4949 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  error: 2 plat 9 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
+Platform defines: UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
+  api=9 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
+Cmd: compileSnippet
+  error: 2 plat 9 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON
+Platform defines: UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
+  api=9 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
+Cmd: compileSnippet
+  api=5 type=0 insize=9067 outsize=8473 kw=DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=9067 outsize=6 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  error: 2 plat 9 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with POINT
+Platform defines: UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
+  api=9 type=0 insize=6237 outsize=0 kw=POINT pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
+Cmd: compileSnippet
+  error: 2 plat 9 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with SPOT
+Platform defines: UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
+  api=9 type=0 insize=6237 outsize=0 kw=SPOT pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
+Cmd: compileSnippet
+  api=5 type=0 insize=6237 outsize=4683 kw=DIRECTIONAL_COOKIE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=6237 outsize=7 kw=DIRECTIONAL pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=6237 outsize=7 kw=POINT_COOKIE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=8528 outsize=6122 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=8528 outsize=6 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=691 outsize=7 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=4597 outsize=6507 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=4597 outsize=6 kw=POINT pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1807 outsize=6972 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=541 outsize=6816 kw=SHADOWS_CUBE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=541 outsize=7 kw=SHADOWS_DEPTH pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=6924 outsize=4921 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=6924 outsize=9564 kw=DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=6924 outsize=7 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=3695 outsize=8728 kw=POINT pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=3695 outsize=9071 kw=SPOT pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=3695 outsize=7 kw=DIRECTIONAL pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=3695 outsize=7 kw=POINT_COOKIE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=2902 outsize=4578 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=5962 outsize=9066 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=5962 outsize=7 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1275 outsize=9822 kw=POINT SHADOWS_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=1275 outsize=3855 kw=POINT_COOKIE SHADOWS_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1275 outsize=9847 kw=DIRECTIONAL_COOKIE SHADOWS_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=1275 outsize=4133 kw=POINT SHADOWS_CUBE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1275 outsize=10544 kw=POINT_COOKIE SHADOWS_CUBE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=1275 outsize=5683 kw=POINT_COOKIE SHADOWS_CUBE SHADOWS_SOFT pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1275 outsize=9744 kw=DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1275 outsize=6 kw=DIRECTIONAL SHADOWS_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1275 outsize=6 kw=POINT_COOKIE SHADOWS_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1275 outsize=6 kw=SPOT SHADOWS_DEPTH SHADOWS_NONATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1275 outsize=6 kw=DIRECTIONAL SHADOWS_SCREEN pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1275 outsize=6 kw=POINT_COOKIE SHADOWS_CUBE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1275 outsize=6 kw=POINT SHADOWS_CUBE SHADOWS_SOFT pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1275 outsize=6 kw=DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1268 outsize=9362 kw=DIRECTIONAL SHADOWS_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1268 outsize=10118 kw=POINT_COOKIE SHADOWS_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1268 outsize=10910 kw=SPOT SHADOWS_DEPTH SHADOWS_NATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1268 outsize=10496 kw=POINT_COOKIE SHADOWS_CUBE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1268 outsize=11019 kw=POINT SHADOWS_CUBE SHADOWS_SOFT pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=1268 outsize=3609 kw=DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1268 outsize=9999 kw=DIRECTIONAL_COOKIE SHADOWS_SCREEN SHADOWS_NATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1268 outsize=6 kw=DIRECTIONAL SHADOWS_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1268 outsize=6 kw=POINT_COOKIE SHADOWS_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1268 outsize=6 kw=SPOT SHADOWS_DEPTH SHADOWS_NONATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1268 outsize=6 kw=DIRECTIONAL_COOKIE SHADOWS_SCREEN pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=1268 outsize=7 kw=POINT_COOKIE SHADOWS_CUBE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1268 outsize=6 kw=POINT SHADOWS_CUBE SHADOWS_SOFT pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1268 outsize=6 kw=DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1273 outsize=9362 kw=DIRECTIONAL SHADOWS_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=1273 outsize=3800 kw=POINT_COOKIE SHADOWS_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1273 outsize=9799 kw=DIRECTIONAL_COOKIE SHADOWS_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=1273 outsize=3924 kw=DIRECTIONAL_COOKIE SHADOWS_SCREEN pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=1273 outsize=4398 kw=POINT_COOKIE SHADOWS_CUBE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1273 outsize=11555 kw=SPOT SHADOWS_DEPTH SHADOWS_SOFT SHADOWS_NATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=1273 outsize=3614 kw=DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1273 outsize=9999 kw=DIRECTIONAL_COOKIE SHADOWS_SCREEN SHADOWS_NATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=1273 outsize=7 kw=DIRECTIONAL SHADOWS_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=1273 outsize=7 kw=POINT_COOKIE SHADOWS_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1273 outsize=6 kw=SPOT SHADOWS_DEPTH SHADOWS_NATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1273 outsize=6 kw=POINT SHADOWS_CUBE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1273 outsize=6 kw=SPOT SHADOWS_DEPTH SHADOWS_SOFT SHADOWS_NONATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=1273 outsize=7 kw=POINT SHADOWS_CUBE SHADOWS_SOFT pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=1273 outsize=7 kw=DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1934 outsize=10289 kw=DIRECTIONAL SHADOWS_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=1934 outsize=4405 kw=POINT_COOKIE SHADOWS_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1934 outsize=10621 kw=DIRECTIONAL_COOKIE SHADOWS_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=1934 outsize=4392 kw=DIRECTIONAL SHADOWS_SCREEN pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1934 outsize=11012 kw=POINT SHADOWS_CUBE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1934 outsize=12644 kw=SPOT SHADOWS_DEPTH SHADOWS_SOFT SHADOWS_NATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=1934 outsize=4392 kw=DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1934 outsize=11120 kw=DIRECTIONAL_COOKIE SHADOWS_SCREEN SHADOWS_NATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=1934 outsize=4350 kw=SPOT SHADOWS_OFF UNITY_HDR_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=1934 outsize=3973 kw=DIRECTIONAL_COOKIE SHADOWS_OFF UNITY_HDR_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=1934 outsize=5469 kw=SPOT SHADOWS_DEPTH SHADOWS_NATIVE UNITY_HDR_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=1934 outsize=4524 kw=POINT SHADOWS_CUBE UNITY_HDR_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=1934 outsize=6491 kw=SPOT SHADOWS_DEPTH SHADOWS_SOFT UNITY_HDR_ON SHADOWS_NONATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1934 outsize=11879 kw=POINT SHADOWS_CUBE SHADOWS_SOFT UNITY_HDR_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=1934 outsize=4592 kw=DIRECTIONAL_COOKIE SHADOWS_SCREEN SHADOWS_NATIVE UNITY_HDR_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1934 outsize=6 kw=DIRECTIONAL SHADOWS_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1934 outsize=6 kw=POINT_COOKIE SHADOWS_OFF pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1934 outsize=6 kw=SPOT SHADOWS_DEPTH SHADOWS_NONATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1934 outsize=6 kw=DIRECTIONAL_COOKIE SHADOWS_SCREEN pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=1934 outsize=7 kw=POINT_COOKIE SHADOWS_CUBE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1934 outsize=6 kw=POINT SHADOWS_CUBE SHADOWS_SOFT pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1934 outsize=6 kw=DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1934 outsize=6 kw=POINT SHADOWS_OFF UNITY_HDR_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1934 outsize=6 kw=SPOT SHADOWS_OFF UNITY_HDR_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=1934 outsize=7 kw=POINT_COOKIE SHADOWS_OFF UNITY_HDR_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1934 outsize=6 kw=SPOT SHADOWS_DEPTH SHADOWS_NATIVE UNITY_HDR_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1934 outsize=6 kw=POINT SHADOWS_CUBE UNITY_HDR_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=1 insize=1934 outsize=6 kw=SPOT SHADOWS_DEPTH SHADOWS_SOFT UNITY_HDR_ON SHADOWS_NONATIVE pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=1934 outsize=7 kw=POINT SHADOWS_CUBE SHADOWS_SOFT UNITY_HDR_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=1934 outsize=7 kw=DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE UNITY_HDR_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=683 outsize=3355 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=3264 outsize=10316 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=5 type=0 insize=823 outsize=829 kw=UNITY_HDR_ON pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=1 insize=823 outsize=7 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=1420 outsize=7592 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=6657 outsize=23789 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  api=9 type=0 insize=701 outsize=6375 kw= pd=UNITY_NO_DXT5nm UNITY_NO_RGBM UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=1
+Cmd: compileSnippet
+  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
 Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=6237 outsize=0 kw=DIRECTIONAL pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
+  api=8 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
+Cmd: compileSnippet
+  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON
+  api=4 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON pd= ok=0
+Cmd: compileSnippet
+  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
+Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
+  api=8 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
+Cmd: compileSnippet
+  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with POINT
+Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
+  api=8 type=0 insize=6237 outsize=0 kw=POINT pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
+Cmd: compileSnippet
+  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with SPOT
+  api=1 type=0 insize=6237 outsize=0 kw=SPOT pd= ok=0
 Cmd: compileSnippet
   error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with POINT_COOKIE
   api=1 type=0 insize=6237 outsize=0 kw=POINT_COOKIE pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL_COOKIE
-  api=4 type=0 insize=6237 outsize=0 kw=DIRECTIONAL_COOKIE pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program
-  api=4 type=0 insize=5589 outsize=0 kw= pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF
-  api=4 type=0 insize=8528 outsize=0 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-  api=1 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON
-  api=1 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON
-  api=4 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with POINT
-  api=4 type=0 insize=6237 outsize=0 kw=POINT pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=6237 outsize=0 kw=DIRECTIONAL pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with SPOT
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=6237 outsize=0 kw=SPOT pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
 Cmd: compileSnippet
   error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL_COOKIE
   api=4 type=0 insize=6237 outsize=0 kw=DIRECTIONAL_COOKIE pd= ok=0
@@ -57,295 +282,9 @@ Cmd: compileSnippet
 Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
   api=8 type=0 insize=5589 outsize=0 kw= pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
 Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF
-  api=4 type=0 insize=8528 outsize=0 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-  api=4 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON
-  api=1 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL
-  api=1 type=0 insize=6237 outsize=0 kw=DIRECTIONAL pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL
-  api=4 type=0 insize=6237 outsize=0 kw=DIRECTIONAL pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with SPOT
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=6237 outsize=0 kw=SPOT pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL_COOKIE
-  api=1 type=0 insize=6237 outsize=0 kw=DIRECTIONAL_COOKIE pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON
-  api=1 type=0 insize=8528 outsize=0 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON
-  api=4 type=0 insize=8528 outsize=0 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-  api=4 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON
-  api=1 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with POINT
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=6237 outsize=0 kw=POINT pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with SPOT
-  api=1 type=0 insize=6237 outsize=0 kw=SPOT pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with POINT_COOKIE
-  api=4 type=0 insize=6237 outsize=0 kw=POINT_COOKIE pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL_COOKIE
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=6237 outsize=0 kw=DIRECTIONAL_COOKIE pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=5589 outsize=0 kw= pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
   error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF
 Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
   api=8 type=0 insize=8528 outsize=0 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON
-  api=4 type=0 insize=8528 outsize=0 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-  api=4 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-  api=4 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON
-  api=1 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL
-  api=1 type=0 insize=6237 outsize=0 kw=DIRECTIONAL pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL
-  api=4 type=0 insize=6237 outsize=0 kw=DIRECTIONAL pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with POINT_COOKIE
-  api=4 type=0 insize=6237 outsize=0 kw=POINT_COOKIE pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL_COOKIE
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=6237 outsize=0 kw=DIRECTIONAL_COOKIE pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program
-  api=4 type=0 insize=5589 outsize=0 kw= pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON
-  api=1 type=0 insize=8528 outsize=0 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON
-  api=4 type=0 insize=8528 outsize=0 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-  api=1 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-  api=4 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON
-  api=4 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL
-  api=1 type=0 insize=6237 outsize=0 kw=DIRECTIONAL pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL
-  api=4 type=0 insize=6237 outsize=0 kw=DIRECTIONAL pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with POINT_COOKIE
-  api=1 type=0 insize=6237 outsize=0 kw=POINT_COOKIE pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL_COOKIE
-  api=1 type=0 insize=6237 outsize=0 kw=DIRECTIONAL_COOKIE pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program
-  api=4 type=0 insize=5589 outsize=0 kw= pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF
-  api=4 type=0 insize=8528 outsize=0 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=8528 outsize=0 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-  api=1 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON
-  api=4 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with POINT
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=6237 outsize=0 kw=POINT pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL
-  api=4 type=0 insize=6237 outsize=0 kw=DIRECTIONAL pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with SPOT
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=6237 outsize=0 kw=SPOT pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL_COOKIE
-  api=4 type=0 insize=6237 outsize=0 kw=DIRECTIONAL_COOKIE pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=8528 outsize=0 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=8528 outsize=0 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-  api=1 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON
-  api=4 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL
-  api=1 type=0 insize=6237 outsize=0 kw=DIRECTIONAL pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL
-  api=4 type=0 insize=6237 outsize=0 kw=DIRECTIONAL pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with SPOT
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=6237 outsize=0 kw=SPOT pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL_COOKIE
-  api=1 type=0 insize=6237 outsize=0 kw=DIRECTIONAL_COOKIE pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program
-  api=4 type=0 insize=5589 outsize=0 kw= pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=8528 outsize=0 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON
-  api=4 type=0 insize=8528 outsize=0 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-  api=1 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-  api=4 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with POINT
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=6237 outsize=0 kw=POINT pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with SPOT
-  api=1 type=0 insize=6237 outsize=0 kw=SPOT pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with POINT_COOKIE
-  api=4 type=0 insize=6237 outsize=0 kw=POINT_COOKIE pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL_COOKIE
-  api=4 type=0 insize=6237 outsize=0 kw=DIRECTIONAL_COOKIE pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=8528 outsize=0 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON
-  api=4 type=0 insize=8528 outsize=0 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-  api=1 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON
-  api=4 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with POINT
-  api=4 type=0 insize=6237 outsize=0 kw=POINT pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with SPOT
-  api=1 type=0 insize=6237 outsize=0 kw=SPOT pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with SPOT
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=6237 outsize=0 kw=SPOT pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL_COOKIE
-  api=1 type=0 insize=6237 outsize=0 kw=DIRECTIONAL_COOKIE pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON
-  api=1 type=0 insize=8528 outsize=0 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON
-  api=4 type=0 insize=8528 outsize=0 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-  api=1 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF
-  api=4 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON
-  api=1 type=0 insize=9067 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with POINT
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=6237 outsize=0 kw=POINT pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL
-  api=4 type=0 insize=6237 outsize=0 kw=DIRECTIONAL pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with SPOT
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=6237 outsize=0 kw=SPOT pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with DIRECTIONAL_COOKIE
-  api=1 type=0 insize=6237 outsize=0 kw=DIRECTIONAL_COOKIE pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 4 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program
-  api=4 type=0 insize=5589 outsize=0 kw= pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 1 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON
-  api=1 type=0 insize=8528 outsize=0 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON pd= ok=0
-Cmd: compileSnippet
-  error: 2 plat 8 at (85): 'vert': output parameter 'o' not completely initialized\nCompiling Vertex program with LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON
-Platform defines: UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE
-  api=8 type=0 insize=8528 outsize=0 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF UNITY_HDR_ON pd=UNITY_NO_SCREENSPACE_SHADOWS UNITY_NO_LINEAR_COLORSPACE ok=0
 Unhandled exception: Readfile from pipe failed. GLE=The pipe has been ended.
 
 
