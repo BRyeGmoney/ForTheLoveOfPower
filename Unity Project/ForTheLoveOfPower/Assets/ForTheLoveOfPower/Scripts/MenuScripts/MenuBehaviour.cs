@@ -56,6 +56,7 @@ public class MenuBehaviour : MonoBehaviour {
 
     private void OnJoinedMatch(UnityEngine.Networking.Match.JoinMatchResponse joinedMatchResp)
     {
+        Utility.SetAccessTokenForNetwork(joinedMatchResp.networkId, new UnityEngine.Networking.Types.NetworkAccessToken(joinedMatchResp.accessTokenString));
         lobbyManager.client.RegisterHandler(MsgType.Connect, OnConnected);
         lobbyManager.client.Connect(new UnityEngine.Networking.Match.MatchInfo(joinedMatchResp));
     }
@@ -108,7 +109,7 @@ public class MenuBehaviour : MonoBehaviour {
     public void OnMatchCreate(UnityEngine.Networking.Match.CreateMatchResponse matchInfo)
     {
         lobbyManager.OnMatchCreate(matchInfo);
-        
+        Utility.SetAccessTokenForNetwork(matchInfo.networkId, new UnityEngine.Networking.Types.NetworkAccessToken(matchInfo.accessTokenString));
         matchID = (System.UInt64)matchInfo.networkId;
     }
 
