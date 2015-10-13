@@ -110,6 +110,7 @@ public class MenuBehaviour : MonoBehaviour {
     {
         lobbyManager.OnMatchCreate(matchInfo);
         Utility.SetAccessTokenForNetwork(matchInfo.networkId, new UnityEngine.Networking.Types.NetworkAccessToken(matchInfo.accessTokenString));
+        NetworkServer.Listen(new UnityEngine.Networking.Match.MatchInfo(matchInfo), 9000);
         matchID = (System.UInt64)matchInfo.networkId;
     }
 
