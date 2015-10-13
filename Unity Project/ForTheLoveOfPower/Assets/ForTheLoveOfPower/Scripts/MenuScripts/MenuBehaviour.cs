@@ -56,6 +56,12 @@ public class MenuBehaviour : MonoBehaviour {
 
     private void OnJoinedMatch(UnityEngine.Networking.Match.JoinMatchResponse joinedMatchResp)
     {
+        lobbyManager.client.RegisterHandler(MsgType.Connect, OnConnected);
+        lobbyManager.client.Connect(new UnityEngine.Networking.Match.MatchInfo(joinedMatchResp));
+    }
+
+    private void OnConnected(NetworkMessage netMessage)
+    {
         SetTextStatus(TextStatus.HostFound);
     }
 
@@ -90,8 +96,6 @@ public class MenuBehaviour : MonoBehaviour {
         SetTextStatus(TextStatus.WaitingForPlayer);
         SetTextVisibility(true);
 
-        lobbyManager.serverBindToIP = true;
-        lobbyManager.serverBindAddress = Network.player.externalIP;
         lobbyManager.StartMatchMaker();
         lobbyManager.matchMaker.CreateMatch(
             PlayerName,
