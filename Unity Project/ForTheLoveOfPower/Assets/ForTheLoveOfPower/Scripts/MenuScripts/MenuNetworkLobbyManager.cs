@@ -6,7 +6,9 @@ using System.Collections;
 public class MenuNetworkLobbyManager : NetworkLobbyManager {
 
     public Text ConnectionStatusString;
-    public Button GoButton;
+    public GameObject GoButton;
+
+    public int numPlayersConnected = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -16,11 +18,21 @@ public class MenuNetworkLobbyManager : NetworkLobbyManager {
     public override void OnClientConnect(NetworkConnection conn)
     {
         base.OnClientConnect(conn);
-        
-        if (numPlayers > 1 && ConnectionStatusString != null && GoButton != null)
+
+    }
+
+    public override void OnLobbyServerConnect(NetworkConnection conn)
+    {
+        base.OnLobbyServerConnect(conn);
+
+        numPlayersConnected += 1;
+
+        if (numPlayersConnected > 1 && ConnectionStatusString != null && GoButton != null)
         {
             ConnectionStatusString.text = "Player Found";
-            GoButton.enabled = true;
+            GoButton.SetActive(true);
         }
     }
+
+
 }

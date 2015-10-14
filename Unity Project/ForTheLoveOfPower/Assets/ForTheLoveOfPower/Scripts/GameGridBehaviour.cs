@@ -9,7 +9,7 @@ using AssemblyCSharp;
 
 public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	static public bool didWin;
-	static public Color baseFloorColor;// = new Color (0.327f, 0.779f, 0.686f, 1f);
+	static public Color baseFloorColor;
     static bool multiGame = true;
 
 	PointyHexPoint startPoint;
@@ -23,11 +23,10 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	Touch prevTouch;
 	PointList<PointyHexPoint> path;
 	PointList<PointyHexPoint> prevPath;
-	//PointyHexTileGridBuilder me;
+
+
 	BuildMenuBehaviour buildScreenSettings;
-	
-	//Player playingPlayer;
-	//AIPlayer aiPlayer;
+
 	public Player[] listOfPlayers;
 	public Text moneyText;
 	public Text touchTypes;
@@ -62,14 +61,9 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
             c++;
         }
-		//playingPlayer = gameObject.Find ("playerOne").GetComponent<Player>();
-		//aiPlayer = gameObject.Find ("playerTwoAI").GetComponent<AIPlayer> ();
-
-		//me = gameObject.GetComponent<PointyHexTileGridBuilder> ();
+        
 		buildScreenSettings = buildScreen.GetComponent<BuildMenuBehaviour> ();
 		baseFloorColor = GridBuilder.Colors [0];
-
-		//Input.simulateMouseWithTouches = true;
 
 		//Create ai player's beginnings
 		prevPath = new PointList<PointyHexPoint> ();

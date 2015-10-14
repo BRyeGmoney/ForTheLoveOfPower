@@ -11,8 +11,8 @@ public class Player : MonoBehaviour {
 	public List<PointyHexPoint> ownedTiles;
 	public Int32 Cash { get; set; }
 
-	public Color PlayerColor { get { return playerColor; } }
-	protected Color playerColor;
+    public Color PlayerColor;// { get { return playerColor; } }
+	//protected Color playerColor;
 
 	public Boolean DictatorAlive { get; set; }
 
@@ -21,9 +21,9 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		InitBasePlayer ();
-
+        PlayerColor = MenuBehaviour.instance.PlayerColor;
 		//temp player color
-		playerColor = new Color32 (0, 255, 255, 255);
+		//PlayerColor = new Color32 (0, 255, 255, 255);
 	}
 	
 	protected void InitBasePlayer()

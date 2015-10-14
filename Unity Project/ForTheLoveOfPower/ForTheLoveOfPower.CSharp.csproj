@@ -77,6 +77,7 @@
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\CameraBehaviour.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\Combat.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs" />
+    <Compile Include="Assets\ForTheLoveOfPower\Scripts\Helpers\PlayerPrefsX.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\MenuScripts\BuildMenuBehaviour.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\MenuScripts\LobbyPlayer.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\MenuScripts\MenuBehaviour.cs" />

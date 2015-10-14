@@ -10,7 +10,7 @@ public class AIPlayer : Player {
 	// Use this for initialization
 	void Start () {
 		InitBasePlayer ();
-		playerColor = new Color32 (50, 205, 50, 255);
+		//PlayerColor = new Color32 (50, 205, 50, 255);
 	}
 
 	// Update is called once per frame

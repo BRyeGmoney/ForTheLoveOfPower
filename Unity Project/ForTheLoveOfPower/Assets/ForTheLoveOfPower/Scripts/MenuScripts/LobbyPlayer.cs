@@ -10,6 +10,8 @@ public class LobbyPlayer : NetworkLobbyPlayer {
 
     [SyncVar(hook = "OnPlayerName")]
     public string playerName;
+    [SyncVar(hook = "OnPlayerColor")]
+    public Color playerColor;
 
     public void Awake()
     {
@@ -26,6 +28,7 @@ public class LobbyPlayer : NetworkLobbyPlayer {
         base.OnClientEnterLobby();
 
         OnPlayerName(playerName);
+        OnPlayerColor(playerColor);
         //playerNameText.text = playerName;
         //transform.SetParent(MenuBehaviour.instance.LobbyPlayersPanel, false);
         int index = Array.IndexOf(MenuBehaviour.instance.lobbyManager.lobbySlots, this);
@@ -36,8 +39,12 @@ public class LobbyPlayer : NetworkLobbyPlayer {
     {
         base.OnStartLocalPlayer();
 
+        
         CmdNameChanged(MenuBehaviour.instance.PlayerName);
         OnPlayerName(playerName);
+        CmdColorChanged(MenuBehaviour.instance.PlayerColor);
+        OnPlayerColor(playerColor);
+
         int index = Array.IndexOf(MenuBehaviour.instance.lobbyManager.lobbySlots, this);
         transform.position = new Vector3(0, -350 + (index * 35), 0);
     }
@@ -48,9 +55,21 @@ public class LobbyPlayer : NetworkLobbyPlayer {
         playerNameText.text = playerName;
     }
 
+    public void OnPlayerColor(Color newPlayerColor)
+    {
+        playerColor = newPlayerColor;
+        playerNameText.color = playerColor;
+    }
+
     [Command]
     public void CmdNameChanged(string name)
     {
         playerName = name;
+    }
+
+    [Command]
+    public void CmdColorChanged(Color pColor)
+    {
+        playerColor = pColor;
     }
 }
