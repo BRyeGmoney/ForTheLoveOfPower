@@ -49,21 +49,24 @@ public class MenuBehaviour : MonoBehaviour {
         if (matchResponses.matches.Count > 0 && System.Convert.ToUInt64(matchResponses.matches[0].networkId) != matchID)
         {
             UnityEngine.Networking.Match.MatchDesc match = matchResponses.matches[0];
-            lobbyManager.StartClient();
+            //lobbyManager.StartClient();
+            lobbyManager.matchName = match.name;
+            lobbyManager.matchSize = (uint)match.maxSize;
             lobbyManager.matchMaker.JoinMatch(match.networkId, "", OnJoinedMatch);
         }
     }
 
     private void OnJoinedMatch(UnityEngine.Networking.Match.JoinMatchResponse joinedMatchResp)
     {
-        Utility.SetAccessTokenForNetwork(joinedMatchResp.networkId, new UnityEngine.Networking.Types.NetworkAccessToken(joinedMatchResp.accessTokenString));
-        lobbyManager.client.RegisterHandler(MsgType.Connect, OnConnected);
-        lobbyManager.client.Connect(new UnityEngine.Networking.Match.MatchInfo(joinedMatchResp));
+       // Utility.SetAccessTokenForNetwork(joinedMatchResp.networkId, new UnityEngine.Networking.Types.NetworkAccessToken(joinedMatchResp.accessTokenString));
+        SetTextStatus(TextStatus.HostFound);
+        //lobbyManager.client.RegisterHandler(MsgType.Connect, OnConnected);
+        //lobbyManager.client.Connect(new UnityEngine.Networking.Match.MatchInfo(joinedMatchResp));
     }
 
     private void OnConnected(NetworkMessage netMessage)
     {
-        SetTextStatus(TextStatus.HostFound);
+        SetTextStatus(TextStatus.WaitingForHost);
     }
 
     public void ChangeToMultiMenu()
@@ -98,19 +101,24 @@ public class MenuBehaviour : MonoBehaviour {
         SetTextVisibility(true);
 
         lobbyManager.StartMatchMaker();
+        //lobbyManager.networkPort = 7777;
+        lobbyManager.SetMatchHost("mm.unet.unity3d.com", 443, true);
         lobbyManager.matchMaker.CreateMatch(
             PlayerName,
             (uint)lobbyManager.maxPlayers,
             true,
             "",
             OnMatchCreate);
+
+        if (NetworkServer.active)
+            Debug.Log("Hey, we're active!");
     }
 
     public void OnMatchCreate(UnityEngine.Networking.Match.CreateMatchResponse matchInfo)
     {
         lobbyManager.OnMatchCreate(matchInfo);
-        Utility.SetAccessTokenForNetwork(matchInfo.networkId, new UnityEngine.Networking.Types.NetworkAccessToken(matchInfo.accessTokenString));
-        NetworkServer.Listen(new UnityEngine.Networking.Match.MatchInfo(matchInfo), 9000);
+        //Utility.SetAccessTokenForNetwork(matchInfo.networkId, new UnityEngine.Networking.Types.NetworkAccessToken(matchInfo.accessTokenString));
+        //NetworkServer.Listen(new UnityEngine.Networking.Match.MatchInfo(matchInfo), 7777);
         matchID = (System.UInt64)matchInfo.networkId;
     }
 
@@ -148,7 +156,9 @@ public class MenuBehaviour : MonoBehaviour {
             mpPlayerText.text = "Waiting For Player...";
         else if (mpStatus == TextStatus.PlayerFound) //player connected - host end
             mpPlayerText.text = "Player found! Ready";
-        else if (mpStatus == TextStatus.HostFound) //player connected - client end
+        else if (mpStatus == TextStatus.HostFound)
+            mpPlayerText.text = "Match Found. Connecting...";
+        else if (mpStatus == TextStatus.WaitingForHost) //player connected - client end
             mpPlayerText.text = "Waiting for Host to Start";
         else
             mpPlayerText.text = "Error: function not defined";
@@ -178,4 +188,5 @@ public enum TextStatus
     WaitingForPlayer = 1,
     PlayerFound = 2,
     HostFound = 3,
+    WaitingForHost = 4,
 }
