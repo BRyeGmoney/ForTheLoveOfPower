@@ -14,6 +14,8 @@ public class MenuBehaviour : MonoBehaviour {
     public GameObject AIPlayerPrefab;
     public MenuNetworkLobbyManager lobbyManager;
 
+    int attempt = 0;
+
     //public RectTransform LobbyPlayersPanel;
     VerticalLayoutGroup layout;
 
@@ -46,18 +48,22 @@ public class MenuBehaviour : MonoBehaviour {
 
     private void ConnectToMatchOne(UnityEngine.Networking.Match.ListMatchResponse matchResponses)
     {
+        Debug.Log(string.Format("Number of Matches: {0}", matchResponses.matches.Count));
+
         if (matchResponses.matches.Count > 0 && System.Convert.ToUInt64(matchResponses.matches[0].networkId) != matchID)
         {
             UnityEngine.Networking.Match.MatchDesc match = matchResponses.matches[0];
             //lobbyManager.StartClient();
             lobbyManager.matchName = match.name;
             lobbyManager.matchSize = (uint)match.maxSize;
+            //lobbyManager.networkPort = match.directConnectInfos[0].
             lobbyManager.matchMaker.JoinMatch(match.networkId, "", OnJoinedMatch);
         }
     }
 
     private void OnJoinedMatch(UnityEngine.Networking.Match.JoinMatchResponse joinedMatchResp)
     {
+        lobbyManager.OnMatchJoined(joinedMatchResp);
        // Utility.SetAccessTokenForNetwork(joinedMatchResp.networkId, new UnityEngine.Networking.Types.NetworkAccessToken(joinedMatchResp.accessTokenString));
         SetTextStatus(TextStatus.HostFound);
         //lobbyManager.client.RegisterHandler(MsgType.Connect, OnConnected);
@@ -102,16 +108,15 @@ public class MenuBehaviour : MonoBehaviour {
 
         lobbyManager.StartMatchMaker();
         //lobbyManager.networkPort = 7777;
-        lobbyManager.SetMatchHost("mm.unet.unity3d.com", 443, true);
+        //lobbyManager.SetMatchHost("mm.unet.unity3d.com", 443, true);
+        //UnityEngine.Networking.Match.CreateMatchRequest matchReq = new UnityEngine.Networking.Match.CreateMatchRequest() { name = PlayerName, advertise = true, password = "", privateAddress = Network.player.externalIP, publicAddress = Network.player.ipAddress, size = 2 };
         lobbyManager.matchMaker.CreateMatch(
             PlayerName,
             (uint)lobbyManager.maxPlayers,
             true,
             "",
             OnMatchCreate);
-
-        if (NetworkServer.active)
-            Debug.Log("Hey, we're active!");
+        //lobbyManager.matchMaker.CreateMatch(matchReq, OnMatchCreate);
     }
 
     public void OnMatchCreate(UnityEngine.Networking.Match.CreateMatchResponse matchInfo)
@@ -170,7 +175,7 @@ public class MenuBehaviour : MonoBehaviour {
         DontDestroyOnLoad(mainPlayer);
         DontDestroyOnLoad(aiPlayer);
 
-		Application.LoadLevel ("MainScreen");
+        Application.LoadLevel ("MainScreen");
 	}
 
 	public void QuitGame() {

@@ -37,6 +37,9 @@ public class LobbyPlayer : NetworkLobbyPlayer {
         base.OnStartLocalPlayer();
 
         CmdNameChanged(MenuBehaviour.instance.PlayerName);
+        OnPlayerName(playerName);
+        int index = Array.IndexOf(MenuBehaviour.instance.lobbyManager.lobbySlots, this);
+        transform.position = new Vector3(0, -350 + (index * 35), 0);
     }
 
     public void OnPlayerName(string newPlayerName)
