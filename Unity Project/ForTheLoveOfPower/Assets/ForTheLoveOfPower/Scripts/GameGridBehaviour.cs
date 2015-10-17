@@ -24,7 +24,6 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	PointList<PointyHexPoint> path;
 	PointList<PointyHexPoint> prevPath;
 
-
 	BuildMenuBehaviour buildScreenSettings;
 
 	public Player[] listOfPlayers;
@@ -94,7 +93,10 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
             curGameState = GameState.PlayerSetupState;
 
             Debug.Log("About to play anim");
-            PlaceDictText.GetComponent<Animator>().SetTrigger("PlaceDictTrigger");
+            Animator anim = PlaceDictText.GetComponent<Animator>();
+            Debug.Log(anim);
+            anim.SetTrigger("PlaceDictTrigger");
+            //PlaceDictText.GetComponent<Animator>().SetTrigger("PlaceDictTrigger");
             Debug.Log("Played Anim");
         }
         
@@ -208,7 +210,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
                         }
                     }
                     Debug.Log("Dragging after start cycle complete");
-                } else if (draggingInput && prevTouch.phase.Equals (TouchPhase.Stationary)) { //we'll try to see if there was a unit to move in the prevClicked
+                } else if (!startChosen && draggingInput) { //we'll try to see if there was a unit to move in the prevClicked
                     Debug.Log("We're dragging the position");
                     prevClickedPoint = Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
                     prevClickedCell = Grid[clickedPoint] as UnitCell;
@@ -237,6 +239,8 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
                 prevClickedPoint = clickedPoint;
                 prevClickedCell = clickedCell;
             }
+
+            tappingInput = false;
 			
 		} else {
 			if (startChosen) { //that means we've decided the final point for the unit
@@ -376,8 +380,6 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
     private void PlayerSetupState()
     {
-        PlaceDictText.GetComponent<Animator>().SetTrigger("PlaceDictTrigger");
-
         if (listOfPlayers[localPlayer].milUnits.Count < 1)
         {
             if (Input.touchCount > 0)
@@ -413,7 +415,6 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
         if (!buildScreenSettings.isActiveAndEnabled)
         {
-            //Debug.Log ("Build settings are inactive");
             if (Input.touchCount > 0)
                 CheckTouchInput();
             else if (!Input.touchSupported)
