@@ -2,12 +2,12 @@ Mono path[0] = 'C:/Users/BryanGrom/Documents/PenisPotato/Unity Project/ForTheLov
 Mono path[1] = 'C:/Users/BryanGrom/Documents/PenisPotato/Unity Project/ForTheLoveOfPower/Build/game_Data/Mono'
 Mono config path = 'C:/Users/BryanGrom/Documents/PenisPotato/Unity Project/ForTheLoveOfPower/Build/game_Data/Mono/etc'
 PlayerConnection initialized from C:/Users/BryanGrom/Documents/PenisPotato/Unity Project/ForTheLoveOfPower/Build/game_Data (debug = 0)
-PlayerConnection initialized network socket : 0.0.0.0 55234
-Multi-casting "[IP] 192.168.0.103 [Port] 55234 [Flags] 3 [Guid] 852575159 [EditorId] 1304660484 [Version] 1048832 [Id] WindowsPlayer(glutenfreepc) [Debug] 1" to [225.0.0.222:54997]...
-Waiting for connection from host on [192.168.0.103:55234]...
+PlayerConnection initialized network socket : 0.0.0.0 55071
+Multi-casting "[IP] 192.168.0.103 [Port] 55071 [Flags] 3 [Guid] 1300205879 [EditorId] 1737838564 [Version] 1048832 [Id] WindowsPlayer(glutenfreepc) [Debug] 1" to [225.0.0.222:54997]...
+Waiting for connection from host on [192.168.0.103:55071]...
 PlayerConnection accepted from [192.168.0.103] handle:0x288
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,defer=y,address=0.0.0.0:56159
-PlayerConnection already initialized - listening to [192.168.0.103:55234]
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,defer=y,address=0.0.0.0:56879
+PlayerConnection already initialized - listening to [192.168.0.103:55071]
 Initialize engine version: 5.2.1f1 (44735ea161b3)
 GfxDevice: creating device client; threaded=1
 Direct3D:
@@ -27,21 +27,21 @@ Loading C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower
 Platform assembly: C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Build\game_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Build\game_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
 Platform assembly: C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Build\game_Data\Managed\System.Core.dll (this message is harmless)
-- Completed reload, in  0.064 seconds
+- Completed reload, in  0.129 seconds
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
 Platform assembly: C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Build\game_Data\Managed\System.dll (this message is harmless)
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 26a8 -> priority: 1 
-  Thread -> id: 1a04 -> priority: 1 
-MatchMakingClient ListMatches :https://mm.unet.unity3d.com/json/reply/ListMatchRequest
+  Thread -> id: 1b88 -> priority: 1 
+  Thread -> id: 2edc -> priority: 1 
+MatchMakingClient Create :https://mm.unet.unity3d.com/json/reply/CreateMatchRequest
 UnityEngine.Debug:Internal_Log(Int32, String, Object)
 UnityEngine.Debug:Log(Object)
-UnityEngine.Networking.Match.NetworkMatch:ListMatches(ListMatchRequest, ResponseDelegate`1) (at C:\buildslave\unity\build\Runtime\Networking\Managed\MatchMakingClient.cs:191)
-UnityEngine.Networking.Match.NetworkMatch:ListMatches(Int32, Int32, String, ResponseDelegate`1) (at C:\buildslave\unity\build\Runtime\Networking\Managed\MatchMakingClient.cs:184)
-MenuBehaviour:LookForMatch() (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\MenuScripts\MenuBehaviour.cs:44)
+UnityEngine.Networking.Match.NetworkMatch:CreateMatch(CreateMatchRequest, ResponseDelegate`1) (at C:\buildslave\unity\build\Runtime\Networking\Managed\MatchMakingClient.cs:78)
+UnityEngine.Networking.Match.NetworkMatch:CreateMatch(String, UInt32, Boolean, String, ResponseDelegate`1) (at C:\buildslave\unity\build\Runtime\Networking\Managed\MatchMakingClient.cs:71)
+MenuBehaviour:CreateRoom() (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\MenuScripts\MenuBehaviour.cs:147)
 UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:149)
 UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:626)
 UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:766)
@@ -56,30 +56,140 @@ UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\builds
 UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:179)
 UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:277)
  
-(Filename: C:/buildslave/unity/build/Runtime/Networking/Managed/MatchMakingClient.cs Line: 191)
+(Filename: C:/buildslave/unity/build/Runtime/Networking/Managed/MatchMakingClient.cs Line: 78)
 
-JSON Response: [[UnityEngine.Networking.Match.ListMatchResponse]-success:True-extendedInfo:]-matches.Count:1
+JSON Response: [[UnityEngine.Networking.Match.CreateMatchResponse]-success:True-extendedInfo:]-address:52.6.182.178,port:9999,networkId:0x001000000000A501,nodeId:0xB2F7,usingRelay:True
 UnityEngine.Debug:Internal_Log(Int32, String, Object)
 UnityEngine.Debug:Log(Object)
 UnityEngine.Networking.Match.<ProcessMatchResponse>c__Iterator0`1:MoveNext() (at C:\buildslave\unity\build\Runtime\Networking\Managed\MatchMakingClient.cs:290)
  
 (Filename: C:/buildslave/unity/build/Runtime/Networking/Managed/MatchMakingClient.cs Line: 290)
 
-MatchMakingClient Join :https://mm.unet.unity3d.com/json/reply/JoinMatchRequest
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 6.617380 ms
+Scene MainScreen is loaded
 UnityEngine.Debug:Internal_Log(Int32, String, Object)
 UnityEngine.Debug:Log(Object)
-UnityEngine.Networking.Match.NetworkMatch:JoinMatch(JoinMatchRequest, ResponseDelegate`1) (at C:\buildslave\unity\build\Runtime\Networking\Managed\MatchMakingClient.cs:107)
-UnityEngine.Networking.Match.NetworkMatch:JoinMatch(NetworkID, String, ResponseDelegate`1) (at C:\buildslave\unity\build\Runtime\Networking\Managed\MatchMakingClient.cs:100)
-MenuBehaviour:ConnectToMatchOne(ListMatchResponse) (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\MenuScripts\MenuBehaviour.cs:53)
-UnityEngine.Networking.Match.<ProcessMatchResponse>c__Iterator0`1:MoveNext() (at C:\buildslave\unity\build\Runtime\Networking\Managed\MatchMakingClient.cs:302)
+Reporter:OnLevelWasLoaded() (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\Reporter\Reporter.cs:1994)
  
-(Filename: C:/buildslave/unity/build/Runtime/Networking/Managed/MatchMakingClient.cs Line: 107)
+(Filename: C:/Users/BryanGrom/Documents/PenisPotato/Unity Project/ForTheLoveOfPower/Assets/Reporter/Reporter.cs Line: 1994)
 
-JSON Response: [[UnityEngine.Networking.Match.JoinMatchResponse]-success:True-extendedInfo:]-address:52.6.182.178,port:9999,networkId:0x00100000000090D2,nodeId:0x8443,usingRelay:True
+System memory in use before: 30.7 MB.
+System memory in use after: 30.8 MB.
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 2681.
+Total: 2.771681 ms (FindLiveObjects: 0.166928 ms CreateObjectMapping: 0.083917 ms MarkObjects: 2.428465 ms  DeleteObjects: 0.090859 ms)
+
+We've pressed a tile
 UnityEngine.Debug:Internal_Log(Int32, String, Object)
 UnityEngine.Debug:Log(Object)
-UnityEngine.Networking.Match.<ProcessMatchResponse>c__Iterator0`1:MoveNext() (at C:\buildslave\unity\build\Runtime\Networking\Managed\MatchMakingClient.cs:290)
+GameGridBehaviour:PressTile(UnitCell, PointyHexPoint) (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:398)
+GameGridBehaviour:CheckMouseInput() (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:227)
+GameGridBehaviour:UpdatePlayGameState() (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:285)
+GameGridBehaviour:Update() (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:255)
  
-(Filename: C:/buildslave/unity/build/Runtime/Networking/Managed/MatchMakingClient.cs Line: 290)
+(Filename: C:/Users/BryanGrom/Documents/PenisPotato/Unity Project/ForTheLoveOfPower/Assets/ForTheLoveOfPower/Scripts/GameGridBehaviour.cs Line: 398)
+
+new military unit created
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GameGridBehaviour:CreateNewMilitaryUnit(Player, Int32, UnitCell, PointyHexPoint) (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:465)
+GameGridBehaviour:PressTile(UnitCell, PointyHexPoint) (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:422)
+GameGridBehaviour:CheckMouseInput() (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:227)
+GameGridBehaviour:UpdatePlayGameState() (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:285)
+GameGridBehaviour:Update() (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:255)
+ 
+(Filename: C:/Users/BryanGrom/Documents/PenisPotato/Unity Project/ForTheLoveOfPower/Assets/ForTheLoveOfPower/Scripts/GameGridBehaviour.cs Line: 465)
+
+We've pressed a tile
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GameGridBehaviour:PressTile(UnitCell, PointyHexPoint) (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:398)
+GameGridBehaviour:CheckMouseInput() (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:227)
+GameGridBehaviour:UpdatePlayGameState() (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:285)
+GameGridBehaviour:Update() (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:255)
+ 
+(Filename: C:/Users/BryanGrom/Documents/PenisPotato/Unity Project/ForTheLoveOfPower/Assets/ForTheLoveOfPower/Scripts/GameGridBehaviour.cs Line: 398)
+
+Setting up the build menu
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GameGridBehaviour:SetupBuildMenu(Boolean) (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:431)
+GameGridBehaviour:PressTile(UnitCell, PointyHexPoint) (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:424)
+GameGridBehaviour:CheckMouseInput() (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:227)
+GameGridBehaviour:UpdatePlayGameState() (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:285)
+GameGridBehaviour:Update() (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:255)
+ 
+(Filename: C:/Users/BryanGrom/Documents/PenisPotato/Unity Project/ForTheLoveOfPower/Assets/ForTheLoveOfPower/Scripts/GameGridBehaviour.cs Line: 431)
+
+The Handler StructChosen is run
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GameGridBehaviour:HandlestructChosen(Object, BuildingChosenArgs) (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:440)
+BuildMenuBehaviour:ClickSettlement() (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\MenuScripts\BuildMenuBehaviour.cs:57)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:149)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:626)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:766)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:54)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:378)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:277)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:265)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:179)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:277)
+ 
+(Filename: C:/Users/BryanGrom/Documents/PenisPotato/Unity Project/ForTheLoveOfPower/Assets/ForTheLoveOfPower/Scripts/GameGridBehaviour.cs Line: 440)
+
+trying to find a building in the area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GameGridBehaviour:IsBuildingInArea(PointyHexPoint, PointList`1, Color) (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:518)
+GameGridBehaviour:HandlestructChosen(Object, BuildingChosenArgs) (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:446)
+BuildMenuBehaviour:ClickSettlement() (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\MenuScripts\BuildMenuBehaviour.cs:57)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:149)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:626)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:766)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:54)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:378)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:277)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:265)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:179)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:277)
+ 
+(Filename: C:/Users/BryanGrom/Documents/PenisPotato/Unity Project/ForTheLoveOfPower/Assets/ForTheLoveOfPower/Scripts/GameGridBehaviour.cs Line: 518)
+
+new settlement created
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GameGridBehaviour:CreateNewSettlement(Player, UnitCell, PointyHexPoint, PointList`1) (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:474)
+GameGridBehaviour:HandlestructChosen(Object, BuildingChosenArgs) (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs:447)
+BuildMenuBehaviour:ClickSettlement() (at C:\Users\BryanGrom\Documents\PenisPotato\Unity Project\ForTheLoveOfPower\Assets\ForTheLoveOfPower\Scripts\MenuScripts\BuildMenuBehaviour.cs:57)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:149)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:626)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:766)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:54)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:378)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:277)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:265)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:179)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:277)
+ 
+(Filename: C:/Users/BryanGrom/Documents/PenisPotato/Unity Project/ForTheLoveOfPower/Assets/ForTheLoveOfPower/Scripts/GameGridBehaviour.cs Line: 474)
+
+Log: connection {1} has been disconnected by timeout; address {::ffff:52.6.182.178:9999}
+aissp: time {40636} lastRecTime {38586} DisTme {2000}, rtt {161} 
+ 
+(Filename: C:/buildslave/unity/build/Runtime/Networking/UNETHost.cpp Line: 1848)
 
 Waiting for finish

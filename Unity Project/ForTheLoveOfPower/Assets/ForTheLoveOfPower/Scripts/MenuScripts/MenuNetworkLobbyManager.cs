@@ -19,6 +19,7 @@ public class MenuNetworkLobbyManager : NetworkLobbyManager {
     {
         base.OnClientConnect(conn);
 
+        ConnectionStatusString.text = "Waiting For Host";
     }
 
     public override void OnLobbyServerConnect(NetworkConnection conn)
@@ -33,6 +34,4 @@ public class MenuNetworkLobbyManager : NetworkLobbyManager {
             GoButton.SetActive(true);
         }
     }
-
-
 }

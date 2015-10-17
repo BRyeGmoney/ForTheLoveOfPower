@@ -7,11 +7,13 @@ public class MenuBehaviour : MonoBehaviour {
     public static MenuBehaviour instance = null;
     public Text mpPlayerText;
     public InputField nameInput;
+    public bool isMPGame;
 
     private Animator animator;
 
     public GameObject PlayerPrefab;
     public GameObject AIPlayerPrefab;
+    public GameObject NetworkPlayerPrefab;
     public MenuNetworkLobbyManager lobbyManager;
 
     //private Sprite colorPicker;
@@ -29,6 +31,7 @@ public class MenuBehaviour : MonoBehaviour {
     public string PlayerName = "PlayerName";
     public Color PlayerColor = new Color(0, 255, 255);
     private ulong matchID;
+
 
 	// Use this for initialization
 	void Start () {
@@ -80,6 +83,7 @@ public class MenuBehaviour : MonoBehaviour {
 
     public void LookForMatch()
     {
+        isMPGame = true;
         SetTextStatus(TextStatus.SearchingForGame);
         SetTextVisibility(true);
 
@@ -117,6 +121,8 @@ public class MenuBehaviour : MonoBehaviour {
 
     public void ChangeToMainMenuFromMulti()
     {
+        isMPGame = false;
+
         if (lobbyManager.matchMaker != null)
             lobbyManager.matchMaker.DestroyMatch((UnityEngine.Networking.Types.NetworkID)matchID, OnMatchDestroyed);
 
@@ -138,6 +144,7 @@ public class MenuBehaviour : MonoBehaviour {
 
     public void CreateRoom()
     {
+        isMPGame = true;
         SetTextStatus(TextStatus.WaitingForPlayer);
         SetTextVisibility(true);
 
@@ -165,7 +172,11 @@ public class MenuBehaviour : MonoBehaviour {
 
     public void StartMPGame()
     {
-        lobbyManager.CheckReadyToBegin();
+        foreach (LobbyPlayer lP in lobbyManager.lobbySlots)
+        {
+            lP.readyToBegin = true;
+            lP.SendReadyToBeginMessage();
+        }
     }
 
     private void SetTextVisibility(bool isVisible)

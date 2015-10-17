@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Internal;
+using UnityEngine.Networking;
 using Gamelogic;
 using Gamelogic.Grids;
 
@@ -43,7 +44,7 @@ namespace AssemblyCSharp
 		Dictator_Idle = 14,
 	}
 
-	public class MilitaryUnit : MonoBehaviour
+	public class MilitaryUnit : NetworkBehaviour
 	{
 		private PointList<PointyHexPoint> movementPath;
 		private int unitAmount = 1;

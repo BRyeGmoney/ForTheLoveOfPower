@@ -1,29 +1,25 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gamelogic.Grids;
 
-public class Player : MonoBehaviour {
+public class Player : NetworkBehaviour {
 
 	public List<AssemblyCSharp.MilitaryUnit> milUnits;
 	public List<AssemblyCSharp.Settlement> settlements;
 	public List<PointyHexPoint> ownedTiles;
 	public Int32 Cash { get; set; }
 
-    public Color PlayerColor;// { get { return playerColor; } }
-	//protected Color playerColor;
-
+    public Color PlayerColor;
+    
 	public Boolean DictatorAlive { get; set; }
-
-	//private PointList<PointyHexPoint> ownedTiles;
 
 	// Use this for initialization
 	void Start () {
 		InitBasePlayer ();
         PlayerColor = MenuBehaviour.instance.PlayerColor;
-		//temp player color
-		//PlayerColor = new Color32 (0, 255, 255, 255);
 	}
 	
 	protected void InitBasePlayer()
@@ -104,4 +100,9 @@ public class Player : MonoBehaviour {
 
 		return pointsToAdd.Except (pointsToRemove).ToPointList<PointyHexPoint>();
 	}
+}
+
+public struct PlayerObjects
+{
+
 }

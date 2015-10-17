@@ -47,6 +47,12 @@ public class LobbyPlayer : NetworkLobbyPlayer {
 
         int index = Array.IndexOf(MenuBehaviour.instance.lobbyManager.lobbySlots, this);
         transform.position = new Vector3(0, -350 + (index * 35), 0);
+
+        if (index > 1)
+        {
+            readyToBegin = true;
+            SendReadyToBeginMessage();
+        }
     }
 
     public void OnPlayerName(string newPlayerName)

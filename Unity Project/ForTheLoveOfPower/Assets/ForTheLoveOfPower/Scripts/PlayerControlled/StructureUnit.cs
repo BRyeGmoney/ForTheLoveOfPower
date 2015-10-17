@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 using System;
 using UnityEngine;
+using UnityEngine.Networking;
 using Gamelogic.Grids;
 
 namespace AssemblyCSharp
@@ -28,7 +29,7 @@ namespace AssemblyCSharp
 		None,
 	}
 
-	public class StructureUnit : MonoBehaviour
+	public class StructureUnit : NetworkBehaviour
 	{
 		//Properties
 		public Color StructColor { get; set; }
