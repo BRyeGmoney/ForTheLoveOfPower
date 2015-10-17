@@ -29,7 +29,6 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 	public Player[] listOfPlayers;
 	public Text moneyText;
-	public Text touchTypes;
     public Text PlaceDictText;
 	public GameObject buildScreen;
 	public GameObject[] unitTypes;
@@ -41,6 +40,11 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 	private List<Combat> listofCurrentCombats;
     private GameState curGameState;
+
+    private bool tappingInput;
+    private bool holdingInput;
+    private bool draggingInput;
+    private float holdTimer;
 
 	// Use this for initialization
 	void Start () {
@@ -96,6 +100,57 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
         
     }
 
+    void CheckTouchInputPreGame()
+    {
+        if (Input.touchCount == 1)
+        {
+            Touch curTouch = Input.GetTouch(0);
+            PointyHexPoint clickedPoint = Map[GridBuilderUtils.ScreenToWorld(curTouch.position)];
+            UnitCell clickedCell;
+
+            if (clickedPoint != new PointyHexPoint())
+            {
+                clickedCell = Grid[clickedPoint] as UnitCell;
+
+                CheckTypeOfTouchInput(curTouch);
+
+                if (tappingInput)
+                { //single press 
+                    PressTile(clickedCell, clickedPoint);
+                }
+            }
+        }
+    }
+
+    private void CheckTypeOfTouchInput(Touch curTouch)
+    {
+        if (curTouch.phase.Equals(TouchPhase.Began))
+        {
+            holdingInput = false;
+            draggingInput = false;
+            tappingInput = false;
+        }
+        else if (curTouch.phase.Equals(TouchPhase.Stationary) && holdTimer < 0.5f)
+            holdTimer += Time.deltaTime;
+        else if (holdTimer > 0.5f && curTouch.phase.Equals(TouchPhase.Stationary))
+        {
+            holdTimer = 0f;
+            holdingInput = true;
+        }
+        else if (curTouch.phase.Equals(TouchPhase.Moved))
+        {
+            holdTimer = 0f;
+            holdingInput = false;
+            tappingInput = false;
+            draggingInput = true;
+        }
+        else if (!holdingInput && !draggingInput && curTouch.phase.Equals(TouchPhase.Ended))
+        {
+            tappingInput = true;
+            draggingInput = false;
+        }
+    }
+
     /// <summary>
     /// Checks the touch input.
     /// </summary>
@@ -110,75 +165,83 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 			if (clickedPoint != new PointyHexPoint()) {
 				clickedCell = Grid[clickedPoint] as UnitCell;
-			
-				touchTypes.text = String.Format ("{0} & {1}", curTouch.phase.ToString (), prevTouch.phase.ToString ());
-			
-				if (curTouch.phase.Equals (TouchPhase.Ended) && (prevTouch.phase.Equals (TouchPhase.Began) || prevTouch.phase.Equals (TouchPhase.Stationary))) { //single press 
-					PressTile (clickedCell, clickedPoint);
-				} else if (startChosen && curTouch.phase.Equals (TouchPhase.Moved)) {
-					if (prevClickedPoint != clickedPoint) {
-						prevPath = path;
-					
-						path = GetGridPath ().ToPointList ();
-					
 
-						foreach (PointyHexPoint point in path) {
-							prevPath.Remove (point);
-							(Grid [point] as SpriteCell).HighlightOn = true;
-						}
-					
-						foreach (PointyHexPoint point in prevPath)
-							(Grid [point] as SpriteCell).HighlightOn = false;
-					}
-				} else if (curTouch.phase.Equals (TouchPhase.Moved) && prevTouch.phase.Equals (TouchPhase.Began) || prevTouch.phase.Equals (TouchPhase.Stationary)) { //we'll try to see if there was a unit to move in the prevClicked
-					unitToMove = listOfPlayers [0].milUnits.Find (unit => unit.TilePoint.Equals (prevClickedPoint));
-				
-					if (unitToMove != null) {
-						startChosen = true;
-						startPoint = prevClickedPoint;
-					}
-				}
+                //Lets flag what the user is trying to do here
+                CheckTypeOfTouchInput(curTouch);
 			
-				prevTouch = curTouch;
-				prevClickedPoint = clickedPoint;
-				prevClickedCell = clickedCell;
+                //Lets actually react to what the user is trying to do here
+				if (tappingInput) { //single press 
+					PressTile (clickedCell, clickedPoint);
+				} else if (startChosen && draggingInput) {
+                    clickedPoint = Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
+
+                    if (clickedPoint != prevClickedPoint || clickedPoint != startPoint)
+                    {
+                        endPoint = clickedPoint;
+                        clickedCell = Grid[clickedPoint] as UnitCell;
+
+                        if (path.Count > 0)
+                            prevPath = path;
+
+                        path = GetGridPath().ToPointList();
+
+                        foreach (PointyHexPoint point in path)
+                        {
+                            if (prevPath != null && prevPath.Contains(point))
+                                prevPath.Remove(point);
+
+                            (Grid[point] as UnitCell).SetTileColorPath(listOfPlayers[localPlayer].PlayerColor);
+                        }
+
+                        if (prevPath.Count > 0)
+                        {
+                            foreach (PointyHexPoint point in prevPath)
+                                (Grid[point] as UnitCell).SetTileColorUnPath();
+                        }
+                    }
+                } else if (draggingInput && prevTouch.phase.Equals (TouchPhase.Stationary)) { //we'll try to see if there was a unit to move in the prevClicked
+                    clickedPoint = Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
+                    clickedCell = Grid[clickedPoint] as UnitCell;
+
+                    //if the initial click succesfully targets a unit, lets set them
+                    if ((clickedCell.unitOnTile))
+                    {
+                        if (!startChosen)
+                        {
+                            if (listOfPlayers[localPlayer].milUnits.Exists(unit => unit.TilePoint.Equals(clickedPoint)))
+                            {//quick check that someone is actually here
+                                startPoint = clickedPoint;
+                                unitToMove = listOfPlayers[localPlayer].milUnits.Find(unit => unit.TilePoint.Equals(startPoint));
+                                unitToMove.ClearMovementPath();
+                                startChosen = true;
+
+                                if (path.Count > 0)
+                                    ClearPath();
+                            }
+                        }
+                    }
+
+                    prevClickedPoint = clickedPoint;
+                    prevClickedCell = clickedCell;
+                }
 			}
 			
 		} else {
-			//touchTypes.text = String.Format ("none & {0}", prevTouch.phase.ToString ());
 			if (startChosen) { //that means we've decided the final point for the unit
-				unitToMove = listOfPlayers [0].milUnits.Find (unit => unit.TilePoint.Equals (startPoint));
-				
-				if (unitToMove != null)
-					unitToMove.SetMovementPath (path.ToPointList ());
-				
-				timer = 0f;
-				startChosen = false;
-			}
+                if (path.Count > 0)
+                {
+                    AnimateTileSmall(path[path.Count - 1]);
+                    unitToMove.SetMovementPath(path);
+                    unitToMove.ChangeSpriteDirection(Grid[path[1]] as UnitCell);
+                    //path.Clear ();
+                    prevPath.Clear();
+                }
+
+                timer = 0f;
+                startChosen = false;
+            }
 		}
 	}
-
-    void CheckTouchInputPreGame()
-    {
-        if (Input.touchCount == 1)
-        {
-            Touch curTouch = Input.GetTouch(0);
-            PointyHexPoint clickedPoint = Map[GridBuilderUtils.ScreenToWorld(curTouch.position)];
-            UnitCell clickedCell;
-
-            if (clickedPoint != new PointyHexPoint())
-            {
-                clickedCell = Grid[clickedPoint] as UnitCell;
-
-                touchTypes.text = String.Format("{0} & {1}", curTouch.phase.ToString(), prevTouch.phase.ToString());
-
-                if (curTouch.phase.Equals(TouchPhase.Ended) && (prevTouch.phase.Equals(TouchPhase.Began) || prevTouch.phase.Equals(TouchPhase.Stationary)))
-                { //single press 
-                    PressTile(clickedCell, clickedPoint);
-                }
-            }
-        }
-    }
 
 	/// <summary>
 	/// Checks the mouse input.
@@ -193,9 +256,9 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			//if the initial click succesfully targets a unit, lets set them
 			if ((clickedCell.unitOnTile)) {
 				if (!startChosen) {
-					if (listOfPlayers [0].milUnits.Exists (unit => unit.TilePoint.Equals (clickedPoint))) {//quick check that someone is actually here
+					if (listOfPlayers [localPlayer].milUnits.Exists (unit => unit.TilePoint.Equals (clickedPoint))) {//quick check that someone is actually here
 						startPoint = clickedPoint;
-						unitToMove = listOfPlayers [0].milUnits.Find (unit => unit.TilePoint.Equals (startPoint));
+						unitToMove = listOfPlayers [localPlayer].milUnits.Find (unit => unit.TilePoint.Equals (startPoint));
 						unitToMove.ClearMovementPath ();
 						startChosen = true;
 
@@ -212,8 +275,8 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 			if (clickedPoint != prevClickedPoint || clickedPoint != startPoint) {
 				endPoint = clickedPoint;
-				AnimateTileBig (clickedPoint);
-				AnimateTileSmall (prevClickedPoint);
+				//AnimateTileBig (clickedPoint);
+				//AnimateTileSmall (prevClickedPoint);
 				clickedCell = Grid [clickedPoint] as UnitCell;
 
 				if (path.Count > 0)
@@ -225,7 +288,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 					if (prevPath != null && prevPath.Contains (point))
 						prevPath.Remove(point);
 
-					(Grid [point] as UnitCell).SetTileColorPath (listOfPlayers[0].PlayerColor);
+					(Grid [point] as UnitCell).SetTileColorPath (listOfPlayers[localPlayer].PlayerColor);
 				}
 
 				if (prevPath.Count > 0) {
