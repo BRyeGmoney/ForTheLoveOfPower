@@ -298,6 +298,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
     private void PlayerSetupState()
     {
+        PlaceDictText.GetComponent<Animator>().SetTrigger("PlaceDictTrigger");
 
         if (listOfPlayers[localPlayer].milUnits.Count < 1)
         {
