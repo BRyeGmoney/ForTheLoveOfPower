@@ -126,19 +126,25 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
     {
         if (curTouch.phase.Equals(TouchPhase.Began))
         {
+            Debug.Log("Beginning");
             holdingInput = false;
             draggingInput = false;
             tappingInput = false;
         }
-        else if (curTouch.phase.Equals(TouchPhase.Stationary) && holdTimer < 0.5f)
+        else if (curTouch.phase.Equals(TouchPhase.Stationary) && holdTimer < 0.5f && !holdingInput)
+        {
+            Debug.Log("Tracking hold");
             holdTimer += Time.deltaTime;
+        }
         else if (holdTimer > 0.5f && curTouch.phase.Equals(TouchPhase.Stationary))
         {
+            Debug.Log("We're now holding");
             holdTimer = 0f;
             holdingInput = true;
         }
         else if (curTouch.phase.Equals(TouchPhase.Moved))
         {
+            Debug.Log("Now dragging");
             holdTimer = 0f;
             holdingInput = false;
             tappingInput = false;
@@ -146,8 +152,10 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
         }
         else if (!holdingInput && !draggingInput && curTouch.phase.Equals(TouchPhase.Ended))
         {
+            Debug.Log("We only tapped them shits");
             tappingInput = true;
             draggingInput = false;
+            holdingInput = false;
         }
     }
 
@@ -156,8 +164,6 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
     /// </summary>
     private void CheckTouchInput()
 	{
-		Debug.Log (String.Format ("We're Checking Touch Input"));
-
 		if (Input.touchCount == 1) {
 			Touch curTouch = Input.GetTouch (0);
 			PointyHexPoint clickedPoint = Map[GridBuilderUtils.ScreenToWorld (curTouch.position)];
@@ -170,9 +176,11 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
                 CheckTypeOfTouchInput(curTouch);
 			
                 //Lets actually react to what the user is trying to do here
-				if (tappingInput) { //single press 
-					PressTile (clickedCell, clickedPoint);
-				} else if (startChosen && draggingInput) {
+				if (tappingInput) {//single press 
+                    Debug.Log("We got one press");
+                    PressTile(clickedCell, clickedPoint);
+                } else if (startChosen && draggingInput) {
+                    Debug.Log("Dragging after start has been set");
                     clickedPoint = Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
 
                     if (clickedPoint != prevClickedPoint || clickedPoint != startPoint)
@@ -199,16 +207,18 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
                                 (Grid[point] as UnitCell).SetTileColorUnPath();
                         }
                     }
+                    Debug.Log("Dragging after start cycle complete");
                 } else if (draggingInput && prevTouch.phase.Equals (TouchPhase.Stationary)) { //we'll try to see if there was a unit to move in the prevClicked
-                    clickedPoint = Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
-                    clickedCell = Grid[clickedPoint] as UnitCell;
+                    Debug.Log("We're dragging the position");
+                    prevClickedPoint = Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
+                    prevClickedCell = Grid[clickedPoint] as UnitCell;
 
                     //if the initial click succesfully targets a unit, lets set them
-                    if ((clickedCell.unitOnTile))
+                    if ((prevClickedCell.unitOnTile))
                     {
                         if (!startChosen)
                         {
-                            if (listOfPlayers[localPlayer].milUnits.Exists(unit => unit.TilePoint.Equals(clickedPoint)))
+                            if (listOfPlayers[localPlayer].milUnits.Exists(unit => unit.TilePoint.Equals(prevClickedPoint)))
                             {//quick check that someone is actually here
                                 startPoint = clickedPoint;
                                 unitToMove = listOfPlayers[localPlayer].milUnits.Find(unit => unit.TilePoint.Equals(startPoint));
@@ -221,16 +231,19 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
                         }
                     }
 
-                    prevClickedPoint = clickedPoint;
-                    prevClickedCell = clickedCell;
+                    Debug.Log("Done dragging cycle");
                 }
-			}
+
+                prevClickedPoint = clickedPoint;
+                prevClickedCell = clickedCell;
+            }
 			
 		} else {
 			if (startChosen) { //that means we've decided the final point for the unit
                 if (path.Count > 0)
                 {
-                    AnimateTileSmall(path[path.Count - 1]);
+                    Debug.Log("Clearing Path, moving unit");
+                    //AnimateTileSmall(path[path.Count - 1]);
                     unitToMove.SetMovementPath(path);
                     unitToMove.ChangeSpriteDirection(Grid[path[1]] as UnitCell);
                     //path.Clear ();
@@ -239,6 +252,8 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
                 timer = 0f;
                 startChosen = false;
+
+                Debug.Log("Done clearing path");
             }
 		}
 	}
