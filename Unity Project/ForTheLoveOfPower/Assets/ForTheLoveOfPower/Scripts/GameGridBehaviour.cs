@@ -89,7 +89,9 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
             moneyText.color = listOfPlayers[localPlayer].PlayerColor;
             curGameState = GameState.PlayerSetupState;
 
+            Debug.Log("About to play anim");
             PlaceDictText.GetComponent<Animator>().SetTrigger("PlaceDictTrigger");
+            Debug.Log("Played Anim");
         }
         
     }
