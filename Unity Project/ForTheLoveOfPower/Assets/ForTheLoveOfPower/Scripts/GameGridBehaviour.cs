@@ -131,7 +131,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
             Debug.Log("Beginning");
             holdingInput = false;
             draggingInput = false;
-            tappingInput = false;
+            tappingInput = true;
         }
         else if (curTouch.phase.Equals(TouchPhase.Stationary) && holdTimer < 0.5f && !holdingInput)
         {
@@ -152,9 +152,10 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
             tappingInput = false;
             draggingInput = true;
         }
-        else if (!holdingInput && !draggingInput && curTouch.phase.Equals(TouchPhase.Ended))
+        else if (!holdingInput && !draggingInput && tappingInput && curTouch.phase.Equals(TouchPhase.Ended))
         {
             Debug.Log("We only tapped them shits");
+            holdTimer = 0f;
             tappingInput = true;
             draggingInput = false;
             holdingInput = false;
@@ -242,24 +243,22 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
             tappingInput = false;
 			
-		} else {
-			if (startChosen) { //that means we've decided the final point for the unit
-                if (path.Count > 0)
-                {
-                    Debug.Log("Clearing Path, moving unit");
-                    //AnimateTileSmall(path[path.Count - 1]);
-                    unitToMove.SetMovementPath(path);
-                    unitToMove.ChangeSpriteDirection(Grid[path[1]] as UnitCell);
-                    //path.Clear ();
-                    prevPath.Clear();
-                }
-
-                timer = 0f;
-                startChosen = false;
-
-                Debug.Log("Done clearing path");
+		} else if (Input.touchCount < 1 && startChosen) {//that means we've decided the final point for the unit
+            if (path.Count > 0)
+            {
+                Debug.Log("Clearing Path, moving unit");
+                //AnimateTileSmall(path[path.Count - 1]);
+                unitToMove.SetMovementPath(path);
+                unitToMove.ChangeSpriteDirection(Grid[path[1]] as UnitCell);
+                //path.Clear ();
+                prevPath.Clear();
             }
-		}
+
+            timer = 0f;
+            startChosen = false;
+
+            Debug.Log("Done clearing path");
+        }
 	}
 
 	/// <summary>
@@ -415,9 +414,9 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
         if (!buildScreenSettings.isActiveAndEnabled)
         {
-            if (Input.touchCount > 0)
+            if (Input.touchSupported)
                 CheckTouchInput();
-            else if (!Input.touchSupported)
+            else
                 CheckMouseInput();
         }
 
