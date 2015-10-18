@@ -139,7 +139,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
             Debug.Log("Tracking hold");
             holdTimer += Time.deltaTime;
         }
-        else if (holdTimer > 0.5f && curTouch.phase.Equals(TouchPhase.Stationary))
+        else if (holdTimer > 0.3f && curTouch.phase.Equals(TouchPhase.Stationary))
         {
             Debug.Log("We're now holding");
             holdTimer = 0f;
@@ -567,7 +567,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			//if the player has no units, then this is how we let them place the dictator
 			if (listOfPlayers[0].milUnits.IsEmpty()) {
 				CreateNewMilitaryUnit (listOfPlayers[0], (int)MilitaryUnitType.Dictator, clickedCell, clickedPoint);
-			} else { //else, bring up the bulding selection screen
+			} else if (clickedCell.Color == listOfPlayers[localPlayer].PlayerColor && !listOfPlayers[localPlayer].TileBelongsToSettlements(clickedPoint)) { //else, bring up the bulding selection screen
 				SetupBuildMenu (true);
 			}
 		}
