@@ -26,8 +26,11 @@ public class Combat {
 		Attacker = attacker;
 		Defender = defender;
 
-		attacker.AnimationController.SetTrigger ("inCombat");
-		defender.AnimationController.SetTrigger ("inCombat");
+        if (attacker.AnimationController != null)
+		    attacker.AnimationController.SetTrigger ("inCombat");
+
+        if (defender.AnimationController != null)
+		    defender.AnimationController.SetTrigger ("inCombat");
 	}
 	
 	// Update is called once per frame
@@ -53,6 +56,8 @@ public class Combat {
 				else if (defenderHitPoints > attackerHitPoints)
 					Attacker.RemoveUnits (1);
 
+                attackerHitPoints = 0;
+                defenderHitPoints = 0;
 				combatTimer = 0f; //Let's reset this mofucka
 			}
 		}

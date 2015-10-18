@@ -87,15 +87,15 @@ public class Player : NetworkBehaviour {
 		settlements.ForEach (settlement => {
 			if (!settlement.Equals (ownSettlement)) { //if we're not currently looking at the same settlement
 				foreach (PointyHexPoint point in pointsToAdd) {
-					if (settlement.tilesOwned.Contains (point))
-						pointsToRemove.Add (point);
+                    if (settlement.tilesOwned.Contains(point))
+                        pointsToRemove.Add(point);
 				}
 			}
 
 		});
 
 		pointsToRemove.ToList<PointyHexPoint>().ForEach (point => {
-			(gameGrid[point] as UnitCell).SetTileColorUnPath ();
+            (gameGrid[point] as UnitCell).SetTileColorUnOwn();
 		});
 
 		return pointsToAdd.Except (pointsToRemove).ToPointList<PointyHexPoint>();

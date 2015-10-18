@@ -290,14 +290,26 @@ namespace AssemblyCSharp
 		{
 			unitAmount += amountToAdd;
 
-			if (unitAmount > 1)
-				unitNumText.text = unitAmount.ToString ();
+            UpdateUnitCountText();
 		}
 
 		public void RemoveUnits(int amountToRemove)
 		{
 			unitAmount -= amountToRemove;
-		}
+
+            UpdateUnitCountText();
+        }
+
+        private void UpdateUnitCountText()
+        {
+            if (unitNumText != null)
+            {
+                if (unitAmount > 1)
+                    unitNumText.text = unitAmount.ToString();
+                else
+                    unitNumText.text = string.Empty;
+            }
+        }
 
 		public bool CheckIfSubordinateExists(PointyHexPoint pointToCheck) 
 		{

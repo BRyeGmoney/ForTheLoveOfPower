@@ -29,6 +29,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	public Player[] listOfPlayers;
 	public Text moneyText;
     public Text PlaceDictText;
+    public RectTransform fadePanel;
 	public GameObject buildScreen;
 	public GameObject[] unitTypes;
 	public GameObject[] structureTypes;
@@ -118,7 +119,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
                 if (tappingInput)
                 { //single press 
-                    PressTile(clickedCell, clickedPoint);
+                    TouchPressTile(clickedCell, clickedPoint);
                 }
             }
         }
@@ -133,7 +134,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
             draggingInput = false;
             tappingInput = true;
         }
-        else if (curTouch.phase.Equals(TouchPhase.Stationary) && holdTimer < 0.5f && !holdingInput)
+        else if (curTouch.phase.Equals(TouchPhase.Stationary) && holdTimer < 0.3f && !holdingInput)
         {
             Debug.Log("Tracking hold");
             holdTimer += Time.deltaTime;
@@ -177,13 +178,13 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
                 //Lets flag what the user is trying to do here
                 CheckTypeOfTouchInput(curTouch);
-			
+
                 //Lets actually react to what the user is trying to do here
-				if (tappingInput) {//single press 
-                    Debug.Log("We got one press");
-                    PressTile(clickedCell, clickedPoint);
+                if (tappingInput) {//single press 
+                    TouchPressTile(clickedCell, clickedPoint);
+                } else if (holdingInput) {
+                    HoldTile(clickedCell, clickedPoint);
                 } else if (startChosen && draggingInput) {
-                    Debug.Log("Dragging after start has been set");
                     clickedPoint = Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
 
                     if (clickedPoint != prevClickedPoint || clickedPoint != startPoint)
@@ -210,9 +211,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
                                 (Grid[point] as UnitCell).SetTileColorUnPath();
                         }
                     }
-                    Debug.Log("Dragging after start cycle complete");
                 } else if (!startChosen && draggingInput) { //we'll try to see if there was a unit to move in the prevClicked
-                    Debug.Log("We're dragging the position");
                     prevClickedPoint = Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
                     prevClickedCell = Grid[clickedPoint] as UnitCell;
 
@@ -233,8 +232,6 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
                             }
                         }
                     }
-
-                    Debug.Log("Done dragging cycle");
                 }
 
                 prevClickedPoint = clickedPoint;
@@ -331,7 +328,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			clickedPoint = Map[GridBuilderUtils.ScreenToWorld (Input.mousePosition)];
 			clickedCell = Grid[clickedPoint] as UnitCell;
 
-			PressTile (clickedCell, clickedPoint);
+			MousePressTile (clickedCell, clickedPoint);
 
 			prevClickedPoint = clickedPoint;
 			prevClickedCell = clickedCell;
@@ -345,7 +342,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
             clickedPoint = Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
             clickedCell = Grid[clickedPoint] as UnitCell;
 
-            PressTile(clickedCell, clickedPoint);
+            MousePressTile(clickedCell, clickedPoint);
         }
     }
 
@@ -375,6 +372,9 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
             InitializePlayers();
         else if (curGameState.Equals(GameState.PlayerSetupState))
             PlayerSetupState();
+        else if (curGameState.Equals(GameState.EndGameState))
+            EndGameState();
+
 	}
 
     private void PlayerSetupState()
@@ -460,7 +460,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
                 if (unit.GetUnitAmount() < 1)
                 {
-                    StartCoroutine(DestroyUnitAfterAnimation(unit, listOfPlayers[0]));
+                    StartCoroutine(DestroyUnitAfterAnimation(unit, listOfPlayers[localPlayer]));
                 }
                 else if (unit.combatToUpdateGame != null)
                 {
@@ -469,7 +469,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
                 }
             }
             else
-                listOfPlayers[0].milUnits.Remove(unit);
+                listOfPlayers[localPlayer].milUnits.Remove(unit);
         });
 
         //Update all the second player's units, post fight, in case anyone died
@@ -526,11 +526,22 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			else
 				GameGridBehaviour.didWin = true;
 
-			Application.LoadLevel ("StatsScreen");
+            timer = 0f;
+            fadePanel.gameObject.SetActive(true);
+            curGameState = GameState.EndGameState;
 		}
 	}
 
-	private void PressTile(UnitCell clickedCell, PointyHexPoint clickedPoint)
+    private void EndGameState()
+    {
+        fadePanel.GetComponent<Animator>().SetTrigger("FadeToBlack");
+        timer += Time.deltaTime;
+
+        if (timer > 1.2f)
+            Application.LoadLevel("StatsScreen");
+    }
+
+	private void MousePressTile(UnitCell clickedCell, PointyHexPoint clickedPoint)
 	{
 		//if there's a building on this tile
 		if (clickedCell.buildingOnTile) {
@@ -561,6 +572,51 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 			}
 		}
 	}
+
+    private void TouchPressTile(UnitCell clickedCell, PointyHexPoint clickedPoint)
+    {
+        //if there's a building on this tile
+        if (clickedCell.buildingOnTile)
+        {
+            //if it is of the military variety
+            if (clickedCell.structureOnTile.tag.Equals("Military"))
+            {
+                //if there's already a unit on this tile, we should just add to it
+                if (clickedCell.unitOnTile)
+                {
+                    MilitaryUnit unitOnTile = listOfPlayers[0].milUnits.Find(unit => unit.TilePoint.Equals(clickedPoint));
+
+                    if (unitOnTile != null)
+                        unitOnTile.AddUnits(1);
+                }
+                else if (clickedCell.structureOnTile.StructureType.Equals(StructureUnitType.Barracks)) {
+                    CreateNewMilitaryUnit(listOfPlayers[0], (int)MilitaryUnitType.Infantry, clickedCell, clickedPoint);
+                } else if (clickedCell.structureOnTile.StructureType.Equals(StructureUnitType.TankDepot)) {
+                    CreateNewMilitaryUnit(listOfPlayers[0], (int)MilitaryUnitType.Tank, clickedCell, clickedPoint);
+                } else {
+                    CreateNewMilitaryUnit(listOfPlayers[0], (int)MilitaryUnitType.Jet, clickedCell, clickedPoint);
+                }
+            }
+        }
+        else
+        {
+            //if the player has no units, then this is how we let them place the dictator
+            if (listOfPlayers[0].milUnits.IsEmpty())
+                CreateNewMilitaryUnit(listOfPlayers[0], (int)MilitaryUnitType.Dictator, clickedCell, clickedPoint);
+
+        }
+    }
+
+    private void HoldTile(UnitCell clickedCell, PointyHexPoint clickedPoint)
+    {
+        if (clickedCell.Color == listOfPlayers[localPlayer].PlayerColor && (!clickedCell.unitOnTile || listOfPlayers[localPlayer].TileBelongsToSettlements(clickedPoint)))
+        { //if its the same color and there isn't a unit or it is part of a settlement
+            SetupBuildMenu(false);
+        } else if (clickedCell.Color == listOfPlayers[localPlayer].PlayerColor && !listOfPlayers[localPlayer].TileBelongsToSettlements(clickedPoint))
+        {
+            SetupBuildMenu(true);
+        }
+    }
 
 	private void SetupBuildMenu(bool isSettlementMenu)
 	{
@@ -688,4 +744,5 @@ public enum GameState
     InitState,
     PlayerSetupState,
     RegGameState,
+    EndGameState,
 }

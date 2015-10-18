@@ -22,7 +22,13 @@ public class StatsBehaviour : MonoBehaviour {
 
 	public void BackToMainMenu() 
 	{
-		Application.LoadLevel ("MainMenuScreen");
+        GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("PlayerType");
+        int amountToDestroy = playerObjects.Length;
+
+        for (int x = 0; x < amountToDestroy; x++)
+            Destroy(playerObjects[x]);
+
+        Application.LoadLevel ("MainMenuScreen");
 	}
 
 	public void ExitGame()

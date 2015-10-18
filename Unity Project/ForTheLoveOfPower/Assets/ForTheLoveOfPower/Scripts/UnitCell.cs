@@ -51,6 +51,12 @@ public class UnitCell : SpriteCell {
 			this.Color = baseTileColor;
 	}
 
+    public void SetTileColorUnOwn()
+    {
+        ownedTileColor = Color.black;
+        this.Color = baseTileColor;
+    }
+
 	public void SetTileColorUnit(Color tileColor)
 	{
 		this.Color = tileColor;
