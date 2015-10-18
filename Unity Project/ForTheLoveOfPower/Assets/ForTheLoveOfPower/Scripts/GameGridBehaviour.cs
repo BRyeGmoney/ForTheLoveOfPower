@@ -182,8 +182,10 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
                 //Lets actually react to what the user is trying to do here
                 if (tappingInput) {//single press 
                     TouchPressTile(clickedCell, clickedPoint);
+                    tappingInput = false;
                 } else if (holdingInput) {
                     HoldTile(clickedCell, clickedPoint);
+                    holdingInput = false;
                 } else if (startChosen && draggingInput) {
                     clickedPoint = Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
 
@@ -237,9 +239,6 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
                 prevClickedPoint = clickedPoint;
                 prevClickedCell = clickedCell;
             }
-
-            tappingInput = false;
-			
 		} else if (Input.touchCount < 1 && startChosen) {//that means we've decided the final point for the unit
             if (path.Count > 0)
             {
