@@ -134,12 +134,13 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
             draggingInput = false;
             tappingInput = true;
         }
-        else if (curTouch.phase.Equals(TouchPhase.Stationary) && holdTimer < 0.3f && !holdingInput)
+        else if (curTouch.phase.Equals(TouchPhase.Stationary) && holdTimer < 0.15f && !holdingInput)
         {
             Debug.Log("Tracking hold");
+            tappingInput = false;
             holdTimer += Time.deltaTime;
         }
-        else if (holdTimer > 0.3f && curTouch.phase.Equals(TouchPhase.Stationary))
+        else if (holdTimer > 0.15f && curTouch.phase.Equals(TouchPhase.Stationary))
         {
             Debug.Log("We're now holding");
             holdTimer = 0f;
@@ -153,7 +154,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
             tappingInput = false;
             draggingInput = true;
         }
-        else if (!holdingInput && !draggingInput && tappingInput && curTouch.phase.Equals(TouchPhase.Ended))
+        else if (!holdingInput && !draggingInput && tappingInput && curTouch.phase.Equals(TouchPhase.Ended)) //authentication for the tap
         {
             Debug.Log("We only tapped them shits");
             holdTimer = 0f;

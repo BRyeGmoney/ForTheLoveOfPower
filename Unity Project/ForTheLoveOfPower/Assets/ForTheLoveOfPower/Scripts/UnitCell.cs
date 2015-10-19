@@ -14,7 +14,8 @@ public class UnitCell : SpriteCell {
 	public bool buildingOnTile;
 	public int playerOnTile;
 	private Color ownedTileColor = Color.black;
-	private Color baseTileColor = new Color32 (83, 199, 175, 255);
+    //private Color baseTileColor = GameGridBehaviour.baseFloorColor;//new Color32 (83, 199, 175, 255);
+    private Color unitTileColor = Color.black;
 	//private Color prevTileColor = Color.black;
 
 	private Sprite holdingSprite;
@@ -45,20 +46,23 @@ public class UnitCell : SpriteCell {
 
 	public void SetTileColorUnPath()
 	{
-		if (ownedTileColor != Color.black)
-			this.Color = ownedTileColor;
-		else
-			this.Color = baseTileColor;
+        if (ownedTileColor != Color.black)
+            this.Color = ownedTileColor;
+        else if (unitOnTile)
+            this.Color = unitTileColor;
+        else
+            this.Color = GameGridBehaviour.baseFloorColor;//baseTileColor;
 	}
 
     public void SetTileColorUnOwn()
     {
         ownedTileColor = Color.black;
-        this.Color = baseTileColor;
+        this.Color = GameGridBehaviour.baseFloorColor;//baseTileColor;
     }
 
 	public void SetTileColorUnit(Color tileColor)
 	{
+        unitTileColor = tileColor;
 		this.Color = tileColor;
 	}
 
@@ -77,16 +81,18 @@ public class UnitCell : SpriteCell {
 	public void RemoveUnit()
 	{
 		unitOnTile = false;
+        unitTileColor = Color.black;
+
 		if (!buildingOnTile) {
 			if (ownedTileColor != Color.black)
 				this.Color = ownedTileColor;
 			else
-				this.Color = baseTileColor;
-			/*if (!prevTileColor.Equals (Color.black)) 
-				SetTileColorUnit (prevTileColor);
-			else
-				SetTileColorUnit (baseTileColor);*/
-		} else {
+				this.Color = GameGridBehaviour.baseFloorColor;//baseTileColor;
+                                                              /*if (!prevTileColor.Equals (Color.black)) 
+                                                                  SetTileColorUnit (prevTileColor);
+                                                              else
+                                                                  SetTileColorUnit (baseTileColor);*/
+        } else {
 			this.Color = ownedTileColor;
 		}
 	}

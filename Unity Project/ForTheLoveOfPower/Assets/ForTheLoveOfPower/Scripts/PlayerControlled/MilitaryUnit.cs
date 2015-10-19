@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Internal;
 using UnityEngine.Networking;
@@ -207,7 +208,7 @@ namespace AssemblyCSharp
 					canMove = commandingUnit.CheckIfSubordinateExists (nextPoint);
 				else
 					canMove = true;
-			} else if (nextCell.Color.Equals (GameGridBehaviour.baseFloorColor)) { //if its the same as the floor color
+			} else if (!nextCell.unitOnTile) {//nextCell.Color.Equals (GameGridBehaviour.baseFloorColor)) { //if its the same as the floor color
 				canMove = true;
 			}
 
@@ -219,7 +220,14 @@ namespace AssemblyCSharp
 
 		public void MoveToNext(IGrid<PointyHexPoint> grid, UnitCell newCell)
 		{
-			(grid [movementPath [0]] as UnitCell).RemoveUnit ();
+            //Check to see if any of the subordinates in the group have already been placed here, if so, lets not fuck with the tile color
+            if (commandingUnit == null && subordinates == null) //if its just a regular unit
+                (grid[movementPath[0]] as UnitCell).RemoveUnit();
+            else if (subordinates != null && !subordinates.Any(sub => sub.TilePoint == movementPath[0])) //if we are the leader and we want to make sure a sub isn't in this spot
+                (grid[movementPath[0]] as UnitCell).RemoveUnit();
+            else if (commandingUnit != null && !commandingUnit.subordinates.Any(sub => sub.TilePoint == movementPath[0] && sub != this)) //if we're a sub and want to see if there are any other subs out there in this spot
+			    (grid [movementPath [0]] as UnitCell).RemoveUnit ();
+
 			movementPath.RemoveAt (0);
 			
 			newCell.AddUnitToTile (this);
