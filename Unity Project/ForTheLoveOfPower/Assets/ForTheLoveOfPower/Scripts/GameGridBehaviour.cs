@@ -609,12 +609,14 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
     private void HoldTile(UnitCell clickedCell, PointyHexPoint clickedPoint)
     {
-        if (clickedCell.Color == listOfPlayers[localPlayer].PlayerColor && (!clickedCell.unitOnTile || listOfPlayers[localPlayer].TileBelongsToSettlements(clickedPoint)))
-        { //if its the same color and there isn't a unit or it is part of a settlement
-            SetupBuildMenu(false);
-        } else if (clickedCell.Color == listOfPlayers[localPlayer].PlayerColor && !listOfPlayers[localPlayer].TileBelongsToSettlements(clickedPoint))
+        if (!clickedCell.structureOnTile)
         {
-            SetupBuildMenu(true);
+            if (clickedCell.Color == listOfPlayers[localPlayer].PlayerColor && (!clickedCell.unitOnTile || listOfPlayers[localPlayer].TileBelongsToSettlements(clickedPoint)))
+            { //if its the same color and there isn't a unit or it is part of a settlement
+                SetupBuildMenu(false);
+            } else if (clickedCell.Color == listOfPlayers[localPlayer].PlayerColor && !listOfPlayers[localPlayer].TileBelongsToSettlements(clickedPoint)) {
+                SetupBuildMenu(true);
+            }
         }
     }
 
