@@ -68,7 +68,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
             int c = 0;
             foreach (GameObject playerObj in playerObjects)
             {
-                if (MenuBehaviour.instance.isMPGame)
+                if (MenuBehaviour.instance != null && MenuBehaviour.instance.isMPGame)
                 {
                     Player netPlayer = playerObj.GetComponent<Player>();
                     listOfPlayers[c] = netPlayer;
@@ -388,7 +388,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
         }
         
         //Create ai player's beginnings
-        if (!MenuBehaviour.instance.isMPGame)
+        if (MenuBehaviour.instance == null || !MenuBehaviour.instance.isMPGame)
         {
             if (listOfPlayers[localPlayer].milUnits.Count > 0)
             {
