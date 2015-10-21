@@ -9,8 +9,7 @@ public class CameraBehaviour : MonoBehaviour {
 	byte prevState = 0;
 
     //Scrolling
-    public float moveSensitivityX = 1.0f;
-    public float moveSensitivityY = 1.0f;
+    public float moveSensitivity = 1.0f;
     public bool invertMoveX = false;
     public bool invertMoveY = false;
     public float inertiaDuration = 1.0f;
@@ -48,15 +47,17 @@ public class CameraBehaviour : MonoBehaviour {
 			// Find the difference in the distances between each frame.
 			float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
 
-			if (touchDeltaMag > 120) {
+			if (touchDeltaMag > 300) {
 				// ... change the orthographic size based on the change in distance between the touches.
 				Camera.main.orthographicSize += deltaMagnitudeDiff * orthoZoomSpeed;
 				
 				// Make sure the orthographic size never drops below zero.
 				//Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize, 0.1f);
 				Camera.main.orthographicSize = Mathf.Clamp (Camera.main.orthographicSize, 200, 1000);
-			} else {
-				Camera.main.transform.parent.transform.Translate(-touchZero.deltaPosition.x * 5f, -touchZero.deltaPosition.y * 5f, 0);
+
+                moveSensitivity = Camera.main.orthographicSize / 5.0f;
+            } else {
+				//Camera.main.transform.parent.transform.Translate(-touchZero.deltaPosition.x * 5f, -touchZero.deltaPosition.y * 5f, 0);
 			}
 
             if (touchDelta != null)
@@ -73,10 +74,10 @@ public class CameraBehaviour : MonoBehaviour {
             {
                 Vector2 delta = touchZero.deltaPosition;
 
-                float positionX = delta.x * moveSensitivityX * Time.deltaTime;
+                float positionX = delta.x * moveSensitivity * Time.deltaTime;
                 positionX = invertMoveX ? positionX : positionX * -1;
 
-                float positionY = delta.y * moveSensitivityY * Time.deltaTime;
+                float positionY = delta.y * moveSensitivity * Time.deltaTime;
                 positionY = invertMoveY ? positionY : positionY * -1;
 
                 Camera.main.transform.position += new Vector3(positionX, positionY, 0);
