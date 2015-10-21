@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class CameraBehaviour : MonoBehaviour {
@@ -7,7 +8,19 @@ public class CameraBehaviour : MonoBehaviour {
 	Vector3 cameraMovement;
 	byte prevState = 0;
 
-	public float orthoZoomSpeed = 2f;        // The rate of change of the orthographic size in orthographic mode.
+    //Scrolling
+    public float moveSensitivityX = 1.0f;
+    public float moveSensitivityY = 1.0f;
+    public bool invertMoveX = false;
+    public bool invertMoveY = false;
+    public float inertiaDuration = 1.0f;
+    private float scrollVelocity = 0.0f;
+    private float timeTouchPhaseEnded;
+    private Vector2 scrollDirection = Vector2.zero;
+
+    public Text touchDelta;
+
+    public float orthoZoomSpeed = 2f;        // The rate of change of the orthographic size in orthographic mode.
 	
 	// Use this for initialization
 	void Start () {
@@ -45,7 +58,58 @@ public class CameraBehaviour : MonoBehaviour {
 			} else {
 				Camera.main.transform.parent.transform.Translate(-touchZero.deltaPosition.x * 5f, -touchZero.deltaPosition.y * 5f, 0);
 			}
-		} 
+
+            if (touchDelta != null)
+            {
+                touchDelta.text = string.Format("TDelta: {0}", touchDeltaMag.ToString());
+            }
+
+            //touch scrolololol
+            if (touchZero.phase == TouchPhase.Began)
+            {
+                scrollVelocity = 0.0f;
+            }
+            else if (touchZero.phase == TouchPhase.Moved && touchOne.phase == TouchPhase.Moved)
+            {
+                Vector2 delta = touchZero.deltaPosition;
+
+                float positionX = delta.x * moveSensitivityX * Time.deltaTime;
+                positionX = invertMoveX ? positionX : positionX * -1;
+
+                float positionY = delta.y * moveSensitivityY * Time.deltaTime;
+                positionY = invertMoveY ? positionY : positionY * -1;
+
+                Camera.main.transform.position += new Vector3(positionX, positionY, 0);
+
+                scrollDirection = touchZero.deltaPosition.normalized;
+                scrollVelocity = touchZero.deltaPosition.magnitude / touchZero.deltaTime;
+
+
+                if (scrollVelocity <= 100)
+                    scrollVelocity = 0;
+            }
+            else if (touchZero.phase == TouchPhase.Ended || touchOne.phase == TouchPhase.Ended)
+            {
+                timeTouchPhaseEnded = Time.time;
+            }
+        } else {
+            //if the camera is currently scrolling
+            if (scrollVelocity != 0.0f)
+            {
+                //slow down over time
+                float t = (Time.time - timeTouchPhaseEnded) / inertiaDuration;
+                float frameVelocity = Mathf.Lerp(scrollVelocity, 0.0f, t);
+                Camera.main.transform.position += -(Vector3)scrollDirection.normalized * (frameVelocity * 0.05f) * Time.deltaTime;
+
+                if (t >= 1.0f)
+                    scrollVelocity = 0.0f;
+            }
+
+            if (touchDelta != null)
+            {
+                touchDelta.text = "TDelta: 0";
+            }
+        }
 
 		if (!Input.touchSupported) {
 			Camera.main.orthographicSize -= Input.GetAxis ("Mouse ScrollWheel") * 200f;
