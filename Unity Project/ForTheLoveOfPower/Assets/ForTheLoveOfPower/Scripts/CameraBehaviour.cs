@@ -15,6 +15,7 @@ public class CameraBehaviour : MonoBehaviour {
     public float inertiaDuration = 1.0f;
     private float scrollVelocity = 0.0f;
     private float timeTouchPhaseEnded;
+    private bool timeTouchPhaseEndRecorded = false;
     private Vector2 scrollDirection = Vector2.zero;
 
     public Text touchDelta;
@@ -57,46 +58,54 @@ public class CameraBehaviour : MonoBehaviour {
 
                 moveSensitivity = Camera.main.orthographicSize / 5.0f;
             } else {
-				//Camera.main.transform.parent.transform.Translate(-touchZero.deltaPosition.x * 5f, -touchZero.deltaPosition.y * 5f, 0);
-			}
+                //Camera.main.transform.parent.transform.Translate(-touchZero.deltaPosition.x * 5f, -touchZero.deltaPosition.y * 5f, 0);
+                //touch scrolololol
+                if (touchZero.phase == TouchPhase.Began)
+                {
+                    scrollVelocity = 0.0f;
+                    timeTouchPhaseEndRecorded = false;
+                }
+                else if (touchZero.phase == TouchPhase.Moved && touchOne.phase == TouchPhase.Moved)
+                {
+                    Vector2 delta = touchZero.deltaPosition;
+
+                    float positionX = delta.x * moveSensitivity * Time.deltaTime;
+                    positionX = invertMoveX ? positionX : positionX * -1;
+
+                    float positionY = delta.y * moveSensitivity * Time.deltaTime;
+                    positionY = invertMoveY ? positionY : positionY * -1;
+
+                    Camera.main.transform.position += new Vector3(positionX, positionY, 0);
+
+                    scrollDirection = touchZero.deltaPosition.normalized;
+                    scrollVelocity = touchZero.deltaPosition.magnitude / touchZero.deltaTime;
+
+
+                    if (scrollVelocity <= 100)
+                        scrollVelocity = 0;
+                }
+            }
 
             if (touchDelta != null)
             {
                 touchDelta.text = string.Format("TDelta: {0}", touchDeltaMag.ToString());
             }
 
-            //touch scrolololol
-            if (touchZero.phase == TouchPhase.Began)
-            {
-                scrollVelocity = 0.0f;
-            }
-            else if (touchZero.phase == TouchPhase.Moved && touchOne.phase == TouchPhase.Moved)
-            {
-                Vector2 delta = touchZero.deltaPosition;
-
-                float positionX = delta.x * moveSensitivity * Time.deltaTime;
-                positionX = invertMoveX ? positionX : positionX * -1;
-
-                float positionY = delta.y * moveSensitivity * Time.deltaTime;
-                positionY = invertMoveY ? positionY : positionY * -1;
-
-                Camera.main.transform.position += new Vector3(positionX, positionY, 0);
-
-                scrollDirection = touchZero.deltaPosition.normalized;
-                scrollVelocity = touchZero.deltaPosition.magnitude / touchZero.deltaTime;
-
-
-                if (scrollVelocity <= 100)
-                    scrollVelocity = 0;
-            }
-            else if (touchZero.phase == TouchPhase.Ended || touchOne.phase == TouchPhase.Ended)
+            
+            /*if (touchZero.phase == TouchPhase.Ended || touchOne.phase == TouchPhase.Ended)
             {
                 timeTouchPhaseEnded = Time.time;
-            }
+            }*/
         } else {
             //if the camera is currently scrolling
             if (scrollVelocity != 0.0f)
             {
+                if (!timeTouchPhaseEndRecorded)
+                {
+                    timeTouchPhaseEnded = Time.time;
+                    timeTouchPhaseEndRecorded = true;
+                }
+
                 //slow down over time
                 float t = (Time.time - timeTouchPhaseEnded) / inertiaDuration;
                 float frameVelocity = Mathf.Lerp(scrollVelocity, 0.0f, t);
