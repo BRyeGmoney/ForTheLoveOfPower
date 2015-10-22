@@ -93,7 +93,7 @@ public class CameraBehaviour : MonoBehaviour {
             //if the camera is currently scrolling
             if (scrollVelocity != 0.0f)
             {
-                scrollVelocity *= 0.9f;
+                scrollVelocity = scrollVelocity * 0.9f;
 
                 
                 /*if (!timeTouchPhaseEndRecorded)
@@ -104,16 +104,16 @@ public class CameraBehaviour : MonoBehaviour {
 
                 //slow down over time
                 /*float t = (Time.time - timeTouchPhaseEnded) / inertiaDuration;
-                float frameVelocity = Mathf.Lerp(scrollVelocity, 0.0f, t);
-                Camera.main.transform.position += -(Vector3)scrollDirection.normalized * (frameVelocity * 0.05f) * Time.deltaTime;
-
-                if (t >= 1.0f)
+                float frameVelocity = Mathf.Lerp(scrollVelocity, 0.0f, t);*/
+                //Camera.main.transform.position += -(Vector3)scrollDirection.normalized * (frameVelocity * 0.05f) * Time.deltaTime;
+                Camera.main.transform.position += -(Vector3)scrollDirection.normalized * (scrollVelocity * 0.05f) * Time.deltaTime;
+                /*if (t >= 1.0f)
                     scrollVelocity = 0.0f;*/
             }
 
             if (touchDelta != null)
             {
-                touchDelta.text = string.Format("SVel: {0}", scrollVelocity);
+                touchDelta.text = string.Format("SVel: {0}, MS: {1}", scrollVelocity, moveSensitivity);
             }
         }
 
