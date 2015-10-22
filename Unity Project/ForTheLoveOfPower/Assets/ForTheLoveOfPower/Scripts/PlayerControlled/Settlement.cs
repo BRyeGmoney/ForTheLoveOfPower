@@ -18,10 +18,7 @@ namespace AssemblyCSharp
 	public class Settlement : StructureUnit
 	{
 		public Boolean RefreshCachedBuildings { get; set; }
-
-		public Sprite townHall;
-		public Sprite cityHall;
-		public Sprite capital;
+        public SpriteRenderer spriteRenderer;
 
 		public List<StructureUnit> cachedBuildingList;
 		public PointList<PointyHexPoint> tilesOwned;
@@ -29,6 +26,10 @@ namespace AssemblyCSharp
 
 		public float costOfUnitsInTown = 1.0f;
 		public int numEconUnitsProducedInTown = 10;
+
+        private int curStateOfSettlement = 0;
+        public bool newBuildingAdded = false;
+        public bool isDictatorInCity = false;
 
 		public Settlement ()
 		{
@@ -38,6 +39,30 @@ namespace AssemblyCSharp
 
 		public void UpdateBuildingList(Player owningPlayer)
 		{
+
+            //lets check if we can update the settlement based on whether it meets the criteria, the flags are set when a building is added, the dictator enters, or leaves
+            if (newBuildingAdded || isDictatorInCity)
+            {
+                if (curStateOfSettlement == 0 && cachedBuildingList.Count > 9)
+                {
+                    curStateOfSettlement = 1;
+                    spriteRenderer.sprite = MenuBehaviour.instance.townHall;
+                }
+                else if ((curStateOfSettlement == 1 && cachedBuildingList.Count > 19) || (curStateOfSettlement == 3 && !isDictatorInCity))
+                {
+                    curStateOfSettlement = 2;
+                    spriteRenderer.sprite = MenuBehaviour.instance.cityHall;
+                }
+                else if (curStateOfSettlement == 2 && isDictatorInCity)
+                {
+                    curStateOfSettlement = 3;
+                    spriteRenderer.sprite = MenuBehaviour.instance.capital;
+                }
+
+                newBuildingAdded = false;
+            }
+                
+
 			if (RefreshCachedBuildings)
 				RefreshBuildingsOwned ();
 

@@ -15,7 +15,7 @@ public class CameraBehaviour : MonoBehaviour {
     public float inertiaDuration = 1.0f;
     private float scrollVelocity = 0.0f;
     private float timeTouchPhaseEnded;
-    private bool timeTouchPhaseEndRecorded = false;
+    //private bool timeTouchPhaseEndRecorded = false;
     private Vector2 scrollDirection = Vector2.zero;
 
     public Text touchDelta;
@@ -63,7 +63,7 @@ public class CameraBehaviour : MonoBehaviour {
                 if (touchZero.phase == TouchPhase.Began)
                 {
                     scrollVelocity = 0.0f;
-                    timeTouchPhaseEndRecorded = false;
+                    //timeTouchPhaseEndRecorded = false;
                 }
                 else if (touchZero.phase == TouchPhase.Moved && touchOne.phase == TouchPhase.Moved)
                 {

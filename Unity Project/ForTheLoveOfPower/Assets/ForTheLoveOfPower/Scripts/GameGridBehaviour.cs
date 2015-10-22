@@ -46,8 +46,8 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
     private bool draggingInput;
     private float holdTimer;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		listofCurrentCombats = new List<Combat> ();
         prevPath = new PointList<PointyHexPoint>();
         path = new PointList<PointyHexPoint>();
@@ -674,6 +674,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		StructureUnit newStructure = Instantiate (structureTypes [structType], gridCell.transform.position, Quaternion.identity).GetComponent<StructureUnit> ();
 		newStructure.Initialize (player.PlayerColor, (StructureUnitType)structType, gridPoint, owningSettlement);
 		owningSettlement.cachedBuildingList.Add (newStructure);
+        owningSettlement.newBuildingAdded = true;
 		player.AddToOwnedTiles (Grid, owningSettlement, listOfPlayers[1], surroundingTiles);
 
 		gridCell.AddStructureToTile (newStructure);

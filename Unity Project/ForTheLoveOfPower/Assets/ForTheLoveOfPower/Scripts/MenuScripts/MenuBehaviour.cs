@@ -16,6 +16,10 @@ public class MenuBehaviour : MonoBehaviour {
     public GameObject NetworkPlayerPrefab;
     public MenuNetworkLobbyManager lobbyManager;
 
+    public Sprite townHall;
+    public Sprite cityHall;
+    public Sprite capital;
+
     //private Sprite colorPicker;
     //public GameObject ThePicker;
     public Button playerColBtn;

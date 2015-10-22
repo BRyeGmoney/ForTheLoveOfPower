@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>5.2.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -79,7 +81,6 @@
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\Helpers\PlayerPrefsX.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\MenuScripts\BuildMenuBehaviour.cs" />
-    <Compile Include="Assets\ForTheLoveOfPower\Scripts\MenuScripts\DevPanelBehaviour.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\MenuScripts\LobbyPlayer.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\MenuScripts\MenuBehaviour.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\MenuScripts\MenuNetworkLobbyManager.cs" />
