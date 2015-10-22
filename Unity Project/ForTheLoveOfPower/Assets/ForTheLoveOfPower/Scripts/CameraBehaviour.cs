@@ -85,13 +85,6 @@ public class CameraBehaviour : MonoBehaviour {
                         scrollVelocity = 0;
                 }
             }
-
-            if (touchDelta != null)
-            {
-                touchDelta.text = string.Format("TDelta: {0}", touchDeltaMag.ToString());
-            }
-
-            
             /*if (touchZero.phase == TouchPhase.Ended || touchOne.phase == TouchPhase.Ended)
             {
                 timeTouchPhaseEnded = Time.time;
@@ -100,24 +93,27 @@ public class CameraBehaviour : MonoBehaviour {
             //if the camera is currently scrolling
             if (scrollVelocity != 0.0f)
             {
-                if (!timeTouchPhaseEndRecorded)
+                scrollVelocity *= 0.9f;
+
+                
+                /*if (!timeTouchPhaseEndRecorded)
                 {
                     timeTouchPhaseEnded = Time.time;
                     timeTouchPhaseEndRecorded = true;
-                }
+                }*/
 
                 //slow down over time
-                float t = (Time.time - timeTouchPhaseEnded) / inertiaDuration;
+                /*float t = (Time.time - timeTouchPhaseEnded) / inertiaDuration;
                 float frameVelocity = Mathf.Lerp(scrollVelocity, 0.0f, t);
                 Camera.main.transform.position += -(Vector3)scrollDirection.normalized * (frameVelocity * 0.05f) * Time.deltaTime;
 
                 if (t >= 1.0f)
-                    scrollVelocity = 0.0f;
+                    scrollVelocity = 0.0f;*/
             }
 
             if (touchDelta != null)
             {
-                touchDelta.text = "TDelta: 0";
+                touchDelta.text = string.Format("SVel: {0}", scrollVelocity);
             }
         }
 
