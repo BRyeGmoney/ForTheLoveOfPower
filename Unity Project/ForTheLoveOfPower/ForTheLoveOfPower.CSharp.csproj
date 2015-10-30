@@ -57,12 +57,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -93,13 +87,6 @@
     <Compile Include="Assets\BeautifulDissolves\Scripts\DissolveOnSpawn.cs" />
     <Compile Include="Assets\BeautifulDissolves\Scripts\DissolveOnTrigger.cs" />
     <Compile Include="Assets\BeautifulDissolves\Scripts\DissolveOnTrigger2D.cs" />
-    <Compile Include="Assets\BeautifulDissolves\Scripts\SpriteDissolveShaderGUI.cs" />
-    <Compile Include="Assets\BeautifulDissolves\_Examples\_Assets\Scripts\AlienMove.cs" />
-    <Compile Include="Assets\BeautifulDissolves\_Examples\_Assets\Scripts\DissolveSlider.cs" />
-    <Compile Include="Assets\BeautifulDissolves\_Examples\_Assets\Scripts\LookAtObject.cs" />
-    <Compile Include="Assets\BeautifulDissolves\_Examples\_Assets\Scripts\RespawnManager.cs" />
-    <Compile Include="Assets\BeautifulDissolves\_Examples\_Assets\Scripts\UpdateLight.cs" />
-    <Compile Include="Assets\BeautifulDissolves\_Examples\_Assets\Scripts\Zombie.cs" />
     <Compile Include="Assets\ColorPalettes\scripts\AdditiveMaskAnimation.cs" />
     <Compile Include="Assets\ColorPalettes\scripts\BackgroundPalette.cs" />
     <Compile Include="Assets\ColorPalettes\scripts\ColorPaletteChanger.cs" />
