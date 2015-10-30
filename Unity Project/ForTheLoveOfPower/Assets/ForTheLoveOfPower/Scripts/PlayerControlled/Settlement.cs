@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System;
+using System.Linq;
 using Gamelogic.Grids;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -31,58 +32,123 @@ namespace AssemblyCSharp
         public bool newBuildingAdded = false;
         public bool isDictatorInCity = false;
 
+        public bool cityBeingConquered = false;
+        private int indexOfBuildingBeingTaken = 0;
+        private Color colorBeingConquered;
+
 		public Settlement ()
 		{
 			cachedBuildingList = new List<StructureUnit> ();
 			tilesOwned = new PointList<PointyHexPoint> ();
 		}
 
-		public void UpdateBuildingList(Player owningPlayer)
+		public void UpdateBuildingList(int owningPlayer)
 		{
-
-            //lets check if we can update the settlement based on whether it meets the criteria, the flags are set when a building is added, the dictator enters, or leaves
-            if (newBuildingAdded || isDictatorInCity)
+            if (!cityBeingConquered)
             {
-                if (curStateOfSettlement == 0 && cachedBuildingList.Count > 9)
+                //lets check if we can update the settlement based on whether it meets the criteria, the flags are set when a building is added, the dictator enters, or leaves
+                if (newBuildingAdded || isDictatorInCity)
                 {
-                    curStateOfSettlement = 1;
-                    spriteRenderer.sprite = MenuBehaviour.instance.townHall;
-                }
-                else if ((curStateOfSettlement == 1 && cachedBuildingList.Count > 19) || (curStateOfSettlement == 3 && !isDictatorInCity))
-                {
-                    curStateOfSettlement = 2;
-                    spriteRenderer.sprite = MenuBehaviour.instance.cityHall;
-                }
-                else if (curStateOfSettlement == 2 && isDictatorInCity)
-                {
-                    curStateOfSettlement = 3;
-                    spriteRenderer.sprite = MenuBehaviour.instance.capital;
+                    if (curStateOfSettlement == 0 && cachedBuildingList.Count > 9)
+                    {
+                        curStateOfSettlement = 1;
+                        spriteRenderer.sprite = MenuBehaviour.instance.townHall;
+                    }
+                    else if ((curStateOfSettlement == 1 && cachedBuildingList.Count > 19) || (curStateOfSettlement == 3 && !isDictatorInCity))
+                    {
+                        curStateOfSettlement = 2;
+                        spriteRenderer.sprite = MenuBehaviour.instance.cityHall;
+                    }
+                    else if (curStateOfSettlement == 2 && isDictatorInCity)
+                    {
+                        curStateOfSettlement = 3;
+                        spriteRenderer.sprite = MenuBehaviour.instance.capital;
+                    }
+
+                    newBuildingAdded = false;
                 }
 
-                newBuildingAdded = false;
+
+                if (RefreshCachedBuildings)
+                    RefreshBuildingsOwned();
+
+                if (updateTimer > 10f)
+                {
+                    cachedBuildingList.ForEach(build =>
+                    {
+                        if (build.StructureType.Equals(StructureUnitType.Factory))
+                        {
+                            GameGridBehaviour.instance.listOfPlayers[owningPlayer].Cash += 200;
+                            if (build.modifierAnim < 3)
+                            {
+                                build.AnimationController.SetTrigger("modifierAnim");
+                                build.modifierAnim += 1;
+                            }
+                        }
+                    });
+
+                    GameGridBehaviour.instance.listOfPlayers[owningPlayer].Cash += 200;
+
+                    updateTimer = 0f;
+                }
+
+                UpdateBuilding();
+
+                updateTimer += Time.deltaTime;
             }
-                
+            else
+            {
+                if (indexOfBuildingBeingTaken > -1) //if we're still iterating through 
+                {
+                    if (cachedBuildingList[indexOfBuildingBeingTaken].currentState == StructureState.Captured) //if the building being conquered is done, lets skip to the next one
+                    {
+                        indexOfBuildingBeingTaken -= 1;
+                    }
+                    else if (cachedBuildingList[indexOfBuildingBeingTaken].currentState != StructureState.BeingCaptured) //lets start conquering the next building in line
+                    {
+                        cachedBuildingList[indexOfBuildingBeingTaken].currentState = StructureState.BeingCaptured;
+                        cachedBuildingList[indexOfBuildingBeingTaken].BeginCapturing(colorBeingConquered);
+                    }
+                    else //if it is being captured
+                    {
+                        //let's keep running the capture
+                        cachedBuildingList[indexOfBuildingBeingTaken].UpdateBuilding();
+                    }
 
-			if (RefreshCachedBuildings)
-				RefreshBuildingsOwned ();
+                    
+                }
+                else //the settlement itself is being captured
+                {
+                    if (currentState.Equals(StructureState.Captured))
+                    {
+                        if (owningPlayer == 0)
+                        {
+                            GameGridBehaviour.instance.listOfPlayers[1].settlements.Add(this);
+                            GameGridBehaviour.instance.listOfPlayers[1].ownedTiles.AddRange(tilesOwned);
+                        }
+                        else
+                        {
+                            GameGridBehaviour.instance.listOfPlayers[0].settlements.Add(this);
+                            GameGridBehaviour.instance.listOfPlayers[0].ownedTiles.AddRange(tilesOwned);
+                        }
 
-			if (updateTimer > 10f) {
-				cachedBuildingList.ForEach (build => {
-					if (build.StructureType.Equals (StructureUnitType.Factory)) {
-						owningPlayer.Cash += 200;
-						if (build.modifierAnim < 3) {
-							build.AnimationController.SetTrigger ("modifierAnim");
-							build.modifierAnim += 1;
-						}
-					}
-				});
+                        GameGridBehaviour.instance.listOfPlayers[owningPlayer].ownedTiles = GameGridBehaviour.instance.listOfPlayers[owningPlayer].ownedTiles.Except(tilesOwned).ToList<PointyHexPoint>();
+                        GameGridBehaviour.instance.listOfPlayers[owningPlayer].settlements.Remove(this);
 
-				owningPlayer.Cash += 200;
-
-				updateTimer = 0f;
-			}
-
-			updateTimer += Time.deltaTime;
+                        FinishSettlementCapture();
+                        RepaintOwnedTiles();
+                    }
+                    else if (!currentState.Equals(StructureState.BeingCaptured))
+                    {
+                        currentState = StructureState.BeingCaptured;
+                        BeginCapturing(colorBeingConquered);
+                    }
+                    else
+                    {
+                        UpdateBuilding();
+                    }
+                }
+            }
 		}
 
 		public void RefreshBuildingsOwned() 
@@ -94,6 +160,38 @@ namespace AssemblyCSharp
 		{
 			return tilesOwned.Contains (tileToCheck);
 		}
+
+        public void BeginSettlementCapture(Color colorToChangeTo)
+        {
+            colorBeingConquered = colorToChangeTo;
+            indexOfBuildingBeingTaken = cachedBuildingList.Count - 1;
+            cityBeingConquered= true;
+        }
+
+        public void FinishSettlementCapture()
+        {
+            cachedBuildingList.ForEach(structure =>
+            {
+                structure.StructColor = colorBeingConquered;
+                structure.spriteRender.color = colorBeingConquered;
+                structure.percentageConquered = 0;
+                structure.currentState = StructureState.Owned;
+            });
+
+            StructColor = colorBeingConquered;
+            spriteRender.color = colorBeingConquered;
+            percentageConquered = 0;
+            currentState = StructureState.Owned;
+            cityBeingConquered = false;
+        }
+
+        private void RepaintOwnedTiles()
+        {
+            foreach (PointyHexPoint point in tilesOwned)
+            {
+                (GameGridBehaviour.instance.Grid[point] as UnitCell).SetTileColorStructure(StructColor);
+            }
+        }
 	}
 }
 

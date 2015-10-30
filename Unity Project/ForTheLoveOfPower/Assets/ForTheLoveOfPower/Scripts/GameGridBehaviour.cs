@@ -9,10 +9,13 @@ using Gamelogic.Grids;
 using AssemblyCSharp;
 
 public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
-	static public bool didWin;
-	static public Color baseFloorColor;
+    public static GameGridBehaviour instance = null;
 
-	PointyHexPoint startPoint;
+    public static bool didWin;
+	public static Color baseFloorColor;
+    public static int localPlayer = 0;
+
+    PointyHexPoint startPoint;
 	UnitCell startCell;
 	UnitCell clickedCell;
 	UnitCell prevClickedCell;
@@ -36,7 +39,6 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 	float timer = 0f;
 	bool startChosen = false;
-	private int localPlayer = 0;
 
 	private List<Combat> listofCurrentCombats;
     private GameState curGameState;
@@ -56,6 +58,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
         baseFloorColor = GridBuilder.Colors[0];
 
         curGameState = GameState.InitState;
+        instance = this;
     }
 
     private void InitializePlayers()
@@ -392,8 +395,11 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
         {
             if (listOfPlayers[localPlayer].milUnits.Count > 0)
             {
-                CreateNewMilitaryUnit(listOfPlayers[1], (int)MilitaryUnitType.Dictator, Grid[new PointyHexPoint(2, 13)] as UnitCell, new PointyHexPoint(2, 13));
+                CreateNewMilitaryUnit(listOfPlayers[1], (int)MilitaryUnitType.Dictator, Grid[new PointyHexPoint(1, 13)] as UnitCell, new PointyHexPoint(1, 13));
                 CreateNewSettlement(listOfPlayers[1], Grid[new PointyHexPoint(2, 13)] as UnitCell, new PointyHexPoint(2, 13), GetSurroundingTiles(new PointyHexPoint(2, 13)));
+                CreateNewStructure(listOfPlayers[1], (int)StructureUnitType.Market, Grid[new PointyHexPoint(2, 12)] as UnitCell, new PointyHexPoint(2, 12), GetSurroundingTiles(new PointyHexPoint(2, 12)), listOfPlayers[1].settlements[0]);
+                CreateNewStructure(listOfPlayers[1], (int)StructureUnitType.Airport, Grid[new PointyHexPoint(3, 12)] as UnitCell, new PointyHexPoint(3, 12), GetSurroundingTiles(new PointyHexPoint(3, 12)), listOfPlayers[1].settlements[0]);
+                CreateNewStructure(listOfPlayers[1], (int)StructureUnitType.Factory, Grid[new PointyHexPoint(1, 13)] as UnitCell, new PointyHexPoint(1, 13), GetSurroundingTiles(new PointyHexPoint(1, 13)), listOfPlayers[1].settlements[0]);
                 CreateNewMilitaryUnit(listOfPlayers[1], (int)MilitaryUnitType.Infantry, Grid[new PointyHexPoint(3, 13)] as UnitCell, new PointyHexPoint(3, 13));
 
                 curGameState = GameState.RegGameState;
@@ -492,7 +498,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
         {
             player.settlements.ForEach(settle =>
             {
-                settle.UpdateBuildingList(player);
+                settle.UpdateBuildingList(Array.IndexOf(listOfPlayers, player));
             });
 
         }
@@ -636,12 +642,12 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 			if (e.IsSettlement) {
 				if (!IsBuildingInArea (prevClickedPoint, surroundingTiles, listOfPlayers[0].PlayerColor))
-					CreateNewSettlement (listOfPlayers[0], prevClickedCell, prevClickedPoint, surroundingTiles);
+					CreateNewSettlement (listOfPlayers[localPlayer], prevClickedCell, prevClickedPoint, surroundingTiles);
 			} else {
 				Settlement owningSettlement = FindOwningSettlement (prevClickedPoint, surroundingTiles, listOfPlayers[0].PlayerColor);
 
 				if (owningSettlement != null) {
-					CreateNewStructure(listOfPlayers[0], (int)e.toBuild, prevClickedCell, prevClickedPoint, surroundingTiles, owningSettlement);
+					CreateNewStructure(listOfPlayers[localPlayer], (int)e.toBuild, prevClickedCell, prevClickedPoint, surroundingTiles, owningSettlement);
 				}
 			}
 		}

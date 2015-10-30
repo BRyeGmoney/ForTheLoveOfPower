@@ -1,0 +1,7 @@
+Version		Date		Changes
+1.0			12.01.2015	Initial version
+1.0.1		01.02.2015	PaletteData Assets improvement: PaletteData can now be share amoung
+						ColorPalette Scripts, several example improvements,
+						Collection Palettes have a remove Button, serveral bugfixes
+1.0.2		12.02.2015  Minor changes: Percentage values can be locked.
+						The position of a color can be changed via drag'n'drop.

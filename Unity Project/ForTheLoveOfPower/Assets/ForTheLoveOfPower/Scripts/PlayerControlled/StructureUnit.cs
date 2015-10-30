@@ -11,6 +11,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Networking;
 using Gamelogic.Grids;
+using BeautifulDissolves;
 
 namespace AssemblyCSharp
 {
@@ -29,11 +30,21 @@ namespace AssemblyCSharp
 		None,
 	}
 
+    public enum StructureState
+    {
+        BeingBuilt,
+        Owned,
+        BeingCaptured,
+        Captured,
+        BeingReclaimed,
+    }
+
 	public class StructureUnit : NetworkBehaviour
 	{
 		//Properties
 		public Color StructColor { get; set; }
 		public PointyHexPoint pointOnMap { get; set; }
+        
 
 		public StructureUnitType StructureType
 		{
@@ -44,6 +55,9 @@ namespace AssemblyCSharp
 
 		public Settlement OwningSettlement { get; set; }
 
+        public Material MyMaterial;
+        public SpriteRenderer spriteRender;
+
 		public Animator AnimationController 
 		{
 			get { return animator; }
@@ -51,8 +65,10 @@ namespace AssemblyCSharp
 		private Animator animator;
 
 		public int modifierAnim;
+        public float percentageConquered = 0;
+        public StructureState currentState;
 
-		public StructureUnit ()
+        public StructureUnit ()
 		{
 		}
 
@@ -61,8 +77,12 @@ namespace AssemblyCSharp
 			StructColor = structColor;
 			StructureType = structType;
 			pointOnMap = gridPoint;
-			gameObject.GetComponent<SpriteRenderer> ().color = StructColor;
+            spriteRender = gameObject.GetComponent<SpriteRenderer>();
+			spriteRender.color = StructColor;
+            MyMaterial = spriteRender.material;
 			animator = gameObject.GetComponent<Animator> ();
+
+            currentState = StructureState.Owned; //Temporary, change this to BeingBuilt
 		}
 
 		public void Initialize(Color structColor, StructureUnitType structType, PointyHexPoint gridPoint, Settlement owningSettlement)
@@ -71,9 +91,24 @@ namespace AssemblyCSharp
 			OwningSettlement = owningSettlement;
 		}
 
-		public void UpdateBuilding(Player owningPlayer)
+		public void UpdateBuilding()
 		{
+            if (currentState.Equals(StructureState.BeingCaptured))
+            {
+                percentageConquered = Mathf.Clamp(percentageConquered + (Time.deltaTime / 5), 0, 1);
+                MyMaterial.SetFloat(DissolveHelper.dissolveAmountID, percentageConquered);
+
+                if (percentageConquered >= 1)
+                    currentState = StructureState.Captured;
+            }
 		}
+
+
+        //Call this from the actual grid file
+        public void BeginCapturing(Color newColor)
+        {
+            MyMaterial.SetColor("_SubColor", newColor);
+        }
 	}
 }
 

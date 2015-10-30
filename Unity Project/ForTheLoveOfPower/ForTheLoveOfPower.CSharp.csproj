@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>5.2.1f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -59,6 +57,12 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -68,6 +72,9 @@
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlSharp">
+      <HintPath>Assets\ColorPalettes\Plugins\HtmlSharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="ForTheLoveOfPower.CSharp.Plugins.csproj">
@@ -76,6 +83,36 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\BeautifulDissolves\Scripts\Dissolve.cs" />
+    <Compile Include="Assets\BeautifulDissolves\Scripts\DissolveGlowUpdate.cs" />
+    <Compile Include="Assets\BeautifulDissolves\Scripts\DissolveHelper.cs" />
+    <Compile Include="Assets\BeautifulDissolves\Scripts\DissolveOnClick.cs" />
+    <Compile Include="Assets\BeautifulDissolves\Scripts\DissolveOnCollision.cs" />
+    <Compile Include="Assets\BeautifulDissolves\Scripts\DissolveOnCollision2D.cs" />
+    <Compile Include="Assets\BeautifulDissolves\Scripts\DissolveOnKeyPress.cs" />
+    <Compile Include="Assets\BeautifulDissolves\Scripts\DissolveOnSpawn.cs" />
+    <Compile Include="Assets\BeautifulDissolves\Scripts\DissolveOnTrigger.cs" />
+    <Compile Include="Assets\BeautifulDissolves\Scripts\DissolveOnTrigger2D.cs" />
+    <Compile Include="Assets\BeautifulDissolves\Scripts\SpriteDissolveShaderGUI.cs" />
+    <Compile Include="Assets\BeautifulDissolves\_Examples\_Assets\Scripts\AlienMove.cs" />
+    <Compile Include="Assets\BeautifulDissolves\_Examples\_Assets\Scripts\DissolveSlider.cs" />
+    <Compile Include="Assets\BeautifulDissolves\_Examples\_Assets\Scripts\LookAtObject.cs" />
+    <Compile Include="Assets\BeautifulDissolves\_Examples\_Assets\Scripts\RespawnManager.cs" />
+    <Compile Include="Assets\BeautifulDissolves\_Examples\_Assets\Scripts\UpdateLight.cs" />
+    <Compile Include="Assets\BeautifulDissolves\_Examples\_Assets\Scripts\Zombie.cs" />
+    <Compile Include="Assets\ColorPalettes\scripts\AdditiveMaskAnimation.cs" />
+    <Compile Include="Assets\ColorPalettes\scripts\BackgroundPalette.cs" />
+    <Compile Include="Assets\ColorPalettes\scripts\ColorPaletteChanger.cs" />
+    <Compile Include="Assets\ColorPalettes\scripts\ColorPaletteStatics.cs" />
+    <Compile Include="Assets\ColorPalettes\scripts\ColorSprites.cs" />
+    <Compile Include="Assets\ColorPalettes\scripts\ColorSwitcher.cs" />
+    <Compile Include="Assets\ColorPalettes\scripts\Palette.cs" />
+    <Compile Include="Assets\ColorPalettes\scripts\PaletteCollection.cs" />
+    <Compile Include="Assets\ColorPalettes\scripts\PaletteCollectionData.cs" />
+    <Compile Include="Assets\ColorPalettes\scripts\PaletteData.cs" />
+    <Compile Include="Assets\ColorPalettes\scripts\PaletteGradient.cs" />
+    <Compile Include="Assets\ColorPalettes\scripts\PaletteImporter.cs" />
+    <Compile Include="Assets\ColorPalettes\scripts\VertexSwitcher.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\CameraBehaviour.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\Combat.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs" />
@@ -314,7 +351,22 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TemplateCode.cs</LastGenOutput>
     </None>
+    <None Include="Assets\BeautifulDissolves\Shaders\Mobile\Mobile-Dissolve.shader" />
+    <None Include="Assets\BeautifulDissolves\Shaders\Mobile\Mobile-DissolveSpecular.shader" />
+    <None Include="Assets\BeautifulDissolves\Shaders\Standard\DissolveCoreFunctions.cginc" />
+    <None Include="Assets\BeautifulDissolves\Shaders\Standard\DissolveStandardCore.cginc" />
+    <None Include="Assets\BeautifulDissolves\Shaders\Standard\DissolveStandardInput.cginc" />
+    <None Include="Assets\BeautifulDissolves\Shaders\Standard\DissolveStandardMeta.cginc" />
+    <None Include="Assets\BeautifulDissolves\Shaders\Standard\DissolveStandardShadow.cginc" />
+    <None Include="Assets\BeautifulDissolves\Shaders\Standard\Standard-Dissolve.shader" />
+    <None Include="Assets\BeautifulDissolves\Shaders\Standard\Standard-DissolveSpecular.shader" />
+    <None Include="Assets\BeautifulDissolves\Shaders\UI\UI-Dissolve.shader" />
+    <None Include="Assets\ColorPalettes\ColorPalettes_releasenotes.txt" />
+    <None Include="Assets\ColorPalettes\shaders\AdditiveMask.shader" />
+    <None Include="Assets\ColorPalettes\shaders\VertexColored.shader" />
     <None Include="Assets\ForTheLoveOfPower\Resources\Shaders\CustomSpriteShader.shader" />
+    <None Include="Assets\ForTheLoveOfPower\Resources\Shaders\Sprites-Dissolve.shader" />
+    <None Include="Assets\ForTheLoveOfPower\Resources\Shaders\Sprites-DissolveColor.shader" />
     <None Include="Assets\Gamelogic\Examples\Grids\Shaders\Transparent Colored.shader" />
     <None Include="Assets\Gamelogic\Examples\Grids\Shaders\Unlit - Transparent Colored.shader" />
     <None Include="Assets\Gamelogic\Plugins\Common\Datastructures\BinaryHeap\BinaryHeapLincense.txt" />

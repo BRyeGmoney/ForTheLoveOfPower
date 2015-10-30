@@ -149,13 +149,13 @@ namespace AssemblyCSharp
 
 							if (canMove) { //move all subbs and the unit itself
 								subordinates.ForEach (subby => {
-									subby.MoveToNext (grid, grid[subby.movementPath[1]] as UnitCell);
+									subby.MoveToNext (grid, grid[subby.movementPath[1]] as UnitCell, listOfPlayers);
 								});
 
-								MoveToNext (grid, newCell);
+								MoveToNext (grid, newCell, listOfPlayers);
 							}
 						} else { //if this unit has no subordinates
-							MoveToNext (grid, newCell);
+							MoveToNext (grid, newCell, listOfPlayers);
 						}
 					} else {
 						//Stop the moving animation because we're going to be fighting now
@@ -218,7 +218,7 @@ namespace AssemblyCSharp
 			return canMove;
 		}
 
-		public void MoveToNext(IGrid<PointyHexPoint> grid, UnitCell newCell)
+		public void MoveToNext(IGrid<PointyHexPoint> grid, UnitCell newCell, Player[] listOfPlayers)
 		{
             //Check to see if any of the subordinates in the group have already been placed here, if so, lets not fuck with the tile color
             if (commandingUnit == null && subordinates == null) //if its just a regular unit
@@ -236,7 +236,26 @@ namespace AssemblyCSharp
 			
 			if (movementPath.Count <= 1)
 				StartMovingAnimation(false);
+
+            CheckWhatsOnTile(newCell, listOfPlayers);
 		}
+
+        private void CheckWhatsOnTile(UnitCell tileUnderUnit, Player[] listOfPlayers)
+        {
+            if (tileUnderUnit.structureOnTile != null) //is there a building here?
+            {
+                if (tileUnderUnit.structureOnTile.StructColor == listOfPlayers[GameGridBehaviour.localPlayer].PlayerColor && tileUnderUnit.structureOnTile.StructureType.Equals(StructureUnitType.Settlement) && UnitType.Equals(MilitaryUnitType.Dictator)) //is it one of ours and are we a dictator?
+                {
+
+                } else
+                {
+                    if (tileUnderUnit.structureOnTile.StructureType.Equals(StructureUnitType.Settlement))
+                    {
+                        (tileUnderUnit.structureOnTile as Settlement).BeginSettlementCapture(listOfPlayers[GameGridBehaviour.localPlayer].PlayerColor);
+                    }
+                }
+            }
+        }
 
 		public void ChangeSpriteDirection(UnitCell nextPoint)
 		{
