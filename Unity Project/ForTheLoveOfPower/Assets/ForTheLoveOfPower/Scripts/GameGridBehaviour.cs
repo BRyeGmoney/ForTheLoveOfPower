@@ -36,6 +36,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	public GameObject buildScreen;
 	public GameObject[] unitTypes;
 	public GameObject[] structureTypes;
+    public Text NotEnoughMoneyText;
 
 	float timer = 0f;
 	bool startChosen = false;
@@ -267,7 +268,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	void CheckMouseInput()
 	{
 		//We're checking for right mouse input, the first frame of it being down
-		if (Input.GetMouseButtonDown (1)) {
+		if (Input.GetMouseButtonDown (2)) {
 			clickedPoint = Map [GridBuilderUtils.ScreenToWorld (Input.mousePosition)];
 			clickedCell = Grid [clickedPoint] as UnitCell;
 
@@ -288,7 +289,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 			prevClickedPoint = clickedPoint;
 			prevClickedCell = clickedCell;
-		} else if (Input.GetMouseButton (1) && startChosen) { //we're polling for if the right mouse is held down, and if the start tile has been chosen
+		} else if (Input.GetMouseButton (2) && startChosen) { //we're polling for if the right mouse is held down, and if the start tile has been chosen
 			clickedPoint = Map [GridBuilderUtils.ScreenToWorld (Input.mousePosition)];
 
 			if (clickedPoint != prevClickedPoint || clickedPoint != startPoint) {
@@ -636,21 +637,38 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 	void HandlestructChosen (object sender, BuildingChosenArgs e)
 	{
-		if (!e.toBuild.Equals (StructureUnitType.None))
-		{
-			PointList<PointyHexPoint> surroundingTiles = GetSurroundingTiles(prevClickedPoint);
 
-			if (e.IsSettlement) {
-				if (!IsBuildingInArea (prevClickedPoint, surroundingTiles, listOfPlayers[0].PlayerColor))
-					CreateNewSettlement (listOfPlayers[localPlayer], prevClickedCell, prevClickedPoint, surroundingTiles);
-			} else {
-				Settlement owningSettlement = FindOwningSettlement (prevClickedPoint, surroundingTiles, listOfPlayers[0].PlayerColor);
+        if (!e.toBuild.Equals(StructureUnitType.None))
+        {
+            int cost = StructureUnit.CostOfStructure(e.toBuild);
 
-				if (owningSettlement != null) {
-					CreateNewStructure(listOfPlayers[localPlayer], (int)e.toBuild, prevClickedCell, prevClickedPoint, surroundingTiles, owningSettlement);
-				}
-			}
-		}
+            if (cost < listOfPlayers[localPlayer].Cash)
+            {
+                listOfPlayers[localPlayer].Cash -= cost;
+
+                PointList<PointyHexPoint> surroundingTiles = GetSurroundingTiles(prevClickedPoint);
+
+                if (e.IsSettlement)
+                {
+                    if (!IsBuildingInArea(prevClickedPoint, surroundingTiles, listOfPlayers[0].PlayerColor))
+                        CreateNewSettlement(listOfPlayers[localPlayer], prevClickedCell, prevClickedPoint, surroundingTiles);
+                }
+                else
+                {
+                    Settlement owningSettlement = FindOwningSettlement(prevClickedPoint, surroundingTiles, listOfPlayers[0].PlayerColor);
+
+                    if (owningSettlement != null)
+                    {
+                        CreateNewStructure(listOfPlayers[localPlayer], (int)e.toBuild, prevClickedCell, prevClickedPoint, surroundingTiles, owningSettlement);
+                    }
+                }
+            }
+            else
+            {
+                //Play the animation
+                NotEnoughMoneyText.GetComponent<Animator>().SetTrigger("PlayerIsBroke");
+            }
+        }
 
 		//me.enabled = true;
 		buildScreenSettings.structChosen -= HandlestructChosen;
@@ -679,12 +697,13 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	{
 		StructureUnit newStructure = Instantiate (structureTypes [structType], gridCell.transform.position, Quaternion.identity).GetComponent<StructureUnit> ();
 		newStructure.Initialize (player.PlayerColor, (StructureUnitType)structType, gridPoint, owningSettlement);
-		owningSettlement.cachedBuildingList.Add (newStructure);
+        //owningSettlement.cachedBuildingList.Add (newStructure);
+        owningSettlement.AddToBuildingList(newStructure);
         owningSettlement.newBuildingAdded = true;
 		player.AddToOwnedTiles (Grid, owningSettlement, listOfPlayers[1], surroundingTiles);
 
 		gridCell.AddStructureToTile (newStructure);
-	}
+    }
 
 	/// <summary>
 	/// We need to know which settlement a building belongs to. and since buildings HAVE to be connected by

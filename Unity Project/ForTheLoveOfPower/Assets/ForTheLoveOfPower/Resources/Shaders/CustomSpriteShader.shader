@@ -1,8 +1,9 @@
 Shader "Custom/CustomSpriteShader" {
 	Properties
 	{
-		[PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
+		_MainTex ("Sprite Texture", 2D) = "white" {}
 		_Color ("Tint", Color) = (1,1,1,1)
+		_Cutoff ("Alpha cutoff", Range(0,1)) = 0.9
 		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
 	}
 
@@ -24,7 +25,7 @@ Shader "Custom/CustomSpriteShader" {
 
 		Pass
 		{
-		CGPROGRAM
+			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma multi_compile _ PIXELSNAP_ON
@@ -45,9 +46,6 @@ Shader "Custom/CustomSpriteShader" {
 			};
 			
 			fixed4 _Color;
-			fixed4 _ColorToChangeTo;
-			fixed _PercentageBuilt;
-			fixed _PercentageCaptured;
 
 			v2f vert(appdata_t IN)
 			{
@@ -63,19 +61,15 @@ Shader "Custom/CustomSpriteShader" {
 			}
 
 			sampler2D _MainTex;
+			uniform float _Cutoff;
 
 			fixed4 frag(v2f IN) : SV_Target
 			{
-				fixed4 c = tex2D(_MainTex, IN.texcoord) * IN.color;
-				//if (IN.vertex.y / 256 > _PercentageBuilt)
-				//	c.a = 0;
-				if (c.r == 0 && c.g == 0 && c.b == 0)
+				fixed4 c = tex2D(_MainTex, IN.texcoord);
+				if (c.a < _Cutoff)
 				{
-					c.r = 255;
-					c.g = 255;
-					c.b = 255;
+					c.rgb *= IN.color;
 				}
-					
 				c.rgb *= c.a;
 				return c;
 			}

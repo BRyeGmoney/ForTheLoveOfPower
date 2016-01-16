@@ -13,6 +13,7 @@ using Gamelogic.Grids;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections.Generic;
+using Vectrosity;
 
 namespace AssemblyCSharp
 {
@@ -36,14 +37,72 @@ namespace AssemblyCSharp
         private int indexOfBuildingBeingTaken = 0;
         private Color colorBeingConquered;
 
+        private float halfWidthOfImage;
+
+        public VectorLine border;
+        private bool madeBorder;
+
 		public Settlement ()
 		{
 			cachedBuildingList = new List<StructureUnit> ();
 			tilesOwned = new PointList<PointyHexPoint> ();
-		}
+            halfWidthOfImage = 128;
+        }
+
+        public void Start()
+        {
+            SpriteRenderer childSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
+            if (childSprite != null)
+                childSprite.color = StructColor;
+
+            border = new VectorLine("stlmntBorder", new List<Vector3>(251), null, 3.0f, LineType.Continuous);
+            border.layer = LayerMask.NameToLayer("TacticalView");
+            border.color = this.StructColor;
+        }
+
+        private Vector2 DetermineCoordinate(int side, StructureUnit unitToParse)
+        {
+            if (side == 0) //top-left
+            {
+                return new Vector2(unitToParse.transform.position.x - halfWidthOfImage, unitToParse.transform.position.y - halfWidthOfImage);
+            }
+            else if (side == 1) //top
+            {
+                return new Vector2(unitToParse.transform.position.x, unitToParse.transform.position.y - halfWidthOfImage);
+            }
+            else if (side == 2) //top right
+            {
+                return new Vector2(unitToParse.transform.position.x + halfWidthOfImage, unitToParse.transform.position.y - halfWidthOfImage);
+            }
+            else if (side == 3) //right
+            {
+                return new Vector2(unitToParse.transform.position.x + halfWidthOfImage, unitToParse.transform.position.y);
+            }
+            else if (side == 4) //bottom right
+            {
+                return new Vector2(unitToParse.transform.position.x + halfWidthOfImage, unitToParse.transform.position.y + halfWidthOfImage);
+            }
+            else if (side == 5) // bottom
+            {
+                return new Vector2(unitToParse.transform.position.x, unitToParse.transform.position.y + halfWidthOfImage);
+            }
+            else if (side == 6) //bottom left
+            {
+                return new Vector2(unitToParse.transform.position.x - halfWidthOfImage, unitToParse.transform.position.y + halfWidthOfImage);
+            } else //left
+            {
+                return new Vector2(unitToParse.transform.position.x - halfWidthOfImage, unitToParse.transform.position.y);
+            }
+        }
 
 		public void UpdateBuildingList(int owningPlayer)
 		{
+            if (!madeBorder)
+            {
+                border.MakeSpline(RefreshBorder(), 250, true);//new Vector3[] { DetermineCoordinate(0, this), DetermineCoordinate(1, this), DetermineCoordinate(2, this), DetermineCoordinate(3, this) }, 250, true);
+                border.Draw3D();
+                madeBorder = true;
+            }
             if (!cityBeingConquered)
             {
                 //lets check if we can update the settlement based on whether it meets the criteria, the flags are set when a building is added, the dictator enters, or leaves
@@ -70,7 +129,7 @@ namespace AssemblyCSharp
 
 
                 if (RefreshCachedBuildings)
-                    RefreshBuildingsOwned();
+                    RefreshBorders();
 
                 if (updateTimer > 10f)
                 {
@@ -151,9 +210,97 @@ namespace AssemblyCSharp
             }
 		}
 
-		public void RefreshBuildingsOwned() 
-		{
+        public void AddToBuildingList(StructureUnit structToAdd)
+        {
+            cachedBuildingList.Add(structToAdd);
+            madeBorder = false;
+            //RefreshBorder();
+        }
 
+        private Vector3[] RefreshBorder()
+        {
+            List<PointyHexPoint> points = new List<PointyHexPoint>();
+            Vector3[] toReturn;
+            PointyHexPoint[] toSort;
+
+            points.AddRange(GameGridBehaviour.instance.GetSurroundingTiles(pointOnMap));
+            cachedBuildingList.ForEach(s =>
+            {
+                points.AddRange(GameGridBehaviour.instance.GetSurroundingTiles(s.pointOnMap));
+            });
+
+            points = points.Distinct<PointyHexPoint>().ToList<PointyHexPoint>();
+
+            points.RemoveAll(point => cachedBuildingList.Any(cB => cB.pointOnMap == point));
+
+            points.Remove(pointOnMap); //remove the settlement
+            toSort = points.ToArray();
+
+            //order the remainder
+            Array.Sort(toSort, new ClockwisePointyHexComparer(pointOnMap));
+            points = toSort.ToList();
+
+            //if (points.Count > 0)
+            //{
+            toReturn = new Vector3[points.Count];
+            for (int a = 0; a < points.Count; a++)
+            {
+                toReturn[a] = GameGridBehaviour.instance.Grid[points[a]].transform.position;
+            }
+            return toReturn;
+            //}
+        }
+
+		public void RefreshBorders() 
+		{
+            //PointyHexPoint[] points = new PointyHexPoint[Math.Max(8, cachedBuildingList.Count * 8)];
+            //PointyHexPoint[] surroundingPoints = new PointyHexPoint[6];
+            List<PointyHexPoint> points = new List<PointyHexPoint>();
+            PointyHexPoint[] toSort;
+
+            //surroundingPoints = GameGridBehaviour.instance.GetSurroundingTiles(pointOnMap).ToArray<PointyHexPoint>();//add the settlement tiles too
+            points.AddRange(GameGridBehaviour.instance.GetSurroundingTiles(pointOnMap));
+            cachedBuildingList.ForEach(s => 
+            {
+                points.AddRange(GameGridBehaviour.instance.GetSurroundingTiles(s.pointOnMap));
+               //points.Concat(GameGridBehaviour.instance.GetSurroundingTiles(s.pointOnMap));
+            });
+
+            points = points.Distinct<PointyHexPoint>().ToList<PointyHexPoint>();
+            //now that we have a list of all the tiles + surrounding ones, lets filter out the ones we own
+            /*points = Array.FindAll<PointyHexPoint>(points, p => 
+            {
+                if (pointOnMap == p || cachedBuildingList.Any(cB => cB.pointOnMap == p))
+                    return false;
+                else
+                    return true;
+            });*/
+
+            points.RemoveAll(point => cachedBuildingList.Any(cB => cB.pointOnMap == point));
+
+            /*points.ForEach(p =>
+            {
+                if (cachedBuildingList.Find(cB => cB.pointOnMap == p))
+                    points.RemoveAll(point => point == p);
+                //if (cachedBuildingList.Any(cB => cB.pointOnMap.X == p.X && cB.pointOnMap.Y == p.Y))
+                //    points.Remove(p);
+            });*/
+            points.Remove(pointOnMap); //remove the settlement
+            toSort = points.ToArray();
+
+            //order the remainder
+            Array.Sort(toSort, new ClockwisePointyHexComparer(pointOnMap));
+            points = toSort.ToList();
+            if (points.Count > 0)
+            {
+                //splineDrawer.spline.Reset();
+                //points.ForEach(point =>
+                //{
+                //    splineDrawer.spline.AddPoint(GameGridBehaviour.instance.Grid[point].transform.position - gameObject.transform.position);//get a local relative position to sit from
+                //});
+                //splineDrawer.Generate();
+                //points.ForEach(p => lineRenderer.SetPosition(points.IndexOf(p), new Vector3(p.X, p.Y, 0)));
+            }
 		}
 
 		public bool TileBelongsToSettlement(PointyHexPoint tileToCheck) 

@@ -83,7 +83,7 @@ namespace AssemblyCSharp
 			animator = gameObject.GetComponent<Animator> ();
 
             currentState = StructureState.Owned; //Temporary, change this to BeingBuilt
-		}
+        }
 
 		public void Initialize(Color structColor, StructureUnitType structType, PointyHexPoint gridPoint, Settlement owningSettlement)
 		{
@@ -108,6 +108,54 @@ namespace AssemblyCSharp
         public void BeginCapturing(Color newColor)
         {
             MyMaterial.SetColor("_SubColor", newColor);
+        }
+
+        public static int CostOfStructure(StructureUnitType tryingToBuild)
+        {
+            if (tryingToBuild.Equals(StructureUnitType.Settlement))
+            {
+                return 1000;
+            }
+            else if (tryingToBuild.Equals(StructureUnitType.Barracks))
+            {
+                return 1000;
+            }
+            else if (tryingToBuild.Equals(StructureUnitType.TankDepot))
+            {
+                return 2000;
+            }
+            else if (tryingToBuild.Equals(StructureUnitType.Airport))
+            {
+                return 3000;
+            }
+            else if (tryingToBuild.Equals(StructureUnitType.Factory))
+            {
+                return 1000;
+            }
+            else if (tryingToBuild.Equals(StructureUnitType.Exporter))
+            {
+                return 2000;
+            }
+            else if (tryingToBuild.Equals(StructureUnitType.Market))
+            {
+                return 3000;
+            }
+            else if (tryingToBuild.Equals(StructureUnitType.LabourCamp))
+            {
+                return 1000;
+            }
+            else if (tryingToBuild.Equals(StructureUnitType.Contractor))
+            {
+                return 2000;
+            }
+            else if (tryingToBuild.Equals(StructureUnitType.Propaganda))
+            {
+                return 3000;
+            }
+            else
+            {
+                return 1000000;
+            }
         }
 	}
 }

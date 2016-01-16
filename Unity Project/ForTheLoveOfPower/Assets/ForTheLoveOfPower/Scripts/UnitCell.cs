@@ -41,7 +41,8 @@ public class UnitCell : SpriteCell {
 			prevTileColor = this.Color;
 		else
 			prevTileColor = Color.black;*/
-			this.Color = tileColor; 
+			this.Color = tileColor;
+        SetOwned();
 	}
 
 	public void SetTileColorUnPath()
@@ -52,31 +53,47 @@ public class UnitCell : SpriteCell {
             this.Color = unitTileColor;
         else
             this.Color = GameGridBehaviour.baseFloorColor;//baseTileColor;
+
+        SetUnowned();
 	}
 
     public void SetTileColorUnOwn()
     {
         ownedTileColor = Color.black;
         this.Color = GameGridBehaviour.baseFloorColor;//baseTileColor;
+        SetUnowned();
     }
 
 	public void SetTileColorUnit(Color tileColor)
 	{
         unitTileColor = tileColor;
 		this.Color = tileColor;
+        SetOwned();
 	}
 
 	public void SetTileColorStructure(Color tileColor)
 	{
 		ownedTileColor = tileColor;
 		this.Color = ownedTileColor;
+        SetOwned();
 	}
 
 	public void SetTileColorBuildable(Color tileColor)
 	{
 		ownedTileColor = tileColor;
 		this.Color = ownedTileColor;
+        SetOwned();
 	}
+
+    private void SetOwned()
+    {
+        FrameIndex = 1;
+    }
+
+    private void SetUnowned()
+    {
+        FrameIndex = 0;
+    }
 
 	public void RemoveUnit()
 	{

@@ -19,6 +19,7 @@ public class Player : NetworkBehaviour {
 	// Use this for initialization
 	void Start () {
 		InitBasePlayer ();
+        Cash = 10000;
         PlayerColor = MenuBehaviour.instance.PlayerColor;
 	}
 	

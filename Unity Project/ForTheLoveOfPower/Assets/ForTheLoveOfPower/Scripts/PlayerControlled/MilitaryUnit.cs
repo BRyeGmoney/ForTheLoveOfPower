@@ -96,6 +96,7 @@ namespace AssemblyCSharp
 			TilePoint = curPoint;
 			UnitType = uType;
 			gameObject.GetComponentInChildren<SpriteRenderer> ().color = UnitColor;
+            transform.GetChild(transform.childCount - 1).GetComponent<SpriteRenderer>().color = unitColor; //the last child should be our friendly neighborhood tactical view unit
 			//SpriteGuy.color = UnitColor;
 			animator = gameObject.GetComponentInChildren<Animator> ();
 			movementPath = new PointList<PointyHexPoint> ();
