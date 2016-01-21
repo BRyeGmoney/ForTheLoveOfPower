@@ -12,12 +12,25 @@ public class ZoomChangeScript : MonoBehaviour {
     public Image buttonImage;
     public Sprite[] viewSprites;
 
+    private BloomPro actionBloom;
+    private BloomPro tacticalBloom;
+
+    public void Start()
+    {
+        actionBloom = actionView.GetComponent<BloomPro>();
+        tacticalBloom = tacticalView.GetComponent<BloomPro>();
+    }
+
 	public void ChangeZoom()
     {
         if (Camera.main.name == "Action Camera")
         {
             zoomButtonAnim.SetTrigger("ToTactical");
-            StartCoroutine(Wait());
+            //StartCoroutine(Wait());
+            Wait();
+
+            actionBloom.enabled = false;
+            tacticalBloom.enabled = true;
         }
         else if (Camera.main.name == "Tactical Camera")
         {
@@ -26,12 +39,15 @@ public class ZoomChangeScript : MonoBehaviour {
             tacticalView.gameObject.SetActive(false);
             uiCanvas.worldCamera = actionView;
             buttonImage.sprite = viewSprites[1];
+
+            tacticalBloom.enabled = false;
+            actionBloom.enabled = true;
         }
     }
 
-    IEnumerator Wait()
+    private void Wait()
     {
-        yield return new WaitForSeconds(0.16f);
+        //yield return new WaitForSeconds(0.16f);
         tacticalView.transform.position = actionView.transform.position;
         tacticalView.gameObject.SetActive(true);
         actionView.gameObject.SetActive(false);

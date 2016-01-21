@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using Gamelogic;
 using Gamelogic.Grids;
@@ -401,7 +402,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
                 CreateNewStructure(listOfPlayers[1], (int)StructureUnitType.Market, Grid[new PointyHexPoint(2, 12)] as UnitCell, new PointyHexPoint(2, 12), GetSurroundingTiles(new PointyHexPoint(2, 12)), listOfPlayers[1].settlements[0]);
                 CreateNewStructure(listOfPlayers[1], (int)StructureUnitType.Airport, Grid[new PointyHexPoint(3, 12)] as UnitCell, new PointyHexPoint(3, 12), GetSurroundingTiles(new PointyHexPoint(3, 12)), listOfPlayers[1].settlements[0]);
                 CreateNewStructure(listOfPlayers[1], (int)StructureUnitType.Factory, Grid[new PointyHexPoint(1, 13)] as UnitCell, new PointyHexPoint(1, 13), GetSurroundingTiles(new PointyHexPoint(1, 13)), listOfPlayers[1].settlements[0]);
-                CreateNewMilitaryUnit(listOfPlayers[1], (int)MilitaryUnitType.Infantry, Grid[new PointyHexPoint(3, 13)] as UnitCell, new PointyHexPoint(3, 13));
+                CreateNewMilitaryUnit(listOfPlayers[1], (int)MilitaryUnitType.Infantry, Grid[new PointyHexPoint(3, 13)] as UnitCell, new PointyHexPoint(3, 13), 5);
 
                 curGameState = GameState.RegGameState;
             }
@@ -545,7 +546,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
         timer += Time.deltaTime;
 
         if (timer > 1.2f)
-            Application.LoadLevel("StatsScreen");
+            SceneManager.LoadScene("StatsScreen");
     }
 
 	private void MousePressTile(UnitCell clickedCell, PointyHexPoint clickedPoint)
@@ -678,13 +679,18 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 	void CreateNewMilitaryUnit(Player player, int unitType, UnitCell gridCell, PointyHexPoint gridPoint)
 	{
-		MilitaryUnit newUnit = Instantiate (unitTypes [unitType], gridCell.transform.position, Quaternion.identity).GetComponent<MilitaryUnit> ();
-		newUnit.Initialize (player.PlayerColor, (MilitaryUnitType)unitType, gridPoint);
-		player.milUnits.Add (newUnit);
-		gridCell.AddUnitToTile (newUnit);
+        CreateNewMilitaryUnit(player, unitType, gridCell, gridPoint, 1);
 	}
-	
-	void CreateNewSettlement(Player player, UnitCell gridCell, PointyHexPoint gridPoint, PointList<PointyHexPoint> surroundingTiles )
+
+    void CreateNewMilitaryUnit(Player player, int unitType, UnitCell gridCell, PointyHexPoint gridPoint, int amount)
+    {
+        MilitaryUnit newUnit = Instantiate(unitTypes[unitType], gridCell.transform.position, Quaternion.identity).GetComponent<MilitaryUnit>();
+        newUnit.Initialize(player.PlayerColor, (MilitaryUnitType)unitType, gridPoint, amount);
+        player.milUnits.Add(newUnit);
+        gridCell.AddUnitToTile(newUnit);
+    }
+
+    void CreateNewSettlement(Player player, UnitCell gridCell, PointyHexPoint gridPoint, PointList<PointyHexPoint> surroundingTiles )
 	{
 		Settlement newSettlement = Instantiate (structureTypes [(int)StructureUnitType.Settlement], gridCell.transform.position, Quaternion.identity).GetComponent<Settlement> ();
 		newSettlement.Initialize (player.PlayerColor, StructureUnitType.Settlement, gridPoint);

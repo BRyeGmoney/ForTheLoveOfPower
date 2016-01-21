@@ -57,14 +57,20 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>Assets\Demigiant\DOTween\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween43">
+      <HintPath>Assets\Demigiant\DOTween\DOTween43.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween46">
+      <HintPath>Assets\Demigiant\DOTween\DOTween46.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween50">
+      <HintPath>Assets\Demigiant\DOTween\DOTween50.dll</HintPath>
     </Reference>
     <Reference Include="Vectrosity">
       <HintPath>Assets\Plugins\Vectrosity\Vectrosity.dll</HintPath>
@@ -122,6 +128,13 @@
     <None Include="Assets\BeautifulDissolves\Shaders\Standard\Standard-Dissolve.shader" />
     <None Include="Assets\BeautifulDissolves\Shaders\Standard\Standard-DissolveSpecular.shader" />
     <None Include="Assets\BeautifulDissolves\Shaders\UI\UI-Dissolve.shader" />
+    <None Include="Assets\Demigiant\DOTween\DOTween.XML" />
+    <None Include="Assets\Demigiant\DOTween\DOTween43.xml" />
+    <None Include="Assets\Demigiant\DOTween\DOTween46.xml" />
+    <None Include="Assets\Demigiant\DOTween\DOTween50.xml" />
+    <None Include="Assets\Demigiant\DOTween\Editor\DOTweenEditor.XML" />
+    <None Include="Assets\Demigiant\DOTween\readme.txt" />
+    <None Include="Assets\ForTheLoveOfPower\Resources\Shaders\CRTShader.shader" />
     <None Include="Assets\ForTheLoveOfPower\Resources\Shaders\CustomSpriteShader.shader" />
     <None Include="Assets\ForTheLoveOfPower\Resources\Shaders\HSVRangeShader.shader" />
     <None Include="Assets\ForTheLoveOfPower\Resources\Shaders\Sprites-Additive.shader" />

@@ -51,10 +51,17 @@ public class Combat {
 				attackerHitPoints += Random.Range (0, 5);
 				defenderHitPoints += Random.Range (0, 5);
 
-				if (attackerHitPoints > defenderHitPoints)
-					Defender.RemoveUnits (1);
-				else if (defenderHitPoints > attackerHitPoints)
-					Attacker.RemoveUnits (1);
+                if (attackerHitPoints > defenderHitPoints)
+                {
+                    Defender.DamageUnit();
+                    Attacker.ShootAnimation(Defender.transform.position);
+                }
+                else if (defenderHitPoints > attackerHitPoints)
+                {
+                    Attacker.DamageUnit();
+                    Defender.ShootAnimation(Attacker.transform.position);
+                }
+                    
 
                 attackerHitPoints = 0;
                 defenderHitPoints = 0;

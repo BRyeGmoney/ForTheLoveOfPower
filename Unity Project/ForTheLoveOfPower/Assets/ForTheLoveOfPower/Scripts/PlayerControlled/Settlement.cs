@@ -40,7 +40,7 @@ namespace AssemblyCSharp
         private float halfWidthOfImage;
 
         public VectorLine border;
-        private bool madeBorder;
+        private bool madeBorder = true;
 
 		public Settlement ()
 		{
@@ -55,9 +55,10 @@ namespace AssemblyCSharp
             if (childSprite != null)
                 childSprite.color = StructColor;
 
-            border = new VectorLine("stlmntBorder", new List<Vector3>(251), null, 3.0f, LineType.Continuous);
+            border = new VectorLine("stlmntBorder", new List<Vector3>(251), null, 10.0f, LineType.Continuous);
             border.layer = LayerMask.NameToLayer("TacticalView");
             border.color = this.StructColor;
+            madeBorder = false;
         }
 
         private Vector2 DetermineCoordinate(int side, StructureUnit unitToParse)

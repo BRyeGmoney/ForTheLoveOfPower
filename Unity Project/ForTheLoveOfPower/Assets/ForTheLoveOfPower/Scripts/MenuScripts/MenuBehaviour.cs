@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 
 public class MenuBehaviour : MonoBehaviour {
@@ -219,7 +220,7 @@ public class MenuBehaviour : MonoBehaviour {
         DontDestroyOnLoad(mainPlayer);
         DontDestroyOnLoad(aiPlayer);
 
-        Application.LoadLevel ("MainScreen");
+        SceneManager.LoadScene ("MainScreen");
 	}
 
 	public void QuitGame() {

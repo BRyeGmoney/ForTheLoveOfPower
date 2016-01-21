@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class StatsBehaviour : MonoBehaviour {
 
@@ -28,7 +29,7 @@ public class StatsBehaviour : MonoBehaviour {
         for (int x = 0; x < amountToDestroy; x++)
             Destroy(playerObjects[x]);
 
-        Application.LoadLevel ("MainMenuScreen");
+        SceneManager.LoadScene ("MainMenuScreen");
 	}
 
 	public void ExitGame()

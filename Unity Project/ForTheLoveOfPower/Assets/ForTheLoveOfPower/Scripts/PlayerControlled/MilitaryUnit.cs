@@ -8,13 +8,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Internal;
 using UnityEngine.Networking;
 using Gamelogic;
 using Gamelogic.Grids;
+using DG.Tweening;
+using Vectrosity;
 
 namespace AssemblyCSharp
 {
@@ -76,6 +78,7 @@ namespace AssemblyCSharp
 
 		public GameObject squadLeader;
 		public TextMesh unitNumText;
+        private GameObject damageIndic;
 
 		//private SpriteRenderer SpriteGuy { get; set; }
 
@@ -84,17 +87,19 @@ namespace AssemblyCSharp
 			get { return animator; }
 		}
 		private Animator animator;
-
+        private SpriteRenderer sprite;
 
 		public MilitaryUnit ()
 		{
 		}
 
-		public void Initialize(Color unitColor, MilitaryUnitType uType, PointyHexPoint curPoint)
+		public void Initialize(Color unitColor, MilitaryUnitType uType, PointyHexPoint curPoint, int amount)
 		{
 			UnitColor = unitColor;
 			TilePoint = curPoint;
 			UnitType = uType;
+            unitAmount = amount;
+            sprite = gameObject.GetComponent<SpriteRenderer>();
 			gameObject.GetComponentInChildren<SpriteRenderer> ().color = UnitColor;
             transform.GetChild(transform.childCount - 1).GetComponent<SpriteRenderer>().color = unitColor; //the last child should be our friendly neighborhood tactical view unit
 			//SpriteGuy.color = UnitColor;
@@ -105,8 +110,13 @@ namespace AssemblyCSharp
 
 				squadLeader = gameObject.transform.GetChild (1).gameObject;
 				unitNumText = gameObject.GetComponentInChildren<TextMesh> ();
+                damageIndic = gameObject.transform.GetChild(3).gameObject;
+
+                damageIndic.GetComponent<SpriteRenderer>().color = UnitColor;
+                unitNumText.color = UnitColor;
 			}
 
+            UpdateUnitCountText();
 			GetMoveTimeLimitByType ();
 		}
 
@@ -262,10 +272,10 @@ namespace AssemblyCSharp
 		{
 			if (animator != null) {
 				if (nextPoint.transform.position.x < gameObject.transform.position.x && facingRight) {
-					animator.transform.Rotate (0, 180, 0);
+                    animator.transform.Rotate (0, 180, 0);
 					facingRight = false;
 				} else if (nextPoint.transform.position.x > gameObject.transform.position.x && !facingRight) {
-					animator.transform.Rotate (0, 180, 0);
+                    animator.transform.Rotate (0, 180, 0);
 					facingRight = true;
 				}
 			}
@@ -324,8 +334,47 @@ namespace AssemblyCSharp
 		public void RemoveUnits(int amountToRemove)
 		{
 			unitAmount -= amountToRemove;
+            
 
             UpdateUnitCountText();
+        }
+
+        public void DamageUnit()
+        {
+            RemoveUnits(1);
+            if (unitAmount > 0)
+                StartCoroutine(PlayHitAnimation());
+        }
+
+        public void ShootAnimation(Vector3 enemyPosition)
+        {
+            VectorLine shot = VectorLine.SetLine3D(UnitColor, 0.6f, gameObject.transform.position, gameObject.transform.position);
+            shot.color = UnitColor;
+            shot.lineWidth = GetBulletSize();
+
+            DOTween.To(() => shot.points3[0], s => shot.points3[0] = s, enemyPosition, 0.2f);
+            DOTween.To(() => shot.points3[1], s => shot.points3[1] = s, enemyPosition, 0.3f);
+        }
+
+        private IEnumerator PlayHitAnimation()
+        {
+            int x = 0;
+            damageIndic.SetActive(true);
+
+            while (x < 4)
+            {
+                damageIndic.transform.localScale = Vector3.zero;
+                damageIndic.transform.localPosition = new Vector3(UnityEngine.Random.Range(-64, 64), UnityEngine.Random.Range(-64, 64), 0);
+                damageIndic.transform.DOScale(1, 0.2f);
+                x++;
+                yield return new WaitForSeconds(0.2f);
+            }
+
+            DOTween.Punch(() => gameObject.transform.position, s => gameObject.transform.position = s, new Vector3(UnityEngine.Random.Range(-32f, 32f), UnityEngine.Random.Range(-32f, 32f), 0), 1f, 10, 1);
+
+            damageIndic.SetActive(false);
+
+            yield return null;
         }
 
         private void UpdateUnitCountText()
@@ -429,9 +478,19 @@ namespace AssemblyCSharp
 			else
 				return 0.5f;
 		}
-	}
 
-	public static class CreateMilitaryUnit
+        private float GetBulletSize()
+        {
+            if (unitType == MilitaryUnitType.Infantry)
+                return 7f;
+            else if (unitType == MilitaryUnitType.Tank)
+                return 10f;
+            else
+                return 8f;
+        }
+    }
+
+    public static class CreateMilitaryUnit
 	{
 		/*public static MilitaryUnit CreateDictator(Color unitColor, PointyHexPoint currentPoint)
 		{
