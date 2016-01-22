@@ -24,7 +24,7 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: .25
+    heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
@@ -49,9 +49,9 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: .5, y: .5}
+  spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: .899999976
+  spritePixelsToUnits: 1.1
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
@@ -65,8 +65,25 @@ TextureImporter:
         width: 256
         height: 256
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -49, y: 35}
+        - {x: -66, y: 21}
+        - {x: -66, y: -38}
+        - {x: -59, y: -40}
+        - {x: 0, y: -40}
+        - {x: 65, y: 1}
+        - {x: 65, y: 17}
+        - {x: 29, y: 35}
+      - - {x: -2, y: -20}
+        - {x: -8, y: -23}
+        - {x: -8, y: -30}
+        - {x: -5, y: -32}
+        - {x: 16, y: -32}
+        - {x: 24, y: -30}
+        - {x: 24, y: -23}
+        - {x: 17, y: -20}
     - name: Unit_PlaneCombat_1
       rect:
         serializedVersion: 2
@@ -75,8 +92,37 @@ TextureImporter:
         width: 256
         height: 256
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 18, y: 35}
+        - {x: -28, y: 35}
+        - {x: -49, y: 27}
+        - {x: -65, y: -15}
+        - {x: -65, y: -30}
+        - {x: -43, y: -40}
+        - {x: -25, y: -40}
+        - {x: 62, y: -2}
+        - {x: 65, y: 1}
+        - {x: 65, y: 14}
+      - - {x: 26, y: -20}
+        - {x: 21, y: -21}
+        - {x: 20, y: -24}
+        - {x: 20, y: -30}
+        - {x: 24, y: -32}
+        - {x: 37, y: -32}
+        - {x: 49, y: -30}
+        - {x: 52, y: -29}
+        - {x: 52, y: -25}
+        - {x: 50, y: -20}
+      - - {x: 34, y: 30}
+        - {x: 31, y: 27}
+        - {x: 31, y: 21}
+        - {x: 32, y: 18}
+        - {x: 56, y: 18}
+        - {x: 63, y: 21}
+        - {x: 63, y: 29}
+        - {x: 57, y: 30}
     - name: Unit_PlaneCombat_2
       rect:
         serializedVersion: 2
@@ -85,8 +131,29 @@ TextureImporter:
         width: 256
         height: 256
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -65, y: 35}
+        - {x: -65, y: -40}
+        - {x: -18, y: -40}
+        - {x: 65, y: -4}
+        - {x: 65, y: 33}
+        - {x: 51, y: 35}
+      - - {x: 50, y: -20}
+        - {x: 44, y: -23}
+        - {x: 44, y: -29}
+        - {x: 45, y: -32}
+        - {x: 64, y: -32}
+        - {x: 73, y: -30}
+        - {x: 73, y: -22}
+        - {x: 59, y: -20}
+      - - {x: 60, y: 30}
+        - {x: 55, y: 29}
+        - {x: 55, y: 18}
+        - {x: 73, y: 18}
+        - {x: 73, y: 29}
+        - {x: 72, y: 30}
     - name: Unit_PlaneCombat_3
       rect:
         serializedVersion: 2
@@ -95,8 +162,27 @@ TextureImporter:
         width: 256
         height: 256
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -65, y: -36}
+        - {x: -62, y: -40}
+        - {x: 0, y: -40}
+        - {x: 66, y: -12}
+        - {x: 66, y: 15}
+        - {x: 36, y: 35}
+        - {x: -48, y: 35}
+        - {x: -65, y: -6}
+      - - {x: -73, y: -29}
+        - {x: -70, y: -28}
+        - {x: -70, y: -25}
+        - {x: -72, y: -23}
+        - {x: -73, y: -23}
+      - - {x: -73, y: 19}
+        - {x: -70, y: 20}
+        - {x: -70, y: 26}
+        - {x: -72, y: 28}
+        - {x: -73, y: 28}
     - name: Unit_PlaneCombat_4
       rect:
         serializedVersion: 2
@@ -105,8 +191,20 @@ TextureImporter:
         width: 256
         height: 256
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 57, y: 16}
+        - {x: 15, y: 35}
+        - {x: -41, y: 35}
+        - {x: -58, y: 24}
+        - {x: -64, y: 5}
+        - {x: -64, y: -32}
+        - {x: -48, y: -40}
+        - {x: -17, y: -40}
+        - {x: 62, y: -1}
+        - {x: 66, y: 5}
+        - {x: 66, y: 10}
     - name: Unit_PlaneCombat_5
       rect:
         serializedVersion: 2
@@ -115,8 +213,18 @@ TextureImporter:
         width: 256
         height: 256
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 66, y: 13}
+        - {x: 14, y: 35}
+        - {x: -44, y: 35}
+        - {x: -64, y: -19}
+        - {x: -64, y: -37}
+        - {x: -46, y: -40}
+        - {x: -24, y: -40}
+        - {x: 62, y: -1}
+        - {x: 66, y: 3}
     - name: Unit_PlaneCombat_6
       rect:
         serializedVersion: 2
@@ -125,8 +233,19 @@ TextureImporter:
         width: 256
         height: 256
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -21, y: 35}
+        - {x: -45, y: 27}
+        - {x: -64, y: -19}
+        - {x: -64, y: -30}
+        - {x: -56, y: -40}
+        - {x: -5, y: -40}
+        - {x: 66, y: -11}
+        - {x: 66, y: 16}
+        - {x: 11, y: 35}
+    outline: []
   spritePackingTag: spritePack
   userData: 
   assetBundleName: 

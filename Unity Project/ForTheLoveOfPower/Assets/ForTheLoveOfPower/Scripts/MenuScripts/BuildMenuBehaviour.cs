@@ -17,18 +17,30 @@ public class BuildMenuBehaviour : MonoBehaviour {
 		IsSettlementMenu = isSettlementMenu;
 
 		if (isSettlementMenu) {
-			for (int x = 1; x < buttonList.Count; x++) {
+            SetActiveSettlementMenu(true);
+			/*for (int x = 1; x < buttonList.Count; x++) {
 				buttonList[x].enabled = false;
 				buttonList[x].image.color = Color.clear;
-			}
+			}*/
 		}
 		else {
-			buttonList [0].enabled = false;
-			buttonList[0].image.color = Color.clear;
-		}
+            //buttonList [0].enabled = false;
+            SetActiveMainMenu(true);
+            //buttonList[0].image.color = Color.clear;
+        }
 	}
 
-	public void ReEnableAll()
+    private void SetActiveSettlementMenu(bool setting)
+    {
+        gameObject.transform.GetChild(0).gameObject.SetActive(setting);
+    }
+
+    private void SetActiveMainMenu(bool setting)
+    {
+        gameObject.transform.GetChild(1).gameObject.SetActive(setting);
+    }
+
+    public void ReEnableAll()
 	{
 		foreach (Button btn in buttonList) {
 			btn.enabled = true;
@@ -48,78 +60,91 @@ public class BuildMenuBehaviour : MonoBehaviour {
 	public void OnClick() 
 	{
 		structChosen (this, new BuildingChosenArgs() {toBuild = AssemblyCSharp.StructureUnitType.None, IsSettlement = false });
-		ReEnableAll ();
-	}
+        SetActiveSettlementMenu(false);
+        SetActiveMainMenu(false);
+        //ReEnableAll ();
+    }
 
 	public void ClickSettlement()
 	{
 		if (IsSettlementMenu)
 			structChosen (this, new BuildingChosenArgs () { toBuild = AssemblyCSharp.StructureUnitType.Settlement, IsSettlement = true });
-		ReEnableAll ();
+
+        SetActiveSettlementMenu(false);
+		//ReEnableAll ();
 	}
 
 	public void ClickBarracks()
 	{
 		if (!IsSettlementMenu)
 			structChosen (this, new BuildingChosenArgs () { toBuild = AssemblyCSharp.StructureUnitType.Barracks, IsSettlement = false });
-		ReEnableAll ();
-	}
+        SetActiveMainMenu(false);
+        //ReEnableAll ();
+    }
 
 	public void ClickTankDepot()
 	{
 		if (!IsSettlementMenu)
 			structChosen (this, new BuildingChosenArgs () { toBuild = AssemblyCSharp.StructureUnitType.TankDepot, IsSettlement = false });
-		ReEnableAll ();
-	}
+        SetActiveMainMenu(false);
+        //ReEnableAll ();
+    }
 
 	public void ClickAirport()
 	{
 		if (!IsSettlementMenu)
 			structChosen (this, new BuildingChosenArgs () { toBuild = AssemblyCSharp.StructureUnitType.Airport, IsSettlement = false });
-		ReEnableAll ();
-	}
+        SetActiveMainMenu(false);
+        //ReEnableAll ();
+    }
 
 	public void ClickFactory()
 	{
 		if (!IsSettlementMenu)
 			structChosen (this, new BuildingChosenArgs () { toBuild = AssemblyCSharp.StructureUnitType.Factory, IsSettlement = false });
-		ReEnableAll ();
-	}
+        SetActiveMainMenu(false);
+        //ReEnableAll ();
+    }
 
 	public void ClickExporter()
 	{
 		if (!IsSettlementMenu)
 			structChosen (this, new BuildingChosenArgs () { toBuild = AssemblyCSharp.StructureUnitType.Exporter, IsSettlement = false });
-		ReEnableAll ();
-	}
+        SetActiveMainMenu(false);
+        //ReEnableAll ();
+    }
 
 	public void ClickMarket()
 	{
 		if (!IsSettlementMenu)
 			structChosen (this, new BuildingChosenArgs () { toBuild = AssemblyCSharp.StructureUnitType.Market, IsSettlement = false });
-		ReEnableAll ();
-	}
+        SetActiveMainMenu(false);
+        //ReEnableAll ();
+    }
 
 	public void ClickPropaganda()
 	{
 		if (!IsSettlementMenu)
 			structChosen (this, new BuildingChosenArgs () { toBuild = AssemblyCSharp.StructureUnitType.Propaganda, IsSettlement = false });
-		ReEnableAll ();
-	}
+        SetActiveMainMenu(false);
+        //ReEnableAll ();
+    }
 
 	public void CreateLabourCamp()
 	{
 		if (!IsSettlementMenu)
 			structChosen (this, new BuildingChosenArgs () { toBuild = AssemblyCSharp.StructureUnitType.LabourCamp, IsSettlement = false });
-		ReEnableAll ();
-	}
+        SetActiveMainMenu(false);
+        //ReEnableAll ();
+    }
 
 	public void CreateContractor()
 	{
 		if (!IsSettlementMenu)
 			structChosen (this, new BuildingChosenArgs () { toBuild = AssemblyCSharp.StructureUnitType.Contractor, IsSettlement = false });
-		ReEnableAll ();
-	}
+        SetActiveMainMenu(false);
+        //ReEnableAll ();
+    }
 }
 
 public delegate void BuildingChosenEventHandler(object sender, BuildingChosenArgs e);

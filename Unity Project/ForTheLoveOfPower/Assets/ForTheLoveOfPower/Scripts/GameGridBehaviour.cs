@@ -8,6 +8,8 @@ using UnityEngine.Networking;
 using Gamelogic;
 using Gamelogic.Grids;
 using AssemblyCSharp;
+using Vectrosity;
+using DG.Tweening;
 
 public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
     public static GameGridBehaviour instance = null;
@@ -38,6 +40,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	public GameObject[] unitTypes;
 	public GameObject[] structureTypes;
     public Text NotEnoughMoneyText;
+    public Texture lineTex;
 
 	float timer = 0f;
 	bool startChosen = false;
@@ -49,6 +52,12 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
     private bool holdingInput;
     private bool draggingInput;
     private float holdTimer;
+
+    private VectorLine usableLine;
+    private bool drawLine;
+    Tween myTween;
+    //private VectorLine[] usableLines;
+    //private ushort curVectorLine;
 
     // Use this for initialization
     void Start () {
@@ -94,6 +103,16 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
                 c++;
             }
+
+            buildScreenSettings.SetBGColor(listOfPlayers[localPlayer].PlayerColor);
+
+            usableLine = new VectorLine("movementPath", new List<Vector3>(), lineTex, 5.0f, LineType.Continuous, Joins.Weld);
+            usableLine.color = listOfPlayers[localPlayer].PlayerColor;
+
+            //usableLines = new VectorLine[5] { setupVL, setupVL, setupVL, setupVL, setupVL };
+            //myTween = DOTween.To(() => usableLine.lineWidth, x => usableLine.lineWidth = x, 15f, 0.5f);
+            //myTween.easeOvershootOrAmplitude = 2f;
+
 
             moneyText.color = listOfPlayers[localPlayer].PlayerColor;
             curGameState = GameState.PlayerSetupState;
@@ -195,7 +214,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
                 } else if (startChosen && draggingInput) {
                     clickedPoint = Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
 
-                    if (clickedPoint != prevClickedPoint || clickedPoint != startPoint)
+                    if (clickedPoint != prevClickedPoint && clickedPoint != startPoint)
                     {
                         endPoint = clickedPoint;
                         clickedCell = Grid[clickedPoint] as UnitCell;
@@ -210,18 +229,26 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
                             if (prevPath != null && prevPath.Contains(point))
                                 prevPath.Remove(point);
 
-                            (Grid[point] as UnitCell).SetTileColorPath(listOfPlayers[localPlayer].PlayerColor);
+                            //(Grid[point] as UnitCell).SetTileColorPath(listOfPlayers[localPlayer].PlayerColor);
                         }
 
-                        if (prevPath.Count > 0)
+                        usableLine.points3.Clear();
+                        for (int i = 0; i < path.Count; i++)
+                            usableLine.points3.Add((Grid[path[i]] as UnitCell).transform.position);
+
+                        BlowupLine();
+
+                        /*if (prevPath.Count > 0)
                         {
                             foreach (PointyHexPoint point in prevPath)
                                 (Grid[point] as UnitCell).SetTileColorUnPath();
-                        }
+                        }*/
                     }
                 } else if (!startChosen && draggingInput) { //we'll try to see if there was a unit to move in the prevClicked
                     prevClickedPoint = Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
                     prevClickedCell = Grid[clickedPoint] as UnitCell;
+
+                    usableLine.active = true;
 
                     //if the initial click succesfully targets a unit, lets set them
                     if ((prevClickedCell.unitOnTile))
@@ -270,6 +297,9 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	{
 		//We're checking for right mouse input, the first frame of it being down
 		if (Input.GetMouseButtonDown (2)) {
+            //drawLine = true;
+            usableLine.active = true;
+            
 			clickedPoint = Map [GridBuilderUtils.ScreenToWorld (Input.mousePosition)];
 			clickedCell = Grid [clickedPoint] as UnitCell;
 
@@ -293,7 +323,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		} else if (Input.GetMouseButton (2) && startChosen) { //we're polling for if the right mouse is held down, and if the start tile has been chosen
 			clickedPoint = Map [GridBuilderUtils.ScreenToWorld (Input.mousePosition)];
 
-			if (clickedPoint != prevClickedPoint || clickedPoint != startPoint) {
+			if (clickedPoint != prevClickedPoint && clickedPoint != startPoint) {
 				endPoint = clickedPoint;
 				//AnimateTileBig (clickedPoint);
 				//AnimateTileSmall (prevClickedPoint);
@@ -304,21 +334,31 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 				path = GetGridPath ().ToPointList();
 
-				foreach (PointyHexPoint point in path) {
+                
+
+                foreach (PointyHexPoint point in path) {
 					if (prevPath != null && prevPath.Contains (point))
 						prevPath.Remove(point);
 
-					(Grid [point] as UnitCell).SetTileColorPath (listOfPlayers[localPlayer].PlayerColor);
+                    
+					//(Grid [point] as UnitCell).SetTileColorPath (listOfPlayers[localPlayer].PlayerColor);
 				}
 
-				if (prevPath.Count > 0) {
+                usableLine.points3.Clear();
+                for (int i = 0; i < path.Count; i++)
+                    usableLine.points3.Add((Grid[path[i]] as UnitCell).transform.position);
+
+                BlowupLine();
+
+                prevClickedPoint = clickedPoint;
+                prevClickedCell = clickedCell;
+                /*if (prevPath.Count > 0) {
 					foreach (PointyHexPoint point in prevPath) 
 						(Grid[point] as UnitCell).SetTileColorUnPath ();
-				}
-			}
+				}*/
+            }
 		} else if (startChosen) {
 			if (path.Count > 0) {
-				AnimateTileSmall(path[path.Count - 1]);
 				unitToMove.SetMovementPath (path);
 				unitToMove.ChangeSpriteDirection (Grid [path [1]] as UnitCell);
 				//path.Clear ();
@@ -340,6 +380,11 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		}
 	}
 
+    private void BlowupLine()
+    {
+        DOTween.To(x => usableLine.lineWidth = x, 1f, 9f, 0.6f).SetEase(Ease.OutElastic);
+    }
+
     void CheckMouseInputPreGame()
     {
         if (Input.GetMouseButtonDown(0))
@@ -351,23 +396,21 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
         }
     }
 
-	void AnimateTileBig(PointyHexPoint toAnimate)
-	{
-		toAnimate.ScaleUp (2);
-	}
-
-	void AnimateTileSmall(PointyHexPoint toAnimate)
-	{
-		toAnimate.ScaleDown (2);
-	}
-
 	void ClearPath()
 	{
-		foreach (PointyHexPoint point in path)
-			(Grid [point] as UnitCell).SetTileColorUnPath ();
+        //foreach (PointyHexPoint point in path)
+        //	(Grid [point] as UnitCell).SetTileColorUnPath ();
+        DOTween.To(() => usableLine.color, x => usableLine.color = x, new Color(1, 1, 1, 0), 0.4f).SetOptions(true).OnComplete(FadeTweenComplete);
 
-		path.Clear ();
+        path.Clear ();
 	}
+
+    private void FadeTweenComplete()
+    {
+        usableLine.points3.Clear();
+        usableLine.active = false;
+        usableLine.color = new Color(usableLine.color.r, usableLine.color.g, usableLine.color.b, 1f);
+    }
 
 	// Update is called once per frame
 	void Update () {
@@ -438,6 +481,9 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
             UpdateSPGame();
         else
             UpdateMPGame();
+
+        //if (drawLine)
+            usableLine.Draw3D();
 
         //Display the player's money
         moneyText.text = String.Concat("Money: ", listOfPlayers[localPlayer].Cash);
@@ -631,7 +677,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	private void SetupBuildMenu(bool isSettlementMenu)
 	{
 		buildScreenSettings.structChosen += HandlestructChosen;
-		buildScreenSettings.SetBGColor(listOfPlayers[0].PlayerColor);
+		//buildScreenSettings.SetBGColor(listOfPlayers[0].PlayerColor);
 		buildScreenSettings.DoSettlementMenu(isSettlementMenu);
 		buildScreen.SetActive (true);
 	}
@@ -771,6 +817,16 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 		return path.Keys.ToPointList<PointyHexPoint>();
 	}
+
+    /*private ushort HijackNextVectorLine()
+    {
+        if (curVectorLine > 4)
+            curVectorLine = 0;
+        else
+            curVectorLine++;
+
+        return curVectorLine;
+    }*/
 }
 
 public enum GameState

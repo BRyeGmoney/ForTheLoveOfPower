@@ -19,7 +19,7 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: .25
+    heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
@@ -44,9 +44,9 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: .5, y: .5}
+  spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: .899999976
+  spritePixelsToUnits: 1.1
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
@@ -60,8 +60,22 @@ TextureImporter:
         width: 256
         height: 256
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 16, y: -47}
+        - {x: 47, y: 15}
+        - {x: 47, y: 48}
+        - {x: 7, y: 58}
+        - {x: -26, y: 58}
+        - {x: -38, y: 37}
+        - {x: -44, y: 6}
+        - {x: -47, y: -24}
+        - {x: -47, y: -58}
+        - {x: -33, y: -58}
+        - {x: -32, y: -54}
+        - {x: -18, y: -58}
+        - {x: 11, y: -58}
     - name: Unit_Infantry_1
       rect:
         serializedVersion: 2
@@ -70,8 +84,23 @@ TextureImporter:
         width: 256
         height: 256
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 16, y: -47}
+        - {x: 47, y: 15}
+        - {x: 47, y: 48}
+        - {x: 7, y: 58}
+        - {x: -26, y: 58}
+        - {x: -38, y: 37}
+        - {x: -44, y: 6}
+        - {x: -47, y: -24}
+        - {x: -47, y: -58}
+        - {x: -33, y: -58}
+        - {x: -32, y: -54}
+        - {x: -18, y: -58}
+        - {x: 11, y: -58}
+    outline: []
   spritePackingTag: spritePack
   userData: 
   assetBundleName: 

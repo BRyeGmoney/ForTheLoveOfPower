@@ -55,7 +55,7 @@ public class CameraBehaviour : MonoBehaviour {
 
                     // Make sure the orthographic size never drops below zero.
                     //Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize, 0.1f);
-                    Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, 200, 1000);
+                    Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, 300, 1000);
 
                     moveSensitivity = Camera.main.orthographicSize / 5.0f;
                 }
@@ -130,8 +130,8 @@ public class CameraBehaviour : MonoBehaviour {
             }
             else if (!Input.touchSupported)
             {
-                Camera.main.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * 200f;
-                Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, 200, 1000);
+                Camera.main.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * 600f;
+                Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, 300, 1000);
 
                 if (Input.GetMouseButton(1))
                 { // we're moving
@@ -142,8 +142,12 @@ public class CameraBehaviour : MonoBehaviour {
                     //currMousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
                     //prevState = 1;
                 }
-                else
+                else if (Input.GetMouseButton(2))
                 {
+                    
+                    float drag = dragMultiply * (Camera.main.orthographicSize / 800);
+                    cameraMovement = new Vector3(-Input.GetAxis("Mouse X") * drag, -Input.GetAxis("Mouse Y") * drag, 0);
+                    Camera.main.transform.position += cameraMovement;
                     //if (prevState == 1)
                     //    cameraMovement = new Vector3(prevMousePos.x - currMousePos.x, prevMousePos.y - currMousePos.y, 0);
 
