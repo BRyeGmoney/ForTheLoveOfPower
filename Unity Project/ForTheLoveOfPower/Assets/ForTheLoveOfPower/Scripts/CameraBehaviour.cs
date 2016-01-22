@@ -144,9 +144,35 @@ public class CameraBehaviour : MonoBehaviour {
                 }
                 else if (Input.GetMouseButton(2))
                 {
-                    
+                    float percX = Input.mousePosition.x / Screen.width;
+                    float percY = Input.mousePosition.y / Screen.height;
                     float drag = dragMultiply * (Camera.main.orthographicSize / 800);
-                    cameraMovement = new Vector3(-Input.GetAxis("Mouse X") * drag, -Input.GetAxis("Mouse Y") * drag, 0);
+
+                    if (percX > 0.8f)
+                    {
+                        cameraMovement.x = (percX - 0.8f) * drag;
+                    }
+                    else if (percX < 0.2f)
+                    {
+                        cameraMovement.x = (-0.2f + percX) * drag;
+                    }
+                    else
+                        cameraMovement.x = 0f;
+
+                    if (percY > 0.8f)
+                    {
+                        cameraMovement.y = (percY - 0.8f) * drag;
+                    }
+                    else if (percY < 0.2f)
+                    {
+                        cameraMovement.y = (-0.2f + percY) * drag;
+                    }
+                    else
+                        cameraMovement.y = 0;
+
+
+                    
+                    //cameraMovement = new Vector3(-Input.GetAxis("Mouse X") * drag, -Input.GetAxis("Mouse Y") * drag, 0);
                     Camera.main.transform.position += cameraMovement;
                     //if (prevState == 1)
                     //    cameraMovement = new Vector3(prevMousePos.x - currMousePos.x, prevMousePos.y - currMousePos.y, 0);
