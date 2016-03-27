@@ -61,6 +61,11 @@ public class Combat {
                     Attacker.DamageUnit();
                     Defender.ShootAnimation(Attacker.transform.position);
                 }
+                else
+                {
+                    Attacker.ShootAnimation(Defender.transform.position);
+                    Defender.ShootAnimation(Attacker.transform.position);
+                }
                     
 
                 attackerHitPoints = 0;

@@ -11,33 +11,28 @@ public class BuildMenuBehaviour : MonoBehaviour {
 
 	public event BuildingChosenEventHandler structChosen;
 
-	public void DoSettlementMenu(bool isSettlementMenu)
+	public void ShowBuildMenu(bool isSettlementMenu)
 	{
-
 		IsSettlementMenu = isSettlementMenu;
 
 		if (isSettlementMenu) {
             SetActiveSettlementMenu(true);
-			/*for (int x = 1; x < buttonList.Count; x++) {
-				buttonList[x].enabled = false;
-				buttonList[x].image.color = Color.clear;
-			}*/
 		}
 		else {
-            //buttonList [0].enabled = false;
             SetActiveMainMenu(true);
-            //buttonList[0].image.color = Color.clear;
         }
 	}
 
     private void SetActiveSettlementMenu(bool setting)
     {
-        gameObject.transform.GetChild(0).gameObject.SetActive(setting);
+        gameObject.SetActive(setting);
+        gameObject.transform.GetChild(1).gameObject.SetActive(setting);
     }
 
     private void SetActiveMainMenu(bool setting)
     {
-        gameObject.transform.GetChild(1).gameObject.SetActive(setting);
+        gameObject.SetActive(setting);
+        gameObject.transform.GetChild(2).gameObject.SetActive(setting);
     }
 
     public void ReEnableAll()

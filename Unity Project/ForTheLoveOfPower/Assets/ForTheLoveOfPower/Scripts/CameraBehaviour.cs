@@ -189,5 +189,35 @@ public class CameraBehaviour : MonoBehaviour {
                 prevMousePos = currMousePos;
             }
         }
+        /*else if (Camera.main.name == "Tactical Camera")
+        {
+            if (Input.touchSupported)
+            {
+                if (Input.touchCount == 2)
+                {
+                    Touch touchOne = Input.GetTouch(0);
+
+                    float drag = dragMultiply * (Camera.main.orthographicSize / 800);
+                    cameraMovement = new Vector3(-(touchOne.deltaPosition.x), -(touchOne.deltaPosition.y), 0);
+                    Camera.main.transform.position += cameraMovement;
+                }
+                else //if none or even one
+                {
+
+                }
+            }
+            else if (!Input.touchSupported)
+            {
+                if (Input.GetMouseButton(1))
+                { // we're moving
+                    float drag = dragMultiply * (Camera.main.orthographicSize / 800);
+                    cameraMovement = new Vector3(-Input.GetAxis("Mouse X") * drag, -Input.GetAxis("Mouse Y") * drag, 0);
+                    Camera.main.transform.position += cameraMovement;
+                    //Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y)), 5 * Time.deltaTime);
+                    //currMousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+                    //prevState = 1;
+                }
+            }
+        }*/
 	}
 }

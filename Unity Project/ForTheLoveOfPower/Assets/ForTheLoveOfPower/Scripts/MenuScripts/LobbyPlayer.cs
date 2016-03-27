@@ -31,8 +31,8 @@ public class LobbyPlayer : NetworkLobbyPlayer {
         OnPlayerColor(playerColor);
         //playerNameText.text = playerName;
         //transform.SetParent(MenuBehaviour.instance.LobbyPlayersPanel, false);
-        int index = Array.IndexOf(MenuBehaviour.instance.lobbyManager.lobbySlots, this);
-        transform.position = new Vector3(0, -350 + (index * 35), 0);// * Random.Range(1, 4), 0);
+        //int index = Array.IndexOf(MenuBehaviour.instance.lobbyManager.lobbySlots, this);
+        //transform.position = new Vector3(0, -350 + (index * 35), 0);// * Random.Range(1, 4), 0);
     }
 
     public override void OnStartLocalPlayer()
@@ -45,14 +45,14 @@ public class LobbyPlayer : NetworkLobbyPlayer {
         CmdColorChanged(MenuBehaviour.instance.PlayerColor);
         OnPlayerColor(playerColor);
 
-        int index = Array.IndexOf(MenuBehaviour.instance.lobbyManager.lobbySlots, this);
-        transform.position = new Vector3(0, -350 + (index * 35), 0);
+        //int index = Array.IndexOf(MenuBehaviour.instance.lobbyManager.lobbySlots, this);
+        //transform.position = new Vector3(0, -350 + (index * 35), 0);
 
-        if (index > 1)
-        {
-            readyToBegin = true;
-            SendReadyToBeginMessage();
-        }
+        //if (index > 1)
+        //{
+         //   readyToBegin = true;
+         //   SendReadyToBeginMessage();
+       // }
     }
 
     public void OnPlayerName(string newPlayerName)

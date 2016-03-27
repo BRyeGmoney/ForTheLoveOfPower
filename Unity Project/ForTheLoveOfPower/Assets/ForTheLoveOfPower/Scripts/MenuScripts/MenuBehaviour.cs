@@ -15,21 +15,14 @@ public class MenuBehaviour : MonoBehaviour {
     public GameObject PlayerPrefab;
     public GameObject AIPlayerPrefab;
     public GameObject NetworkPlayerPrefab;
-    public MenuNetworkLobbyManager lobbyManager;
 
     public Sprite townHall;
     public Sprite cityHall;
     public Sprite capital;
 
-    //private Sprite colorPicker;
-    //public GameObject ThePicker;
     public Button playerColBtn;
     private Image playerColBtnCol;
     private int ColorChoice = 0;
-    //private bool showColorPicker;
-    //private int ImageWidth = 100;
-    //private int ImageHeight = 100;
-    //private Vector2 ColorPickerPos;
 
     public Text ColorText;
 
@@ -51,74 +44,18 @@ public class MenuBehaviour : MonoBehaviour {
         ColorBlock newBlock = playerColBtn.colors;
         newBlock.normalColor = ReturnColorChoice((ColorChooser)ColorChoice);
         playerColBtn.colors = newBlock;
-        //colorPicker = ThePicker.GetComponent<SpriteRenderer>().sprite;
-        //ImageWidth = (int)colorPicker.bounds.extents.x;
-        //ImageHeight = (int)colorPicker.bounds.extents.y;
-        //ColorPickerPos = new Vector2(ThePicker.transform.position.x, ThePicker.transform.position.y);
 
 
         instance = this;
 	}
 
-    void Update()
-    {
-        /*if (showColorPicker && Input.touchCount > 0 || Input.GetMouseButton(0))
-        {
-            Vector2 pickpos = Vector2.zero;
-            int a, b;
-
-            if (Input.touchCount > 0)
-            {
-                pickpos = Input.GetTouch(0).position;
-            }
-            else if (Input.GetMouseButton(0))
-            {
-                pickpos = Input.mousePosition;
-            }
-            a = Convert.ToInt32(pickpos.x + 60);
-            b = Convert.ToInt32(pickpos.y - 270);
-
-            ColorBlock newBlock = playerColBtn.colors;
-            newBlock.normalColor = colorPicker.texture.GetPixel(a, b);
-            playerColBtn.colors = newBlock;
-            PlayerColor = newBlock.normalColor;
-            ColorText.text = String.Format("Color: {0}, {1}, {2}", PlayerColor.r, PlayerColor.g, PlayerColor.b);
-        }*/
-    }
-
-    public void LookForMatch()
-    {
-        isMPGame = true;
-        SetTextStatus(TextStatus.SearchingForGame);
-        SetTextVisibility(true);
-
-        lobbyManager.StartMatchMaker();
-        lobbyManager.matchMaker.ListMatches(0, 10, "", ConnectToMatchOne);
-    }
-
-    private void ConnectToMatchOne(UnityEngine.Networking.Match.ListMatchResponse matchResponses)
-    {
-        if (matchResponses.matches.Count > 0 && System.Convert.ToUInt64(matchResponses.matches[0].networkId) != matchID)
-        {
-            UnityEngine.Networking.Match.MatchDesc match = matchResponses.matches[0];
-            lobbyManager.matchName = match.name;
-            lobbyManager.matchSize = (uint)match.maxSize;
-            lobbyManager.matchMaker.JoinMatch(match.networkId, "", OnJoinedMatch);
-        }
-    }
-
-    private void OnJoinedMatch(UnityEngine.Networking.Match.JoinMatchResponse joinedMatchResp)
-    {
-        lobbyManager.OnMatchJoined(joinedMatchResp);
-        SetTextStatus(TextStatus.HostFound);
-    }
-
-    public void WaitingForHost()
-    {
-        SetTextStatus(TextStatus.WaitingForHost);
-    }
-
     public void ChangeToMultiMenu()
+    {
+        PhotonNetwork.ConnectUsingSettings("v4.2");
+        PhotonNetwork.automaticallySyncScene = true;
+    }
+
+    public void OnConnectedToMaster()
     {
         SetTextVisibility(false);
         animator.SetTrigger("MultiplayerPressed");
@@ -126,10 +63,12 @@ public class MenuBehaviour : MonoBehaviour {
 
     public void ChangeToMainMenuFromMulti()
     {
-        isMPGame = false;
+        PhotonNetwork.Disconnect();
+    }
 
-        if (lobbyManager.matchMaker != null)
-            lobbyManager.matchMaker.DestroyMatch((UnityEngine.Networking.Types.NetworkID)matchID, OnMatchDestroyed);
+    public void OnDisconnectedFromPhoton()
+    {
+        isMPGame = false;
 
         SetTextVisibility(false);
         animator.SetTrigger("BackPressed");
@@ -149,39 +88,98 @@ public class MenuBehaviour : MonoBehaviour {
 
     public void CreateRoom()
     {
+        PhotonNetwork.CreateRoom("PvPMatch", new RoomOptions() { isOpen = true, isVisible = true, maxPlayers = 2 }, TypedLobby.Default);
         isMPGame = true;
         SetTextStatus(TextStatus.WaitingForPlayer);
         SetTextVisibility(true);
-
-        lobbyManager.StartMatchMaker();
-        lobbyManager.matchMaker.CreateMatch(
-            PlayerName,
-            (uint)lobbyManager.maxPlayers,
-            true,
-            "",
-            OnMatchCreate);
     }
 
-    public void OnMatchCreate(UnityEngine.Networking.Match.CreateMatchResponse matchInfo)
+    public void LookForMatch()
     {
-        lobbyManager.OnMatchCreate(matchInfo);
-        matchID = (System.UInt64)matchInfo.networkId;
+        PhotonNetwork.JoinRandomRoom(null, 0, ExitGames.Client.Photon.MatchmakingMode.RandomMatching, TypedLobby.Default, "");
+        isMPGame = true;
+        SetTextStatus(TextStatus.SearchingForGame);
+        SetTextVisibility(true);
     }
 
-    private void OnMatchDestroyed(UnityEngine.Networking.Match.BasicResponse baseResponse)
+    public void OnJoinedRoom()
     {
-        matchID = (System.UInt64)UnityEngine.Networking.Types.NetworkID.Invalid;
-        lobbyManager.StopMatchMaker();
-        lobbyManager.StopHost();
-    }
-
-    public void StartMPGame()
-    {
-        foreach (LobbyPlayer lP in lobbyManager.lobbySlots)
+        if (PhotonNetwork.playerList.Length < 2)
+            SetTextStatus(TextStatus.WaitingForPlayer);
+        else
         {
-            lP.readyToBegin = true;
-            lP.SendReadyToBeginMessage();
+            SetTextStatus(TextStatus.PlayerFound);
         }
+    }
+
+    public void OnPhotonPlayerConnected(PhotonPlayer player)
+    {
+        if (PhotonNetwork.playerList.Length > 1)
+            StartMPGame();
+    }
+
+    public void WaitingForHost()
+    {
+        SetTextStatus(TextStatus.WaitingForHost);
+    }
+
+    private void StartMPGame()
+    {
+        //CreatePlayerObjects(true);
+        PhotonNetwork.LoadLevel("MainScreen");
+    }  
+
+	private void StartGame() {
+        //CreatePlayerObjects(false);
+
+        SceneManager.LoadScene ("MainScreen");
+	}
+
+    public void CreatePlayerObjects(bool ismp)
+    {
+        GameObject PlayerOne;
+        GameObject PlayerTwo;
+        if (!ismp)
+        {
+            PlayerOne = Instantiate(PlayerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+            PlayerTwo = Instantiate(AIPlayerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+        }
+        else
+        {
+            PlayerOne = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0);
+            PlayerTwo = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0);
+        }
+        //DontDestroyOnLoad(PlayerOne);
+        //DontDestroyOnLoad(PlayerTwo);
+    }
+
+    public void QuitGame() {
+		Application.Quit ();
+	}
+
+    public void SetPlayerName()
+    {
+        PlayerName = nameInput.text;
+        PlayerPrefs.SetString(SaveData.PlayerName.ToString(), PlayerName);
+    }
+
+    public void PlayerColorPressed()
+    {
+        ColorChoice += 1;
+
+        if (ColorChoice > 8)
+            ColorChoice = 0;
+
+        playerColBtnCol.color = ReturnColorChoice((ColorChooser)ColorChoice);
+        ColorBlock newBlock = playerColBtn.colors;
+        newBlock.normalColor = ReturnColorChoice((ColorChooser)ColorChoice);
+        playerColBtn.colors = newBlock;
+    }
+
+    public void SetPlayerColor()
+    {
+        PlayerColor = playerColBtn.colors.normalColor;
+        PlayerPrefsX.SetColor(SaveData.PlayerColor.ToString(), PlayerColor);
     }
 
     private void SetTextVisibility(bool isVisible)
@@ -212,48 +210,6 @@ public class MenuBehaviour : MonoBehaviour {
             mpPlayerText.text = "Waiting for Host to Start";
         else
             mpPlayerText.text = "Error: function not defined";
-    }
-
-	public void StartGame() {
-        GameObject mainPlayer = Instantiate(PlayerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
-        GameObject aiPlayer = Instantiate(AIPlayerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
-        DontDestroyOnLoad(mainPlayer);
-        DontDestroyOnLoad(aiPlayer);
-
-        SceneManager.LoadScene ("MainScreen");
-	}
-
-	public void QuitGame() {
-		Application.Quit ();
-	}
-
-    public void SetPlayerName()
-    {
-        PlayerName = nameInput.text;
-        PlayerPrefs.SetString(SaveData.PlayerName.ToString(), PlayerName);
-    }
-
-    public void PlayerColorPressed()
-    {
-        ColorChoice += 1;
-
-        if (ColorChoice > 8)
-            ColorChoice = 0;
-
-        playerColBtnCol.color = ReturnColorChoice((ColorChooser)ColorChoice);
-        ColorBlock newBlock = playerColBtn.colors;
-        newBlock.normalColor = ReturnColorChoice((ColorChooser)ColorChoice);
-        playerColBtn.colors = newBlock;
-        //showColorPicker = true;
-        //ThePicker.SetActive(true);
-    }
-
-    public void SetPlayerColor()
-    {
-        PlayerColor = playerColBtn.colors.normalColor;
-        PlayerPrefsX.SetColor(SaveData.PlayerColor.ToString(), PlayerColor);
-        //showColorPicker = false;
-        //ThePicker.SetActive(false);
     }
 
     private Color ReturnColorChoice(ColorChooser choice)
