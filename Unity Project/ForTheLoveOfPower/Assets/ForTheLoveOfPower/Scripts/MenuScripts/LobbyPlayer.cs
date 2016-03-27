@@ -40,10 +40,10 @@ public class LobbyPlayer : NetworkLobbyPlayer {
         base.OnStartLocalPlayer();
 
         
-        CmdNameChanged(MenuBehaviour.instance.PlayerName);
-        OnPlayerName(playerName);
-        CmdColorChanged(MenuBehaviour.instance.PlayerColor);
-        OnPlayerColor(playerColor);
+        //CmdNameChanged(MenuBehaviour.instance.PlayerName);
+        //OnPlayerName(playerName);
+        //CmdColorChanged(MenuBehaviour.instance.PlayerColor);
+        //OnPlayerColor(playerColor);
 
         //int index = Array.IndexOf(MenuBehaviour.instance.lobbyManager.lobbySlots, this);
         //transform.position = new Vector3(0, -350 + (index * 35), 0);

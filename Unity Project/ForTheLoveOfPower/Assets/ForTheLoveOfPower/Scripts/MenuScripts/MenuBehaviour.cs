@@ -5,20 +5,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 
 public class MenuBehaviour : MonoBehaviour {
-    public static MenuBehaviour instance = null;
     public Text mpPlayerText;
     public InputField nameInput;
-    public bool isMPGame;
 
     private Animator animator;
-
-    public GameObject PlayerPrefab;
-    public GameObject AIPlayerPrefab;
-    public GameObject NetworkPlayerPrefab;
-
-    public Sprite townHall;
-    public Sprite cityHall;
-    public Sprite capital;
 
     public Button playerColBtn;
     private Image playerColBtnCol;
@@ -44,9 +34,6 @@ public class MenuBehaviour : MonoBehaviour {
         ColorBlock newBlock = playerColBtn.colors;
         newBlock.normalColor = ReturnColorChoice((ColorChooser)ColorChoice);
         playerColBtn.colors = newBlock;
-
-
-        instance = this;
 	}
 
     public void ChangeToMultiMenu()
@@ -68,7 +55,7 @@ public class MenuBehaviour : MonoBehaviour {
 
     public void OnDisconnectedFromPhoton()
     {
-        isMPGame = false;
+        GameGridBehaviour.isMP = false;
 
         SetTextVisibility(false);
         animator.SetTrigger("BackPressed");
@@ -89,7 +76,7 @@ public class MenuBehaviour : MonoBehaviour {
     public void CreateRoom()
     {
         PhotonNetwork.CreateRoom("PvPMatch", new RoomOptions() { isOpen = true, isVisible = true, maxPlayers = 2 }, TypedLobby.Default);
-        isMPGame = true;
+        GameGridBehaviour.isMP = true;
         SetTextStatus(TextStatus.WaitingForPlayer);
         SetTextVisibility(true);
     }
@@ -97,7 +84,7 @@ public class MenuBehaviour : MonoBehaviour {
     public void LookForMatch()
     {
         PhotonNetwork.JoinRandomRoom(null, 0, ExitGames.Client.Photon.MatchmakingMode.RandomMatching, TypedLobby.Default, "");
-        isMPGame = true;
+        GameGridBehaviour.isMP = true;
         SetTextStatus(TextStatus.SearchingForGame);
         SetTextVisibility(true);
     }
@@ -135,23 +122,7 @@ public class MenuBehaviour : MonoBehaviour {
         SceneManager.LoadScene ("MainScreen");
 	}
 
-    public void CreatePlayerObjects(bool ismp)
-    {
-        GameObject PlayerOne;
-        GameObject PlayerTwo;
-        if (!ismp)
-        {
-            PlayerOne = Instantiate(PlayerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
-            PlayerTwo = Instantiate(AIPlayerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
-        }
-        else
-        {
-            PlayerOne = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0);
-            PlayerTwo = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0);
-        }
-        //DontDestroyOnLoad(PlayerOne);
-        //DontDestroyOnLoad(PlayerTwo);
-    }
+    
 
     public void QuitGame() {
 		Application.Quit ();

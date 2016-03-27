@@ -17,6 +17,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
     public static bool didWin;
 	public static Color baseFloorColor;
     public static int localPlayer = 0;
+    public static bool isMP = false;
 
 	BuildMenuBehaviour buildScreenSettings;
 
@@ -30,9 +31,13 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
     public Text NotEnoughMoneyText;
     public Texture lineTex;
 
-	float timer = 0f;
+    public Sprite townHall;
+    public Sprite cityHall;
+    public Sprite capital;
 
-	private List<Combat> listofCurrentCombats;
+    float timer = 0f;
+
+	public List<Combat> listofCurrentCombats;
     private GameState curGameState;
 
     
@@ -49,10 +54,19 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
         curGameState = GameState.InitState;
         instance = this;
 
-        if (MenuBehaviour.instance.isMPGame)
+        if (isMP)
             PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0);
         else
-            MenuBehaviour.instance.CreatePlayerObjects(false);
+            CreatePlayerObjects(false);
+    }
+
+    public void CreatePlayerObjects(bool ismp)
+    {
+        GameObject P1;
+        GameObject P2;
+
+        P1 = Instantiate(Resources.Load("Player") as GameObject, Vector3.zero, Quaternion.identity) as GameObject;
+        P2 = Instantiate(Resources.Load("AIPlayer") as GameObject, Vector3.zero, Quaternion.identity) as GameObject;
     }
 
     private void InitializePlayers(GameObject[] playerObjects)
@@ -64,7 +78,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
             int c = 0;
             foreach (GameObject playerObj in playerObjects)
             {
-                if (MenuBehaviour.instance != null && MenuBehaviour.instance.isMPGame)
+                if (isMP)
                 {
                     Player netPlayer = playerObj.GetComponent<Player>();
                     listOfPlayers[c] = netPlayer;
@@ -91,19 +105,15 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
             moneyText.color = listOfPlayers[localPlayer].PlayerColor;
             curGameState = GameState.PlayerSetupState;
 
-            Debug.Log("About to play anim");
             Animator anim = PlaceDictText.GetComponent<Animator>();
-            Debug.Log(anim);
             anim.SetTrigger("PlaceDictTrigger");
-            Debug.Log("Played Anim");
         }
-        
     }
 
     
 
 	// Update is called once per frame
-	void FixedUpdate () {
+	void Update () {
         if (curGameState.Equals(GameState.RegGameState))
             UpdatePlayGameState();
         else if (curGameState.Equals(GameState.InitState))
@@ -121,15 +131,8 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
     private void PlayerSetupState()
     {
-        if (listOfPlayers[localPlayer].milUnits.Count < 1)
-        {
-            listOfPlayers[localPlayer].PlayerSetupState();
-        }
-        
         if (listOfPlayers[0].milUnits.Count > 0 && listOfPlayers[1].milUnits.Count > 0)
             curGameState = GameState.RegGameState;
-
-        
     }
 
     private void UpdatePlayGameState()
@@ -137,11 +140,6 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
         CheckEndGame();
 
         UpdateSPGame();
-
-        listOfPlayers[0].PlayGameState(timer);
-
-        //Display the player's money
-        moneyText.text = String.Concat("Money: ", listOfPlayers[localPlayer].Cash);
 
         //update our timer
         timer += Time.deltaTime;
@@ -161,7 +159,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
         });
 
         //Update All the player's units, post fight, in case anyone died, we can get rid of them now
-        listOfPlayers[localPlayer].milUnits.ForEach(unit => {
+        /*listOfPlayers[localPlayer].milUnits.ForEach(unit => {
 
             if (unit != null)
             {
@@ -179,10 +177,10 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
             }
             else
                 listOfPlayers[localPlayer].milUnits.Remove(unit);
-        });
+        });*/
 
         //Update all the second player's units, post fight, in case anyone died
-        listOfPlayers[1].milUnits.ForEach(unit => {
+        /*listOfPlayers[1].milUnits.ForEach(unit => {
             unit.UpdateUnit(Grid, listOfPlayers);
 
             if (unit.GetUnitAmount() < 1)
@@ -194,20 +192,20 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
                 this.listofCurrentCombats.Add(unit.combatToUpdateGame);
                 unit.combatToUpdateGame = null;
             }
-        });
+        });*/
 
         //Update All of the player's settlements, in case enemy units have died on something being taken over
-        foreach (Player player in listOfPlayers)
+        /*foreach (Player player in listOfPlayers)
         {
             player.settlements.ForEach(settle =>
             {
                 settle.UpdateBuildingList(Array.IndexOf(listOfPlayers, player));
             });
 
-        }
+        }*/
     }
 
-	private IEnumerator DestroyUnitAfterAnimation(MilitaryUnit unit, Player playerUnitBelongsTo) 
+	public IEnumerator DestroyUnitAfterAnimation(MilitaryUnit unit, Player playerUnitBelongsTo) 
 	{
 		Debug.Log ("destroying reference to unit");
 		playerUnitBelongsTo.milUnits.Remove (unit);
@@ -355,6 +353,11 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
     public void RemoveBuildScreenHandler(BuildingChosenEventHandler HandleStructChosen)
     {
         buildScreenSettings.structChosen -= HandleStructChosen;
+    }
+
+    public GameState GetCurrentGameState()
+    {
+        return curGameState;
     }
 }
 

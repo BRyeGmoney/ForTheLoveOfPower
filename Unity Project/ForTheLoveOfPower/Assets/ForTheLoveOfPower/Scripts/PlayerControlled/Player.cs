@@ -323,6 +323,8 @@ public class Player : Photon.MonoBehaviour {
         //We're checking for right mouse input, the first frame of it being down
         if (Input.GetMouseButtonDown(2))
         {
+
+            Debug.Log("We right clicked");
             //drawLine = true;
             usableLine.active = true;
 
@@ -351,7 +353,9 @@ public class Player : Photon.MonoBehaviour {
             prevClickedCell = clickedCell;
         }
         else if (Input.GetMouseButton(2) && startChosen)
-        { //we're polling for if the right mouse is held down, and if the start tile has been chosen
+        {
+            Debug.Log("We right clicked");
+            //we're polling for if the right mouse is held down, and if the start tile has been chosen
             clickedPoint = GameGridBehaviour.instance.Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
 
             if (clickedPoint != prevClickedPoint && clickedPoint != startPoint)
@@ -397,6 +401,8 @@ public class Player : Photon.MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0))
         {
+            Debug.Log("We Left Clicked");
+
             clickedPoint = GameGridBehaviour.instance.Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
             clickedCell = GameGridBehaviour.instance.Grid[clickedPoint] as UnitCell;
 
@@ -569,8 +575,6 @@ public class Player : Photon.MonoBehaviour {
 
     void ClearPath()
     {
-        //foreach (PointyHexPoint point in path)
-        //	(Grid [point] as UnitCell).SetTileColorUnPath ();
         DOTween.To(() => usableLine.color, x => usableLine.color = x, new Color(1, 1, 1, 0), 0.4f).SetOptions(true).OnComplete(FadeTweenComplete);
 
         path.Clear();
@@ -583,7 +587,26 @@ public class Player : Photon.MonoBehaviour {
         usableLine.color = new Color(usableLine.color.r, usableLine.color.g, usableLine.color.b, 1f);
     }
 
-    public void PlayGameState(float timer)
+    void Update()
+    {
+        if (GameGridBehaviour.instance.GetCurrentGameState().Equals(GameState.RegGameState))
+        {
+            PlayGameState();
+        }
+        else if (GameGridBehaviour.instance.GetCurrentGameState().Equals(GameState.PlayerSetupState))
+        {
+            if (this.milUnits.Count <= 0)
+                PlayerSetupState();
+        }
+
+        if (!GameGridBehaviour.isMP || (GameGridBehaviour.isMP && photonView.isMine))
+        {
+            //Display the player's money
+            GameGridBehaviour.instance.moneyText.text = String.Concat("Money: ", this.Cash);
+        }
+    }
+
+    public void PlayGameState()
     {
         if (!GameGridBehaviour.instance.IsBuildScreenBlocking())
         {
@@ -593,7 +616,32 @@ public class Player : Photon.MonoBehaviour {
                 CheckMouseInput();
         }
 
-        if (timer > 1f && !startChosen)
+        milUnits.ForEach(unit => {
+
+             if (unit != null)
+             {
+                 unit.UpdateUnit(GameGridBehaviour.instance.Grid, GameGridBehaviour.instance.listOfPlayers);
+
+                 if (unit.GetUnitAmount() < 1)
+                 {
+                     StartCoroutine(GameGridBehaviour.instance.DestroyUnitAfterAnimation(unit, this));
+                 }
+                 else if (unit.combatToUpdateGame != null)
+                 {
+                     GameGridBehaviour.instance.listofCurrentCombats.Add(unit.combatToUpdateGame);
+                     unit.combatToUpdateGame = null;
+                 }
+             }
+             else
+                 this.milUnits.Remove(unit);
+         });
+
+        settlements.ForEach(settle =>
+        {
+            settle.UpdateBuildingList(this);
+        });
+
+        if (playerTimer > 1f && !startChosen)
         {
             if (path.Count > 0)
                 ClearPath();
@@ -601,9 +649,9 @@ public class Player : Photon.MonoBehaviour {
 
         //if (drawLine)
         if (usableLine.active)
-        {
             usableLine.Draw3D();
-        }
+
+        playerTimer += Time.deltaTime;
     }
 
     public void PlayerSetupState()

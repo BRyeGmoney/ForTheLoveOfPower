@@ -18,12 +18,39 @@ public class AIPlayer : Player {
 
 	// Update is called once per frame
 	void Update () {
-        if (myState.Equals(AIState.DefenseState))
+        if (GameGridBehaviour.instance.GetCurrentGameState().Equals(GameState.RegGameState))
         {
+            if (myState.Equals(AIState.DefenseState))
+            {
 
+            }
+            //else if (myState.Equals(AIState.InitState))
+            //    CreateInitialBuildings();
+
+            milUnits.ForEach(unit => {
+                unit.UpdateUnit(GameGridBehaviour.instance.Grid, GameGridBehaviour.instance.listOfPlayers);
+
+                if (unit.GetUnitAmount() < 1)
+                {
+                    StartCoroutine(GameGridBehaviour.instance.DestroyUnitAfterAnimation(unit, this));
+                }
+                else if (unit.combatToUpdateGame != null)
+                {
+                    GameGridBehaviour.instance.listofCurrentCombats.Add(unit.combatToUpdateGame);
+                    unit.combatToUpdateGame = null;
+                }
+            });
+
+            settlements.ForEach(settle =>
+            {
+                settle.UpdateBuildingList(this);
+            });
         }
-        else if (myState.Equals(AIState.InitState))
-            CreateInitialBuildings();
+        else if (GameGridBehaviour.instance.GetCurrentGameState().Equals(GameState.PlayerSetupState))
+        {
+            if (myState.Equals(AIState.InitState))
+                CreateInitialBuildings();
+        }
 	}
 
     void CreateInitialBuildings()

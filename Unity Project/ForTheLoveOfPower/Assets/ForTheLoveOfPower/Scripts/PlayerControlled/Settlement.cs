@@ -96,7 +96,7 @@ namespace AssemblyCSharp
             }
         }
 
-		public void UpdateBuildingList(int owningPlayer)
+		public void UpdateBuildingList(Player owningPlayer)
 		{
             if (!madeBorder)
             {
@@ -112,17 +112,17 @@ namespace AssemblyCSharp
                     if (curStateOfSettlement == 0 && cachedBuildingList.Count > 9)
                     {
                         curStateOfSettlement = 1;
-                        spriteRenderer.sprite = MenuBehaviour.instance.townHall;
+                        spriteRenderer.sprite = GameGridBehaviour.instance.townHall;
                     }
                     else if ((curStateOfSettlement == 1 && cachedBuildingList.Count > 19) || (curStateOfSettlement == 3 && !isDictatorInCity))
                     {
                         curStateOfSettlement = 2;
-                        spriteRenderer.sprite = MenuBehaviour.instance.cityHall;
+                        spriteRenderer.sprite = GameGridBehaviour.instance.cityHall;
                     }
                     else if (curStateOfSettlement == 2 && isDictatorInCity)
                     {
                         curStateOfSettlement = 3;
-                        spriteRenderer.sprite = MenuBehaviour.instance.capital;
+                        spriteRenderer.sprite = GameGridBehaviour.instance.capital;
                     }
 
                     newBuildingAdded = false;
@@ -138,7 +138,7 @@ namespace AssemblyCSharp
                     {
                         if (build.StructureType.Equals(StructureUnitType.Factory))
                         {
-                            GameGridBehaviour.instance.listOfPlayers[owningPlayer].Cash += 200;
+                            owningPlayer.Cash += 200;
                             if (build.modifierAnim < 3)
                             {
                                 build.AnimationController.SetTrigger("modifierAnim");
@@ -147,7 +147,7 @@ namespace AssemblyCSharp
                         }
                     });
 
-                    GameGridBehaviour.instance.listOfPlayers[owningPlayer].Cash += 200;
+                    owningPlayer.Cash += 200;
 
                     updateTimer = 0f;
                 }
@@ -181,7 +181,9 @@ namespace AssemblyCSharp
                 {
                     if (currentState.Equals(StructureState.Captured))
                     {
-                        if (owningPlayer == 0)
+                        owningPlayer.settlements.Add(this);
+                        owningPlayer.ownedTiles.AddRange(tilesOwned);
+                        /*if (owningPlayer == 0)
                         {
                             GameGridBehaviour.instance.listOfPlayers[1].settlements.Add(this);
                             GameGridBehaviour.instance.listOfPlayers[1].ownedTiles.AddRange(tilesOwned);
@@ -190,10 +192,10 @@ namespace AssemblyCSharp
                         {
                             GameGridBehaviour.instance.listOfPlayers[0].settlements.Add(this);
                             GameGridBehaviour.instance.listOfPlayers[0].ownedTiles.AddRange(tilesOwned);
-                        }
+                        }*/
 
-                        GameGridBehaviour.instance.listOfPlayers[owningPlayer].ownedTiles = GameGridBehaviour.instance.listOfPlayers[owningPlayer].ownedTiles.Except(tilesOwned).ToList<PointyHexPoint>();
-                        GameGridBehaviour.instance.listOfPlayers[owningPlayer].settlements.Remove(this);
+                        owningPlayer.ownedTiles = owningPlayer.ownedTiles.Except(tilesOwned).ToList<PointyHexPoint>();
+                        owningPlayer.settlements.Remove(this);
 
                         FinishSettlementCapture();
                         RepaintOwnedTiles();
