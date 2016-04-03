@@ -49,6 +49,8 @@ namespace AssemblyCSharp
 
 	public class MilitaryUnit : NetworkBehaviour
 	{
+        public Int16 ID { get { return id; } }
+        private short id;
 		private PointList<PointyHexPoint> movementPath;
 		private int unitAmount = 1;
 		private float moveTime;
@@ -63,12 +65,7 @@ namespace AssemblyCSharp
 
 		public MilitaryUnit commandingUnit;
 
-		public MilitaryUnitType UnitType 
-		{ 
-			get { return unitType; } 
-			set { unitType = value; } 
-		}
-		private MilitaryUnitType unitType;
+		public MilitaryUnitType UnitType { get; set; }
 
 		public Color UnitColor { get; set; }
 		public float MoveTimeLimit { get; set; }
@@ -93,8 +90,9 @@ namespace AssemblyCSharp
 		{
 		}
 
-		public void Initialize(Color unitColor, MilitaryUnitType uType, PointyHexPoint curPoint, int amount)
+		public void Initialize(Int16 id, Color unitColor, MilitaryUnitType uType, PointyHexPoint curPoint, int amount)
 		{
+            this.id = id;
 			UnitColor = unitColor;
 			TilePoint = curPoint;
 			UnitType = uType;
@@ -117,7 +115,7 @@ namespace AssemblyCSharp
 			}
 
             UpdateUnitCountText();
-			GetMoveTimeLimitByType ();
+			SetMoveTimeLimitByType ();
 		}
 
 		/// <summary>
@@ -175,8 +173,9 @@ namespace AssemblyCSharp
 						MilitaryUnit unitOnTile;
 
 						if (newCell.Color.Equals (UnitColor)) { //if it is the same player's units
-							unitOnTile = listOfPlayers[0].milUnits.Find (mU => mU.TilePoint.Equals (movementPath[1]));
-							if (unitOnTile.unitType.Equals (UnitType)) {//if its the same as the current unit type
+                            unitOnTile = listOfPlayers[0].FindUnitByPosition(movementPath[1]);
+
+							if (unitOnTile.UnitType.Equals (UnitType)) {//if its the same as the current unit type
 								unitOnTile.AddUnits (unitAmount);
 								(grid[movementPath[0]] as UnitCell).RemoveUnit ();
 								Destroy (gameObject);
@@ -197,7 +196,7 @@ namespace AssemblyCSharp
 									unitOnTile.AddSubordinate (this);
 							}
 						} else { //then it must be the other players'
-							unitOnTile = listOfPlayers[1].milUnits.Find(unit => unit.TilePoint.Equals(movementPath[1]));
+                            unitOnTile = listOfPlayers[1].FindUnitByPosition(movementPath[1]);
 
 							if (unitOnTile != null) {
 								combatToUpdateGame = new Combat();
@@ -445,7 +444,7 @@ namespace AssemblyCSharp
 		public void UpdateUnit(IGrid<PointyHexPoint> grid, Player[] listOfPlayers)
 		{
 			if (unitAmount <= 0) {
-				listOfPlayers[0].milUnits.Remove (this);
+                listOfPlayers[0].RemoveFromUnits(this);
 			} else { //if he's still alive then lets update him
 				if (moveTime > MoveTimeLimit) {
 					MoveNextMoveInPath (grid, listOfPlayers);
@@ -456,7 +455,7 @@ namespace AssemblyCSharp
 			}
 		}
 
-		private void GetMoveTimeLimitByType() {
+		private void SetMoveTimeLimitByType() {
 			if (UnitType.Equals (MilitaryUnitType.Dictator))
 				MoveTimeLimit = 2f;
 			else if (UnitType.Equals (MilitaryUnitType.Infantry))
@@ -481,9 +480,9 @@ namespace AssemblyCSharp
 
         private float GetBulletSize()
         {
-            if (unitType == MilitaryUnitType.Infantry)
+            if (UnitType == MilitaryUnitType.Infantry)
                 return 7f;
-            else if (unitType == MilitaryUnitType.Tank)
+            else if (UnitType == MilitaryUnitType.Tank)
                 return 10f;
             else
                 return 8f;

@@ -44,9 +44,11 @@ namespace AssemblyCSharp
 		//Properties
 		public Color StructColor { get; set; }
 		public PointyHexPoint pointOnMap { get; set; }
-        
 
-		public StructureUnitType StructureType
+        public Int16 ID { get { return id; } }
+        protected short id;
+
+        public StructureUnitType StructureType
 		{
 			get { return structureType; }
 			set { structureType = value; }
@@ -72,8 +74,9 @@ namespace AssemblyCSharp
 		{
 		}
 
-		public void Initialize(Color structColor, StructureUnitType structType, PointyHexPoint gridPoint)
+		public void Initialize(short id, Color structColor, StructureUnitType structType, PointyHexPoint gridPoint)
 		{
+            this.id = id;
 			StructColor = structColor;
 			StructureType = structType;
 			pointOnMap = gridPoint;
@@ -85,9 +88,9 @@ namespace AssemblyCSharp
             currentState = StructureState.Owned; //Temporary, change this to BeingBuilt
         }
 
-		public void Initialize(Color structColor, StructureUnitType structType, PointyHexPoint gridPoint, Settlement owningSettlement)
+		public void Initialize(short id, Color structColor, StructureUnitType structType, PointyHexPoint gridPoint, Settlement owningSettlement)
 		{
-			Initialize (structColor, structType, gridPoint);
+			Initialize (id, structColor, structType, gridPoint);
 			OwningSettlement = owningSettlement;
 		}
 
@@ -110,7 +113,7 @@ namespace AssemblyCSharp
             MyMaterial.SetColor("_SubColor", newColor);
         }
 
-        public static int CostOfStructure(StructureUnitType tryingToBuild)
+        public static int GetCostOfStructure(StructureUnitType tryingToBuild)
         {
             if (tryingToBuild.Equals(StructureUnitType.Settlement))
             {

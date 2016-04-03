@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Gamelogic.Grids;
@@ -11,51 +12,57 @@ using Vectrosity;
 
 public class Player : Photon.MonoBehaviour {
 
-	public List<MilitaryUnit> milUnits;
-	public List<Settlement> settlements;
-	public List<PointyHexPoint> ownedTiles;
-	public Int32 Cash { get; set; }
+    public Int32 Cash { get { return cash; } }
+    private int cash;
 
-    public Color PlayerColor = new Color(0, 255, 255);
-    
-	public Boolean DictatorAlive { get; set; }
+    public Boolean DictatorAlive { get { return dictAlive; } }
+    private bool dictAlive;
 
-    bool startChosen = false;
+	List<MilitaryUnit> milUnits;
+	List<Settlement> settlements;
+	List<PointyHexPoint> ownedTiles;
 
     PointyHexPoint startPoint;
+    PointyHexPoint endPoint;
     UnitCell startCell;
     UnitCell clickedCell;
     UnitCell prevClickedCell;
     PointyHexPoint clickedPoint;
     PointyHexPoint prevClickedPoint;
-    PointyHexPoint endPoint;
     MilitaryUnit unitToMove;
     Touch prevTouch;
     PointList<PointyHexPoint> path;
     PointList<PointyHexPoint> prevPath;
 
-    private bool tappingInput;
-    private bool holdingInput;
-    private bool draggingInput;
-    private float holdTimer;
+    bool tappingInput;
+    bool holdingInput;
+    bool draggingInput;
+    float holdTimer;
+    bool startChosen = false;
 
-    private VectorLine usableLine;
-    private bool drawLine;
+    VectorLine movementLine;
+    bool drawLine;
     Tween myTween;
 
+    short NextUnitID;
+    short NextStructID;
+    short NextSettleID;
+
     float playerTimer = 0f;
+
+    public Color PlayerColor = new Color(0, 255, 255);
 
     // Use this for initialization
     void Start () {
 		InitBasePlayer ();
-        Cash = 10000;
+        AddCash(10000);
         PlayerColor = PlayerPrefsX.GetColor(SaveData.PlayerColor.ToString(), PlayerColor);
-        path = new PointList<PointyHexPoint>();
 
+        path = new PointList<PointyHexPoint>();
         prevPath = new PointList<PointyHexPoint>();
 
-        usableLine = new VectorLine("movementPath", new List<Vector3>(), GameGridBehaviour.instance.lineTex, 5.0f, LineType.Continuous, Joins.Weld);
-        usableLine.color = PlayerColor;
+        movementLine = new VectorLine("movementPath", new List<Vector3>(), GameGridBehaviour.instance.lineTex, 5.0f, LineType.Continuous, Joins.Weld);
+        movementLine.color = PlayerColor;
     }
 	
 	protected void InitBasePlayer()
@@ -63,7 +70,7 @@ public class Player : Photon.MonoBehaviour {
 		milUnits = new List<MilitaryUnit> ();
 		settlements = new List<Settlement> ();
         
-        DictatorAlive = true;
+        dictAlive = true;
 	}
 
     #region Tile Functions
@@ -90,7 +97,7 @@ public class Player : Photon.MonoBehaviour {
 		return belongs;
 	}
 
-	public void AddToOwnedTiles(IGrid<PointyHexPoint> gameGrid, AssemblyCSharp.Settlement ownSettlement, Player enemyPlayer, PointList<PointyHexPoint> pointsToAdd)
+	public void AddToSettlementOwnedTiles(IGrid<PointyHexPoint> gameGrid, AssemblyCSharp.Settlement ownSettlement, Player enemyPlayer, PointList<PointyHexPoint> pointsToAdd)
 	{
 		foreach (PointyHexPoint point in TileDoesNotBelongToOtherSettlement(gameGrid, ownSettlement, enemyPlayer, pointsToAdd)) {
 			if (!ownSettlement.tilesOwned.Contains (point)) {
@@ -101,17 +108,31 @@ public class Player : Photon.MonoBehaviour {
 		}
 	}
 
-	public void AddToOwnedTiles(IGrid<PointyHexPoint> gameGrid, Player enemyPlayer, PointyHexPoint pointToAdd)
+	public bool AddToOwnedTiles(IGrid<PointyHexPoint> gameGrid, PointyHexPoint pointToAdd)
 	{
-		if (!(gameGrid [pointToAdd] as UnitCell).buildingOnTile) {
-			ownedTiles.Add (pointToAdd);
-		}
+        if (!(gameGrid[pointToAdd] as UnitCell).buildingOnTile)
+        {
+            ownedTiles.Add(pointToAdd);
+            return true;
+        }
+        else
+            return false;
 	}
 
-	public void RemoveFromOwnedTiles(PointyHexPoint pointToRemove)
+    public bool AddToOwnedTiles(IGrid<PointyHexPoint> gameGrid, PointList<PointyHexPoint> pointsToAdd)
+    {
+        return pointsToAdd.All(point => AddToOwnedTiles(gameGrid, point));
+    }
+
+	public bool RemoveFromOwnedTiles(PointyHexPoint pointToRemove)
 	{
-		ownedTiles.Remove (pointToRemove);
+		return ownedTiles.Remove (pointToRemove);
 	}
+
+    public bool RemoveFromOwnedTiles(PointList<PointyHexPoint> pointsToRemove)
+    {
+        return pointsToRemove.All(point => RemoveFromOwnedTiles(point));
+    }
 
 	private PointList<PointyHexPoint> TileDoesNotBelongToOtherSettlement(IGrid<PointyHexPoint> gameGrid, AssemblyCSharp.Settlement ownSettlement, Player enemyPlayer, PointList<PointyHexPoint> pointsToAdd) 
 	{
@@ -155,11 +176,20 @@ public class Player : Photon.MonoBehaviour {
 
                 CheckTypeOfTouchInput(curTouch);
 
-                if (tappingInput)
-                { //single press 
-                    TouchPressTile(clickedCell, clickedPoint);
-                }
+                if (tappingInput) //single press 
+                    TryToBuildDictator(clickedCell, clickedPoint);
             }
+        }
+    }
+
+    void CheckMouseInputPreGame()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            clickedPoint = GameGridBehaviour.instance.Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
+            clickedCell = GameGridBehaviour.instance.Grid[clickedPoint] as UnitCell;
+
+            TryToBuildDictator(clickedCell, clickedPoint);
         }
     }
 
@@ -249,29 +279,22 @@ public class Player : Photon.MonoBehaviour {
                         {
                             if (prevPath != null && prevPath.Contains(point))
                                 prevPath.Remove(point);
-
-                            //(Grid[point] as UnitCell).SetTileColorPath(listOfPlayers[localPlayer].PlayerColor);
                         }
 
-                        usableLine.points3.Clear();
+                        movementLine.points3.Clear();
                         for (int i = 0; i < path.Count; i++)
-                            usableLine.points3.Add((GameGridBehaviour.instance.Grid[path[i]] as UnitCell).transform.position);
+                            movementLine.points3.Add((GameGridBehaviour.instance.Grid[path[i]] as UnitCell).transform.position);
 
                         BlowupLine();
-
-                        /*if (prevPath.Count > 0)
-                        {
-                            foreach (PointyHexPoint point in prevPath)
-                                (Grid[point] as UnitCell).SetTileColorUnPath();
-                        }*/
                     }
                 }
                 else if (!startChosen && draggingInput)
-                { //we'll try to see if there was a unit to move in the prevClicked
+                { 
+                    //we'll try to see if there was a unit to move in the prevClicked
                     prevClickedPoint = GameGridBehaviour.instance.Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
                     prevClickedCell = GameGridBehaviour.instance.Grid[clickedPoint] as UnitCell;
 
-                    usableLine.active = true;
+                    movementLine.active = true;
 
                     //if the initial click succesfully targets a unit, lets set them
                     if ((prevClickedCell.unitOnTile))
@@ -326,7 +349,7 @@ public class Player : Photon.MonoBehaviour {
 
             Debug.Log("We right clicked");
             //drawLine = true;
-            usableLine.active = true;
+            movementLine.active = true;
 
             clickedPoint = GameGridBehaviour.instance.Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
             clickedCell = GameGridBehaviour.instance.Grid[clickedPoint] as UnitCell;
@@ -376,9 +399,9 @@ public class Player : Photon.MonoBehaviour {
                         prevPath.Remove(point);
                 }
 
-                usableLine.points3.Clear();
+                movementLine.points3.Clear();
                 for (int i = 0; i < path.Count; i++)
-                    usableLine.points3.Add((GameGridBehaviour.instance.Grid[path[i]] as UnitCell).transform.position);
+                    movementLine.points3.Add((GameGridBehaviour.instance.Grid[path[i]] as UnitCell).transform.position);
 
                 BlowupLine();
 
@@ -413,64 +436,17 @@ public class Player : Photon.MonoBehaviour {
         }
     }
 
-    
-
-    void CheckMouseInputPreGame()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            clickedPoint = GameGridBehaviour.instance.Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
-            clickedCell = GameGridBehaviour.instance.Grid[clickedPoint] as UnitCell;
-
-            MousePressTile(clickedCell, clickedPoint);
-        }
-    }
-
     private void MousePressTile(UnitCell clickedCell, PointyHexPoint clickedPoint)
     {
         //if there's a building on this tile
         if (clickedCell.buildingOnTile)
-        {
-            //if it is of the military variety
-            if (clickedCell.structureOnTile.tag.Equals("Military"))
-            {
-                //if there's already a unit on this tile, we should just add to it
-                if (clickedCell.unitOnTile)
-                {
-                    MilitaryUnit unitOnTile = this.milUnits.Find(unit => unit.TilePoint.Equals(clickedPoint));
-
-                    if (unitOnTile != null)
-                        unitOnTile.AddUnits(1);
-                }
-                else if (clickedCell.structureOnTile.StructureType.Equals(StructureUnitType.Barracks))
-                {
-                    GameGridBehaviour.instance.CreateNewMilitaryUnit(this, (int)MilitaryUnitType.Infantry, clickedCell, clickedPoint);
-                }
-                else if (clickedCell.structureOnTile.StructureType.Equals(StructureUnitType.TankDepot))
-                {
-                    GameGridBehaviour.instance.CreateNewMilitaryUnit(this, (int)MilitaryUnitType.Tank, clickedCell, clickedPoint);
-                }
-                else
-                {
-                    GameGridBehaviour.instance.CreateNewMilitaryUnit(this, (int)MilitaryUnitType.Jet, clickedCell, clickedPoint);
-                }
-            }
-        }
-        else if (clickedCell.Color == this.PlayerColor && (!clickedCell.unitOnTile || this.TileBelongsToSettlements(clickedPoint)))
-        { //if its the same color and there isn't a unit or it is part of a settlement
+            TryToBuildUnit(clickedCell, clickedPoint);
+        else if (clickedCell.Color == this.PlayerColor && (!clickedCell.unitOnTile || this.TileBelongsToSettlements(clickedPoint)))//if its the same color and there isn't a unit or it is part of a settlement
             GameGridBehaviour.instance.SetupBuildMenu(false, HandlestructChosen);
-        }
         else
         {
-            //if the player has no units, then this is how we let them place the dictator
-            if (this.milUnits.Count <= 0)
-            {
-                GameGridBehaviour.instance.CreateNewMilitaryUnit(this, (int)MilitaryUnitType.Dictator, clickedCell, clickedPoint);
-            }
-            else if (clickedCell.Color == PlayerColor && !this.TileBelongsToSettlements(clickedPoint))
-            { //else, bring up the bulding selection screen
+            if (clickedCell.Color == PlayerColor && !this.TileBelongsToSettlements(clickedPoint))
                 GameGridBehaviour.instance.SetupBuildMenu(true, HandlestructChosen);
-            }
         }
     }
 
@@ -478,39 +454,7 @@ public class Player : Photon.MonoBehaviour {
     {
         //if there's a building on this tile
         if (clickedCell.buildingOnTile)
-        {
-            //if it is of the military variety
-            if (clickedCell.structureOnTile.tag.Equals("Military"))
-            {
-                //if there's already a unit on this tile, we should just add to it
-                if (clickedCell.unitOnTile)
-                {
-                    MilitaryUnit unitOnTile = this.milUnits.Find(unit => unit.TilePoint.Equals(clickedPoint));
-
-                    if (unitOnTile != null)
-                        unitOnTile.AddUnits(1);
-                }
-                else if (clickedCell.structureOnTile.StructureType.Equals(StructureUnitType.Barracks))
-                {
-                    GameGridBehaviour.instance.CreateNewMilitaryUnit(this, (int)MilitaryUnitType.Infantry, clickedCell, clickedPoint);
-                }
-                else if (clickedCell.structureOnTile.StructureType.Equals(StructureUnitType.TankDepot))
-                {
-                    GameGridBehaviour.instance.CreateNewMilitaryUnit(this, (int)MilitaryUnitType.Tank, clickedCell, clickedPoint);
-                }
-                else
-                {
-                    GameGridBehaviour.instance.CreateNewMilitaryUnit(this, (int)MilitaryUnitType.Jet, clickedCell, clickedPoint);
-                }
-            }
-        }
-        else
-        {
-            //if the player has no units, then this is how we let them place the dictator
-            if (this.milUnits.Count <= 0)
-                GameGridBehaviour.instance.CreateNewMilitaryUnit(this, (int)MilitaryUnitType.Dictator, clickedCell, clickedPoint);
-
-        }
+            TryToBuildUnit(clickedCell, clickedPoint);
     }
 
     private void HoldTile(UnitCell clickedCell, PointyHexPoint clickedPoint)
@@ -530,22 +474,75 @@ public class Player : Photon.MonoBehaviour {
 
     #endregion
 
+    #region Unit & Building Creation
+
+    protected void BuildNewSettlement(PointyHexPoint buildPoint)
+    {
+        /*GameGridBehaviour.instance.CreateNewSettlement(this,
+            GameGridBehaviour.instance.Grid[buildPoint] as UnitCell,
+            buildPoint,
+            GameGridBehaviour.instance.GetSurroundingTiles(buildPoint));*/
+
+        UnitCell gridCell = GameGridBehaviour.instance.Grid[buildPoint] as UnitCell;
+        Settlement newSettlement = (Instantiate(GameGridBehaviour.instance.structureTypes[(int)StructureUnitType.Settlement], gridCell.transform.position, Quaternion.identity) as GameObject).GetComponent<Settlement>();
+        newSettlement.Initialize(GetNextSettleID(), PlayerColor, StructureUnitType.Settlement, buildPoint);
+        AddToSettlements(newSettlement);
+        AddToSettlementOwnedTiles(GameGridBehaviour.instance.Grid, newSettlement, this, GameGridBehaviour.instance.GetSurroundingTiles(buildPoint));
+        gridCell.AddStructureToTile(newSettlement);
+        
+    }
+
+    protected void BuildNewStructure(PointyHexPoint buildPoint, StructureUnitType structType, Settlement owningSettlement)
+    {
+        UnitCell gridCell = GameGridBehaviour.instance.Grid[buildPoint] as UnitCell;
+        StructureUnit newStruct = (Instantiate(GameGridBehaviour.instance.structureTypes[(int)structType], gridCell.transform.position, Quaternion.identity) as GameObject).GetComponent<StructureUnit>();
+        newStruct.Initialize(GetNextStructID(), PlayerColor, structType, buildPoint, owningSettlement);
+        owningSettlement.AddToBuildingList(newStruct);
+        AddToSettlementOwnedTiles(GameGridBehaviour.instance.Grid, owningSettlement, this, GameGridBehaviour.instance.GetSurroundingTiles(buildPoint));
+        gridCell.AddStructureToTile(newStruct);
+        /*GameGridBehaviour.instance.CreateNewStructure(this,
+            (int)structType,
+            GameGridBehaviour.instance.Grid[buildPoint] as UnitCell,
+            buildPoint,
+            GameGridBehaviour.instance.GetSurroundingTiles(buildPoint),
+            owningSettlement);*/
+    }
+
+    protected void CreateNewUnit(PointyHexPoint buildPoint, MilitaryUnitType milType)
+    {
+        CreateNewUnit(buildPoint, milType, 1);
+    }
+
+    protected void CreateNewUnit(PointyHexPoint buildPoint, MilitaryUnitType milType, int amountOf)
+    {
+        UnitCell gridCell = GameGridBehaviour.instance.Grid[buildPoint] as UnitCell;
+
+        MilitaryUnit newUnit = (Instantiate(GameGridBehaviour.instance.unitTypes[(int)milType], gridCell.transform.position, Quaternion.identity) as GameObject).GetComponent<MilitaryUnit>();
+        newUnit.Initialize(GetNextUnitID(), PlayerColor, milType, buildPoint, 1);
+        AddToUnits(newUnit);
+        gridCell.AddUnitToTile(newUnit);
+        /*GameGridBehaviour.instance.CreateNewMilitaryUnit(this,
+            (int)milType,
+            GameGridBehaviour.instance.Grid[buildPoint] as UnitCell,
+            buildPoint);*/
+    }
+
     void HandlestructChosen(object sender, BuildingChosenArgs e)
     {
         if (!e.toBuild.Equals(StructureUnitType.None))
         {
-            int cost = StructureUnit.CostOfStructure(e.toBuild);
+            int cost = StructureUnit.GetCostOfStructure(e.toBuild);
 
-            if (cost < this.Cash)
+            if (CanSpendCash(cost))
             {
-                this.Cash -= cost;
+                SpendCash(cost);
 
                 PointList<PointyHexPoint> surroundingTiles = GameGridBehaviour.instance.GetSurroundingTiles(prevClickedPoint);
 
                 if (e.IsSettlement)
                 {
                     if (!GameGridBehaviour.instance.IsBuildingInArea(prevClickedPoint, surroundingTiles, this.PlayerColor))
-                        GameGridBehaviour.instance.CreateNewSettlement(this, prevClickedCell, prevClickedPoint, surroundingTiles);
+                        BuildNewSettlement(prevClickedPoint);
                 }
                 else
                 {
@@ -553,7 +550,7 @@ public class Player : Photon.MonoBehaviour {
 
                     if (owningSettlement != null)
                     {
-                        GameGridBehaviour.instance.CreateNewStructure(this, (int)e.toBuild, prevClickedCell, prevClickedPoint, surroundingTiles, owningSettlement);
+                        BuildNewStructure(prevClickedPoint, e.toBuild, owningSettlement);
                     }
                 }
             }
@@ -568,26 +565,149 @@ public class Player : Photon.MonoBehaviour {
         prevClickedCell.HighlightOn = false;
     }
 
-    private void BlowupLine()
+    protected void TryToBuildDictator(UnitCell clickedCell, PointyHexPoint clickedPoint)
     {
-        DOTween.To(x => usableLine.lineWidth = x, 1f, 9f, 0.6f).SetEase(Ease.OutElastic);
+        //if the player has no units, then this is how we let them place the dictator
+        if (GetUnitCount() <= 0)
+            CreateNewUnit(clickedPoint, MilitaryUnitType.Dictator);
     }
 
-    void ClearPath()
+    protected void TryToBuildUnit(UnitCell clickedCell, PointyHexPoint clickedPoint)
     {
-        DOTween.To(() => usableLine.color, x => usableLine.color = x, new Color(1, 1, 1, 0), 0.4f).SetOptions(true).OnComplete(FadeTweenComplete);
+        //if it is of the military variety
+        if (clickedCell.structureOnTile.tag.Equals("Military"))
+        {
+            //if there's already a unit on this tile, we should just add to it
+            if (clickedCell.unitOnTile)
+            {
+                MilitaryUnit unitOnTile = this.milUnits.Find(unit => unit.TilePoint.Equals(clickedPoint));
 
-        path.Clear();
+                if (unitOnTile != null)
+                    unitOnTile.AddUnits(1);
+            }
+            else if (clickedCell.structureOnTile.StructureType.Equals(StructureUnitType.Barracks))
+                CreateNewUnit(clickedPoint, MilitaryUnitType.Infantry);
+            else if (clickedCell.structureOnTile.StructureType.Equals(StructureUnitType.TankDepot))
+                CreateNewUnit(clickedPoint, MilitaryUnitType.Tank);
+            else
+                CreateNewUnit(clickedPoint, MilitaryUnitType.Jet);
+        }
     }
 
-    private void FadeTweenComplete()
+    public IEnumerator DestroyUnitAfterAnimation(MilitaryUnit unit)
     {
-        usableLine.points3.Clear();
-        usableLine.active = false;
-        usableLine.color = new Color(usableLine.color.r, usableLine.color.g, usableLine.color.b, 1f);
+        Debug.Log("destroying reference to unit");
+        this.milUnits.Remove(unit);
+        (GameGridBehaviour.instance.Grid[unit.TilePoint] as UnitCell).RemoveUnit();
+
+        yield return new WaitForSeconds(unit.GetUnitAnimationTime());
+
+        if (unit.UnitType.Equals(MilitaryUnitType.Dictator))
+            dictAlive = false;
+
+        Destroy(unit.gameObject);
     }
+    #endregion
+
+    #region Units
+
+    public Int32 GetUnitCount()
+    {
+        return milUnits.Count;
+    }
+
+    public MilitaryUnit FindUnitByID(short id)
+    {
+        return milUnits.Find(unit => unit.ID == id);
+    }
+
+    public MilitaryUnit FindUnitByPosition(PointyHexPoint positionToSearch)
+    {
+        return milUnits.Find(mU => mU.TilePoint.Equals(positionToSearch));
+    }
+
+    protected void UpdateUnits()
+    {
+        milUnits.ForEach(unit => {
+
+            if (unit != null)
+            {
+                unit.UpdateUnit(GameGridBehaviour.instance.Grid, GameGridBehaviour.instance.listOfPlayers);
+
+                if (unit.GetUnitAmount() < 1)
+                {
+                    StartCoroutine(DestroyUnitAfterAnimation(unit));
+                }
+                else if (unit.combatToUpdateGame != null)
+                {
+                    GameGridBehaviour.instance.listofCurrentCombats.Add(unit.combatToUpdateGame);
+                    unit.combatToUpdateGame = null;
+                }
+            }
+            else
+                this.milUnits.Remove(unit);
+        });
+    }
+
+    protected void AddToUnits(MilitaryUnit unit)
+    {
+        milUnits.Add(unit);
+    }
+
+    public void RemoveFromUnits(MilitaryUnit unit)
+    {
+        milUnits.Remove(unit);
+    }
+
+    public void RemoveFromUnits(MilitaryUnit[] units)
+    {
+        units.All(unit => milUnits.Remove(unit));
+    }
+
+    #endregion
+
+    #region Settlements
+    public Int32 GetSettlementsCount()
+    {
+        return settlements.Count;
+    }
+
+    public Settlement FindSettlementByID(short id)
+    {
+        return settlements.Find(settlement => settlement.ID == id);
+    }
+
+    public void AddToSettlements(Settlement newSettlement)
+    {
+        settlements.Add(newSettlement);
+    }
+
+    protected void UpdateSettlements()
+    {
+        settlements.ForEach(settlement =>
+        {
+            settlement.UpdateBuildingList(this);
+        });
+    }
+
+    public void RemoveFromSettlements(Settlement settlement)
+    {
+        settlements.Remove(settlement);
+    }
+
+    #endregion
+
+    #region Update States
 
     void Update()
+    {
+        UpdateBasedOnState();
+
+        UpdateCashText();
+        
+    }
+
+    void UpdateBasedOnState()
     {
         if (GameGridBehaviour.instance.GetCurrentGameState().Equals(GameState.RegGameState))
         {
@@ -598,17 +718,11 @@ public class Player : Photon.MonoBehaviour {
             if (this.milUnits.Count <= 0)
                 PlayerSetupState();
         }
-
-        if (!GameGridBehaviour.isMP || (GameGridBehaviour.isMP && photonView.isMine))
-        {
-            //Display the player's money
-            GameGridBehaviour.instance.moneyText.text = String.Concat("Money: ", this.Cash);
-        }
     }
 
-    public void PlayGameState()
+    void PlayGameState()
     {
-        if (!GameGridBehaviour.instance.IsBuildScreenBlocking())
+        if ((!GameGridBehaviour.isMP || photonView.isMine) && !GameGridBehaviour.instance.IsBuildScreenBlocking())
         {
             if (Input.touchSupported)
                 CheckTouchInput();
@@ -616,30 +730,8 @@ public class Player : Photon.MonoBehaviour {
                 CheckMouseInput();
         }
 
-        milUnits.ForEach(unit => {
-
-             if (unit != null)
-             {
-                 unit.UpdateUnit(GameGridBehaviour.instance.Grid, GameGridBehaviour.instance.listOfPlayers);
-
-                 if (unit.GetUnitAmount() < 1)
-                 {
-                     StartCoroutine(GameGridBehaviour.instance.DestroyUnitAfterAnimation(unit, this));
-                 }
-                 else if (unit.combatToUpdateGame != null)
-                 {
-                     GameGridBehaviour.instance.listofCurrentCombats.Add(unit.combatToUpdateGame);
-                     unit.combatToUpdateGame = null;
-                 }
-             }
-             else
-                 this.milUnits.Remove(unit);
-         });
-
-        settlements.ForEach(settle =>
-        {
-            settle.UpdateBuildingList(this);
-        });
+        UpdateUnits();
+        UpdateSettlements();
 
         if (playerTimer > 1f && !startChosen)
         {
@@ -648,19 +740,90 @@ public class Player : Photon.MonoBehaviour {
         }
 
         //if (drawLine)
-        if (usableLine.active)
-            usableLine.Draw3D();
+        if (movementLine.active)
+            movementLine.Draw3D();
 
         playerTimer += Time.deltaTime;
     }
 
-    public void PlayerSetupState()
+    void PlayerSetupState()
     {
-        if (Input.touchCount > 0)
-            CheckTouchInputPreGame();
-        else if (!Input.touchSupported)
-            CheckMouseInputPreGame();
+        if (!GameGridBehaviour.isMP || photonView.isMine)
+        {
+            if (Input.touchCount > 0)
+                CheckTouchInputPreGame();
+            else if (!Input.touchSupported)
+                CheckMouseInputPreGame();
+        }
     }
 
+    #endregion
 
+    #region MovementLine & Tweens
+
+    void BlowupLine()
+    {
+        DOTween.To(x => movementLine.lineWidth = x, 1f, 9f, 0.6f).SetEase(Ease.OutElastic);
+    }
+
+    void ClearPath()
+    {
+        DOTween.To(() => movementLine.color, x => movementLine.color = x, new Color(1, 1, 1, 0), 0.4f).SetOptions(true).OnComplete(FadeTweenComplete);
+
+        path.Clear();
+    }
+
+    void FadeTweenComplete()
+    {
+        movementLine.points3.Clear();
+        movementLine.active = false;
+        movementLine.color = new Color(movementLine.color.r, movementLine.color.g, movementLine.color.b, 1f);
+    }
+
+    #endregion
+
+    #region IDs
+
+    public Int16 GetNextUnitID()
+    {
+        return NextUnitID++;
+    }
+    public Int16 GetNextSettleID()
+    {
+        return NextSettleID++;
+    }
+    public Int16 GetNextStructID()
+    {
+        return NextStructID++;
+    }
+
+    #endregion
+
+    #region Cash
+
+    bool CanSpendCash(int amountToSpend)
+    {
+        return amountToSpend < Cash;
+    }
+
+    void SpendCash(int amountToSpend)
+    {
+        cash -= amountToSpend;
+    }
+
+    public void AddCash(int amountToAdd)
+    {
+        cash += amountToAdd;
+    }
+
+    void UpdateCashText()
+    {
+        if (!GameGridBehaviour.isMP || (GameGridBehaviour.isMP && photonView.isMine))
+        {
+            //Display the player's money
+            GameGridBehaviour.instance.moneyText.text = String.Concat("Money: ", this.Cash);
+        }
+    }
+
+    #endregion
 }
