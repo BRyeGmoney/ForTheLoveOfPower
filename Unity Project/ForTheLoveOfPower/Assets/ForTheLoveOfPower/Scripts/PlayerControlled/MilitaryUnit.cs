@@ -47,7 +47,7 @@ namespace AssemblyCSharp
 		Dictator_Idle = 14,
 	}
 
-	public class MilitaryUnit : NetworkBehaviour
+	public class MilitaryUnit : MonoBehaviour
 	{
         public Int16 ID { get { return id; } }
         private short id;

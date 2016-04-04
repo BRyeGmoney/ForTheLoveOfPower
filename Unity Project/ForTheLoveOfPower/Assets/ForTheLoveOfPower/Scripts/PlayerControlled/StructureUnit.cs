@@ -39,7 +39,7 @@ namespace AssemblyCSharp
         BeingReclaimed,
     }
 
-	public class StructureUnit : NetworkBehaviour
+	public class StructureUnit : MonoBehaviour
 	{
 		//Properties
 		public Color StructColor { get; set; }

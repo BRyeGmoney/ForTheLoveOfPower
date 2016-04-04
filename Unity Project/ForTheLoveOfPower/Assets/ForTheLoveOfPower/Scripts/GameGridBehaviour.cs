@@ -40,10 +40,6 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 	public List<Combat> listofCurrentCombats;
     private GameState curGameState;
 
-    
-    //private VectorLine[] usableLines;
-    //private ushort curVectorLine;
-
     // Use this for initialization
     void Start () {
 		listofCurrentCombats = new List<Combat> ();
@@ -51,7 +47,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
         buildScreenSettings = buildScreen.GetComponent<BuildMenuBehaviour>();
         baseFloorColor = GridBuilder.Colors[0];
 
-        curGameState = GameState.InitState;
+        curGameState = GameState.LoadState;
         instance = this;
 
         if (isMP)
@@ -67,6 +63,11 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
         P1 = Instantiate(Resources.Load("Player") as GameObject, Vector3.zero, Quaternion.identity) as GameObject;
         P2 = Instantiate(Resources.Load("AIPlayer") as GameObject, Vector3.zero, Quaternion.identity) as GameObject;
+    }
+
+    public void InformDoneLoading()
+    {
+        curGameState = GameState.InitState;
     }
 
     private void InitializePlayers(GameObject[] playerObjects)
@@ -311,6 +312,7 @@ public enum GameState
 {
     None,
     ComeFromLoad,
+    LoadState,
     InitState,
     PlayerSetupState,
     RegGameState,

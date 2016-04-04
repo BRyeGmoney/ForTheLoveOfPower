@@ -343,6 +343,7 @@
     <Compile Include="Assets\GoldenZebra\Image Effects\BloomPro\Scripts\BloomHelper.cs" />
     <Compile Include="Assets\GoldenZebra\Image Effects\BloomPro\Scripts\BloomPro.cs" />
     <Compile Include="Assets\GoldenZebra\Image Effects\BloomPro\Scripts\RenderTextureManager.cs" />
+    <Compile Include="Assets\ObjectPool.cs" />
     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\CustomTypes.cs" />
     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Enums.cs" />
     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Extensions.cs" />
