@@ -8,9 +8,10 @@ using Vectrosity;
 
 namespace AssemblyCSharp
 {
-	public class Settlement : StructureUnit
-	{
+	public class Settlement : StructureUnit, Assets.ForTheLoveOfPower.Scripts.PlayerControlled.IObjectPoolItem
+    {
 		public Boolean RefreshCachedBuildings { get; set; }
+
         public SpriteRenderer spriteRenderer;
 
 		public List<StructureUnit> cachedBuildingList;
@@ -130,11 +131,11 @@ namespace AssemblyCSharp
                         if (build.StructureType.Equals(StructureUnitType.Factory))
                         {
                             owningPlayer.AddCash(200);
-                            if (build.modifierAnim < 3)
+                            /*if (build.modifierAnim < 3)
                             {
                                 build.AnimationController.SetTrigger("modifierAnim");
                                 build.modifierAnim += 1;
-                            }
+                            }*/
                         }
                     });
 
@@ -297,6 +298,11 @@ namespace AssemblyCSharp
             percentageConquered = 0;
             currentState = StructureState.Owned;
             cityBeingConquered = false;
+        }
+
+        public void DissolveFinished()
+        {
+
         }
 
         private void RepaintOwnedTiles()

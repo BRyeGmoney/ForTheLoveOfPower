@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>5.3.3f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -120,6 +122,7 @@
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\MenuScripts\MenuNetworkLobbyManager.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\MenuScripts\StatsBehaviour.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\AIPlayer.cs" />
+    <Compile Include="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\IObjectPoolItem.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\MilitaryUnit.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\Player.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\PlayerControlled\Settlement.cs" />

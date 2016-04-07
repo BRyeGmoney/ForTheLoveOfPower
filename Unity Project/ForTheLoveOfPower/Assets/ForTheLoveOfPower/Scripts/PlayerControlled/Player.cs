@@ -484,22 +484,24 @@ public class Player : Photon.MonoBehaviour {
             GameGridBehaviour.instance.GetSurroundingTiles(buildPoint));*/
 
         UnitCell gridCell = GameGridBehaviour.instance.Grid[buildPoint] as UnitCell;
-        Settlement newSettlement = (Instantiate(GameGridBehaviour.instance.structureTypes[(int)StructureUnitType.Settlement], gridCell.transform.position, Quaternion.identity) as GameObject).GetComponent<Settlement>();
+        Settlement newSettlement = ObjectPool.instance.PullNewSettlement(gridCell.transform.position); //(Instantiate(GameGridBehaviour.instance.structureTypes[(int)StructureUnitType.Settlement], gridCell.transform.position, Quaternion.identity) as GameObject).GetComponent<Settlement>();
         newSettlement.Initialize(GetNextSettleID(), PlayerColor, StructureUnitType.Settlement, buildPoint);
         AddToSettlements(newSettlement);
         AddToSettlementOwnedTiles(GameGridBehaviour.instance.Grid, newSettlement, this, GameGridBehaviour.instance.GetSurroundingTiles(buildPoint));
         gridCell.AddStructureToTile(newSettlement);
+        newSettlement.GetComponent<BeautifulDissolves.Dissolve>().TriggerDissolve();
         
     }
 
     protected void BuildNewStructure(PointyHexPoint buildPoint, StructureUnitType structType, Settlement owningSettlement)
     {
         UnitCell gridCell = GameGridBehaviour.instance.Grid[buildPoint] as UnitCell;
-        StructureUnit newStruct = (Instantiate(GameGridBehaviour.instance.structureTypes[(int)structType], gridCell.transform.position, Quaternion.identity) as GameObject).GetComponent<StructureUnit>();
+        StructureUnit newStruct = ObjectPool.instance.PullNewStructure(structType, gridCell.transform.position);//(Instantiate(GameGridBehaviour.instance.structureTypes[(int)structType], gridCell.transform.position, Quaternion.identity) as GameObject).GetComponent<StructureUnit>();
         newStruct.Initialize(GetNextStructID(), PlayerColor, structType, buildPoint, owningSettlement);
         owningSettlement.AddToBuildingList(newStruct);
         AddToSettlementOwnedTiles(GameGridBehaviour.instance.Grid, owningSettlement, this, GameGridBehaviour.instance.GetSurroundingTiles(buildPoint));
         gridCell.AddStructureToTile(newStruct);
+        newStruct.GetComponent<BeautifulDissolves.Dissolve>().TriggerDissolve();
         /*GameGridBehaviour.instance.CreateNewStructure(this,
             (int)structType,
             GameGridBehaviour.instance.Grid[buildPoint] as UnitCell,
@@ -517,7 +519,7 @@ public class Player : Photon.MonoBehaviour {
     {
         UnitCell gridCell = GameGridBehaviour.instance.Grid[buildPoint] as UnitCell;
 
-        MilitaryUnit newUnit = (Instantiate(GameGridBehaviour.instance.unitTypes[(int)milType], gridCell.transform.position, Quaternion.identity) as GameObject).GetComponent<MilitaryUnit>();
+        MilitaryUnit newUnit = ObjectPool.instance.PullNewUnit(milType, gridCell.transform.position); //(Instantiate(GameGridBehaviour.instance.unitTypes[(int)milType], gridCell.transform.position, Quaternion.identity) as GameObject).GetComponent<MilitaryUnit>();
         newUnit.Initialize(GetNextUnitID(), PlayerColor, milType, buildPoint, 1);
         AddToUnits(newUnit);
         gridCell.AddUnitToTile(newUnit);

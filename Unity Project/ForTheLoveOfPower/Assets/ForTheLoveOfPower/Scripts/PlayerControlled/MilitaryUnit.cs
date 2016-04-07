@@ -47,9 +47,10 @@ namespace AssemblyCSharp
 		Dictator_Idle = 14,
 	}
 
-	public class MilitaryUnit : MonoBehaviour
+	public class MilitaryUnit : MonoBehaviour, Assets.ForTheLoveOfPower.Scripts.PlayerControlled.IObjectPoolItem
 	{
         public Int16 ID { get { return id; } }
+        public bool PoolObjInUse { get; set; }
         private short id;
 		private PointList<PointyHexPoint> movementPath;
 		private int unitAmount = 1;

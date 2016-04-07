@@ -39,10 +39,13 @@ namespace AssemblyCSharp
         BeingReclaimed,
     }
 
-	public class StructureUnit : MonoBehaviour
+	public class StructureUnit : MonoBehaviour, Assets.ForTheLoveOfPower.Scripts.PlayerControlled.IObjectPoolItem
 	{
-		//Properties
-		public Color StructColor { get; set; }
+        //Interface Properties
+        public bool PoolObjInUse { get; set; }
+
+        //Properties
+        public Color StructColor { get; set; }
 		public PointyHexPoint pointOnMap { get; set; }
 
         public Int16 ID { get { return id; } }

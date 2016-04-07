@@ -26,8 +26,6 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
     public Text PlaceDictText;
     public RectTransform fadePanel;
 	public GameObject buildScreen;
-	public GameObject[] unitTypes;
-	public GameObject[] structureTypes;
     public Text NotEnoughMoneyText;
     public Texture lineTex;
 
