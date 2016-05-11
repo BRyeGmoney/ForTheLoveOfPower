@@ -17,7 +17,6 @@ namespace AssemblyCSharp
 {
 	public enum StructureUnitType
 	{
-		Settlement,
 		Factory,
 		Exporter,
 		Market,
@@ -27,6 +26,7 @@ namespace AssemblyCSharp
 		Contractor,
 		LabourCamp,
 		Propaganda,
+        Settlement,
 		None,
 	}
 
@@ -88,6 +88,7 @@ namespace AssemblyCSharp
             MyMaterial = spriteRender.material;
 			animator = gameObject.GetComponent<Animator> ();
 
+            SetTagByType();
             currentState = StructureState.Owned; //Temporary, change this to BeingBuilt
         }
 
@@ -114,6 +115,17 @@ namespace AssemblyCSharp
         public void BeginCapturing(Color newColor)
         {
             MyMaterial.SetColor("_SubColor", newColor);
+        }
+
+        private void SetTagByType()
+        {
+            int typeNum = (int)StructureType;
+            if (typeNum < 3)
+                this.tag = "Economy";
+            else if (typeNum < 6)
+                this.tag = "Military";
+            else if (typeNum < 9)
+                this.tag = "Manipulation";
         }
 
         public static int GetCostOfStructure(StructureUnitType tryingToBuild)

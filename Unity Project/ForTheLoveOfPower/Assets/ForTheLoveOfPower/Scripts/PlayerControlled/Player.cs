@@ -607,7 +607,7 @@ public class Player : Photon.MonoBehaviour {
         if (unit.UnitType.Equals(MilitaryUnitType.Dictator))
             dictAlive = false;
 
-        Destroy(unit.gameObject);
+        ObjectPool.instance.DestroyOldUnit(unit);//Destroy(unit.gameObject);
     }
     #endregion
 

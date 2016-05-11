@@ -156,17 +156,20 @@ public class ObjectPool : MonoBehaviour {
     #region Destruction
     public void DestroyOldUnit(MilitaryUnit unitToDestroy)
     {
-
+        unitToDestroy.PoolObjInUse = false;
+        unitToDestroy.gameObject.SetActive(false);
     }
 
     public void DestroyOldSettlement(Settlement settlementToDestroy)
     {
-
+        settlementToDestroy.PoolObjInUse = false;
+        settlementToDestroy.gameObject.SetActive(false);
     }
 
     public void DestroyOldStructure(StructureUnit structureToDestroy)
     {
-
+        structureToDestroy.PoolObjInUse = false;
+        structureToDestroy.gameObject.SetActive(false);
     }
 
     #endregion
