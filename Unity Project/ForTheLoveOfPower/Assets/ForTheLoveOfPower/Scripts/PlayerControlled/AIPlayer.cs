@@ -20,12 +20,8 @@ public class AIPlayer : Player {
 	void Update () {
         if (GameGridBehaviour.instance.GetCurrentGameState().Equals(GameState.RegGameState))
         {
-            if (myState.Equals(AIState.DefenseState))
-            {
-
-            }
+            DetermineNextAction();
             UpdateUnits();
-
             UpdateSettlements();
         }
         else if (GameGridBehaviour.instance.GetCurrentGameState().Equals(GameState.PlayerSetupState))
@@ -44,6 +40,11 @@ public class AIPlayer : Player {
         BuildNewStructure(new PointyHexPoint(1, 13), StructureUnitType.Factory, FindSettlementByID(0));
         CreateNewUnit(new PointyHexPoint(3, 13), MilitaryUnitType.Infantry, 5);
         myState = AIState.DefenseState;
+    }
+
+    void DetermineNextAction()
+    {
+
     }
 }
 enum AIState

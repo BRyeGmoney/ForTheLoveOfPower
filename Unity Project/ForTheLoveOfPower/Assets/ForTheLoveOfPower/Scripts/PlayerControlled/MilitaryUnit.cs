@@ -78,6 +78,8 @@ namespace AssemblyCSharp
 		public TextMesh unitNumText;
         private GameObject damageIndic;
 
+        public bool inCombat = false;
+
 		//private SpriteRenderer SpriteGuy { get; set; }
 
 		public Animator AnimationController 

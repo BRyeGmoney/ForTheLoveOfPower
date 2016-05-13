@@ -14,6 +14,8 @@ using DG.Tweening;
 public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
     public static GameGridBehaviour instance = null;
 
+    public Rect Viewport { get; set; }
+
     public static bool didWin;
 	public static Color baseFloorColor;
     public static int localPlayer = 0;
@@ -41,6 +43,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
     // Use this for initialization
     void Start () {
 		listofCurrentCombats = new List<Combat> ();
+        Viewport = new Rect();
 
         buildScreenSettings = buildScreen.GetComponent<BuildMenuBehaviour>();
         baseFloorColor = GridBuilder.Colors[0];
@@ -127,6 +130,14 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
             EndGameState();
 
 	}
+
+    void FixedUpdate()
+    {
+        float height = 2f * Camera.main.orthographicSize;
+        float width = height * Camera.main.aspect;
+
+        Viewport = new Rect(new Vector2(Camera.main.transform.position.x - width / 2, Camera.main.transform.position.y - height / 2), new Vector2(width, height));
+    }
 
     private void PlayerSetupState()
     {

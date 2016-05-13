@@ -100,6 +100,11 @@ namespace AssemblyCSharp
 
 		public void UpdateBuilding()
 		{
+            if (currentState.Equals(StructureState.BeingBuilt))
+            {
+                if (MyMaterial.GetFloat(DissolveHelper.dissolveAmountID) <= 0f)
+                    currentState = StructureState.Owned;
+            }
             if (currentState.Equals(StructureState.BeingCaptured))
             {
                 percentageConquered = Mathf.Clamp(percentageConquered + (Time.deltaTime / 5), 0, 1);

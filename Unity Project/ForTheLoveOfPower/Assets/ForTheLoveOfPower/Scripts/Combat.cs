@@ -3,10 +3,11 @@ using System.Collections;
 using AssemblyCSharp;
 
 public class Combat {
-	private float combatTimer;
-	private int attackerHitPoints = 0;
-	private int defenderHitPoints = 0;
-	public bool fightOver = false;
+    private float combatTimer;
+    private int attackerHitPoints = 0;
+    private int defenderHitPoints = 0;
+    public bool fightOver = false;
+    private CombatIndicatorScript CombatIndicator {get;set;}
 
 	public MilitaryUnit Attacker {
 		get;
@@ -26,24 +27,24 @@ public class Combat {
 		Attacker = attacker;
 		Defender = defender;
 
+        SetCombatFlags(true);
+
         if (attacker.AnimationController != null)
 		    attacker.AnimationController.SetTrigger ("inCombat");
 
         if (defender.AnimationController != null)
 		    defender.AnimationController.SetTrigger ("inCombat");
+
+        CombatIndicator = ObjectPool.instance.PullNewIndicator(attacker.gameObject.transform.position);
 	}
 	
 	// Update is called once per frame
 	public void Update () {
 		if (Attacker != null && Defender != null) { //first lets make sure they exist
 			if (Attacker.GetUnitAmount () > 0 && Defender.GetUnitAmount () < 1) { //attacker wins!
-				Defender.StartDeathAnimation ();
-				Attacker.StopCombatAnimation ();
-				fightOver = true;
+                WrapUpCombat(Attacker, Defender);
 			} else if (Defender.GetUnitAmount () > 0 && Attacker.GetUnitAmount () < 1) { //defender wins!
-				Attacker.StartDeathAnimation ();
-				Defender.StopCombatAnimation ();
-				fightOver = true;
+                WrapUpCombat(Defender, Attacker);
 			}
 
 			if (!fightOver && combatTimer > 2f) {
@@ -76,4 +77,19 @@ public class Combat {
 
 		combatTimer += Time.deltaTime;
 	}
+
+    private void SetCombatFlags(bool inCombat)
+    {
+        Attacker.inCombat = inCombat;
+        Defender.inCombat = inCombat;
+    }
+
+    private void WrapUpCombat(MilitaryUnit winner, MilitaryUnit loser)
+    {
+        winner.StopCombatAnimation();
+        loser.StartDeathAnimation();
+        fightOver = true;
+        SetCombatFlags(false);
+        ObjectPool.instance.DestroyOldIndicator(CombatIndicator);
+    }
 }

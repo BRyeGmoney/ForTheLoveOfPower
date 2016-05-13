@@ -7,14 +7,17 @@ public class ObjectPool : MonoBehaviour {
     Settlement[] settlementPool;
     StructureUnit[] structurePool;
     MilitaryUnit[] unitPool;
+    CombatIndicatorScript[] indicatorPool;
 
     public Object settlementDefault;
     public Object structureDefault;
     public Object unitDefault;
+    public Object combatIndicatorDefault;
 
     public short SettlementPoolSize = 25;
     public short StructurePoolSize = 100;
     public short UnitPoolSize = 100;
+    public short IndicatorPoolSize = 5;
 
     public GameObject[] unitObjects;
     public GameObject[] structureObjects;
@@ -37,6 +40,7 @@ public class ObjectPool : MonoBehaviour {
         CreateSettlementPool();
         CreateStructurePool();
         CreateUnitPool();
+        CreateIndicatorPool();
 
         StartCoroutine(SetGameGridInitState());
 
@@ -79,6 +83,17 @@ public class ObjectPool : MonoBehaviour {
         }
     }
 
+    void CreateIndicatorPool()
+    {
+        indicatorPool = new CombatIndicatorScript[IndicatorPoolSize];
+
+        for (int x = 0; x < IndicatorPoolSize; x++)
+        {
+            indicatorPool[x] = (Instantiate(combatIndicatorDefault) as GameObject).GetComponent<CombatIndicatorScript>();
+            indicatorPool[x].gameObject.SetActive(false);
+        }
+    }
+
     #region GetNextAvailable
     MilitaryUnit GetNextAvailableUnit()
     {
@@ -93,6 +108,11 @@ public class ObjectPool : MonoBehaviour {
     Settlement GetNextAvailableSettlement()
     {
         return settlementPool.First(settlement => !settlement.PoolObjInUse);
+    }
+
+    CombatIndicatorScript GetNextAvailableIndicator()
+    {
+        return indicatorPool.First(indic => !indic.PoolObjInUse);
     }
     #endregion
 
@@ -151,6 +171,22 @@ public class ObjectPool : MonoBehaviour {
 
         return newSettlement;
     }
+
+    public CombatIndicatorScript PullNewIndicator(Vector3 desiredPosition)
+    {
+        CombatIndicatorScript newIndicator = GetNextAvailableIndicator();
+
+        //set the indicator's new position
+        newIndicator.CombatPosition = desiredPosition;
+
+        //set the indicator's inUse flag
+        newIndicator.PoolObjInUse = true;
+
+        //last but not least, activate the object
+        newIndicator.gameObject.SetActive(true);
+
+        return newIndicator;
+    }
     #endregion
 
     #region Destruction
@@ -170,6 +206,12 @@ public class ObjectPool : MonoBehaviour {
     {
         structureToDestroy.PoolObjInUse = false;
         structureToDestroy.gameObject.SetActive(false);
+    }
+
+    public void DestroyOldIndicator(CombatIndicatorScript indicatorToDestroy)
+    {
+        indicatorToDestroy.PoolObjInUse = false;
+        indicatorToDestroy.gameObject.SetActive(false);
     }
 
     #endregion

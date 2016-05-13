@@ -577,7 +577,7 @@ public class Player : Photon.MonoBehaviour {
     protected void TryToBuildUnit(UnitCell clickedCell, PointyHexPoint clickedPoint)
     {
         //if it is of the military variety
-        if (clickedCell.structureOnTile.tag.Equals("Military"))
+        if (clickedCell.structureOnTile.tag.Equals("Military") && clickedCell.structureOnTile.currentState == StructureState.Owned)
         {
             //if there's already a unit on this tile, we should just add to it
             if (clickedCell.unitOnTile)
@@ -666,6 +666,10 @@ public class Player : Photon.MonoBehaviour {
         units.All(unit => milUnits.Remove(unit));
     }
 
+    public IEnumerable<MilitaryUnit> UnitsUnderAttack()
+    {
+        return milUnits.Where(unit => unit.inCombat);
+    }
     #endregion
 
     #region Settlements
@@ -682,6 +686,11 @@ public class Player : Photon.MonoBehaviour {
     public void AddToSettlements(Settlement newSettlement)
     {
         settlements.Add(newSettlement);
+    }
+
+    public IEnumerable<Settlement> SettlementsUnderAttack()
+    {
+        return settlements.Where(settlement => settlement.cityBeingConquered);
     }
 
     protected void UpdateSettlements()
