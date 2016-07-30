@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.Networking;
 using Gamelogic;
 using Gamelogic.Grids;
 using AssemblyCSharp;
@@ -35,7 +34,13 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
     public Sprite cityHall;
     public Sprite capital;
 
+    public Material tileMat;
+    public Material finalMat;
+    public GameObject tileSprite;
+    private bool inited = false;
+
     float timer = 0f;
+    float timer2 = 0f;
 
 	public List<Combat> listofCurrentCombats;
     private GameState curGameState;
@@ -55,6 +60,8 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
             PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0);
         else
             CreatePlayerObjects(false);
+
+        InformDoneLoading();
     }
 
     public void CreatePlayerObjects(bool ismp)
@@ -68,7 +75,8 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
     public void InformDoneLoading()
     {
-        curGameState = GameState.InitState;
+        tileMat.SetFloat(BeautifulDissolves.DissolveHelper.dissolveAmountID, 1f);
+        curGameState = GameState.ComeFromLoad;
     }
 
     private void InitializePlayers(GameObject[] playerObjects)
@@ -77,6 +85,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
         if (listOfPlayers.Length > 1)
         {
+            inited = true;
             int c = 0;
             foreach (GameObject playerObj in playerObjects)
             {
@@ -109,6 +118,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
             Animator anim = PlaceDictText.GetComponent<Animator>();
             anim.SetTrigger("PlaceDictTrigger");
+            Debug.Log("poo");
         }
     }
 
@@ -121,8 +131,14 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
         else if (curGameState.Equals(GameState.InitState))
         {
             GameObject[] players = GameObject.FindGameObjectsWithTag("PlayerType");
-            if (players.Length >= 2)
+            if (players.Length >= 2 && !inited)
                 InitializePlayers(players);
+        }
+        else if (curGameState.Equals(GameState.ComeFromLoad))
+        {
+            curGameState = GameState.CreateBoardState;
+            //DOTween.To(() => timer2, x => timer2 = x, 1, 1).OnComplete(ChangeToBoardState);
+            DOTween.To(UpdateTileTween, 1f, 0f, 3f).SetDelay(1f).OnComplete(ChangeToInitState);
         }
         else if (curGameState.Equals(GameState.PlayerSetupState))
             PlayerSetupState();
@@ -130,6 +146,22 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
             EndGameState();
 
 	}
+
+    void ChangeToBoardState()
+    {
+        DOTween.To(UpdateTileTween, 1f, 0f, 3f).SetDelay(1f).OnComplete(ChangeToInitState);
+    }
+
+    void UpdateTileTween(float amount)
+    {
+        tileMat.SetFloat(BeautifulDissolves.DissolveHelper.dissolveAmountID, amount);
+    }
+
+    void ChangeToInitState()
+    {
+        curGameState = GameState.InitState;
+        SwitchTileMaterial();
+    }
 
     void FixedUpdate()
     {
@@ -193,7 +225,10 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
             SceneManager.LoadScene("StatsScreen");
     }
 
-	
+	void SwitchTileMaterial()
+    {
+        tileSprite.GetComponent<Renderer>().material = finalMat;
+    }
 
 	/// <summary>
 	/// We need to know which settlement a building belongs to. and since buildings HAVE to be connected by
@@ -256,45 +291,6 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		return path.Keys.ToPointList<PointyHexPoint>();
 	}
 
-    #region Creation
-    /*
-    public void CreateNewMilitaryUnit(Player player, int unitType, UnitCell gridCell, PointyHexPoint gridPoint)
-    {
-        CreateNewMilitaryUnit(player, unitType, gridCell, gridPoint, 1);
-    }
-
-
-    public void CreateNewMilitaryUnit(Player player, int unitType, UnitCell gridCell, PointyHexPoint gridPoint, int amount)
-    {
-        MilitaryUnit newUnit = Instantiate(unitTypes[unitType], gridCell.transform.position, Quaternion.identity).GetComponent<MilitaryUnit>();
-        newUnit.Initialize(player.GetNextUnitID(), player.PlayerColor, (MilitaryUnitType)unitType, gridPoint, amount);
-        player.AddToUnits(newUnit);
-        gridCell.AddUnitToTile(newUnit);
-    }
-
-
-    public void CreateNewSettlement(Player player, UnitCell gridCell, PointyHexPoint gridPoint, PointList<PointyHexPoint> surroundingTiles)
-    {
-        Settlement newSettlement = Instantiate(structureTypes[(int)StructureUnitType.Settlement], gridCell.transform.position, Quaternion.identity).GetComponent<Settlement>();
-        newSettlement.Initialize(player.PlayerColor, StructureUnitType.Settlement, gridPoint);
-        player.settlements.Add(newSettlement);
-        player.AddToOwnedTiles(Grid, newSettlement, player, surroundingTiles);
-        gridCell.AddStructureToTile(newSettlement);
-    }
-
-    public void CreateNewStructure(Player player, int structType, UnitCell gridCell, PointyHexPoint gridPoint, PointList<PointyHexPoint> surroundingTiles, Settlement owningSettlement)
-    {
-        StructureUnit newStructure = Instantiate(structureTypes[structType], gridCell.transform.position, Quaternion.identity).GetComponent<StructureUnit>();
-        newStructure.Initialize(player.PlayerColor, (StructureUnitType)structType, gridPoint, owningSettlement);
-        owningSettlement.AddToBuildingList(newStructure);
-        owningSettlement.newBuildingAdded = true;
-        player.AddToOwnedTiles(Grid, owningSettlement, player, surroundingTiles);
-
-        gridCell.AddStructureToTile(newStructure);
-    }*/
-
-    #endregion
-
     public bool IsBuildScreenBlocking()
     {
         return buildScreenSettings.isActiveAndEnabled;
@@ -326,4 +322,5 @@ public enum GameState
     PlayerSetupState,
     RegGameState,
     EndGameState,
+    CreateBoardState,
 }

@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.Networking;
 
 public class MenuBehaviour : MonoBehaviour {
     public Text mpPlayerText;

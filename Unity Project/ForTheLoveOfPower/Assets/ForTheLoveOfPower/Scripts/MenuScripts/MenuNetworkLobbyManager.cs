@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Networking;
 using System.Collections;
 
-public class MenuNetworkLobbyManager : NetworkLobbyManager {
+public class MenuNetworkLobbyManager {//: NetworkLobbyManager {
 
     public Text ConnectionStatusString;
     public GameObject GoButton;
@@ -15,7 +14,7 @@ public class MenuNetworkLobbyManager : NetworkLobbyManager {
 	
 	}
 
-    public override void OnClientConnect(NetworkConnection conn)
+    /*public override void OnClientConnect(NetworkConnection conn)
     {
         base.OnClientConnect(conn);
 
@@ -33,5 +32,5 @@ public class MenuNetworkLobbyManager : NetworkLobbyManager {
             ConnectionStatusString.text = "Player Found";
             GoButton.SetActive(true);
         }
-    }
+    }*/
 }

@@ -1,24 +1,23 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Collections;
 
-public class LobbyPlayer : NetworkLobbyPlayer {
+public class LobbyPlayer {//: NetworkLobbyPlayer {
 
     private TextMesh playerNameText;
 
-    [SyncVar(hook = "OnPlayerName")]
+    //[SyncVar(hook = "OnPlayerName")]
     public string playerName;
-    [SyncVar(hook = "OnPlayerColor")]
+    //[SyncVar(hook = "OnPlayerColor")]
     public Color playerColor;
 
     public void Awake()
     {
-        playerNameText = gameObject.GetComponentInChildren<TextMesh>();
+        //playerNameText = gameObject.GetComponentInChildren<TextMesh>();
     }
 
-    public override void OnStartClient()
+    /*public override void OnStartClient()
     {
         base.OnStartClient();
     }
@@ -53,7 +52,7 @@ public class LobbyPlayer : NetworkLobbyPlayer {
          //   readyToBegin = true;
          //   SendReadyToBeginMessage();
        // }
-    }
+    }*/
 
     public void OnPlayerName(string newPlayerName)
     {
@@ -67,13 +66,13 @@ public class LobbyPlayer : NetworkLobbyPlayer {
         playerNameText.color = playerColor;
     }
 
-    [Command]
+    //[Command]
     public void CmdNameChanged(string name)
     {
         playerName = name;
     }
 
-    [Command]
+    //[Command]
     public void CmdColorChanged(Color pColor)
     {
         playerColor = pColor;

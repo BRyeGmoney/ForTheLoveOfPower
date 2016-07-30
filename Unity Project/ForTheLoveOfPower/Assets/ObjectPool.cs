@@ -252,6 +252,6 @@ public class ObjectPool : MonoBehaviour {
     {
         yield return new WaitUntil(() => GameGridBehaviour.instance != null);
         //loadPanel.SetActive(false);
-        GameGridBehaviour.instance.InformDoneLoading();
+        //GameGridBehaviour.instance.InformDoneLoading();
     }
 }
