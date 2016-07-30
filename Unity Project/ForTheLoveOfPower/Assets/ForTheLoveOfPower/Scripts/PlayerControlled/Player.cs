@@ -11,13 +11,14 @@ using Vectrosity;
 
 public class Player : Photon.MonoBehaviour {
 
+    #region Properties
     public Int32 Cash { get { return cash; } }
     private int cash;
 
     public Boolean DictatorAlive { get { return dictAlive; } }
-    private bool dictAlive;
+    public bool dictAlive;
 
-	List<MilitaryUnit> milUnits;
+    public Army playerArmy;
 	List<Settlement> settlements;
 	List<PointyHexPoint> ownedTiles;
 
@@ -43,7 +44,7 @@ public class Player : Photon.MonoBehaviour {
     bool drawLine;
     Tween myTween;
 
-    short NextUnitID;
+    
     short NextStructID;
     short NextSettleID;
 
@@ -51,6 +52,9 @@ public class Player : Photon.MonoBehaviour {
 
     public Color PlayerColor = new Color(0, 255, 255);
 
+    #endregion
+
+    #region Init
     // Use this for initialization
     void Start () {
 		InitBasePlayer ();
@@ -62,15 +66,17 @@ public class Player : Photon.MonoBehaviour {
 
         movementLine = new VectorLine("movementPath", new List<Vector3>(), GameGridBehaviour.instance.lineTex, 5.0f, LineType.Continuous, Joins.Weld);
         movementLine.color = PlayerColor;
+        
     }
 	
 	protected void InitBasePlayer()
 	{
-		milUnits = new List<MilitaryUnit> ();
+        playerArmy = gameObject.AddComponent<Army>();
 		settlements = new List<Settlement> ();
         
         dictAlive = true;
 	}
+    #endregion
 
     #region Tile Functions
     public PointList<PointyHexPoint> GetOwnedTiles()
@@ -176,7 +182,7 @@ public class Player : Photon.MonoBehaviour {
                 CheckTypeOfTouchInput(curTouch);
 
                 if (tappingInput) //single press 
-                    TryToBuildDictator(clickedCell, clickedPoint);
+                    playerArmy.TryToBuildDictator(clickedCell, clickedPoint, this);
             }
         }
     }
@@ -188,7 +194,7 @@ public class Player : Photon.MonoBehaviour {
             clickedPoint = GameGridBehaviour.instance.Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
             clickedCell = GameGridBehaviour.instance.Grid[clickedPoint] as UnitCell;
 
-            TryToBuildDictator(clickedCell, clickedPoint);
+            playerArmy.TryToBuildDictator(clickedCell, clickedPoint, this);
         }
     }
 
@@ -300,10 +306,10 @@ public class Player : Photon.MonoBehaviour {
                     {
                         if (!startChosen)
                         {
-                            if (this.milUnits.Exists(unit => unit.TilePoint.Equals(prevClickedPoint)))
+                            if (playerArmy.army.Exists(unit => unit.TilePoint.Equals(prevClickedPoint)))
                             {//quick check that someone is actually here
                                 startPoint = clickedPoint;
-                                unitToMove = this.milUnits.Find(unit => unit.TilePoint.Equals(startPoint));
+                                unitToMove = playerArmy.army.Find(unit => unit.TilePoint.Equals(startPoint));
                                 unitToMove.ClearMovementPath();
                                 startChosen = true;
 
@@ -358,10 +364,10 @@ public class Player : Photon.MonoBehaviour {
             {
                 if (!startChosen)
                 {
-                    if (this.milUnits.Exists(unit => unit.TilePoint.Equals(clickedPoint)))
+                    if (playerArmy.army.Exists(unit => unit.TilePoint.Equals(clickedPoint)))
                     {//quick check that someone is actually here
                         startPoint = clickedPoint;
-                        unitToMove = this.milUnits.Find(unit => unit.TilePoint.Equals(startPoint));
+                        unitToMove = playerArmy.army.Find(unit => unit.TilePoint.Equals(startPoint));
                         unitToMove.ClearMovementPath();
                         startChosen = true;
 
@@ -439,7 +445,7 @@ public class Player : Photon.MonoBehaviour {
     {
         //if there's a building on this tile
         if (clickedCell.buildingOnTile)
-            TryToBuildUnit(clickedCell, clickedPoint);
+            playerArmy.TryToBuildUnit(clickedCell, clickedPoint, this);
         else if (clickedCell.Color == this.PlayerColor && (!clickedCell.unitOnTile || this.TileBelongsToSettlements(clickedPoint)))//if its the same color and there isn't a unit or it is part of a settlement
             GameGridBehaviour.instance.SetupBuildMenu(false, HandlestructChosen);
         else
@@ -453,7 +459,7 @@ public class Player : Photon.MonoBehaviour {
     {
         //if there's a building on this tile
         if (clickedCell.buildingOnTile)
-            TryToBuildUnit(clickedCell, clickedPoint);
+            playerArmy.TryToBuildUnit(clickedCell, clickedPoint, this);
     }
 
     private void HoldTile(UnitCell clickedCell, PointyHexPoint clickedPoint)
@@ -473,7 +479,7 @@ public class Player : Photon.MonoBehaviour {
 
     #endregion
 
-    #region Unit & Building Creation
+    #region Building Creation
 
     protected void BuildNewSettlement(PointyHexPoint buildPoint)
     {
@@ -507,25 +513,6 @@ public class Player : Photon.MonoBehaviour {
             buildPoint,
             GameGridBehaviour.instance.GetSurroundingTiles(buildPoint),
             owningSettlement);*/
-    }
-
-    protected void CreateNewUnit(PointyHexPoint buildPoint, MilitaryUnitType milType)
-    {
-        CreateNewUnit(buildPoint, milType, 1);
-    }
-
-    protected void CreateNewUnit(PointyHexPoint buildPoint, MilitaryUnitType milType, int amountOf)
-    {
-        UnitCell gridCell = GameGridBehaviour.instance.Grid[buildPoint] as UnitCell;
-
-        MilitaryUnit newUnit = ObjectPool.instance.PullNewUnit(milType, gridCell.transform.position); //(Instantiate(GameGridBehaviour.instance.unitTypes[(int)milType], gridCell.transform.position, Quaternion.identity) as GameObject).GetComponent<MilitaryUnit>();
-        newUnit.Initialize(GetNextUnitID(), PlayerColor, milType, buildPoint, 1);
-        AddToUnits(newUnit);
-        gridCell.AddUnitToTile(newUnit);
-        /*GameGridBehaviour.instance.CreateNewMilitaryUnit(this,
-            (int)milType,
-            GameGridBehaviour.instance.Grid[buildPoint] as UnitCell,
-            buildPoint);*/
     }
 
     void HandlestructChosen(object sender, BuildingChosenArgs e)
@@ -565,110 +552,7 @@ public class Player : Photon.MonoBehaviour {
         GameGridBehaviour.instance.RemoveBuildScreenHandler(HandlestructChosen);
         prevClickedCell.HighlightOn = false;
     }
-
-    protected void TryToBuildDictator(UnitCell clickedCell, PointyHexPoint clickedPoint)
-    {
-        //if the player has no units, then this is how we let them place the dictator
-        if (GetUnitCount() <= 0)
-            CreateNewUnit(clickedPoint, MilitaryUnitType.Dictator);
-    }
-
-    protected void TryToBuildUnit(UnitCell clickedCell, PointyHexPoint clickedPoint)
-    {
-        //if it is of the military variety
-        if (clickedCell.structureOnTile.tag.Equals("Military") && clickedCell.structureOnTile.currentState == StructureState.Owned)
-        {
-            //if there's already a unit on this tile, we should just add to it
-            if (clickedCell.unitOnTile)
-            {
-                MilitaryUnit unitOnTile = this.milUnits.Find(unit => unit.TilePoint.Equals(clickedPoint));
-
-                if (unitOnTile != null)
-                    unitOnTile.AddUnits(1);
-            }
-            else if (clickedCell.structureOnTile.StructureType.Equals(StructureUnitType.Barracks))
-                CreateNewUnit(clickedPoint, MilitaryUnitType.Infantry);
-            else if (clickedCell.structureOnTile.StructureType.Equals(StructureUnitType.TankDepot))
-                CreateNewUnit(clickedPoint, MilitaryUnitType.Tank);
-            else
-                CreateNewUnit(clickedPoint, MilitaryUnitType.Jet);
-        }
-    }
-
-    public IEnumerator DestroyUnitAfterAnimation(MilitaryUnit unit)
-    {
-        Debug.Log("destroying reference to unit");
-        this.milUnits.Remove(unit);
-        (GameGridBehaviour.instance.Grid[unit.TilePoint] as UnitCell).RemoveUnit();
-
-        yield return new WaitForSeconds(unit.GetUnitAnimationTime());
-
-        if (unit.UnitType.Equals(MilitaryUnitType.Dictator))
-            dictAlive = false;
-
-        ObjectPool.instance.DestroyOldUnit(unit);//Destroy(unit.gameObject);
-    }
-    #endregion
-
-    #region Units
-
-    public Int32 GetUnitCount()
-    {
-        return milUnits.Count;
-    }
-
-    public MilitaryUnit FindUnitByID(short id)
-    {
-        return milUnits.Find(unit => unit.ID == id);
-    }
-
-    public MilitaryUnit FindUnitByPosition(PointyHexPoint positionToSearch)
-    {
-        return milUnits.Find(mU => mU.TilePoint.Equals(positionToSearch));
-    }
-
-    protected void UpdateUnits()
-    {
-        milUnits.ForEach(unit => {
-
-            if (unit != null)
-            {
-                unit.UpdateUnit(GameGridBehaviour.instance.Grid, GameGridBehaviour.instance.listOfPlayers);
-
-                if (unit.GetUnitAmount() < 1)
-                {
-                    StartCoroutine(DestroyUnitAfterAnimation(unit));
-                }
-                else if (unit.combatToUpdateGame != null)
-                {
-                    GameGridBehaviour.instance.listofCurrentCombats.Add(unit.combatToUpdateGame);
-                    unit.combatToUpdateGame = null;
-                }
-            }
-            else
-                this.milUnits.Remove(unit);
-        });
-    }
-
-    protected void AddToUnits(MilitaryUnit unit)
-    {
-        milUnits.Add(unit);
-    }
-
-    public void RemoveFromUnits(MilitaryUnit unit)
-    {
-        milUnits.Remove(unit);
-    }
-
-    public void RemoveFromUnits(MilitaryUnit[] units)
-    {
-        units.All(unit => milUnits.Remove(unit));
-    }
-
-    public IEnumerable<MilitaryUnit> UnitsUnderAttack()
-    {
-        return milUnits.Where(unit => unit.inCombat);
-    }
+    
     #endregion
 
     #region Settlements
@@ -725,7 +609,7 @@ public class Player : Photon.MonoBehaviour {
         }
         else if (GameGridBehaviour.instance.GetCurrentGameState().Equals(GameState.PlayerSetupState))
         {
-            if (this.milUnits.Count <= 0)
+            if (playerArmy.army.Count <= 0)
                 PlayerSetupState();
         }
     }
@@ -740,7 +624,7 @@ public class Player : Photon.MonoBehaviour {
                 CheckMouseInput();
         }
 
-        UpdateUnits();
+        playerArmy.UpdateUnits(this);
         UpdateSettlements();
 
         if (playerTimer > 1f && !startChosen)
@@ -769,6 +653,75 @@ public class Player : Photon.MonoBehaviour {
 
     #endregion
 
+    #region Networking
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.isWriting)
+        {
+            if (playerArmy != null && playerArmy.dirtyUnits.Count > 0)
+            {
+                playerArmy.dirtyUnits.Take(5).ToList().ForEach(dirtyUnit =>
+                {
+                    short mpComm = dirtyUnit.mpCommand;
+                    short uid = dirtyUnit.Unit.ID;
+                    short type = (short)dirtyUnit.Unit.UnitType;
+                    Vector2 pos = new Vector2(dirtyUnit.Unit.TilePoint.X, dirtyUnit.Unit.TilePoint.Y);
+
+                    stream.Serialize(ref mpComm);
+                    stream.Serialize(ref uid);
+                    stream.Serialize(ref type);
+                    stream.Serialize(ref pos);
+
+                    playerArmy.dirtyUnits.Remove(dirtyUnit);
+                });
+            }
+        }
+        else
+        {
+            short mpComm = 0;
+
+            stream.Serialize(ref mpComm);
+            
+            if (mpComm == (short)MpMilitaryCommands.AddUnit)
+            {
+                short uid = 0;
+                short type = 0;
+                Vector2 pos = Vector2.zero;
+
+                stream.Serialize(ref uid);
+                stream.Serialize(ref type);
+                stream.Serialize(ref pos);
+
+                playerArmy.CreateNewUnit(new PointyHexPoint((int)pos.x, (int)pos.y), (MilitaryUnitType)type, this);
+            }
+            else if (mpComm == (short)MpMilitaryCommands.MoveUnit)
+            {
+                short uid = 0;
+                short type = 0;
+                Vector2 pos = Vector2.zero;
+
+                stream.Serialize(ref uid);
+                stream.Serialize(ref type);
+                stream.Serialize(ref pos);
+
+                StartCoroutine(SyncUnitPosition(uid, pos));
+            }
+        }
+    }
+
+    public IEnumerator SyncUnitPosition(short uid, Vector2 pos)
+    {
+        MilitaryUnit unitToMove = playerArmy.FindUnitByID(uid);
+
+        unitToMove.MoveToNext(new PointyHexPoint((int)pos.x, (int)pos.y), unitToMove.TilePoint, true);
+
+        yield break;
+    }
+
+
+    #endregion
+
     #region MovementLine & Tweens
 
     void BlowupLine()
@@ -794,10 +747,7 @@ public class Player : Photon.MonoBehaviour {
 
     #region IDs
 
-    public Int16 GetNextUnitID()
-    {
-        return NextUnitID++;
-    }
+    
     public Int16 GetNextSettleID()
     {
         return NextSettleID++;

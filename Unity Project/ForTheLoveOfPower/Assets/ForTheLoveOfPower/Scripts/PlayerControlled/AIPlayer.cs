@@ -21,7 +21,7 @@ public class AIPlayer : Player {
         if (GameGridBehaviour.instance.GetCurrentGameState().Equals(GameState.RegGameState))
         {
             DetermineNextAction();
-            UpdateUnits();
+            playerArmy.UpdateUnits(this);
             UpdateSettlements();
         }
         else if (GameGridBehaviour.instance.GetCurrentGameState().Equals(GameState.PlayerSetupState))
@@ -33,12 +33,12 @@ public class AIPlayer : Player {
 
     void CreateInitialBuildings()
     {
-        CreateNewUnit(new PointyHexPoint(1, 13), MilitaryUnitType.Dictator);
+        playerArmy.CreateNewUnit(new PointyHexPoint(1, 13), MilitaryUnitType.Dictator, this);
         BuildNewSettlement(new PointyHexPoint(2, 13));
         BuildNewStructure(new PointyHexPoint(2, 12), StructureUnitType.Market, FindSettlementByID(0));
         BuildNewStructure(new PointyHexPoint(3, 12), StructureUnitType.Airport, FindSettlementByID(0));
         BuildNewStructure(new PointyHexPoint(1, 13), StructureUnitType.Factory, FindSettlementByID(0));
-        CreateNewUnit(new PointyHexPoint(3, 13), MilitaryUnitType.Infantry, 5);
+        playerArmy.CreateNewUnit(new PointyHexPoint(3, 13), MilitaryUnitType.Infantry, 5, this);
         myState = AIState.DefenseState;
     }
 

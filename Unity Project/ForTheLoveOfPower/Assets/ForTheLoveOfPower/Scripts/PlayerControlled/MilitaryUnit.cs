@@ -135,14 +135,14 @@ namespace AssemblyCSharp
 		/// </summary>
 		/// <param name="grid">The playing Grid</param>
 		/// <param name="unitSprites">An array of pre-loaded sprites</param>
-		public void MoveNextMoveInPath(IGrid<PointyHexPoint> grid, Player[] listOfPlayers)
+		public bool MoveNextMoveInPath(Player player)
 		{
 			UnitCell newCell;
 
 			if (movementPath != null) {
 				//make sure that this isn't the update cycle of a subordinate
 				if (movementPath.Count > 1 && commandingUnit == null) {
-					newCell = grid[movementPath[1]] as UnitCell;
+					newCell = GameGridBehaviour.instance.Grid[movementPath[1]] as UnitCell;
 
 					ChangeSpriteDirection (newCell);
 
@@ -154,19 +154,21 @@ namespace AssemblyCSharp
 							subordinates.ForEach (subby => {
 								if (canMove) { //only continue the cycle if canmove hasn't already been set to false
 									PointyHexPoint newPoint = subby.TilePoint + (movementPath[1] - movementPath[0]); //just a difference thing
-									canMove = subby.CheckIfNextSpotClear (newPoint, grid[newPoint] as UnitCell);
+									canMove = subby.CheckIfNextSpotClear (newPoint, GameGridBehaviour.instance.Grid[newPoint] as UnitCell);
 								}
 							});
 
 							if (canMove) { //move all subbs and the unit itself
 								subordinates.ForEach (subby => {
-									subby.MoveToNext (grid, grid[subby.movementPath[1]] as UnitCell, listOfPlayers);
+									subby.MoveToNext (subby.movementPath[1], subby.movementPath[0]);
 								});
 
-								MoveToNext (grid, newCell, listOfPlayers);
+								MoveToNext (movementPath[1], movementPath[0]);
+                                return true;
 							}
 						} else { //if this unit has no subordinates
-							MoveToNext (grid, newCell, listOfPlayers);
+							MoveToNext (movementPath[1], movementPath[0]);
+                            return true;
 						}
 					} else {
 						//Stop the moving animation because we're going to be fighting now
@@ -175,11 +177,11 @@ namespace AssemblyCSharp
 						MilitaryUnit unitOnTile;
 
 						if (newCell.Color.Equals (UnitColor)) { //if it is the same player's units
-                            unitOnTile = listOfPlayers[0].FindUnitByPosition(movementPath[1]);
+                            unitOnTile = player.playerArmy.FindUnitByPosition(movementPath[1]);
 
 							if (unitOnTile.UnitType.Equals (UnitType)) {//if its the same as the current unit type
 								unitOnTile.AddUnits (unitAmount);
-								(grid[movementPath[0]] as UnitCell).RemoveUnit ();
+								(GameGridBehaviour.instance.Grid[movementPath[0]] as UnitCell).RemoveUnit ();
 								Destroy (gameObject);
 							} else {
 								if (subordinates != null && subordinates.Count > 0)
@@ -198,7 +200,7 @@ namespace AssemblyCSharp
 									unitOnTile.AddSubordinate (this);
 							}
 						} else { //then it must be the other players'
-                            unitOnTile = listOfPlayers[1].FindUnitByPosition(movementPath[1]);
+                            unitOnTile = GameGridBehaviour.instance.listOfPlayers[GameGridBehaviour.instance.GetIndexOfOppositePlayer(player)].playerArmy.FindUnitByPosition(movementPath[1]);
 
 							if (unitOnTile != null) {
 								combatToUpdateGame = new Combat();
@@ -206,9 +208,11 @@ namespace AssemblyCSharp
 							}
 						}
 						movementPath.Clear ();
+                        return false;
 					}
 				}
 			}
+            return false;
 		}
 
 		public bool CheckIfNextSpotClear(PointyHexPoint nextPoint, UnitCell nextCell) 
@@ -230,40 +234,59 @@ namespace AssemblyCSharp
 			return canMove;
 		}
 
-		public void MoveToNext(IGrid<PointyHexPoint> grid, UnitCell newCell, Player[] listOfPlayers)
+		public void MoveToNext(PointyHexPoint newPoint, PointyHexPoint oldPoint, bool isSync = false)
 		{
-            //Check to see if any of the subordinates in the group have already been placed here, if so, lets not fuck with the tile color
-            if (commandingUnit == null && subordinates == null) //if its just a regular unit
-                (grid[movementPath[0]] as UnitCell).RemoveUnit();
-            else if (subordinates != null && !subordinates.Any(sub => sub.TilePoint == movementPath[0])) //if we are the leader and we want to make sure a sub isn't in this spot
-                (grid[movementPath[0]] as UnitCell).RemoveUnit();
-            else if (commandingUnit != null && !commandingUnit.subordinates.Any(sub => sub.TilePoint == movementPath[0] && sub != this)) //if we're a sub and want to see if there are any other subs out there in this spot
-			    (grid [movementPath [0]] as UnitCell).RemoveUnit ();
+            UnitCell newCell = GameGridBehaviour.instance.Grid[newPoint] as UnitCell;
+            UnitCell oldCell = GameGridBehaviour.instance.Grid[oldPoint] as UnitCell;
 
-			movementPath.RemoveAt (0);
+            if (!isSync)
+            {
+                //Check to see if any of the subordinates in the group have already been placed here, if so, lets not fuck with the tile color
+                if (commandingUnit == null && subordinates == null) //if its just a regular unit
+                    oldCell.RemoveUnit(); //(GameGridBehaviour.instance.Grid[movementPath[0]] as UnitCell)
+                else if (subordinates != null && !subordinates.Any(sub => sub.TilePoint == movementPath[0])) //if we are the leader and we want to make sure a sub isn't in this spot
+                    oldCell.RemoveUnit();
+                else if (commandingUnit != null && !commandingUnit.subordinates.Any(sub => sub.TilePoint == movementPath[0] && sub != this)) //if we're a sub and want to see if there are any other subs out there in this spot
+                    oldCell.RemoveUnit();
+            }
+            else
+                oldCell.RemoveUnit();
+
+            if (movementPath.Count > 0)
+			    movementPath.RemoveAt (0);
+
+            SetNewUnitPosition(newCell, newPoint);
 			
-			newCell.AddUnitToTile (this);
-			gameObject.transform.position = newCell.transform.position;
-			TilePoint = movementPath[0];
-			
-			if (movementPath.Count <= 1)
+			if (!isSync && movementPath.Count <= 1)
 				StartMovingAnimation(false);
 
-            CheckWhatsOnTile(newCell, listOfPlayers);
+            if (!isSync)
+                CheckWhatsOnTile(newCell);
 		}
 
-        private void CheckWhatsOnTile(UnitCell tileUnderUnit, Player[] listOfPlayers)
+        public void SetNewUnitPosition(UnitCell newCell, PointyHexPoint newPoint)
+        {
+            newCell.AddUnitToTile(this);
+            gameObject.transform.position = newCell.transform.position;
+            TilePoint = newPoint;
+        }
+
+        private void CheckWhatsOnTile(UnitCell tileUnderUnit)
         {
             if (tileUnderUnit.structureOnTile != null) //is there a building here?
             {
-                if (tileUnderUnit.structureOnTile.StructColor == listOfPlayers[GameGridBehaviour.localPlayer].PlayerColor && tileUnderUnit.structureOnTile.StructureType.Equals(StructureUnitType.Settlement) && UnitType.Equals(MilitaryUnitType.Dictator)) //is it one of ours and are we a dictator?
+                if (tileUnderUnit.structureOnTile.StructColor == 
+                    GameGridBehaviour.instance.listOfPlayers[GameGridBehaviour.localPlayer].PlayerColor && 
+                    tileUnderUnit.structureOnTile.StructureType.Equals(StructureUnitType.Settlement) && 
+                    UnitType.Equals(MilitaryUnitType.Dictator)) //is it one of ours and are we a dictator?
                 {
 
                 } else
                 {
                     if (tileUnderUnit.structureOnTile.StructureType.Equals(StructureUnitType.Settlement))
                     {
-                        (tileUnderUnit.structureOnTile as Settlement).BeginSettlementCapture(listOfPlayers[GameGridBehaviour.localPlayer].PlayerColor);
+                        (tileUnderUnit.structureOnTile as Settlement)
+                            .BeginSettlementCapture(GameGridBehaviour.instance.listOfPlayers[GameGridBehaviour.localPlayer].PlayerColor);
                     }
                 }
             }
@@ -443,14 +466,16 @@ namespace AssemblyCSharp
 				squadLeader.SetActive (false);
 		}
 
-		public void UpdateUnit(IGrid<PointyHexPoint> grid, Player[] listOfPlayers)
+		public void UpdateUnit(IGrid<PointyHexPoint> grid, Player player)
 		{
 			if (unitAmount <= 0) {
-                listOfPlayers[0].RemoveFromUnits(this);
+                player.playerArmy.RemoveFromUnits(this);
 			} else { //if he's still alive then lets update him
 				if (moveTime > MoveTimeLimit) {
-					MoveNextMoveInPath (grid, listOfPlayers);
-					moveTime = 0f;
+					if (MoveNextMoveInPath (player))
+                        player.playerArmy.dirtyUnits.Add(new ArmyUpdate() { mpCommand = (short)MpMilitaryCommands.MoveUnit, Unit = this });
+
+                    moveTime = 0f;
 				}
 
 				moveTime += Time.deltaTime;
@@ -491,27 +516,165 @@ namespace AssemblyCSharp
         }
     }
 
-    public static class CreateMilitaryUnit
-	{
-		/*public static MilitaryUnit CreateDictator(Color unitColor, PointyHexPoint currentPoint)
-		{
-			return new MilitaryUnit() { UnitType = MilitaryUnitType.Dictator, unitColor = unitColor, 
-				MoveTimeLimit = 2f, tilePoint = currentPoint };
-		}
+    public class Army : MonoBehaviour
+    {
+        public List<MilitaryUnit> army;
+        public List<ArmyUpdate> dirtyUnits;
 
-		public static MilitaryUnit CreateInfantry(Color unitColor, PointyHexPoint currentPoint)
-		{
-			return new MilitaryUnit () { UnitType = MilitaryUnitType.Infantry, unitColor = unitColor, MoveTimeLimit = 1.75f, tilePoint = currentPoint };
-		}
+        short NextUnitID;
 
-		public static MilitaryUnit CreateTank(Color unitColor, PointyHexPoint currentPoint)
-		{
-			return new MilitaryUnit () { UnitType = MilitaryUnitType.Tank, unitColor = unitColor, MoveTimeLimit = 1.25f, tilePoint = currentPoint };
-		}
+        public Army()
+        {
+            army = new List<MilitaryUnit>();
+            dirtyUnits = new List<ArmyUpdate>();
+        }
 
-		public static MilitaryUnit CreatePlane(Color unitColor, PointyHexPoint currentPoint)
-		{
-			return new MilitaryUnit () { UnitType = MilitaryUnitType.Jet, unitColor = unitColor, MoveTimeLimit = 1f, tilePoint = currentPoint };
-		}*/
-	}
+        public int GetUnitCount()
+        {
+            return army.Count;
+        }
+
+        public MilitaryUnit FindUnitByID(short id)
+        {
+            return army.Find(unit => unit.ID == id);
+        }
+
+        public MilitaryUnit FindUnitByPosition(PointyHexPoint positionToSearch)
+        {
+            return army.Find(mU => mU.TilePoint.Equals(positionToSearch));
+        }
+
+        public void AddToUnits(MilitaryUnit unit)
+        {
+            army.Add(unit);
+            dirtyUnits.Add(new ArmyUpdate() { mpCommand = (short)MpMilitaryCommands.AddUnit, Unit = unit });
+        }
+
+        public bool RemoveFromUnits(MilitaryUnit unit)
+        {
+            army.Remove(unit);
+            dirtyUnits.Add(new ArmyUpdate() { mpCommand = (short)MpMilitaryCommands.RemoveUnit, Unit = unit });
+
+            return true;
+        }
+
+        public void RemoveFromUnits(MilitaryUnit[] units)
+        {
+            units.All(unit => RemoveFromUnits(unit));
+        }
+
+        public IEnumerable<MilitaryUnit> UnitsUnderAttack()
+        {
+            return army.Where(unit => unit.inCombat);
+        }
+
+        public void UpdateUnits(Player player)
+        {
+            army.ForEach(unit => {
+
+                if (unit != null)
+                {
+                    unit.UpdateUnit(GameGridBehaviour.instance.Grid, player);
+
+                    if (unit.GetUnitAmount() < 1)
+                    {
+                        StartCoroutine(DestroyUnitAfterAnimation(unit, player));
+                    }
+                    else if (unit.combatToUpdateGame != null)
+                    {
+                        GameGridBehaviour.instance.listofCurrentCombats.Add(unit.combatToUpdateGame);
+                        unit.combatToUpdateGame = null;
+                    }
+                }
+                else
+                    army.Remove(unit);
+            });
+        }
+
+        public IEnumerator DestroyUnitAfterAnimation(MilitaryUnit unit, Player player)
+        {
+            Debug.Log("destroying reference to unit");
+            army.Remove(unit);
+            (GameGridBehaviour.instance.Grid[unit.TilePoint] as UnitCell).RemoveUnit();
+
+            yield return new WaitForSeconds(unit.GetUnitAnimationTime());
+
+            if (unit.UnitType.Equals(MilitaryUnitType.Dictator))
+                player.dictAlive = false;
+
+            ObjectPool.instance.DestroyOldUnit(unit);//Destroy(unit.gameObject);
+        }
+
+        public void TryToBuildDictator(UnitCell clickedCell, PointyHexPoint clickedPoint, Player player)
+        {
+            //if the player has no units, then this is how we let them place the dictator
+            if (GetUnitCount() <= 0)
+                CreateNewUnit(clickedPoint, MilitaryUnitType.Dictator, player);
+        }
+
+        public void TryToBuildUnit(UnitCell clickedCell, PointyHexPoint clickedPoint, Player player)
+        {
+            //if it is of the military variety
+            if (clickedCell.structureOnTile.tag.Equals("Military") && clickedCell.structureOnTile.currentState == StructureState.Owned)
+            {
+                //if there's already a unit on this tile, we should just add to it
+                if (clickedCell.unitOnTile)
+                {
+                    MilitaryUnit unitOnTile = army.Find(unit => unit.TilePoint.Equals(clickedPoint));
+
+                    if (unitOnTile != null)
+                        unitOnTile.AddUnits(1);
+                }
+                else if (clickedCell.structureOnTile.StructureType.Equals(StructureUnitType.Barracks))
+                    CreateNewUnit(clickedPoint, MilitaryUnitType.Infantry, player);
+                else if (clickedCell.structureOnTile.StructureType.Equals(StructureUnitType.TankDepot))
+                    CreateNewUnit(clickedPoint, MilitaryUnitType.Tank, player);
+                else
+                    CreateNewUnit(clickedPoint, MilitaryUnitType.Jet, player);
+            }
+        }
+
+        public void CreateNewUnit(PointyHexPoint buildPoint, MilitaryUnitType milType, Player player)
+        {
+            CreateNewUnit(buildPoint, milType, 1, player);
+        }
+
+        public void CreateNewUnit(PointyHexPoint buildPoint, MilitaryUnitType milType, int amountOf, Player player, short unitId = -1)
+        {
+            UnitCell gridCell = GameGridBehaviour.instance.Grid[buildPoint] as UnitCell;
+
+            MilitaryUnit newUnit;
+            if (unitId < 0)
+                newUnit = ObjectPool.instance.PullNewUnit(milType, gridCell.transform.position); //(Instantiate(GameGridBehaviour.instance.unitTypes[(int)milType], gridCell.transform.position, Quaternion.identity) as GameObject).GetComponent<MilitaryUnit>();
+            else
+                newUnit = ObjectPool.instance.PullNewUnit(milType, gridCell.transform.position, unitId);
+
+            newUnit.Initialize(GetNextUnitID(), player.PlayerColor, milType, buildPoint, 1);
+            AddToUnits(newUnit);
+            gridCell.AddUnitToTile(newUnit);
+            /*GameGridBehaviour.instance.CreateNewMilitaryUnit(this,
+                (int)milType,
+                GameGridBehaviour.instance.Grid[buildPoint] as UnitCell,
+                buildPoint);*/
+        }
+
+        public Int16 GetNextUnitID()
+        {
+            return NextUnitID++;
+        }
+    }
+
+    public class ArmyUpdate
+    {
+        public Int16 mpCommand { get; set; }
+        public MilitaryUnit Unit { get; set; }
+    }
+
+    public enum MpMilitaryCommands
+    {
+        AddUnit,
+        RemoveUnit,
+        MoveUnit,
+    }
 }
+

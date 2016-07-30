@@ -100,6 +100,11 @@ public class ObjectPool : MonoBehaviour {
         return unitPool.First(unit => !unit.PoolObjInUse);
     }
 
+    MilitaryUnit GetById(short id)
+    {
+        return unitPool.FirstOrDefault(unit => unit.ID == id);
+    }
+
     StructureUnit GetNextAvailableStructure()
     {
         return structurePool.First(structure => !structure.PoolObjInUse);
@@ -117,9 +122,14 @@ public class ObjectPool : MonoBehaviour {
     #endregion
 
     #region Creation
-    public MilitaryUnit PullNewUnit(MilitaryUnitType desiredType, Vector3 desiredPosition)
+    public MilitaryUnit PullNewUnit(MilitaryUnitType desiredType, Vector3 desiredPosition, short id = -1)
     {
-        MilitaryUnit newUnit = GetNextAvailableUnit();
+        MilitaryUnit newUnit;
+
+        if (id < 0)
+            newUnit = GetNextAvailableUnit();
+        else
+            newUnit = GetById(id);
 
         if (desiredType.Equals(MilitaryUnitType.Dictator))
             SetupDictator(ref newUnit);
@@ -137,6 +147,7 @@ public class ObjectPool : MonoBehaviour {
 
         return newUnit;
     }
+
 
     public StructureUnit PullNewStructure(StructureUnitType desiredType, Vector3 desiredPosition)
     {

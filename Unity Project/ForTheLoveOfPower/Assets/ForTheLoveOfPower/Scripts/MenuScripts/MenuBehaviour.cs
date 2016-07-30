@@ -17,6 +17,9 @@ public class MenuBehaviour : MonoBehaviour {
 
     public string PlayerName = "PlayerName";
     public Color PlayerColor = new Color(0, 255, 255);
+
+    public Text VersionTxt;
+
     private ulong matchID;
 
 
@@ -34,6 +37,14 @@ public class MenuBehaviour : MonoBehaviour {
         newBlock.normalColor = ReturnColorChoice((ColorChooser)ColorChoice);
         playerColBtn.colors = newBlock;
 	}
+
+    void Awake()
+    {
+        if (VersionTxt != null)
+        {
+            VersionTxt.text = string.Format("Version: {0}", Application.version);
+        }
+    }
 
     public void ChangeToMultiMenu()
     {
@@ -112,6 +123,7 @@ public class MenuBehaviour : MonoBehaviour {
     private void StartMPGame()
     {
         //CreatePlayerObjects(true);
+        PhotonNetwork.automaticallySyncScene = true;
         PhotonNetwork.LoadLevel("MainScreen");
     }  
 

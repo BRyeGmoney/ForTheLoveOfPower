@@ -75,7 +75,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
     public void InformDoneLoading()
     {
-        tileMat.SetFloat(BeautifulDissolves.DissolveHelper.dissolveAmountID, 1f);
+        //tileMat.SetFloat(BeautifulDissolves.DissolveHelper.dissolveAmountID, 1f);
         curGameState = GameState.ComeFromLoad;
     }
 
@@ -137,8 +137,9 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
         else if (curGameState.Equals(GameState.ComeFromLoad))
         {
             curGameState = GameState.CreateBoardState;
+            ChangeToInitState();
             //DOTween.To(() => timer2, x => timer2 = x, 1, 1).OnComplete(ChangeToBoardState);
-            DOTween.To(UpdateTileTween, 1f, 0f, 3f).SetDelay(1f).OnComplete(ChangeToInitState);
+            //DOTween.To(UpdateTileTween, 1f, 0f, 3f).SetDelay(1f).OnComplete(ChangeToInitState);
         }
         else if (curGameState.Equals(GameState.PlayerSetupState))
             PlayerSetupState();
@@ -173,7 +174,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
     private void PlayerSetupState()
     {
-        if (listOfPlayers[0].GetUnitCount() > 0 && listOfPlayers[1].GetUnitCount() > 0)
+        if (listOfPlayers[0].playerArmy.GetUnitCount() > 0 && listOfPlayers[1].playerArmy.GetUnitCount() > 0)
             curGameState = GameState.RegGameState;
     }
 
@@ -290,6 +291,14 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
 		return path.Keys.ToPointList<PointyHexPoint>();
 	}
+
+    public int GetIndexOfOppositePlayer(Player player)
+    {
+        if (Array.IndexOf(listOfPlayers, player) == 0)
+            return 1;
+        else
+            return 0;
+    }
 
     public bool IsBuildScreenBlocking()
     {
