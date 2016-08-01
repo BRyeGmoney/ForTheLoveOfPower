@@ -127,6 +127,9 @@
     <Reference Include="Photon3Unity3D">
       <HintPath>Assets\Plugins\Photon3Unity3D.dll</HintPath>
     </Reference>
+    <Reference Include="RelationsInspector">
+      <HintPath>Assets\Plugins\Editor\RelationsInspector\RelationsInspector.dll</HintPath>
+    </Reference>
     <Reference Include="Vectrosity">
       <HintPath>Assets\Plugins\Vectrosity\Vectrosity.dll</HintPath>
     </Reference>
@@ -138,9 +141,6 @@
     </Reference>
     <Reference Include="StrumpyShaderEditor">
       <HintPath>Assets\StrumpyShaderEditor\Editor\StrumpyShaderEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="RelationsInspector">
-      <HintPath>Assets\Plugins\Editor\RelationsInspector\RelationsInspector.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
