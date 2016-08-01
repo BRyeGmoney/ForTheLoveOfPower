@@ -42,6 +42,8 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
     float timer = 0f;
     float timer2 = 0f;
 
+    public CameraState curCameraState;
+
 	public List<Combat> listofCurrentCombats;
     private GameState curGameState;
 
@@ -54,6 +56,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
         baseFloorColor = GridBuilder.Colors[0];
 
         curGameState = GameState.LoadState;
+        curCameraState = CameraState.Action;
         instance = this;
 
         if (isMP)
@@ -320,6 +323,13 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
     {
         return curGameState;
     }
+}
+
+public enum CameraState
+{
+    Action,
+    Tactical,
+    Statistical
 }
 
 public enum GameState

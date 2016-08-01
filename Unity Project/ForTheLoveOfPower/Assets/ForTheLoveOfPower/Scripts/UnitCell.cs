@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using Gamelogic.Grids;
+using DG.Tweening;
 
 public class UnitCell : SpriteCell {
 
@@ -60,28 +61,31 @@ public class UnitCell : SpriteCell {
     public void SetTileColorUnOwn()
     {
         ownedTileColor = Color.black;
-        this.Color = GameGridBehaviour.baseFloorColor;//baseTileColor;
+        //this.Color = GameGridBehaviour.baseFloorColor;//baseTileColor;
+        DOTween.To(() => this.Color, x => this.Color = x, GameGridBehaviour.baseFloorColor, 0.5f);
         SetUnowned();
     }
 
 	public void SetTileColorUnit(Color tileColor)
 	{
         unitTileColor = tileColor;
-		this.Color = tileColor;
+		//this.Color = tileColor;
+        DOTween.To(() => this.Color, x => this.Color = x, tileColor, 0.5f);
         SetOwned();
 	}
 
 	public void SetTileColorStructure(Color tileColor)
 	{
 		ownedTileColor = tileColor;
-		this.Color = ownedTileColor;
+        DOTween.To(() => this.Color, x => this.Color = x, ownedTileColor, 1f);
+		//this.Color = ownedTileColor;
         SetOwned();
 	}
 
 	public void SetTileColorBuildable(Color tileColor)
 	{
 		ownedTileColor = tileColor;
-		this.Color = ownedTileColor;
+        DOTween.To(() => this.Color, x => this.Color = x, ownedTileColor, 1f);
         SetOwned();
 	}
 
@@ -102,13 +106,13 @@ public class UnitCell : SpriteCell {
 
 		if (!buildingOnTile) {
 			if (ownedTileColor != Color.black)
-				this.Color = ownedTileColor;
-			else
-				this.Color = GameGridBehaviour.baseFloorColor;//baseTileColor;
-                                                              /*if (!prevTileColor.Equals (Color.black)) 
-                                                                  SetTileColorUnit (prevTileColor);
-                                                              else
-                                                                  SetTileColorUnit (baseTileColor);*/
+                DOTween.To(() => this.Color, x => this.Color = x, ownedTileColor, 0.5f);
+            else
+                DOTween.To(() => this.Color, x => this.Color = x, GameGridBehaviour.baseFloorColor, 0.5f);//baseTileColor;
+                                                                                                          /*if (!prevTileColor.Equals (Color.black)) 
+                                                                                                              SetTileColorUnit (prevTileColor);
+                                                                                                          else
+                                                                                                              SetTileColorUnit (baseTileColor);*/
         } else {
 			this.Color = ownedTileColor;
 		}

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -108,7 +109,7 @@ public class Player : Photon.MonoBehaviour {
 			if (!ownSettlement.tilesOwned.Contains (point)) {
 				ownSettlement.tilesOwned.Add (point);
 				//ownedTiles.Add (point);
-				(gameGrid [point] as UnitCell).SetTileColorStructure (PlayerColor);
+				(gameGrid [point] as UnitCell).SetTileColorBuildable (PlayerColor);
 			}
 		}
 	}
@@ -172,6 +173,10 @@ public class Player : Photon.MonoBehaviour {
         if (Input.touchCount == 1)
         {
             Touch curTouch = Input.GetTouch(0);
+
+            /*if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                return;*/
+
             PointyHexPoint clickedPoint = GameGridBehaviour.instance.Map[GridBuilderUtils.ScreenToWorld(curTouch.position)];
             UnitCell clickedCell;
 
@@ -191,6 +196,9 @@ public class Player : Photon.MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(0))
         {
+            /*if (EventSystem.current.IsPointerOverGameObject())
+                return;*/
+
             clickedPoint = GameGridBehaviour.instance.Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
             clickedCell = GameGridBehaviour.instance.Grid[clickedPoint] as UnitCell;
 
@@ -242,9 +250,15 @@ public class Player : Photon.MonoBehaviour {
     /// </summary>
     private void CheckTouchInput()
     {
+        
+
         if (Input.touchCount == 1)
         {
             Touch curTouch = Input.GetTouch(0);
+
+            /*if (EventSystem.current.IsPointerOverGameObject(curTouch.fingerId))
+                return;*/
+
             PointyHexPoint clickedPoint = GameGridBehaviour.instance.Map[GridBuilderUtils.ScreenToWorld(curTouch.position)];
             UnitCell clickedCell;
 
@@ -348,6 +362,8 @@ public class Player : Photon.MonoBehaviour {
     /// </summary>
     void CheckMouseInput()
     {
+        
+
         //We're checking for right mouse input, the first frame of it being down
         if (Input.GetMouseButtonDown(2))
         {
@@ -430,6 +446,9 @@ public class Player : Photon.MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("We Left Clicked");
+
+            /*if (EventSystem.current.IsPointerOverGameObject())
+                return;*/
 
             clickedPoint = GameGridBehaviour.instance.Map[GridBuilderUtils.ScreenToWorld(Input.mousePosition)];
             clickedCell = GameGridBehaviour.instance.Grid[clickedPoint] as UnitCell;
@@ -595,7 +614,8 @@ public class Player : Photon.MonoBehaviour {
 
     void Update()
     {
-        UpdateBasedOnState();
+        if (GameGridBehaviour.instance.curCameraState == CameraState.Action)
+            UpdateBasedOnState();
 
         UpdateCashText();
         
