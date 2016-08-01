@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForTheLoveOfPower.CSharp.Pl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForTheLoveOfPower.CSharp", "ForTheLoveOfPower.CSharp.csproj", "{34A31C7A-2E65-1A53-CE16-2CD1E0A9BE2E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForTheLoveOfPower.CSharp.Editor.Plugins", "ForTheLoveOfPower.CSharp.Editor.Plugins.csproj", "{2C81B6B1-971D-F6FF-E7C4-34C5F4ECC96C}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForTheLoveOfPower.CSharp.Editor", "ForTheLoveOfPower.CSharp.Editor.csproj", "{0176DE6C-4B16-8821-0115-005D84DA4A47}"
 EndProject
 Global
@@ -21,6 +23,10 @@ Global
 		{34A31C7A-2E65-1A53-CE16-2CD1E0A9BE2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34A31C7A-2E65-1A53-CE16-2CD1E0A9BE2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34A31C7A-2E65-1A53-CE16-2CD1E0A9BE2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C81B6B1-971D-F6FF-E7C4-34C5F4ECC96C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C81B6B1-971D-F6FF-E7C4-34C5F4ECC96C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C81B6B1-971D-F6FF-E7C4-34C5F4ECC96C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C81B6B1-971D-F6FF-E7C4-34C5F4ECC96C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0176DE6C-4B16-8821-0115-005D84DA4A47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0176DE6C-4B16-8821-0115-005D84DA4A47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0176DE6C-4B16-8821-0115-005D84DA4A47}.Release|Any CPU.ActiveCfg = Release|Any CPU

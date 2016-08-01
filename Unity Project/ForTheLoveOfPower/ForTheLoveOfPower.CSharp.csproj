@@ -110,8 +110,6 @@
     <Compile Include="Assets\BeautifulDissolves\Scripts\DissolveOnTrigger.cs" />
     <Compile Include="Assets\BeautifulDissolves\Scripts\DissolveOnTrigger2D.cs" />
     <Compile Include="Assets\CombatIndicatorScript.cs" />
-    <Compile Include="Assets\Demigiant\DOTween\Examples\Basics.cs" />
-    <Compile Include="Assets\Demigiant\DOTween\Examples\Sequences.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\CameraBehaviour.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\Combat.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs" />
@@ -449,6 +447,9 @@
     <None Include="Assets\GoldenZebra\Image Effects\BloomPro\Shaders\Resources\SeparableBlur.cginc" />
     <None Include="Assets\Photon Unity Networking\changelog.txt" />
     <None Include="Assets\Photon Unity Networking\readme.txt" />
+    <None Include="Assets\Plugins\DarkTonic\MasterAudio\ReleaseNotes.txt" />
+    <None Include="Assets\Plugins\Editor\RelationsInspector\README.txt" />
+    <None Include="Assets\Plugins\Editor\RelationsInspector\changelog.txt" />
     <None Include="Assets\Plugins\Photon3Unity3D.xml" />
     <None Include="Assets\Plugins\release_history.txt" />
     <None Include="Assets\Resources\ALSF1.txt" />

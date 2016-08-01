@@ -33,7 +33,8 @@ public class CameraBehaviour : MonoBehaviour {
 		prevMousePos = Vector3.zero;
 
 #if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IPHONE || UNITY_IOS)
-        cameraSpeed = 2.0f;
+        cameraSpeed = 0.5f;
+        Debug.Log("Camera Speed:" + cameraSpeed);
 #else
         cameraSpeed = 0.8f;
 #endif
@@ -55,19 +56,43 @@ public class CameraBehaviour : MonoBehaviour {
         {
             Touch touchOne = Input.GetTouch(0);
 
+            if (Input.touchCount == 2 && GameGridBehaviour.instance.curCameraState == CameraState.Action)
+            {
+                Touch touchTwo = Input.GetTouch(1);
 
-            if (touchOne.phase == TouchPhase.Began)
-            {
-                touchStartPosition = lastPosition = touchOne.position;
-            }
-            else if (touchOne.phase == TouchPhase.Stationary)
-            {
+                // Find the position in the previous frame of each touch.
+                Vector2 touchZeroPrevPos = touchOne.position - touchOne.deltaPosition;
+                Vector2 touchOnePrevPos = touchTwo.position - touchTwo.deltaPosition;
 
+                // Find the magnitude of the vector (the distance) between the touches in each frame.
+                float prevTouchDeltaMag = (touchZeroPrevPos - touchOnePrevPos).magnitude;
+                float touchDeltaMag = (touchOne.position - touchTwo.position).magnitude;
+
+                // Find the difference in the distances between each frame.
+                float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
+
+                // ... change the orthographic size based on the change in distance between the touches.
+                Camera.main.orthographicSize += deltaMagnitudeDiff * orthoZoomSpeed;
+
+                // Make sure the orthographic size never drops below zero.
+                Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, 800, 1350); //Mathf.Max(Camera.main.orthographicSize, 0.1f);
             }
-            else if (touchOne.phase == TouchPhase.Moved)
+            else
             {
-                deltaVector = touchOne.position - lastPosition;
-                lastPosition = touchOne.position;
+                if (touchOne.phase == TouchPhase.Began)
+                {
+                    touchStartPosition = lastPosition = touchOne.position;
+                }
+                else if (touchOne.phase == TouchPhase.Stationary)
+                {
+
+                }
+                else if (touchOne.phase == TouchPhase.Moved)
+                {
+                    deltaVector = touchOne.position - lastPosition;
+                    cameraVelocity = deltaVector * cameraSpeed;
+                    lastPosition = touchOne.position;
+                }
             }
         }
 
@@ -95,6 +120,7 @@ public class CameraBehaviour : MonoBehaviour {
 
             deltaVector = (Vector2)Input.mousePosition - lastPosition;
             cameraVelocity = deltaVector * cameraSpeed;
+            Debug.Log(cameraVelocity);
 
             lastPosition = Input.mousePosition;
         }

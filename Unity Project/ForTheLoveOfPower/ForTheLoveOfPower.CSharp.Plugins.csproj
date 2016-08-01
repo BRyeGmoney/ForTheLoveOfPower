@@ -93,6 +93,45 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Events\ButtonClicker.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Events\EventSounds.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Events\FootstepSounds.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Events\MechanimStateCustomEvents.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Events\MechanimStateSounds.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\ResultObjects\PlaySoundResult.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Settings\AudioEvent.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Settings\AudioEventGroup.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Settings\AudioScriptOrder.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Settings\BusFadeInfo.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Settings\CustomEvent.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Settings\DuckGroupInfo.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Settings\DynamicGroupVariation.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Settings\DynamicSoundGroup.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Settings\FootstepGroup.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Settings\GroupBus.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Settings\GroupFadeInfo.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Settings\ICustomEventReceiver.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Settings\MasterAudioGroup.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Settings\MasterAudioSettings.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Settings\MasterCustomEventAttribute.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Settings\MusicSetting.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Settings\SoundGroupAttribute.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Settings\SoundGroupVariation.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Settings\SoundGroupVariationUpdater.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Singleton\AudioPrioritizer.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Singleton\AudioResourceOptimizer.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Singleton\MasterAudio.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Singleton\PersistentAudioSettings.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Singleton\SingletonScriptable.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Singleton\SoundGroupOrganizer.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Utility\ArrayListUtil.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Utility\AudioUtil.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Utility\CoroutineHelper.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Utility\DTMonoHelper.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Utility\DelayBetweenSongs.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Utility\DynamicSoundGroupCreator.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Utility\PlaylistController.cs" />
+    <Compile Include="Assets\Plugins\DarkTonic\MasterAudio\Scripts\Utility\UtilStrings.cs" />
     <Compile Include="Assets\Plugins\PhotonChatApi\ChatChannel.cs" />
     <Compile Include="Assets\Plugins\PhotonChatApi\ChatClient.cs" />
     <Compile Include="Assets\Plugins\PhotonChatApi\ChatDisconnectCause.cs" />
@@ -103,6 +142,7 @@
     <Compile Include="Assets\Plugins\PhotonChatApi\ChatState.cs" />
     <Compile Include="Assets\Plugins\PhotonChatApi\ChatUserStatus.cs" />
     <Compile Include="Assets\Plugins\PhotonChatApi\IChatClientListener.cs" />
+    <Compile Include="Assets\Plugins\RelationsInspector\AutoBackendAttributes.cs" />
     <Compile Include="Assets\Plugins\WebSocket\WebSocket.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +181,9 @@
     <None Include="Assets\GoldenZebra\Image Effects\BloomPro\Shaders\Resources\SeparableBlur.cginc" />
     <None Include="Assets\Photon Unity Networking\changelog.txt" />
     <None Include="Assets\Photon Unity Networking\readme.txt" />
+    <None Include="Assets\Plugins\DarkTonic\MasterAudio\ReleaseNotes.txt" />
+    <None Include="Assets\Plugins\Editor\RelationsInspector\README.txt" />
+    <None Include="Assets\Plugins\Editor\RelationsInspector\changelog.txt" />
     <None Include="Assets\Plugins\Photon3Unity3D.xml" />
     <None Include="Assets\Plugins\release_history.txt" />
     <None Include="Assets\Resources\ALSF1.txt" />

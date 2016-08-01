@@ -139,6 +139,9 @@
     <Reference Include="StrumpyShaderEditor">
       <HintPath>Assets\StrumpyShaderEditor\Editor\StrumpyShaderEditor.dll</HintPath>
     </Reference>
+    <Reference Include="RelationsInspector">
+      <HintPath>Assets\Plugins\Editor\RelationsInspector\RelationsInspector.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="ForTheLoveOfPower.CSharp.Plugins.csproj">
@@ -148,6 +151,10 @@
     <ProjectReference Include="ForTheLoveOfPower.CSharp.csproj">
       <Project>{34A31C7A-2E65-1A53-CE16-2CD1E0A9BE2E}</Project>
       <Name>ForTheLoveOfPower.CSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="ForTheLoveOfPower.CSharp.Editor.Plugins.csproj">
+      <Project>{2C81B6B1-971D-F6FF-E7C4-34C5F4ECC96C}</Project>
+      <Name>ForTheLoveOfPower.CSharp.Editor.Plugins</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +239,9 @@
     <None Include="Assets\GoldenZebra\Image Effects\BloomPro\Shaders\Resources\SeparableBlur.cginc" />
     <None Include="Assets\Photon Unity Networking\changelog.txt" />
     <None Include="Assets\Photon Unity Networking\readme.txt" />
+    <None Include="Assets\Plugins\DarkTonic\MasterAudio\ReleaseNotes.txt" />
+    <None Include="Assets\Plugins\Editor\RelationsInspector\README.txt" />
+    <None Include="Assets\Plugins\Editor\RelationsInspector\changelog.txt" />
     <None Include="Assets\Plugins\Photon3Unity3D.xml" />
     <None Include="Assets\Plugins\release_history.txt" />
     <None Include="Assets\Resources\ALSF1.txt" />

@@ -215,13 +215,13 @@ public class Player : Photon.MonoBehaviour {
             draggingInput = false;
             tappingInput = true;
         }
-        else if (curTouch.phase.Equals(TouchPhase.Stationary) && holdTimer < 0.15f && !holdingInput)
+        else if (curTouch.phase.Equals(TouchPhase.Stationary) && holdTimer < 0.1f && !holdingInput)
         {
             Debug.Log("Tracking hold");
             tappingInput = false;
             holdTimer += Time.deltaTime;
         }
-        else if (holdTimer > 0.15f && curTouch.phase.Equals(TouchPhase.Stationary))
+        else if (holdTimer > 0.1f && curTouch.phase.Equals(TouchPhase.Stationary))
         {
             Debug.Log("We're now holding");
             holdTimer = 0f;
@@ -801,7 +801,7 @@ public class Player : Photon.MonoBehaviour {
         if (!GameGridBehaviour.isMP || (GameGridBehaviour.isMP && photonView.isMine))
         {
             //Display the player's money
-            GameGridBehaviour.instance.moneyText.text = String.Concat("Money: ", this.Cash);
+            GameGridBehaviour.instance.moneyText.text = String.Concat("$", this.Cash);
         }
     }
 
