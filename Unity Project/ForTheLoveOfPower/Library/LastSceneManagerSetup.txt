@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/ForTheLoveOfPower/Scenes/MainMenuScreen.unity
+  isLoaded: 1
+  isActive: 1
