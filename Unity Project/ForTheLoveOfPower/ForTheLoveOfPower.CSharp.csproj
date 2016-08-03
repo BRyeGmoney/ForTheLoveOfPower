@@ -99,6 +99,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\AdditionalExamples\SphereIllusion\SphereIllusion.cs" />
     <Compile Include="Assets\BeautifulDissolves\Scripts\Dissolve.cs" />
     <Compile Include="Assets\BeautifulDissolves\Scripts\DissolveGlowUpdate.cs" />
     <Compile Include="Assets\BeautifulDissolves\Scripts\DissolveHelper.cs" />

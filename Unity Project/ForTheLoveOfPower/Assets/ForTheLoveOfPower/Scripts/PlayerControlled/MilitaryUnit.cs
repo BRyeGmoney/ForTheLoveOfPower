@@ -672,9 +672,9 @@ namespace AssemblyCSharp
 
     public enum MpMilitaryCommands
     {
-        AddUnit,
-        RemoveUnit,
-        MoveUnit,
+        AddUnit = 500,
+        RemoveUnit = 501,
+        MoveUnit = 502,
     }
 }
 

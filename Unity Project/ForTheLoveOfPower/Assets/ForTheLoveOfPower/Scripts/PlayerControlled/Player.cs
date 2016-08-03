@@ -44,7 +44,10 @@ public class Player : Photon.MonoBehaviour {
     VectorLine movementLine;
     bool drawLine;
     Tween myTween;
+    
+    public bool netPlayer = true;
 
+    public string PlayerName;
     
     short NextStructID;
     short NextSettleID;
@@ -59,15 +62,36 @@ public class Player : Photon.MonoBehaviour {
     // Use this for initialization
     void Start () {
 		InitBasePlayer ();
-        AddCash(10000);
-        PlayerColor = PlayerPrefsX.GetColor(SaveData.PlayerColor.ToString(), PlayerColor);
+        if (!netPlayer)
+        {
+            AddCash(10000);
+            PlayerColor = PlayerPrefsX.GetColor(SaveData.PlayerColor.ToString(), PlayerColor);
+            Debug.Log(string.Format("Player Color Set {0}", PlayerName));
 
-        path = new PointList<PointyHexPoint>();
-        prevPath = new PointList<PointyHexPoint>();
+            path = new PointList<PointyHexPoint>();
+            prevPath = new PointList<PointyHexPoint>();
 
-        movementLine = new VectorLine("movementPath", new List<Vector3>(), GameGridBehaviour.instance.lineTex, 5.0f, LineType.Continuous, Joins.Weld);
-        movementLine.color = PlayerColor;
-        
+            movementLine = new VectorLine("movementPath", new List<Vector3>(), GameGridBehaviour.instance.lineTex, 5.0f, LineType.Continuous, Joins.Weld);
+            movementLine.color = PlayerColor;
+        }
+        else
+        {
+            Vector3 pColor = (Vector3)PhotonNetwork.otherPlayers[0].customProperties["PlayerColor"];
+            PlayerColor = new Color(pColor.x, pColor.y, pColor.z);
+
+            Debug.Log(string.Format("Net Player Color Set {0}", PlayerName));
+        }
+    }
+
+    public void SetPlayerColor()
+    {
+        if (netPlayer)
+        {
+            Vector3 pColor = (Vector3)PhotonNetwork.otherPlayers[0].customProperties["PlayerColor"];
+            PlayerColor = new Color(pColor.x, pColor.y, pColor.z);
+
+            Debug.Log(string.Format("Net Player Color Set {0}", PlayerName));
+        }
     }
 	
 	protected void InitBasePlayer()
@@ -215,13 +239,13 @@ public class Player : Photon.MonoBehaviour {
             draggingInput = false;
             tappingInput = true;
         }
-        else if (curTouch.phase.Equals(TouchPhase.Stationary) && holdTimer < 0.1f && !holdingInput)
+        else if (curTouch.phase.Equals(TouchPhase.Stationary) && holdTimer < 0.6f && !holdingInput)
         {
             Debug.Log("Tracking hold");
             tappingInput = false;
             holdTimer += Time.deltaTime;
         }
-        else if (holdTimer > 0.1f && curTouch.phase.Equals(TouchPhase.Stationary))
+        else if (holdTimer > 0.6f && curTouch.phase.Equals(TouchPhase.Stationary))
         {
             Debug.Log("We're now holding");
             holdTimer = 0f;
@@ -614,11 +638,13 @@ public class Player : Photon.MonoBehaviour {
 
     void Update()
     {
-        if (GameGridBehaviour.instance.curCameraState == CameraState.Action)
-            UpdateBasedOnState();
+        if (!netPlayer)
+        {
+            if (GameGridBehaviour.instance.curCameraState == CameraState.Action)
+                UpdateBasedOnState();
 
-        UpdateCashText();
-        
+            UpdateCashText();
+        }
     }
 
     void UpdateBasedOnState()
@@ -807,3 +833,8 @@ public class Player : Photon.MonoBehaviour {
 
     #endregion
 }
+public enum MpPlayerCommands
+{
+    InitialSettings = 1,
+}
+

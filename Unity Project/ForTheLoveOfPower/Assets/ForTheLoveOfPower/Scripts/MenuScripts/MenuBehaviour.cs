@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -19,6 +20,8 @@ public class MenuBehaviour : MonoBehaviour {
     public Color PlayerColor = new Color(0, 255, 255);
 
     public Text VersionTxt;
+    public Text OpenRoomsTxt;
+    public Text NumPlayersTxt;
 
     private ulong matchID;
 
@@ -46,10 +49,28 @@ public class MenuBehaviour : MonoBehaviour {
         }
     }
 
+    public void UpdateRoomsText()
+    {
+        if (OpenRoomsTxt != null)
+        {
+            OpenRoomsTxt.text = string.Format("Open Rooms: {0}", PhotonNetwork.countOfRooms);
+            NumPlayersTxt.text = string.Format("# of Players: {0}", PhotonNetwork.countOfPlayers);
+        }
+    }
+
     public void ChangeToMultiMenu()
     {
         PhotonNetwork.ConnectUsingSettings("v4.2");
         PhotonNetwork.automaticallySyncScene = true;
+        PhotonNetwork.playerName = PlayerPrefs.GetString(SaveData.PlayerName.ToString(), PlayerName);
+        Color pColor = PlayerPrefsX.GetColor(SaveData.PlayerColor.ToString(), PlayerColor);
+
+        ExitGames.Client.Photon.Hashtable propTable = new ExitGames.Client.Photon.Hashtable();
+        propTable.Add("PlayerColor", new Vector3(pColor.r, pColor.g, pColor.b));
+
+        PhotonNetwork.SetPlayerCustomProperties(propTable);
+
+        InvokeRepeating("UpdateRoomsText", 0f, 5f);
     }
 
     public void OnConnectedToMaster()
@@ -129,7 +150,7 @@ public class MenuBehaviour : MonoBehaviour {
 
 	private void StartGame() {
         //CreatePlayerObjects(false);
-
+        GameGridBehaviour.isMP = false;
         SceneManager.LoadScene ("MainScreen");
 	}
 

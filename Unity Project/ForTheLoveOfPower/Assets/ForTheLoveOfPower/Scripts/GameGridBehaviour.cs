@@ -45,6 +45,8 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
     public CameraState curCameraState;
 
 	public List<Combat> listofCurrentCombats;
+
+    public Canvas optionsCanvas;
     private GameState curGameState;
 
     // Use this for initialization
@@ -60,7 +62,7 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
         instance = this;
 
         if (isMP)
-            PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0);
+            PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0).GetComponent<Player>().netPlayer = false;
         else
             CreatePlayerObjects(false);
 
@@ -74,6 +76,9 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
         P1 = Instantiate(Resources.Load("Player") as GameObject, Vector3.zero, Quaternion.identity) as GameObject;
         P2 = Instantiate(Resources.Load("AIPlayer") as GameObject, Vector3.zero, Quaternion.identity) as GameObject;
+
+        P1.GetComponent<Player>().netPlayer = false;
+        P2.GetComponent<Player>().netPlayer = false;
     }
 
     public void InformDoneLoading()
@@ -96,6 +101,9 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
                 {
                     Player netPlayer = playerObj.GetComponent<Player>();
                     listOfPlayers[c] = netPlayer;
+
+                    if (netPlayer.netPlayer)
+                        netPlayer.SetPlayerColor();
 
                     //if (listOfPlayers[c])
                         localPlayer = 0;
@@ -121,7 +129,6 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 
             Animator anim = PlaceDictText.GetComponent<Animator>();
             anim.SetTrigger("PlaceDictTrigger");
-            Debug.Log("poo");
         }
     }
 
@@ -322,6 +329,24 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
     public GameState GetCurrentGameState()
     {
         return curGameState;
+    }
+
+    public void OpenOptionsMenu()
+    {
+        optionsCanvas.gameObject.SetActive(true);
+    }
+
+    public void CloseOptionsMenu()
+    {
+        optionsCanvas.gameObject.SetActive(false);
+    }
+
+    public void ExitGame()
+    {
+        if (PhotonNetwork.connected)
+            PhotonNetwork.Disconnect();
+
+        SceneManager.LoadScene(0);
     }
 }
 
