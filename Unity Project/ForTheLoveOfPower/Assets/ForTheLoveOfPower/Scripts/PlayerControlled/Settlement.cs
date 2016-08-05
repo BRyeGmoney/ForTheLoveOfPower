@@ -175,12 +175,12 @@ namespace AssemblyCSharp
                 {
                     if (currentState.Equals(StructureState.Captured))
                     {
-                        owningPlayer.AddToSettlements(this);
-                        owningPlayer.AddToOwnedTiles(GameGridBehaviour.instance.Grid, tilesOwned);
+                        owningPlayer.playerCiv.AddToSettlements(this);
+                        owningPlayer.playerCiv.AddToOwnedTiles(GameGridBehaviour.instance.Grid, tilesOwned);
 
-                        owningPlayer.RemoveFromOwnedTiles(tilesOwned);
+                        owningPlayer.playerCiv.RemoveFromOwnedTiles(tilesOwned);
                         //owningPlayer.ownedTiles = owningPlayer.ownedTiles.Except(tilesOwned).ToList<PointyHexPoint>();
-                        owningPlayer.RemoveFromSettlements(this);
+                        owningPlayer.playerCiv.RemoveFromSettlements(this);
 
                         FinishSettlementCapture();
                         RepaintOwnedTiles();
@@ -211,21 +211,21 @@ namespace AssemblyCSharp
             Vector3[] toReturn;
             PointyHexPoint[] toSort;
 
-            points.AddRange(GameGridBehaviour.instance.GetSurroundingTiles(pointOnMap));
+            points.AddRange(GameGridBehaviour.instance.GetSurroundingTiles(TilePoint));
             cachedBuildingList.ForEach(s =>
             {
-                points.AddRange(GameGridBehaviour.instance.GetSurroundingTiles(s.pointOnMap));
+                points.AddRange(GameGridBehaviour.instance.GetSurroundingTiles(s.TilePoint));
             });
 
             points = points.Distinct<PointyHexPoint>().ToList<PointyHexPoint>();
 
-            points.RemoveAll(point => cachedBuildingList.Any(cB => cB.pointOnMap == point));
+            points.RemoveAll(point => cachedBuildingList.Any(cB => cB.TilePoint == point));
 
-            points.Remove(pointOnMap); //remove the settlement
+            points.Remove(TilePoint); //remove the settlement
             toSort = points.ToArray();
 
             //order the remainder
-            Array.Sort(toSort, new ClockwisePointyHexComparer(pointOnMap));
+            Array.Sort(toSort, new ClockwisePointyHexComparer(TilePoint));
             points = toSort.ToList();
 
             //if (points.Count > 0)
@@ -245,21 +245,21 @@ namespace AssemblyCSharp
             PointyHexPoint[] toSort;
 
             //add the settlement tiles too
-            points.AddRange(GameGridBehaviour.instance.GetSurroundingTiles(pointOnMap));
+            points.AddRange(GameGridBehaviour.instance.GetSurroundingTiles(TilePoint));
             cachedBuildingList.ForEach(s => 
             {
-                points.AddRange(GameGridBehaviour.instance.GetSurroundingTiles(s.pointOnMap));
+                points.AddRange(GameGridBehaviour.instance.GetSurroundingTiles(s.TilePoint));
             });
 
             points = points.Distinct<PointyHexPoint>().ToList<PointyHexPoint>();
 
-            points.RemoveAll(point => cachedBuildingList.Any(cB => cB.pointOnMap == point));
+            points.RemoveAll(point => cachedBuildingList.Any(cB => cB.TilePoint == point));
 
-            points.Remove(pointOnMap); //remove the settlement
+            points.Remove(TilePoint); //remove the settlement
             toSort = points.ToArray();
 
             //order the remainder
-            Array.Sort(toSort, new ClockwisePointyHexComparer(pointOnMap));
+            Array.Sort(toSort, new ClockwisePointyHexComparer(TilePoint));
             points = toSort.ToList();
             if (points.Count > 0)
             {

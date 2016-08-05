@@ -9,6 +9,8 @@
 //------------------------------------------------------------------------------
 using System;
 using UnityEngine;
+using System.Linq;
+using System.Collections.Generic;
 using Gamelogic.Grids;
 using BeautifulDissolves;
 
@@ -45,7 +47,7 @@ namespace AssemblyCSharp
 
         //Properties
         public Color StructColor { get; set; }
-		public PointyHexPoint pointOnMap { get; set; }
+		public PointyHexPoint TilePoint { get; set; }
 
         public Int16 ID { get { return id; } }
         protected short id;
@@ -81,7 +83,7 @@ namespace AssemblyCSharp
             this.id = id;
 			StructColor = structColor;
 			StructureType = structType;
-			pointOnMap = gridPoint;
+			TilePoint = gridPoint;
             spriteRender = gameObject.GetComponent<SpriteRenderer>();
 			spriteRender.color = StructColor;
             MyMaterial = spriteRender.material;
@@ -180,5 +182,206 @@ namespace AssemblyCSharp
             }
         }
 	}
+
+    public class Civilization
+    {
+        public List<CivUpdate> dirtyUnits;
+        public List<Settlement> settlements;
+
+        List<PointyHexPoint> ownedTiles;
+
+        short NextStructID;
+        short NextSettleID;
+
+        public Civilization()
+        {
+            dirtyUnits = new List<CivUpdate>();
+            settlements = new List<Settlement>();
+        }
+
+        public Int16 GetNextSettleID()
+        {
+            return NextSettleID++;
+        }
+
+        public Int16 GetNextStructID()
+        {
+            return NextStructID++;
+        }
+
+        #region Settlements
+        public Int32 GetSettlementsCount()
+        {
+            return settlements.Count;
+        }
+
+        public Settlement FindSettlementByID(short id)
+        {
+            return settlements.Find(settlement => settlement.ID == id);
+        }
+
+        public void AddToSettlements(Settlement newSettlement)
+        {
+            settlements.Add(newSettlement);
+        }
+
+        public IEnumerable<Settlement> SettlementsUnderAttack()
+        {
+            return settlements.Where(settlement => settlement.cityBeingConquered);
+        }
+
+        public void UpdateSettlements(Player owningPlayer)
+        {
+            settlements.ForEach(settlement =>
+            {
+                settlement.UpdateBuildingList(owningPlayer);
+            });
+        }
+
+        public void RemoveFromSettlements(Settlement settlement)
+        {
+            settlements.Remove(settlement);
+        }
+
+        #endregion
+
+        public void BuildNewSettlement(PointyHexPoint buildPoint, Player enemyPlayer, Color playerColor, short id = -1)
+        {
+            UnitCell gridCell = GameGridBehaviour.instance.Grid[buildPoint] as UnitCell;
+            Settlement newSettlement;
+
+            if (id < 0)
+                newSettlement = ObjectPool.instance.PullNewSettlement(gridCell.transform.position);
+            else
+                newSettlement = ObjectPool.instance.PullNewSettlement(gridCell.transform.position, id);
+
+            newSettlement.Initialize(GetNextSettleID(), playerColor, StructureUnitType.Settlement, buildPoint);
+            AddToSettlements(newSettlement);
+            AddToSettlementOwnedTiles(GameGridBehaviour.instance.Grid, newSettlement, enemyPlayer, GameGridBehaviour.instance.GetSurroundingTiles(buildPoint), playerColor);
+            gridCell.AddStructureToTile(newSettlement);
+            newSettlement.GetComponent<BeautifulDissolves.Dissolve>().TriggerDissolve();
+
+        }
+
+        public void BuildNewStructure(PointyHexPoint buildPoint, StructureUnitType structType, Settlement owningSettlement, Player enemyPlayer, Color playerColor, short id = -1)
+        {
+            UnitCell gridCell = GameGridBehaviour.instance.Grid[buildPoint] as UnitCell;
+            StructureUnit newStruct;
+            if (id < 0)
+                newStruct = ObjectPool.instance.PullNewStructure(structType, gridCell.transform.position);
+            else
+                newStruct = ObjectPool.instance.PullNewStructure(structType, gridCell.transform.position, id);
+
+            newStruct.Initialize(GetNextStructID(), playerColor, structType, buildPoint, owningSettlement);
+            owningSettlement.AddToBuildingList(newStruct);
+            AddToSettlementOwnedTiles(GameGridBehaviour.instance.Grid, owningSettlement, enemyPlayer, GameGridBehaviour.instance.GetSurroundingTiles(buildPoint), playerColor);
+            gridCell.AddStructureToTile(newStruct);
+            newStruct.GetComponent<BeautifulDissolves.Dissolve>().TriggerDissolve();
+        }
+
+        #region Tile Functions
+        public PointList<PointyHexPoint> GetOwnedTiles()
+        {
+            PointList<PointyHexPoint> currList = new PointList<PointyHexPoint>();
+
+            settlements.ForEach(settlement => {
+                currList = currList.Union(settlement.tilesOwned).ToPointList<PointyHexPoint>();
+            });
+
+            return currList;
+        }
+
+        public bool TileBelongsToSettlements(PointyHexPoint tileToCheck)
+        {
+            bool belongs = false;
+
+            settlements.ForEach(settlement => {
+                if (!belongs)
+                    belongs = settlement.TileBelongsToSettlement(tileToCheck);
+            });
+
+            return belongs;
+        }
+
+        public void AddToSettlementOwnedTiles(IGrid<PointyHexPoint> gameGrid, AssemblyCSharp.Settlement ownSettlement, Player enemyPlayer, PointList<PointyHexPoint> pointsToAdd, Color playerColor)
+        {
+            foreach (PointyHexPoint point in TileDoesNotBelongToOtherSettlement(gameGrid, ownSettlement, enemyPlayer, pointsToAdd))
+            {
+                if (!ownSettlement.tilesOwned.Contains(point))
+                {
+                    ownSettlement.tilesOwned.Add(point);
+                    //ownedTiles.Add (point);
+                    (gameGrid[point] as UnitCell).SetTileColorBuildable(playerColor);
+                }
+            }
+        }
+
+        public bool AddToOwnedTiles(IGrid<PointyHexPoint> gameGrid, PointyHexPoint pointToAdd)
+        {
+            if (!(gameGrid[pointToAdd] as UnitCell).buildingOnTile)
+            {
+                ownedTiles.Add(pointToAdd);
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool AddToOwnedTiles(IGrid<PointyHexPoint> gameGrid, PointList<PointyHexPoint> pointsToAdd)
+        {
+            return pointsToAdd.All(point => AddToOwnedTiles(gameGrid, point));
+        }
+
+        public bool RemoveFromOwnedTiles(PointyHexPoint pointToRemove)
+        {
+            return ownedTiles.Remove(pointToRemove);
+        }
+
+        public bool RemoveFromOwnedTiles(PointList<PointyHexPoint> pointsToRemove)
+        {
+            return pointsToRemove.All(point => RemoveFromOwnedTiles(point));
+        }
+
+        private PointList<PointyHexPoint> TileDoesNotBelongToOtherSettlement(IGrid<PointyHexPoint> gameGrid, AssemblyCSharp.Settlement ownSettlement, Player enemyPlayer, PointList<PointyHexPoint> pointsToAdd)
+        {
+            PointList<PointyHexPoint> pointsToRemove = new PointList<PointyHexPoint>();
+
+            //lets cut out as many points as possible for the next loop to be faster
+            pointsToAdd.RemoveAll(point => enemyPlayer.playerCiv.GetOwnedTiles().Contains(point));
+            pointsToRemove.Clear();
+
+            //make sure two neighboring cities don't collide
+            settlements.ForEach(settlement => {
+                if (!settlement.Equals(ownSettlement))
+                { //if we're not currently looking at the same settlement
+                    foreach (PointyHexPoint point in pointsToAdd)
+                    {
+                        if (settlement.tilesOwned.Contains(point))
+                            pointsToRemove.Add(point);
+                    }
+                }
+
+            });
+
+            pointsToRemove.ToList<PointyHexPoint>().ForEach(point => {
+                (gameGrid[point] as UnitCell).SetTileColorUnOwn();
+            });
+
+            return pointsToAdd.Except(pointsToRemove).ToPointList<PointyHexPoint>();
+        }
+        #endregion
+    }
+
+    public class CivUpdate
+    {
+        public Int16 mpCommand { get; set; }
+        public StructureUnit Structure { get; set; }
+    }
+
+    public enum CivMpCommands
+    {
+        NewSettlement = 400,
+        NewStructure = 401
+    }
 }
 

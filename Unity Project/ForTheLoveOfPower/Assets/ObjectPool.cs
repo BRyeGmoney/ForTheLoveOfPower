@@ -105,6 +105,16 @@ public class ObjectPool : MonoBehaviour {
         return unitPool.FirstOrDefault(unit => unit.ID == id);
     }
 
+    Settlement GetSettlementById(short id)
+    {
+        return settlementPool.FirstOrDefault(settle => settle.ID == id);
+    }
+
+    StructureUnit GetStructureById(short id)
+    {
+        return structurePool.FirstOrDefault(struc => struc.ID == id);
+    }
+
     StructureUnit GetNextAvailableStructure()
     {
         return structurePool.First(structure => !structure.PoolObjInUse);
@@ -149,9 +159,14 @@ public class ObjectPool : MonoBehaviour {
     }
 
 
-    public StructureUnit PullNewStructure(StructureUnitType desiredType, Vector3 desiredPosition)
+    public StructureUnit PullNewStructure(StructureUnitType desiredType, Vector3 desiredPosition, short id = -1)
     {
-        StructureUnit newStructure = GetNextAvailableStructure();
+        StructureUnit newStructure;
+
+        if (id < 0)
+            newStructure = GetNextAvailableStructure();
+        else
+            newStructure = GetStructureById(id);
 
         SetupStructure((int)desiredType, ref newStructure);
 
@@ -167,9 +182,14 @@ public class ObjectPool : MonoBehaviour {
         return newStructure;
     }
 
-    public Settlement PullNewSettlement(Vector3 desiredPosition)
+    public Settlement PullNewSettlement(Vector3 desiredPosition, short id = -1)
     {
-        Settlement newSettlement = GetNextAvailableSettlement();
+        Settlement newSettlement;
+
+        if (id < 0)
+            newSettlement = GetNextAvailableSettlement();
+        else
+            newSettlement = GetSettlementById(id);
 
         //set the settlement's new position
         newSettlement.transform.position = desiredPosition;

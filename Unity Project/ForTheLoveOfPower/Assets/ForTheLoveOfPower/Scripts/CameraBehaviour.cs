@@ -19,7 +19,7 @@ public class CameraBehaviour : MonoBehaviour {
     //private bool timeTouchPhaseEndRecorded = false;
     private Vector2 scrollDirection = Vector2.zero;
 
-    public float orthoZoomSpeed = 2f;        // The rate of change of the orthographic size in orthographic mode.
+    public float orthoZoomSpeed = 6f;        // The rate of change of the orthographic size in orthographic mode.
 
     Vector2 touchStartPosition;
     Vector2 lastPosition;
@@ -33,7 +33,7 @@ public class CameraBehaviour : MonoBehaviour {
 		prevMousePos = Vector3.zero;
 
 #if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IPHONE || UNITY_IOS)
-        cameraSpeed = 0.5f;
+        cameraSpeed = 0.8f;
         Debug.Log("Camera Speed:" + cameraSpeed);
 #else
         cameraSpeed = 0.8f;
@@ -83,10 +83,6 @@ public class CameraBehaviour : MonoBehaviour {
                 {
                     touchStartPosition = lastPosition = touchOne.position;
                 }
-                else if (touchOne.phase == TouchPhase.Stationary)
-                {
-
-                }
                 else if (touchOne.phase == TouchPhase.Moved)
                 {
                     deltaVector = touchOne.position - lastPosition;
@@ -96,7 +92,7 @@ public class CameraBehaviour : MonoBehaviour {
             }
         }
 
-        Camera.main.transform.position += (Vector3)cameraVelocity;
+        Camera.main.transform.position -= (Vector3)cameraVelocity;
         cameraVelocity *= Mathf.Pow(cameraFriction, Time.deltaTime);
     }
 

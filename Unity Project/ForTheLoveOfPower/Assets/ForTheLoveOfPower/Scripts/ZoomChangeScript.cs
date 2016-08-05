@@ -26,6 +26,7 @@ public class ZoomChangeScript : MonoBehaviour {
         if (Camera.main.name == "Action Camera")
         {
             GameGridBehaviour.instance.curCameraState = CameraState.Tactical;
+
             zoomButtonAnim.SetTrigger("ToTactical");
             //StartCoroutine(Wait());
             Wait();
@@ -37,7 +38,7 @@ public class ZoomChangeScript : MonoBehaviour {
         {
             GameGridBehaviour.instance.curCameraState = CameraState.Action;
 
-            actionView.transform.position = actionView.transform.position;
+            actionView.transform.position = tacticalView.transform.position;
             actionView.gameObject.SetActive(true);
             tacticalView.gameObject.SetActive(false);
             uiCanvas.worldCamera = actionView;

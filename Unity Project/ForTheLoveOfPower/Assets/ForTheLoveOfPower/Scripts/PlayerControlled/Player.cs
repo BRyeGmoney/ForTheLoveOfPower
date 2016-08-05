@@ -20,8 +20,8 @@ public class Player : Photon.MonoBehaviour {
     public bool dictAlive;
 
     public Army playerArmy;
-	List<Settlement> settlements;
-	List<PointyHexPoint> ownedTiles;
+    public Civilization playerCiv;
+	
 
     PointyHexPoint startPoint;
     PointyHexPoint endPoint;
@@ -48,9 +48,6 @@ public class Player : Photon.MonoBehaviour {
     public bool netPlayer = true;
 
     public string PlayerName;
-    
-    short NextStructID;
-    short NextSettleID;
 
     float playerTimer = 0f;
 
@@ -97,99 +94,13 @@ public class Player : Photon.MonoBehaviour {
 	protected void InitBasePlayer()
 	{
         playerArmy = gameObject.AddComponent<Army>();
-		settlements = new List<Settlement> ();
+        playerCiv = new Civilization();
         
         dictAlive = true;
 	}
     #endregion
 
-    #region Tile Functions
-    public PointList<PointyHexPoint> GetOwnedTiles()
-	{
-		PointList<PointyHexPoint> currList = new PointList<PointyHexPoint> ();
-
-		settlements.ForEach (settlement => {
-			currList = currList.Union (settlement.tilesOwned).ToPointList<PointyHexPoint>();
-		});
-
-		return currList;
-	}
-
-	public bool TileBelongsToSettlements(PointyHexPoint tileToCheck)
-	{
-		bool belongs = false;
-
-		settlements.ForEach (settlement => {
-			if (!belongs)
-				belongs = settlement.TileBelongsToSettlement (tileToCheck);
-		});
-
-		return belongs;
-	}
-
-	public void AddToSettlementOwnedTiles(IGrid<PointyHexPoint> gameGrid, AssemblyCSharp.Settlement ownSettlement, Player enemyPlayer, PointList<PointyHexPoint> pointsToAdd)
-	{
-		foreach (PointyHexPoint point in TileDoesNotBelongToOtherSettlement(gameGrid, ownSettlement, enemyPlayer, pointsToAdd)) {
-			if (!ownSettlement.tilesOwned.Contains (point)) {
-				ownSettlement.tilesOwned.Add (point);
-				//ownedTiles.Add (point);
-				(gameGrid [point] as UnitCell).SetTileColorBuildable (PlayerColor);
-			}
-		}
-	}
-
-	public bool AddToOwnedTiles(IGrid<PointyHexPoint> gameGrid, PointyHexPoint pointToAdd)
-	{
-        if (!(gameGrid[pointToAdd] as UnitCell).buildingOnTile)
-        {
-            ownedTiles.Add(pointToAdd);
-            return true;
-        }
-        else
-            return false;
-	}
-
-    public bool AddToOwnedTiles(IGrid<PointyHexPoint> gameGrid, PointList<PointyHexPoint> pointsToAdd)
-    {
-        return pointsToAdd.All(point => AddToOwnedTiles(gameGrid, point));
-    }
-
-	public bool RemoveFromOwnedTiles(PointyHexPoint pointToRemove)
-	{
-		return ownedTiles.Remove (pointToRemove);
-	}
-
-    public bool RemoveFromOwnedTiles(PointList<PointyHexPoint> pointsToRemove)
-    {
-        return pointsToRemove.All(point => RemoveFromOwnedTiles(point));
-    }
-
-	private PointList<PointyHexPoint> TileDoesNotBelongToOtherSettlement(IGrid<PointyHexPoint> gameGrid, AssemblyCSharp.Settlement ownSettlement, Player enemyPlayer, PointList<PointyHexPoint> pointsToAdd) 
-	{
-		PointList<PointyHexPoint> pointsToRemove = new PointList<PointyHexPoint>();
-
-		//lets cut out as many points as possible for the next loop to be faster
-		pointsToAdd.RemoveAll (point => enemyPlayer.GetOwnedTiles ().Contains (point));
-		pointsToRemove.Clear ();
-
-		//make sure two neighboring cities don't collide
-		settlements.ForEach (settlement => {
-			if (!settlement.Equals (ownSettlement)) { //if we're not currently looking at the same settlement
-				foreach (PointyHexPoint point in pointsToAdd) {
-                    if (settlement.tilesOwned.Contains(point))
-                        pointsToRemove.Add(point);
-				}
-			}
-
-		});
-
-		pointsToRemove.ToList<PointyHexPoint>().ForEach (point => {
-            (gameGrid[point] as UnitCell).SetTileColorUnOwn();
-		});
-
-		return pointsToAdd.Except (pointsToRemove).ToPointList<PointyHexPoint>();
-	}
-    #endregion
+    
 
     #region Input
     void CheckTouchInputPreGame()
@@ -239,13 +150,13 @@ public class Player : Photon.MonoBehaviour {
             draggingInput = false;
             tappingInput = true;
         }
-        else if (curTouch.phase.Equals(TouchPhase.Stationary) && holdTimer < 0.6f && !holdingInput)
+        else if (curTouch.phase.Equals(TouchPhase.Stationary) && holdTimer < 0.2f && !holdingInput)
         {
             Debug.Log("Tracking hold");
             tappingInput = false;
             holdTimer += Time.deltaTime;
         }
-        else if (holdTimer > 0.6f && curTouch.phase.Equals(TouchPhase.Stationary))
+        else if (holdTimer > 0.2f && curTouch.phase.Equals(TouchPhase.Stationary))
         {
             Debug.Log("We're now holding");
             holdTimer = 0f;
@@ -274,8 +185,6 @@ public class Player : Photon.MonoBehaviour {
     /// </summary>
     private void CheckTouchInput()
     {
-        
-
         if (Input.touchCount == 1)
         {
             Touch curTouch = Input.GetTouch(0);
@@ -489,11 +398,11 @@ public class Player : Photon.MonoBehaviour {
         //if there's a building on this tile
         if (clickedCell.buildingOnTile)
             playerArmy.TryToBuildUnit(clickedCell, clickedPoint, this);
-        else if (clickedCell.Color == this.PlayerColor && (!clickedCell.unitOnTile || this.TileBelongsToSettlements(clickedPoint)))//if its the same color and there isn't a unit or it is part of a settlement
+        else if (clickedCell.Color == PlayerColor && (!clickedCell.unitOnTile || playerCiv.TileBelongsToSettlements(clickedPoint)))//if its the same color and there isn't a unit or it is part of a settlement
             GameGridBehaviour.instance.SetupBuildMenu(false, HandlestructChosen);
         else
         {
-            if (clickedCell.Color == PlayerColor && !this.TileBelongsToSettlements(clickedPoint))
+            if (clickedCell.Color == PlayerColor && !playerCiv.TileBelongsToSettlements(clickedPoint))
                 GameGridBehaviour.instance.SetupBuildMenu(true, HandlestructChosen);
         }
     }
@@ -509,11 +418,11 @@ public class Player : Photon.MonoBehaviour {
     {
         if (!clickedCell.structureOnTile)
         {
-            if (clickedCell.Color == this.PlayerColor && (!clickedCell.unitOnTile || this.TileBelongsToSettlements(clickedPoint)))
+            if (clickedCell.Color == PlayerColor && (!clickedCell.unitOnTile || playerCiv.TileBelongsToSettlements(clickedPoint)))
             { //if its the same color and there isn't a unit or it is part of a settlement
                 GameGridBehaviour.instance.SetupBuildMenu(false, HandlestructChosen);
             }
-            else if (clickedCell.Color == this.PlayerColor && !this.TileBelongsToSettlements(clickedPoint))
+            else if (clickedCell.Color == PlayerColor && !playerCiv.TileBelongsToSettlements(clickedPoint))
             {
                 GameGridBehaviour.instance.SetupBuildMenu(true, HandlestructChosen);
             }
@@ -523,41 +432,6 @@ public class Player : Photon.MonoBehaviour {
     #endregion
 
     #region Building Creation
-
-    protected void BuildNewSettlement(PointyHexPoint buildPoint)
-    {
-        /*GameGridBehaviour.instance.CreateNewSettlement(this,
-            GameGridBehaviour.instance.Grid[buildPoint] as UnitCell,
-            buildPoint,
-            GameGridBehaviour.instance.GetSurroundingTiles(buildPoint));*/
-
-        UnitCell gridCell = GameGridBehaviour.instance.Grid[buildPoint] as UnitCell;
-        Settlement newSettlement = ObjectPool.instance.PullNewSettlement(gridCell.transform.position); //(Instantiate(GameGridBehaviour.instance.structureTypes[(int)StructureUnitType.Settlement], gridCell.transform.position, Quaternion.identity) as GameObject).GetComponent<Settlement>();
-        newSettlement.Initialize(GetNextSettleID(), PlayerColor, StructureUnitType.Settlement, buildPoint);
-        AddToSettlements(newSettlement);
-        AddToSettlementOwnedTiles(GameGridBehaviour.instance.Grid, newSettlement, this, GameGridBehaviour.instance.GetSurroundingTiles(buildPoint));
-        gridCell.AddStructureToTile(newSettlement);
-        newSettlement.GetComponent<BeautifulDissolves.Dissolve>().TriggerDissolve();
-        
-    }
-
-    protected void BuildNewStructure(PointyHexPoint buildPoint, StructureUnitType structType, Settlement owningSettlement)
-    {
-        UnitCell gridCell = GameGridBehaviour.instance.Grid[buildPoint] as UnitCell;
-        StructureUnit newStruct = ObjectPool.instance.PullNewStructure(structType, gridCell.transform.position);//(Instantiate(GameGridBehaviour.instance.structureTypes[(int)structType], gridCell.transform.position, Quaternion.identity) as GameObject).GetComponent<StructureUnit>();
-        newStruct.Initialize(GetNextStructID(), PlayerColor, structType, buildPoint, owningSettlement);
-        owningSettlement.AddToBuildingList(newStruct);
-        AddToSettlementOwnedTiles(GameGridBehaviour.instance.Grid, owningSettlement, this, GameGridBehaviour.instance.GetSurroundingTiles(buildPoint));
-        gridCell.AddStructureToTile(newStruct);
-        newStruct.GetComponent<BeautifulDissolves.Dissolve>().TriggerDissolve();
-        /*GameGridBehaviour.instance.CreateNewStructure(this,
-            (int)structType,
-            GameGridBehaviour.instance.Grid[buildPoint] as UnitCell,
-            buildPoint,
-            GameGridBehaviour.instance.GetSurroundingTiles(buildPoint),
-            owningSettlement);*/
-    }
-
     void HandlestructChosen(object sender, BuildingChosenArgs e)
     {
         if (!e.toBuild.Equals(StructureUnitType.None))
@@ -572,16 +446,16 @@ public class Player : Photon.MonoBehaviour {
 
                 if (e.IsSettlement)
                 {
-                    if (!GameGridBehaviour.instance.IsBuildingInArea(prevClickedPoint, surroundingTiles, this.PlayerColor))
-                        BuildNewSettlement(prevClickedPoint);
+                    if (!GameGridBehaviour.instance.IsBuildingInArea(prevClickedPoint, surroundingTiles, PlayerColor))
+                        playerCiv.BuildNewSettlement(prevClickedPoint, GameGridBehaviour.instance.listOfPlayers[GameGridBehaviour.instance.GetIndexOfOppositePlayer(this)], PlayerColor);
                 }
                 else
                 {
-                    Settlement owningSettlement = GameGridBehaviour.instance.FindOwningSettlement(prevClickedPoint, surroundingTiles, this.PlayerColor);
+                    Settlement owningSettlement = GameGridBehaviour.instance.FindOwningSettlement(prevClickedPoint, surroundingTiles, PlayerColor);
 
                     if (owningSettlement != null)
                     {
-                        BuildNewStructure(prevClickedPoint, e.toBuild, owningSettlement);
+                        playerCiv.BuildNewStructure(prevClickedPoint, e.toBuild, owningSettlement, GameGridBehaviour.instance.listOfPlayers[GameGridBehaviour.instance.GetIndexOfOppositePlayer(this)], PlayerColor);
                     }
                 }
             }
@@ -598,41 +472,7 @@ public class Player : Photon.MonoBehaviour {
     
     #endregion
 
-    #region Settlements
-    public Int32 GetSettlementsCount()
-    {
-        return settlements.Count;
-    }
-
-    public Settlement FindSettlementByID(short id)
-    {
-        return settlements.Find(settlement => settlement.ID == id);
-    }
-
-    public void AddToSettlements(Settlement newSettlement)
-    {
-        settlements.Add(newSettlement);
-    }
-
-    public IEnumerable<Settlement> SettlementsUnderAttack()
-    {
-        return settlements.Where(settlement => settlement.cityBeingConquered);
-    }
-
-    protected void UpdateSettlements()
-    {
-        settlements.ForEach(settlement =>
-        {
-            settlement.UpdateBuildingList(this);
-        });
-    }
-
-    public void RemoveFromSettlements(Settlement settlement)
-    {
-        settlements.Remove(settlement);
-    }
-
-    #endregion
+    
 
     #region Update States
 
@@ -640,8 +480,8 @@ public class Player : Photon.MonoBehaviour {
     {
         if (!netPlayer)
         {
-            if (GameGridBehaviour.instance.curCameraState == CameraState.Action)
-                UpdateBasedOnState();
+            //if (GameGridBehaviour.instance.curCameraState == CameraState.Action)
+            UpdateBasedOnState();
 
             UpdateCashText();
         }
@@ -662,7 +502,7 @@ public class Player : Photon.MonoBehaviour {
 
     void PlayGameState()
     {
-        if ((!GameGridBehaviour.isMP || photonView.isMine) && !GameGridBehaviour.instance.IsBuildScreenBlocking())
+        if ((!GameGridBehaviour.isMP || photonView.isMine) && GameGridBehaviour.instance.curCameraState == CameraState.Action && !GameGridBehaviour.instance.IsBuildScreenBlocking())
         {
             if (Input.touchSupported)
                 CheckTouchInput();
@@ -671,7 +511,7 @@ public class Player : Photon.MonoBehaviour {
         }
 
         playerArmy.UpdateUnits(this);
-        UpdateSettlements();
+        playerCiv.UpdateSettlements(this);
 
         if (playerTimer > 1f && !startChosen)
         {
@@ -722,6 +562,32 @@ public class Player : Photon.MonoBehaviour {
                     playerArmy.dirtyUnits.Remove(dirtyUnit);
                 });
             }
+            else if (playerCiv != null && playerCiv.dirtyUnits.Count > 0)
+            {
+                playerCiv.dirtyUnits.Take(5).ToList().ForEach(dirtyUnit =>
+                {
+                    short mpComm = dirtyUnit.mpCommand;
+
+                    short uid = dirtyUnit.Structure.ID;
+                    short comSettlement = 0;
+                    short type = (short)dirtyUnit.Structure.StructureType;
+                    Vector2 pos = new Vector2(dirtyUnit.Structure.TilePoint.X, dirtyUnit.Structure.TilePoint.Y);
+
+                    
+
+                    stream.Serialize(ref mpComm);
+                    stream.Serialize(ref uid);
+                    if (mpComm == (short)CivMpCommands.NewStructure)
+                    {
+                        comSettlement = dirtyUnit.Structure.OwningSettlement.ID;
+                        stream.Serialize(ref comSettlement);
+                    }
+                    stream.Serialize(ref type);
+                    stream.Serialize(ref pos);
+
+                    playerCiv.dirtyUnits.Remove(dirtyUnit);
+                });
+            }
         }
         else
         {
@@ -753,6 +619,33 @@ public class Player : Photon.MonoBehaviour {
 
                 StartCoroutine(SyncUnitPosition(uid, pos));
             }
+            else if (mpComm == (short)CivMpCommands.NewSettlement)
+            {
+                short uid = 0;
+                short type = 0;
+                Vector2 pos = Vector2.zero;
+
+                stream.Serialize(ref uid);
+                stream.Serialize(ref type);
+                stream.Serialize(ref pos);
+
+                playerCiv.BuildNewSettlement(new PointyHexPoint((int)pos.x, (int)pos.y), GameGridBehaviour.instance.listOfPlayers[GameGridBehaviour.instance.GetIndexOfOppositePlayer(this)], PlayerColor, uid);
+            }
+            else if (mpComm == (short)CivMpCommands.NewStructure)
+            {
+                short uid = 0;
+                short comSettlement = 0;
+                short type = 0;
+                Vector2 pos = Vector2.zero;
+
+                stream.Serialize(ref uid);
+                stream.Serialize(ref comSettlement);
+                stream.Serialize(ref type);
+
+                stream.Serialize(ref pos);
+
+                playerCiv.BuildNewStructure(new PointyHexPoint((int)pos.x, (int)pos.y), (StructureUnitType)type, playerCiv.FindSettlementByID(comSettlement), GameGridBehaviour.instance.listOfPlayers[GameGridBehaviour.instance.GetIndexOfOppositePlayer(this)], PlayerColor, uid);
+            }
         }
     }
 
@@ -764,7 +657,6 @@ public class Player : Photon.MonoBehaviour {
 
         yield break;
     }
-
 
     #endregion
 
@@ -787,20 +679,6 @@ public class Player : Photon.MonoBehaviour {
         movementLine.points3.Clear();
         movementLine.active = false;
         movementLine.color = new Color(movementLine.color.r, movementLine.color.g, movementLine.color.b, 1f);
-    }
-
-    #endregion
-
-    #region IDs
-
-    
-    public Int16 GetNextSettleID()
-    {
-        return NextSettleID++;
-    }
-    public Int16 GetNextStructID()
-    {
-        return NextStructID++;
     }
 
     #endregion
@@ -832,9 +710,5 @@ public class Player : Photon.MonoBehaviour {
     }
 
     #endregion
-}
-public enum MpPlayerCommands
-{
-    InitialSettings = 1,
 }
 

@@ -622,7 +622,7 @@ namespace AssemblyCSharp
                 {
                     MilitaryUnit unitOnTile = army.Find(unit => unit.TilePoint.Equals(clickedPoint));
 
-                    if (unitOnTile != null)
+                    if (unitOnTile != null && IsUnitSameAsStructureType(clickedCell.structureOnTile.StructureType, unitOnTile.UnitType))
                         unitOnTile.AddUnits(1);
                 }
                 else if (clickedCell.structureOnTile.StructureType.Equals(StructureUnitType.Barracks))
@@ -632,6 +632,18 @@ namespace AssemblyCSharp
                 else
                     CreateNewUnit(clickedPoint, MilitaryUnitType.Jet, player);
             }
+        }
+
+        private bool IsUnitSameAsStructureType(StructureUnitType structType, MilitaryUnitType milUnitType)
+        {
+            if (structType == StructureUnitType.Airport && milUnitType == MilitaryUnitType.Jet)
+                return true;
+            else if (structType == StructureUnitType.Barracks && milUnitType == MilitaryUnitType.Infantry)
+                return true;
+            else if (structType == StructureUnitType.TankDepot && milUnitType == MilitaryUnitType.Tank)
+                return true;
+            else
+                return false;
         }
 
         public void CreateNewUnit(PointyHexPoint buildPoint, MilitaryUnitType milType, Player player)

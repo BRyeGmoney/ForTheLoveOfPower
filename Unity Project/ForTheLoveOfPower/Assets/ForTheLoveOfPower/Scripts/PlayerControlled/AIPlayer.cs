@@ -22,7 +22,7 @@ public class AIPlayer : Player {
         {
             DetermineNextAction();
             playerArmy.UpdateUnits(this);
-            UpdateSettlements();
+            playerCiv.UpdateSettlements(this);
         }
         else if (GameGridBehaviour.instance.GetCurrentGameState().Equals(GameState.PlayerSetupState))
         {
@@ -34,10 +34,10 @@ public class AIPlayer : Player {
     void CreateInitialBuildings()
     {
         playerArmy.CreateNewUnit(new PointyHexPoint(1, 13), MilitaryUnitType.Dictator, this);
-        BuildNewSettlement(new PointyHexPoint(2, 13));
-        BuildNewStructure(new PointyHexPoint(2, 12), StructureUnitType.Market, FindSettlementByID(0));
-        BuildNewStructure(new PointyHexPoint(3, 12), StructureUnitType.Airport, FindSettlementByID(0));
-        BuildNewStructure(new PointyHexPoint(1, 13), StructureUnitType.Factory, FindSettlementByID(0));
+        playerCiv.BuildNewSettlement(new PointyHexPoint(2, 13), GameGridBehaviour.instance.listOfPlayers[GameGridBehaviour.instance.GetIndexOfOppositePlayer(this)], PlayerColor);
+        playerCiv.BuildNewStructure(new PointyHexPoint(2, 12), StructureUnitType.Market, playerCiv.FindSettlementByID(0), GameGridBehaviour.instance.listOfPlayers[GameGridBehaviour.instance.GetIndexOfOppositePlayer(this)], PlayerColor);
+        playerCiv.BuildNewStructure(new PointyHexPoint(3, 12), StructureUnitType.Airport, playerCiv.FindSettlementByID(0), GameGridBehaviour.instance.listOfPlayers[GameGridBehaviour.instance.GetIndexOfOppositePlayer(this)], PlayerColor);
+        playerCiv.BuildNewStructure(new PointyHexPoint(1, 13), StructureUnitType.Factory, playerCiv.FindSettlementByID(0), GameGridBehaviour.instance.listOfPlayers[GameGridBehaviour.instance.GetIndexOfOppositePlayer(this)], PlayerColor);
         playerArmy.CreateNewUnit(new PointyHexPoint(3, 13), MilitaryUnitType.Infantry, 5, this);
         myState = AIState.DefenseState;
     }
