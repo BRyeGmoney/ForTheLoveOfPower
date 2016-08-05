@@ -259,6 +259,9 @@ namespace AssemblyCSharp
             AddToSettlements(newSettlement);
             AddToSettlementOwnedTiles(GameGridBehaviour.instance.Grid, newSettlement, enemyPlayer, GameGridBehaviour.instance.GetSurroundingTiles(buildPoint), playerColor);
             gridCell.AddStructureToTile(newSettlement);
+
+            dirtyUnits.Add(new CivUpdate() { mpCommand = (short)CivMpCommands.NewSettlement, Structure = newSettlement });
+
             newSettlement.GetComponent<BeautifulDissolves.Dissolve>().TriggerDissolve();
 
         }
@@ -276,6 +279,9 @@ namespace AssemblyCSharp
             owningSettlement.AddToBuildingList(newStruct);
             AddToSettlementOwnedTiles(GameGridBehaviour.instance.Grid, owningSettlement, enemyPlayer, GameGridBehaviour.instance.GetSurroundingTiles(buildPoint), playerColor);
             gridCell.AddStructureToTile(newStruct);
+
+            dirtyUnits.Add(new CivUpdate() { mpCommand = (short)CivMpCommands.NewStructure, Structure = newStruct });
+
             newStruct.GetComponent<BeautifulDissolves.Dissolve>().TriggerDissolve();
         }
 

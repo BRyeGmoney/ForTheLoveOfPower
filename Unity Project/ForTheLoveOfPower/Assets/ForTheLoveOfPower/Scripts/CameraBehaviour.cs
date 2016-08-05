@@ -92,7 +92,7 @@ public class CameraBehaviour : MonoBehaviour {
             }
         }
 
-        Camera.main.transform.position -= (Vector3)cameraVelocity;
+        Camera.main.transform.position += (Vector3)cameraVelocity;
         cameraVelocity *= Mathf.Pow(cameraFriction, Time.deltaTime);
     }
 
