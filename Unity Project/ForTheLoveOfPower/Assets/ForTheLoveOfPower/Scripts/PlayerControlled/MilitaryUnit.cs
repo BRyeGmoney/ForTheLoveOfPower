@@ -657,9 +657,9 @@ namespace AssemblyCSharp
 
             MilitaryUnit newUnit;
             if (unitId < 0)
-                newUnit = ObjectPool.instance.PullNewUnit(milType, gridCell.transform.position); //(Instantiate(GameGridBehaviour.instance.unitTypes[(int)milType], gridCell.transform.position, Quaternion.identity) as GameObject).GetComponent<MilitaryUnit>();
+                newUnit = ObjectPool.instance.PullNewUnit(milType, gridCell.transform.position, GameGridBehaviour.instance.GetIndexOfPlayer(player)); //(Instantiate(GameGridBehaviour.instance.unitTypes[(int)milType], gridCell.transform.position, Quaternion.identity) as GameObject).GetComponent<MilitaryUnit>();
             else
-                newUnit = ObjectPool.instance.PullNewUnit(milType, gridCell.transform.position, unitId);
+                newUnit = ObjectPool.instance.PullNewUnit(milType, gridCell.transform.position, GameGridBehaviour.instance.GetIndexOfPlayer(player), unitId);
 
             newUnit.Initialize(GetNextUnitID(), player.PlayerColor, milType, buildPoint, 1);
             AddToUnits(newUnit);

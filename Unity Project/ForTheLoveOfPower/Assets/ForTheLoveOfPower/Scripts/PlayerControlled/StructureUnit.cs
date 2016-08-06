@@ -251,9 +251,9 @@ namespace AssemblyCSharp
             Settlement newSettlement;
 
             if (id < 0)
-                newSettlement = ObjectPool.instance.PullNewSettlement(gridCell.transform.position);
+                newSettlement = ObjectPool.instance.PullNewSettlement(gridCell.transform.position, GameGridBehaviour.instance.GetIndexOfOppositePlayer(enemyPlayer));
             else
-                newSettlement = ObjectPool.instance.PullNewSettlement(gridCell.transform.position, id);
+                newSettlement = ObjectPool.instance.PullNewSettlement(gridCell.transform.position, GameGridBehaviour.instance.GetIndexOfOppositePlayer(enemyPlayer), id);
 
             newSettlement.Initialize(GetNextSettleID(), playerColor, StructureUnitType.Settlement, buildPoint);
             AddToSettlements(newSettlement);
@@ -271,9 +271,9 @@ namespace AssemblyCSharp
             UnitCell gridCell = GameGridBehaviour.instance.Grid[buildPoint] as UnitCell;
             StructureUnit newStruct;
             if (id < 0)
-                newStruct = ObjectPool.instance.PullNewStructure(structType, gridCell.transform.position);
+                newStruct = ObjectPool.instance.PullNewStructure(structType, gridCell.transform.position, GameGridBehaviour.instance.GetIndexOfOppositePlayer(enemyPlayer));
             else
-                newStruct = ObjectPool.instance.PullNewStructure(structType, gridCell.transform.position, id);
+                newStruct = ObjectPool.instance.PullNewStructure(structType, gridCell.transform.position, GameGridBehaviour.instance.GetIndexOfOppositePlayer(enemyPlayer), id);
 
             newStruct.Initialize(GetNextStructID(), playerColor, structType, buildPoint, owningSettlement);
             owningSettlement.AddToBuildingList(newStruct);

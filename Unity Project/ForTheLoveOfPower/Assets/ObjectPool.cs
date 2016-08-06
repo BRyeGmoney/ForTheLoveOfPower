@@ -95,9 +95,9 @@ public class ObjectPool : MonoBehaviour {
     }
 
     #region GetNextAvailable
-    MilitaryUnit GetNextAvailableUnit()
+    MilitaryUnit GetNextAvailableUnit(int indexOfPlayer)
     {
-        return unitPool.First(unit => !unit.PoolObjInUse);
+        return unitPool.Skip(unitPool.Length / 2 * indexOfPlayer).Take(unitPool.Length / 2).First(unit => !unit.PoolObjInUse);
     }
 
     MilitaryUnit GetById(short id)
@@ -115,14 +115,14 @@ public class ObjectPool : MonoBehaviour {
         return structurePool.FirstOrDefault(struc => struc.ID == id);
     }
 
-    StructureUnit GetNextAvailableStructure()
+    StructureUnit GetNextAvailableStructure(int indexOfPlayer)
     {
-        return structurePool.First(structure => !structure.PoolObjInUse);
+        return structurePool.Skip(unitPool.Length / 2 * indexOfPlayer).Take(unitPool.Length / 2).First(structure => !structure.PoolObjInUse);
     }
 
-    Settlement GetNextAvailableSettlement()
+    Settlement GetNextAvailableSettlement(int indexOfPlayer)
     {
-        return settlementPool.First(settlement => !settlement.PoolObjInUse);
+        return settlementPool.Skip(unitPool.Length / 2 * indexOfPlayer).Take(unitPool.Length / 2).First(settlement => !settlement.PoolObjInUse);
     }
 
     CombatIndicatorScript GetNextAvailableIndicator()
@@ -132,12 +132,12 @@ public class ObjectPool : MonoBehaviour {
     #endregion
 
     #region Creation
-    public MilitaryUnit PullNewUnit(MilitaryUnitType desiredType, Vector3 desiredPosition, short id = -1)
+    public MilitaryUnit PullNewUnit(MilitaryUnitType desiredType, Vector3 desiredPosition, int indexOfPlayer, short id = -1)
     {
         MilitaryUnit newUnit;
 
         if (id < 0)
-            newUnit = GetNextAvailableUnit();
+            newUnit = GetNextAvailableUnit(indexOfPlayer);
         else
             newUnit = GetById(id);
 
@@ -159,12 +159,12 @@ public class ObjectPool : MonoBehaviour {
     }
 
 
-    public StructureUnit PullNewStructure(StructureUnitType desiredType, Vector3 desiredPosition, short id = -1)
+    public StructureUnit PullNewStructure(StructureUnitType desiredType, Vector3 desiredPosition, int indexOfPlayer, short id = -1)
     {
         StructureUnit newStructure;
 
         if (id < 0)
-            newStructure = GetNextAvailableStructure();
+            newStructure = GetNextAvailableStructure(indexOfPlayer);
         else
             newStructure = GetStructureById(id);
 
@@ -182,12 +182,12 @@ public class ObjectPool : MonoBehaviour {
         return newStructure;
     }
 
-    public Settlement PullNewSettlement(Vector3 desiredPosition, short id = -1)
+    public Settlement PullNewSettlement(Vector3 desiredPosition, int indexOfPlayer, short id = -1)
     {
         Settlement newSettlement;
 
         if (id < 0)
-            newSettlement = GetNextAvailableSettlement();
+            newSettlement = GetNextAvailableSettlement(indexOfPlayer);
         else
             newSettlement = GetSettlementById(id);
 

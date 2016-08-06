@@ -113,6 +113,7 @@
     <Compile Include="Assets\CombatIndicatorScript.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\CameraBehaviour.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\Combat.cs" />
+    <Compile Include="Assets\ForTheLoveOfPower\Scripts\Fisheye.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\GameGridBehaviour.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\Helpers\CRT.cs" />
     <Compile Include="Assets\ForTheLoveOfPower\Scripts\Helpers\PlayerPrefsX.cs" />

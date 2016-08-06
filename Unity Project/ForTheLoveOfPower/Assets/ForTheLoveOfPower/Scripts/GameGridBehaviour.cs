@@ -302,6 +302,11 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
 		return path.Keys.ToPointList<PointyHexPoint>();
 	}
 
+    public int GetIndexOfPlayer(Player player)
+    {
+        return Array.IndexOf(listOfPlayers, player);
+    }
+
     public int GetIndexOfOppositePlayer(Player player)
     {
         if (Array.IndexOf(listOfPlayers, player) == 0)
