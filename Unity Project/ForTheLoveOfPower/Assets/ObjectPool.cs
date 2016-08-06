@@ -14,7 +14,7 @@ public class ObjectPool : MonoBehaviour {
     public Object unitDefault;
     public Object combatIndicatorDefault;
 
-    public short SettlementPoolSize = 25;
+    public short SettlementPoolSize = 20;
     public short StructurePoolSize = 100;
     public short UnitPoolSize = 100;
     public short IndicatorPoolSize = 5;
@@ -95,11 +95,6 @@ public class ObjectPool : MonoBehaviour {
     }
 
     #region GetNextAvailable
-    MilitaryUnit GetNextAvailableUnit(int indexOfPlayer)
-    {
-        return unitPool.Skip(unitPool.Length / 2 * indexOfPlayer).Take(unitPool.Length / 2).First(unit => !unit.PoolObjInUse);
-    }
-
     MilitaryUnit GetById(short id)
     {
         return unitPool.FirstOrDefault(unit => unit.ID == id);
@@ -115,14 +110,25 @@ public class ObjectPool : MonoBehaviour {
         return structurePool.FirstOrDefault(struc => struc.ID == id);
     }
 
+    MilitaryUnit GetNextAvailableUnit(int indexOfPlayer)
+    {
+        int skip = (unitPool.Length / 2 * indexOfPlayer);
+        int take = (unitPool.Length / 2);
+        return unitPool.Skip(skip).Take(take).First(unit => !unit.PoolObjInUse);
+    }
+
     StructureUnit GetNextAvailableStructure(int indexOfPlayer)
     {
-        return structurePool.Skip(unitPool.Length / 2 * indexOfPlayer).Take(unitPool.Length / 2).First(structure => !structure.PoolObjInUse);
+        int skip = (structurePool.Length / 2 * indexOfPlayer);
+        int take = (structurePool.Length / 2);
+        return structurePool.Skip(skip).Take(take).First(structure => !structure.PoolObjInUse);
     }
 
     Settlement GetNextAvailableSettlement(int indexOfPlayer)
     {
-        return settlementPool.Skip(unitPool.Length / 2 * indexOfPlayer).Take(unitPool.Length / 2).First(settlement => !settlement.PoolObjInUse);
+        int skip = (settlementPool.Length / 2 * indexOfPlayer);
+        int take = (settlementPool.Length / 2);
+        return settlementPool.Skip(skip).Take(take).First(settlement => !settlement.PoolObjInUse);
     }
 
     CombatIndicatorScript GetNextAvailableIndicator()
@@ -269,6 +275,8 @@ public class ObjectPool : MonoBehaviour {
     #region Structures
     void SetupStructure(int structTypeIndex, ref StructureUnit structToSetup)
     {
+        Debug.Log(string.Format("Struct type index: {0}", structTypeIndex));
+        Debug.Log(structToSetup);
         structToSetup.GetComponent<SpriteRenderer>().sprite = structureObjects[structTypeIndex].GetComponent<SpriteRenderer>().sprite;
     }
     #endregion

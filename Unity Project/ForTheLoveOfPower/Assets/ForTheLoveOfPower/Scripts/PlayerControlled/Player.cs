@@ -48,6 +48,7 @@ public class Player : Photon.MonoBehaviour {
     public bool netPlayer = true;
 
     public string PlayerName;
+    public int PlayerOrder;
 
     float playerTimer = 0f;
 
@@ -62,11 +63,18 @@ public class Player : Photon.MonoBehaviour {
         if (!netPlayer)
         {
             AddCash(10000);
+            PlayerName = PlayerPrefs.GetString(SaveData.PlayerName.ToString(), PlayerName);
             PlayerColor = PlayerPrefsX.GetColor(SaveData.PlayerColor.ToString(), PlayerColor);
             Debug.Log(string.Format("Player Color Set {0}", PlayerName));
 
             path = new PointList<PointyHexPoint>();
             prevPath = new PointList<PointyHexPoint>();
+
+            if (GameGridBehaviour.isMP)
+            {
+                PlayerOrder = (int)PhotonNetwork.player.customProperties["PlayerOrder"];
+                Debug.Log(string.Format("Player Order Set {0}", PlayerOrder));
+            }
 
             movementLine = new VectorLine("movementPath", new List<Vector3>(), GameGridBehaviour.instance.lineTex, 5.0f, LineType.Continuous, Joins.Weld);
             movementLine.color = PlayerColor;
@@ -74,20 +82,24 @@ public class Player : Photon.MonoBehaviour {
         else
         {
             Vector3 pColor = (Vector3)PhotonNetwork.otherPlayers[0].customProperties["PlayerColor"];
+            PlayerName = PhotonNetwork.otherPlayers[0].name;
+            PlayerOrder = (int)PhotonNetwork.otherPlayers[0].customProperties["PlayerOrder"];
             PlayerColor = new Color(pColor.x, pColor.y, pColor.z);
 
             Debug.Log(string.Format("Net Player Color Set {0}", PlayerName));
         }
     }
 
-    public void SetPlayerColor()
+    public void SetPlayerInfo()
     {
         if (netPlayer)
         {
             Vector3 pColor = (Vector3)PhotonNetwork.otherPlayers[0].customProperties["PlayerColor"];
             PlayerColor = new Color(pColor.x, pColor.y, pColor.z);
+            PlayerOrder = (int)PhotonNetwork.otherPlayers[0].customProperties["PlayerOrder"];
 
             Debug.Log(string.Format("Net Player Color Set {0}", PlayerName));
+            Debug.Log(string.Format("Net Player Order Set {0}", PlayerOrder));
         }
     }
 	

@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Gamelogic;
 using Gamelogic.Grids;
 using AssemblyCSharp;
-using Vectrosity;
 using DG.Tweening;
 
 public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
@@ -103,10 +101,10 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
                     listOfPlayers[c] = netPlayer;
 
                     if (netPlayer.netPlayer)
-                        netPlayer.SetPlayerColor();
+                        netPlayer.SetPlayerInfo();
 
                     //if (listOfPlayers[c])
-                        localPlayer = 0;
+                        //localPlayer = 0;
                 }
                 else
                 {
@@ -122,6 +120,17 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
                 c++;
             }
 
+            if (isMP)
+            {
+                listOfPlayers = listOfPlayers.OrderBy(x => x.PlayerOrder).ToArray();
+
+                foreach (Player pl in listOfPlayers)
+                {
+                    Debug.Log(string.Format("Player {0} is ordered: {1}", pl.PlayerName, pl.PlayerOrder));
+                }
+            }
+
+            localPlayer = (int)PhotonNetwork.player.customProperties["PlayerOrder"];
             buildScreenSettings.SetBGColor(listOfPlayers[localPlayer].PlayerColor);
 
             moneyText.color = listOfPlayers[localPlayer].PlayerColor;

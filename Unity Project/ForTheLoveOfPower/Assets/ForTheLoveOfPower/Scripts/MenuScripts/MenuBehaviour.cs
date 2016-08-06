@@ -108,6 +108,12 @@ public class MenuBehaviour : MonoBehaviour {
     {
         PhotonNetwork.CreateRoom("PvPMatch", new RoomOptions() { isOpen = true, isVisible = true, maxPlayers = 2 }, TypedLobby.Default);
         GameGridBehaviour.isMP = true;
+
+        ExitGames.Client.Photon.Hashtable propTable = new ExitGames.Client.Photon.Hashtable();
+        propTable.Add("PlayerOrder", 0);
+
+        PhotonNetwork.SetPlayerCustomProperties(propTable);
+
         SetTextStatus(TextStatus.WaitingForPlayer);
         SetTextVisibility(true);
     }
@@ -116,6 +122,12 @@ public class MenuBehaviour : MonoBehaviour {
     {
         PhotonNetwork.JoinRandomRoom(null, 0, ExitGames.Client.Photon.MatchmakingMode.RandomMatching, TypedLobby.Default, "");
         GameGridBehaviour.isMP = true;
+
+        ExitGames.Client.Photon.Hashtable propTable = new ExitGames.Client.Photon.Hashtable();
+        propTable.Add("PlayerOrder", 1);
+
+        PhotonNetwork.SetPlayerCustomProperties(propTable);
+
         SetTextStatus(TextStatus.SearchingForGame);
         SetTextVisibility(true);
     }
