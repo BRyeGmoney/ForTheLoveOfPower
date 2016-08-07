@@ -13,6 +13,8 @@ public class LobbyPlayer : MonoBehaviour {
     public Color playerColor;
     public bool isReady;
 
+    public PhotonPlayer player;
+
     public void Awake()
     {
         
