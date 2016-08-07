@@ -3,78 +3,37 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class LobbyPlayer {//: NetworkLobbyPlayer {
+public class LobbyPlayer : MonoBehaviour {
 
-    private TextMesh playerNameText;
+    public Text playerNameText;
+    public Button playerColorBtn;
+    public Button playerReadyBtn;
 
-    //[SyncVar(hook = "OnPlayerName")]
     public string playerName;
-    //[SyncVar(hook = "OnPlayerColor")]
     public Color playerColor;
+    public bool isReady;
 
     public void Awake()
     {
-        //playerNameText = gameObject.GetComponentInChildren<TextMesh>();
-    }
-
-    /*public override void OnStartClient()
-    {
-        base.OnStartClient();
-    }
-
-    public override void OnClientEnterLobby()
-    {
-        base.OnClientEnterLobby();
-
-        OnPlayerName(playerName);
-        OnPlayerColor(playerColor);
-        //playerNameText.text = playerName;
-        //transform.SetParent(MenuBehaviour.instance.LobbyPlayersPanel, false);
-        //int index = Array.IndexOf(MenuBehaviour.instance.lobbyManager.lobbySlots, this);
-        //transform.position = new Vector3(0, -350 + (index * 35), 0);// * Random.Range(1, 4), 0);
-    }
-
-    public override void OnStartLocalPlayer()
-    {
-        base.OnStartLocalPlayer();
-
         
-        //CmdNameChanged(MenuBehaviour.instance.PlayerName);
-        //OnPlayerName(playerName);
-        //CmdColorChanged(MenuBehaviour.instance.PlayerColor);
-        //OnPlayerColor(playerColor);
-
-        //int index = Array.IndexOf(MenuBehaviour.instance.lobbyManager.lobbySlots, this);
-        //transform.position = new Vector3(0, -350 + (index * 35), 0);
-
-        //if (index > 1)
-        //{
-         //   readyToBegin = true;
-         //   SendReadyToBeginMessage();
-       // }
-    }*/
-
-    public void OnPlayerName(string newPlayerName)
-    {
-        playerName = newPlayerName;
-        playerNameText.text = playerName;
     }
 
-    public void OnPlayerColor(Color newPlayerColor)
+    public void ChangeReady()
     {
-        playerColor = newPlayerColor;
-        playerNameText.color = playerColor;
-    }
+        isReady = !isReady;
 
-    //[Command]
-    public void CmdNameChanged(string name)
-    {
-        playerName = name;
-    }
+        /*ColorBlock cb = new ColorBlock();
 
-    //[Command]
-    public void CmdColorChanged(Color pColor)
-    {
-        playerColor = pColor;
+        if (!isReady)
+            cb.normalColor = new Color(0.655f, 0.114f, 0.114f);
+        else
+            cb.normalColor = new Color(0.114f, 1f, 0.114f);
+        cb.pressedColor = cb.normalColor;
+        cb.highlightedColor = cb.normalColor;*/
+
+        if (!isReady)
+            playerReadyBtn.GetComponent<Image>().color = new Color(0.655f, 0.114f, 0.114f);
+        else
+            playerReadyBtn.GetComponent<Image>().color = new Color(0.114f, 1f, 0.114f);
     }
 }

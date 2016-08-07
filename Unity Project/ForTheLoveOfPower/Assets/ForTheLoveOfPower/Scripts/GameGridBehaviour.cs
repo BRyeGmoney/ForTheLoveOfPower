@@ -128,9 +128,9 @@ public class GameGridBehaviour : GridBehaviour<PointyHexPoint> {
                 {
                     Debug.Log(string.Format("Player {0} is ordered: {1}", pl.PlayerName, pl.PlayerOrder));
                 }
+                localPlayer = (int)PhotonNetwork.player.customProperties["PlayerOrder"];
             }
 
-            localPlayer = (int)PhotonNetwork.player.customProperties["PlayerOrder"];
             buildScreenSettings.SetBGColor(listOfPlayers[localPlayer].PlayerColor);
 
             moneyText.color = listOfPlayers[localPlayer].PlayerColor;

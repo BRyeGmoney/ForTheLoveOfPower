@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class MenuBehaviour : MonoBehaviour {
     public Text mpPlayerText;
@@ -23,8 +24,13 @@ public class MenuBehaviour : MonoBehaviour {
     public Text OpenRoomsTxt;
     public Text NumPlayersTxt;
 
+    public RectTransform LobbyPanel;
+
     private ulong matchID;
 
+    public GameObject LobbyPlayerObj;
+
+    private List<LobbyPlayer> lobbyPlayers;
 
 	// Use this for initialization
 	void Start () {
@@ -39,6 +45,8 @@ public class MenuBehaviour : MonoBehaviour {
         ColorBlock newBlock = playerColBtn.colors;
         newBlock.normalColor = ReturnColorChoice((ColorChooser)ColorChoice);
         playerColBtn.colors = newBlock;
+
+        lobbyPlayers = new List<LobbyPlayer>();
 	}
 
     void Awake()
@@ -87,6 +95,7 @@ public class MenuBehaviour : MonoBehaviour {
     public void OnDisconnectedFromPhoton()
     {
         GameGridBehaviour.isMP = false;
+        lobbyPlayers.Clear();
 
         SetTextVisibility(false);
         animator.SetTrigger("BackPressed");
@@ -132,20 +141,79 @@ public class MenuBehaviour : MonoBehaviour {
         SetTextVisibility(true);
     }
 
+    [PunRPC]
+    void CreateLobbyPlayer(PhotonPlayer player, int photonViewId)
+    {
+        //Instantiate the object over the network
+        GameObject lobbyPlayer = Instantiate(Resources.Load("LobbyPlayer"), Vector3.zero, Quaternion.identity) as GameObject;
+
+        //add the lobby player to the panel, set the position, and add the click handler for the ready state
+        LobbyPlayer lP = lobbyPlayer.GetComponent<LobbyPlayer>();
+        lobbyPlayer.transform.SetParent(LobbyPanel);
+
+        
+        lobbyPlayer.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0f, -40f - (100f  * lobbyPlayers.Count), 0f);
+
+        if (player == PhotonNetwork.player)
+            lobbyPlayer.GetComponentInChildren<Button>().onClick.AddListener(() => PlayerChangeState(lobbyPlayer.GetComponent<LobbyPlayer>()));
+
+        lobbyPlayers.Add(lP);
+        lP.playerNameText.text = player.name;
+        Vector3 pCol = (Vector3)player.customProperties["PlayerColor"];
+        lP.playerColorBtn.GetComponent<Image>().color = new Color(pCol.x, pCol.y, pCol.z);
+
+        //set the photonview
+        PhotonView[] nViews = gameObject.GetComponentsInChildren<PhotonView>();
+        nViews[0].viewID = photonViewId;
+    }
+
     public void OnJoinedRoom()
     {
         if (PhotonNetwork.playerList.Length < 2)
+        {
             SetTextStatus(TextStatus.WaitingForPlayer);
+
+            //CreateLobbyPlayer(PhotonNetwork.player);
+        }
         else
         {
             SetTextStatus(TextStatus.PlayerFound);
+
+            /*GameObject lobbyPlayer = Instantiate(Resources.Load("LobbyPlayer"), Vector3.zero, Quaternion.identity) as GameObject;
+            LobbyPlayer lP = lobbyPlayer.GetComponent<LobbyPlayer>();
+            lobbyPlayer.transform.SetParent(LobbyPanel);
+            lobbyPlayer.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0f, -40f, 0f);
+            //lobbyPlayer.GetComponentInChildren<Button>().onClick.AddListener(() => PlayerChangeState(lobbyPlayer.GetComponent<LobbyPlayer>()));
+
+            lobbyPlayers.Add(lP);
+            lP.playerNameText.text = PhotonNetwork.otherPlayers[0].name;
+            Vector3 pCol = (Vector3)PhotonNetwork.otherPlayers[0].customProperties["PlayerColor"];
+            lP.playerColorBtn.GetComponent<Image>().color = new Color(pCol.x, pCol.y, pCol.z);
+
+
+            CreateLobbyPlayer(PhotonNetwork.player);*/
         }
+    }
+
+    public void OnCreatedRoom()
+    {
+        int id1 = PhotonNetwork.AllocateViewID();
+        PhotonView photonView = PhotonView.Get(this);
+        photonView.RPC("CreateLobbyPlayer", PhotonTargets.AllBuffered, PhotonNetwork.player, id1);
+
+        //CreateLobbyPlayer(PhotonNetwork.player);
     }
 
     public void OnPhotonPlayerConnected(PhotonPlayer player)
     {
-        if (PhotonNetwork.playerList.Length > 1)
-            StartMPGame();
+        /*if (PhotonNetwork.playerList.Length > 1)
+            StartMPGame();*/
+
+        //CreateLobbyPlayer(PhotonNetwork.player);
+
+        int id1 = PhotonNetwork.AllocateViewID();
+        PhotonView photonView = PhotonView.Get(this);
+        photonView.RPC("CreateLobbyPlayer", PhotonTargets.AllBuffered, PhotonNetwork.player, id1);
     }
 
     public void WaitingForHost()
@@ -166,7 +234,13 @@ public class MenuBehaviour : MonoBehaviour {
         SceneManager.LoadScene ("MainScreen");
 	}
 
-    
+    public void PlayerChangeState(LobbyPlayer player)
+    {
+        player.ChangeReady();
+
+        if (lobbyPlayers.Count > 1 && lobbyPlayers.All(lP => lP.isReady))
+            StartMPGame();
+    }
 
     public void QuitGame() {
 		Application.Quit ();
