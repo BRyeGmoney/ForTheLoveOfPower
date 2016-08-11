@@ -142,10 +142,10 @@ public class ObjectPool : MonoBehaviour {
     {
         MilitaryUnit newUnit;
 
-        if (id < 0)
+        //if (id < 0)
             newUnit = GetNextAvailableUnit(indexOfPlayer);
-        else
-            newUnit = GetById(id);
+        //else
+        //    newUnit = GetById(id);
 
         if (desiredType.Equals(MilitaryUnitType.Dictator))
             SetupDictator(ref newUnit);
@@ -169,10 +169,10 @@ public class ObjectPool : MonoBehaviour {
     {
         StructureUnit newStructure;
 
-        if (id < 0)
+        //if (id < 0)
             newStructure = GetNextAvailableStructure(indexOfPlayer);
-        else
-            newStructure = GetStructureById(id);
+        //else
+        //   newStructure = GetStructureById(id);
 
         SetupStructure((int)desiredType, ref newStructure);
 
@@ -192,10 +192,10 @@ public class ObjectPool : MonoBehaviour {
     {
         Settlement newSettlement;
 
-        if (id < 0)
+        //if (id < 0)
             newSettlement = GetNextAvailableSettlement(indexOfPlayer);
-        else
-            newSettlement = GetSettlementById(id);
+        //else
+        //    newSettlement = GetSettlementById(id);
 
         //set the settlement's new position
         newSettlement.transform.position = desiredPosition;

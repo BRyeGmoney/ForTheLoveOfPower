@@ -656,12 +656,16 @@ namespace AssemblyCSharp
             UnitCell gridCell = GameGridBehaviour.instance.Grid[buildPoint] as UnitCell;
 
             MilitaryUnit newUnit;
-            if (unitId < 0)
+            //if (unitId < 0)
                 newUnit = ObjectPool.instance.PullNewUnit(milType, gridCell.transform.position, GameGridBehaviour.instance.GetIndexOfPlayer(player)); //(Instantiate(GameGridBehaviour.instance.unitTypes[(int)milType], gridCell.transform.position, Quaternion.identity) as GameObject).GetComponent<MilitaryUnit>();
-            else
-                newUnit = ObjectPool.instance.PullNewUnit(milType, gridCell.transform.position, GameGridBehaviour.instance.GetIndexOfPlayer(player), unitId);
+            //else
+            //    newUnit = ObjectPool.instance.PullNewUnit(milType, gridCell.transform.position, GameGridBehaviour.instance.GetIndexOfPlayer(player), unitId);
 
-            newUnit.Initialize(GetNextUnitID(), player.PlayerColor, milType, buildPoint, 1);
+            if (unitId < 0)
+                newUnit.Initialize(GetNextUnitID(), player.PlayerColor, milType, buildPoint, 1);
+            else
+                newUnit.Initialize(unitId, player.PlayerColor, milType, buildPoint, 1);
+
             AddToUnits(newUnit);
             gridCell.AddUnitToTile(newUnit);
             /*GameGridBehaviour.instance.CreateNewMilitaryUnit(this,

@@ -250,12 +250,16 @@ namespace AssemblyCSharp
             UnitCell gridCell = GameGridBehaviour.instance.Grid[buildPoint] as UnitCell;
             Settlement newSettlement;
 
-            if (id < 0)
+            //if (id < 0)
                 newSettlement = ObjectPool.instance.PullNewSettlement(gridCell.transform.position, GameGridBehaviour.instance.GetIndexOfOppositePlayer(enemyPlayer));
-            else
-                newSettlement = ObjectPool.instance.PullNewSettlement(gridCell.transform.position, GameGridBehaviour.instance.GetIndexOfOppositePlayer(enemyPlayer), id);
+            //else
+            //    newSettlement = ObjectPool.instance.PullNewSettlement(gridCell.transform.position, GameGridBehaviour.instance.GetIndexOfOppositePlayer(enemyPlayer), id);
 
-            newSettlement.Initialize(GetNextSettleID(), playerColor, StructureUnitType.Settlement, buildPoint);
+            if (id < 0)
+                newSettlement.Initialize(GetNextSettleID(), playerColor, StructureUnitType.Settlement, buildPoint);
+            else
+                newSettlement.Initialize(id, playerColor, StructureUnitType.Settlement, buildPoint);
+
             AddToSettlements(newSettlement);
             AddToSettlementOwnedTiles(GameGridBehaviour.instance.Grid, newSettlement, enemyPlayer, GameGridBehaviour.instance.GetSurroundingTiles(buildPoint), playerColor);
             gridCell.AddStructureToTile(newSettlement);
@@ -270,12 +274,16 @@ namespace AssemblyCSharp
         {
             UnitCell gridCell = GameGridBehaviour.instance.Grid[buildPoint] as UnitCell;
             StructureUnit newStruct;
-            if (id < 0)
+            //if (id < 0)
                 newStruct = ObjectPool.instance.PullNewStructure(structType, gridCell.transform.position, GameGridBehaviour.instance.GetIndexOfOppositePlayer(enemyPlayer));
-            else
-                newStruct = ObjectPool.instance.PullNewStructure(structType, gridCell.transform.position, GameGridBehaviour.instance.GetIndexOfOppositePlayer(enemyPlayer), id);
+            //else
+            //    newStruct = ObjectPool.instance.PullNewStructure(structType, gridCell.transform.position, GameGridBehaviour.instance.GetIndexOfOppositePlayer(enemyPlayer), id);
 
-            newStruct.Initialize(GetNextStructID(), playerColor, structType, buildPoint, owningSettlement);
+            if (id < 0)
+                newStruct.Initialize(GetNextStructID(), playerColor, structType, buildPoint, owningSettlement);
+            else
+                newStruct.Initialize(id, playerColor, structType, buildPoint, owningSettlement);
+
             owningSettlement.AddToBuildingList(newStruct);
             AddToSettlementOwnedTiles(GameGridBehaviour.instance.Grid, owningSettlement, enemyPlayer, GameGridBehaviour.instance.GetSurroundingTiles(buildPoint), playerColor);
             gridCell.AddStructureToTile(newStruct);
