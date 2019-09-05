@@ -49,5 +49,5 @@ https://help.github.com/en/articles/setting-repository-visibility
 For checking out my project, I hope you are able to learn something from what was my most rewarding personal project to date. 
 We were unable to finish the game as my brother and I slowly drifted apart and had to focus on our personal lives; though there's always hope that we'll get a chance to work on something together again in the future. 
 
-Feel free to reach out to me at my email if you have any questions: 
+Thought the issues area is still full of bugs/tasks from development, feel free to add new ones with any questions you may have or you can reach out to me at my email: 
 #### hello@bryangromadzki.com
