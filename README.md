@@ -33,7 +33,7 @@ Thursday September 5th 2019
 
 ##### Who?
 
-I, Bryan Gromadzki have decided that this repo should be public.
+I, Bryan Gromadzki, have decided that this repo should be public.
 
 ##### Where?
 
